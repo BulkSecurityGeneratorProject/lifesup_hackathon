@@ -1,0 +1,12 @@
+version: '2'
+services:
+    hackathon-postgresql:
+        container_name: hackathon-postgresql
+        image: postgres:9.5.4
+        # volumes:
+        #     - ~/volumes/jhipster/hackathon/postgresql/:/var/lib/postgresql/
+        environment:
+            - POSTGRES_USER=hackathon
+            - POSTGRES_PASSWORD=
+        ports:
+            - 5432:5432

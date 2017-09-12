@@ -1,0 +1,170 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myUserListLabel" data-translate="hackathonApp.userList.home.createOrEditLabel">Create or edit a User List</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.userList.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.userList.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.userList.email" for="field_email">Email</label>
+            <input type="text" class="form-control" name="email" id="field_email"
+                    ng-model="vm.userList.email"
+                    required />
+            <div ng-show="editForm.email.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.email.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.userList.password" for="field_password">Password</label>
+            <input type="text" class="form-control" name="password" id="field_password"
+                    ng-model="vm.userList.password"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.userList.fullName" for="field_fullName">Full Name</label>
+            <input type="text" class="form-control" name="fullName" id="field_fullName"
+                    ng-model="vm.userList.fullName"
+                    required />
+            <div ng-show="editForm.fullName.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.fullName.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.userList.phone" for="field_phone">Phone</label>
+            <input type="text" class="form-control" name="phone" id="field_phone"
+                    ng-model="vm.userList.phone"
+                    required />
+            <div ng-show="editForm.phone.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.phone.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.userList.sex" for="field_sex">Sex</label>
+            <select class="form-control" name="sex" ng-model="vm.userList.sex" id="field_sex" required>
+                <option value="MALE" data-translate="hackathonApp.UserSex.MALE">MALE</option>
+                <option value="FEMALE" data-translate="hackathonApp.UserSex.FEMALE">FEMALE</option>
+            </select>
+            <div ng-show="editForm.sex.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.sex.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.userList.companyName" for="field_companyName">Company Name</label>
+            <input type="text" class="form-control" name="companyName" id="field_companyName"
+                    ng-model="vm.userList.companyName"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.userList.jobTitle" for="field_jobTitle">Job Title</label>
+            <input type="text" class="form-control" name="jobTitle" id="field_jobTitle"
+                    ng-model="vm.userList.jobTitle"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.userList.logoUrl" for="field_logoUrl">Logo Url</label>
+            <input type="text" class="form-control" name="logoUrl" id="field_logoUrl"
+                    ng-model="vm.userList.logoUrl"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.userList.country" for="field_country">Country</label>
+            <input type="text" class="form-control" name="country" id="field_country"
+                    ng-model="vm.userList.country"
+                    required />
+            <div ng-show="editForm.country.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.country.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.userList.city" for="field_city">City</label>
+            <input type="text" class="form-control" name="city" id="field_city"
+                    ng-model="vm.userList.city"
+                    required />
+            <div ng-show="editForm.city.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.city.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.userList.nationality" for="field_nationality">Nationality</label>
+            <input type="text" class="form-control" name="nationality" id="field_nationality"
+                    ng-model="vm.userList.nationality"
+                    required />
+            <div ng-show="editForm.nationality.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.nationality.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.userList.birthday" for="field_birthday">Birthday</label>
+                <div class="input-group">
+                    <input id="field_birthday" type="text" class="form-control" name="birthday" datetime-picker="{{dateformat}}" ng-model="vm.userList.birthday" is-open="vm.datePickerOpenStatus.birthday"
+                      />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('birthday')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.userList.status" for="field_status">Status</label>
+            <select class="form-control" name="status" ng-model="vm.userList.status" id="field_status">
+                <option value="INACTIVATED" data-translate="hackathonApp.UserStatus.INACTIVATED">INACTIVATED</option>
+                <option value="ACTIVATED" data-translate="hackathonApp.UserStatus.ACTIVATED">ACTIVATED</option>
+                <option value="PROFILE_COMPLETE" data-translate="hackathonApp.UserStatus.PROFILE_COMPLETE">PROFILE_COMPLETE</option>
+                <option value="REMOVED" data-translate="hackathonApp.UserStatus.REMOVED">REMOVED</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label data-translate="hackathonApp.userList.userInfo" for="field_userInfo">User Info</label>
+            <select class="form-control" id="field_userInfo" name="userInfo" ng-model="vm.userList.userInfo" ng-options="userInfo as userInfo.id for userInfo in vm.userinfos | orderBy:'id' track by userInfo.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label data-translate="hackathonApp.userList.company" for="field_company">Company</label>
+            <select class="form-control" id="field_company" name="company" ng-model="vm.userList.company" ng-options="company as company.id for company in vm.companies track by company.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label data-translate="hackathonApp.userList.applications" for="field_applications">Applications</label>
+            <select class="form-control" id="field_applications" multiple name="applications" ng-model="vm.userList.applications" ng-options="application as application.id for application in vm.applications track by application.id"></select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

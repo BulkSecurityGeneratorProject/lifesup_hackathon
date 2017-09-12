@@ -1,0 +1,172 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myChallengeLabel" data-translate="hackathonApp.challenge.home.createOrEditLabel">Create or edit a Challenge</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.challenge.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.challenge.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.challenge.name" for="field_name">Name</label>
+            <input type="text" class="form-control" name="name" id="field_name"
+                    ng-model="vm.challenge.name"
+                    required />
+            <div ng-show="editForm.name.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.name.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.challenge.introduction" for="field_introduction">Introduction</label>
+            <input type="text" class="form-control" name="introduction" id="field_introduction"
+                    ng-model="vm.challenge.introduction"
+                    required />
+            <div ng-show="editForm.introduction.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.introduction.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.challenge.challengeText" for="field_challengeText">Challenge Text</label>
+            <input type="text" class="form-control" name="challengeText" id="field_challengeText"
+                    ng-model="vm.challenge.challengeText"
+                    required />
+            <div ng-show="editForm.challengeText.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.challengeText.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.challenge.resourceText" for="field_resourceText">Resource Text</label>
+            <input type="text" class="form-control" name="resourceText" id="field_resourceText"
+                    ng-model="vm.challenge.resourceText"
+                    required />
+            <div ng-show="editForm.resourceText.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.resourceText.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.challenge.rewardsText" for="field_rewardsText">Rewards Text</label>
+            <input type="text" class="form-control" name="rewardsText" id="field_rewardsText"
+                    ng-model="vm.challenge.rewardsText"
+                    required />
+            <div ng-show="editForm.rewardsText.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.rewardsText.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.challenge.timelineText" for="field_timelineText">Timeline Text</label>
+            <input type="text" class="form-control" name="timelineText" id="field_timelineText"
+                    ng-model="vm.challenge.timelineText"
+                    required />
+            <div ng-show="editForm.timelineText.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.timelineText.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.challenge.rulesText" for="field_rulesText">Rules Text</label>
+            <input type="text" class="form-control" name="rulesText" id="field_rulesText"
+                    ng-model="vm.challenge.rulesText"
+                    required />
+            <div ng-show="editForm.rulesText.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.rulesText.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.challenge.bannerUrl" for="field_bannerUrl">Banner Url</label>
+            <input type="text" class="form-control" name="bannerUrl" id="field_bannerUrl"
+                    ng-model="vm.challenge.bannerUrl"
+                    required />
+            <div ng-show="editForm.bannerUrl.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.bannerUrl.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.challenge.additionalText" for="field_additionalText">Additional Text</label>
+            <input type="text" class="form-control" name="additionalText" id="field_additionalText"
+                    ng-model="vm.challenge.additionalText"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.challenge.maxTeamNumber" for="field_maxTeamNumber">Max Team Number</label>
+            <input type="number" class="form-control" name="maxTeamNumber" id="field_maxTeamNumber"
+                    ng-model="vm.challenge.maxTeamNumber"
+                    required />
+            <div ng-show="editForm.maxTeamNumber.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.maxTeamNumber.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.maxTeamNumber.$error.number" data-translate="entity.validation.number">
+                    This field should be a number.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.challenge.minTeamNumber" for="field_minTeamNumber">Min Team Number</label>
+            <input type="number" class="form-control" name="minTeamNumber" id="field_minTeamNumber"
+                    ng-model="vm.challenge.minTeamNumber"
+                    required />
+            <div ng-show="editForm.minTeamNumber.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.minTeamNumber.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.minTeamNumber.$error.number" data-translate="entity.validation.number">
+                    This field should be a number.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label data-translate="hackathonApp.challenge.info" for="field_info">Info</label>
+            <select class="form-control" id="field_info" name="info" ng-model="vm.challenge.info" ng-options="challengeInfo as challengeInfo.id for challengeInfo in vm.infos | orderBy:'id' track by challengeInfo.id">
+                <option value=""></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label data-translate="hackathonApp.challenge.company" for="field_company">Company</label>
+            <select class="form-control" id="field_company" name="company" ng-model="vm.challenge.company" ng-options="company as company.id for company in vm.companies track by company.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

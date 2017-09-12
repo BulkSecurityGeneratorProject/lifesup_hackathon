@@ -1,0 +1,96 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myApplicationLabel" data-translate="hackathonApp.application.home.createOrEditLabel">Create or edit a Application</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.application.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.application.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.application.teamName" for="field_teamName">Team Name</label>
+            <input type="text" class="form-control" name="teamName" id="field_teamName"
+                    ng-model="vm.application.teamName"
+                    required />
+            <div ng-show="editForm.teamName.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.teamName.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.application.companyName" for="field_companyName">Company Name</label>
+            <input type="text" class="form-control" name="companyName" id="field_companyName"
+                    ng-model="vm.application.companyName"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.application.description" for="field_description">Description</label>
+            <input type="text" class="form-control" name="description" id="field_description"
+                    ng-model="vm.application.description"
+                    required />
+            <div ng-show="editForm.description.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.description.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.application.motivation" for="field_motivation">Motivation</label>
+            <input type="text" class="form-control" name="motivation" id="field_motivation"
+                    ng-model="vm.application.motivation"
+                    required />
+            <div ng-show="editForm.motivation.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.motivation.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.application.ideasDescription" for="field_ideasDescription">Ideas Description</label>
+            <input type="text" class="form-control" name="ideasDescription" id="field_ideasDescription"
+                    ng-model="vm.application.ideasDescription"
+                    required />
+            <div ng-show="editForm.ideasDescription.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.ideasDescription.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.application.status" for="field_status">Status</label>
+            <select class="form-control" name="status" ng-model="vm.application.status" id="field_status">
+                <option value="DRAFT" data-translate="hackathonApp.ApplicationStatus.DRAFT">DRAFT</option>
+                <option value="WAITING_FOR_APPROVE" data-translate="hackathonApp.ApplicationStatus.WAITING_FOR_APPROVE">WAITING_FOR_APPROVE</option>
+                <option value="APPROVED" data-translate="hackathonApp.ApplicationStatus.APPROVED">APPROVED</option>
+                <option value="REJECTED" data-translate="hackathonApp.ApplicationStatus.REJECTED">REJECTED</option>
+                <option value="CLOSED" data-translate="hackathonApp.ApplicationStatus.CLOSED">CLOSED</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label data-translate="hackathonApp.application.challenge" for="field_challenge">Challenge</label>
+            <select class="form-control" id="field_challenge" name="challenge" ng-model="vm.application.challenge" ng-options="challenge as challenge.id for challenge in vm.challenges track by challenge.id">
+                <option value=""></option>
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

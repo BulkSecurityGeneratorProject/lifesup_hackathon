@@ -1,0 +1,35 @@
+{
+    "hackathonApp": {
+        "challenge" : {
+            "home": {
+                "title": "Challenges",
+                "createLabel": "Create a new Challenge",
+                "createOrEditLabel": "Create or edit a Challenge",
+                "search": "Search for Challenge"
+            },
+            "created": "A new Challenge is created with identifier {{ param }}",
+            "updated": "A Challenge is updated with identifier {{ param }}",
+            "deleted": "A Challenge is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Challenge {{ id }}?"
+            },
+            "detail": {
+                "title": "Challenge"
+            },
+            "name": "Name",
+            "introduction": "Introduction",
+            "challengeText": "Challenge Text",
+            "resourceText": "Resource Text",
+            "rewardsText": "Rewards Text",
+            "timelineText": "Timeline Text",
+            "rulesText": "Rules Text",
+            "bannerUrl": "Banner Url",
+            "additionalText": "Additional Text",
+            "maxTeamNumber": "Max Team Number",
+            "minTeamNumber": "Min Team Number",
+            "info": "Info",
+            "applications": "Applications",
+            "company": "Company"
+        }
+    }
+}

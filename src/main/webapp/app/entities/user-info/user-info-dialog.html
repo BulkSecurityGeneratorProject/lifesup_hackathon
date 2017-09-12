@@ -1,0 +1,92 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myUserInfoLabel" data-translate="hackathonApp.userInfo.home.createOrEditLabel">Create or edit a User Info</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.userInfo.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.userInfo.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.userInfo.introduction" for="field_introduction">Introduction</label>
+            <input type="text" class="form-control" name="introduction" id="field_introduction"
+                    ng-model="vm.userInfo.introduction"
+                    required />
+            <div ng-show="editForm.introduction.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.introduction.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.userInfo.twitterUrl" for="field_twitterUrl">Twitter Url</label>
+            <input type="text" class="form-control" name="twitterUrl" id="field_twitterUrl"
+                    ng-model="vm.userInfo.twitterUrl"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.userInfo.linkedInUrl" for="field_linkedInUrl">Linked In Url</label>
+            <input type="text" class="form-control" name="linkedInUrl" id="field_linkedInUrl"
+                    ng-model="vm.userInfo.linkedInUrl"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.userInfo.websiteUrl" for="field_websiteUrl">Website Url</label>
+            <input type="text" class="form-control" name="websiteUrl" id="field_websiteUrl"
+                    ng-model="vm.userInfo.websiteUrl"
+                     />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.userInfo.skills" for="field_skills">Skills</label>
+            <input type="text" class="form-control" name="skills" id="field_skills"
+                    ng-model="vm.userInfo.skills"
+                    required />
+            <div ng-show="editForm.skills.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.skills.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.userInfo.workArea" for="field_workArea">Work Area</label>
+            <input type="text" class="form-control" name="workArea" id="field_workArea"
+                    ng-model="vm.userInfo.workArea"
+                    required />
+            <div ng-show="editForm.workArea.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.workArea.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.userInfo.feedbackFrom" for="field_feedbackFrom">Feedback From</label>
+            <input type="text" class="form-control" name="feedbackFrom" id="field_feedbackFrom"
+                    ng-model="vm.userInfo.feedbackFrom"
+                    required />
+            <div ng-show="editForm.feedbackFrom.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.feedbackFrom.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

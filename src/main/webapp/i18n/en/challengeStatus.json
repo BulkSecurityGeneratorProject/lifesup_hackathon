@@ -1,0 +1,11 @@
+{
+    "hackathonApp": {
+        "ChallengeStatus" : {
+            "null": "",
+            "DRAFT": "DRAFT",
+            "ACTIVE": "ACTIVE",
+            "INACTIVE": "INACTIVE",
+            "REMOVED": "REMOVED"
+        }
+    }
+}

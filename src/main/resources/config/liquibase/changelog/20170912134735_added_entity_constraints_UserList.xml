@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <!--
+        Added the constraints for entity UserList.
+    -->
+    <changeSet id="20170912134735-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="user_info_id"
+                                 baseTableName="user_list"
+                                 constraintName="fk_user_list_user_info_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_info"/>
+
+        <addForeignKeyConstraint baseColumnNames="company_id"
+                                 baseTableName="user_list"
+                                 constraintName="fk_user_list_company_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="company"/>
+
+        <addForeignKeyConstraint baseColumnNames="user_lists_id"
+                                 baseTableName="user_list_applications"
+                                 constraintName="fk_user_list_applications_user_lists_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_list"/>
+        <addForeignKeyConstraint baseColumnNames="applications_id"
+                                 baseTableName="user_list_applications"
+                                 constraintName="fk_user_list_applications_applications_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="application"/>
+        
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,60 @@
+<div>
+    <h2 data-translate="hackathonApp.challengeUserApplication.home.title">Challenge User Applications</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="challenge-user-application.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="hackathonApp.challengeUserApplication.home.createLabel">
+                        Create new Challenge User Application
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span data-translate="global.field.id">ID</span></th>
+                    <th><span data-translate="hackathonApp.challengeUserApplication.challengeId">Challenge Id</span></th>
+                    <th><span data-translate="hackathonApp.challengeUserApplication.userId">User Id</span></th>
+                    <th><span data-translate="hackathonApp.challengeUserApplication.applicationId">Application Id</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="challengeUserApplication in vm.challengeUserApplications track by challengeUserApplication.id">
+                    <td><a ui-sref="challenge-user-application-detail({id:challengeUserApplication.id})">{{challengeUserApplication.id}}</a></td>
+                    <td>{{challengeUserApplication.challengeId}}</td>
+                    <td>{{challengeUserApplication.userId}}</td>
+                    <td>{{challengeUserApplication.applicationId}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="challenge-user-application-detail({id:challengeUserApplication.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="challenge-user-application.edit({id:challengeUserApplication.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="challenge-user-application.delete({id:challengeUserApplication.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

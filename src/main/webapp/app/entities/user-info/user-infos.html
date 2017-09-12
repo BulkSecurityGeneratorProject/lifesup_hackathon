@@ -1,0 +1,68 @@
+<div>
+    <h2 data-translate="hackathonApp.userInfo.home.title">User Infos</h2>
+    <jhi-alert></jhi-alert>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-4 no-padding-left">
+                <button class="btn btn-primary" ui-sref="user-info.new" >
+                    <span class="glyphicon glyphicon-plus"></span>
+                    <span  data-translate="hackathonApp.userInfo.home.createLabel">
+                        Create new User Info
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="table-responsive">
+        <table class="jh-table table table-striped">
+            <thead>
+                <tr>
+                    <th><span data-translate="global.field.id">ID</span></th>
+                    <th><span data-translate="hackathonApp.userInfo.introduction">Introduction</span></th>
+                    <th><span data-translate="hackathonApp.userInfo.twitterUrl">Twitter Url</span></th>
+                    <th><span data-translate="hackathonApp.userInfo.linkedInUrl">Linked In Url</span></th>
+                    <th><span data-translate="hackathonApp.userInfo.websiteUrl">Website Url</span></th>
+                    <th><span data-translate="hackathonApp.userInfo.skills">Skills</span></th>
+                    <th><span data-translate="hackathonApp.userInfo.workArea">Work Area</span></th>
+                    <th><span data-translate="hackathonApp.userInfo.feedbackFrom">Feedback From</span></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="userInfo in vm.userInfos track by userInfo.id">
+                    <td><a ui-sref="user-info-detail({id:userInfo.id})">{{userInfo.id}}</a></td>
+                    <td>{{userInfo.introduction}}</td>
+                    <td>{{userInfo.twitterUrl}}</td>
+                    <td>{{userInfo.linkedInUrl}}</td>
+                    <td>{{userInfo.websiteUrl}}</td>
+                    <td>{{userInfo.skills}}</td>
+                    <td>{{userInfo.workArea}}</td>
+                    <td>{{userInfo.feedbackFrom}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="user-info-detail({id:userInfo.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm" data-translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="user-info.edit({id:userInfo.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="user-info.delete({id:userInfo.id})"
+                                    class="btn btn-danger btn-sm">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm" data-translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

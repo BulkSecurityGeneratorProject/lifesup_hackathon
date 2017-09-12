@@ -1,0 +1,51 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "introduction",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "twitterUrl",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "linkedInUrl",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "websiteUrl",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "skills",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "workArea",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "feedbackFrom",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        }
+    ],
+    "changelogDate": "20170912134736",
+    "entityTableName": "user_info",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no"
+}

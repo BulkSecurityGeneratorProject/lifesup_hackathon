@@ -1,0 +1,119 @@
+
+enum UserSex {
+	MALE, FEMALE
+}
+
+enum UserStatus {
+	INACTIVATED, ACTIVATED, PROFILE_COMPLETE, REMOVED
+}
+
+entity UserList {
+	id Long,
+    email String required,
+    password String,
+    fullName String required,
+    phone String required,
+    sex UserSex required,
+    companyName String,
+    jobTitle String,
+    logoUrl String,
+    country String required,
+    city String required,
+    nationality String required,
+    birthday ZonedDateTime,
+    status UserStatus
+}
+
+entity UserInfo {
+	id Long,
+    introduction String required,
+    twitterUrl String,
+    linkedInUrl String,
+    websiteUrl String,
+    skills String required,
+    workArea String required,
+    feedbackFrom String required
+}
+
+relationship OneToOne {
+	UserList {userInfo} to UserInfo
+}
+
+entity Company {
+	id Long,
+    name String required,
+    fullAddress String required,
+    phone String required,
+    email String required,
+    website String required
+}
+
+relationship ManyToOne {
+	UserList {company} to Company
+}
+
+entity Challenge {
+	id Long,
+    name String required,
+    introduction String required,
+    challengeText String required,
+    resourceText String required,
+    rewardsText String required,
+    timelineText String required,
+    rulesText String required,
+    bannerUrl String required,
+    additionalText String,
+    maxTeamNumber Integer required,
+    minTeamNumber Integer required
+}
+
+enum ChallengeStatus {
+	DRAFT, ACTIVE, INACTIVE, REMOVED
+}
+
+entity ChallengeInfo {
+	id Long,
+    eventStartTime ZonedDateTime required,
+    eventEndTime ZonedDateTime required,
+    location String required,
+    status ChallengeStatus,
+    prize String required
+}
+
+relationship OneToOne {
+	Challenge {info} to ChallengeInfo
+}
+
+relationship ManyToOne {
+	Challenge {company} to Company
+}
+
+enum ApplicationStatus {
+	DRAFT, WAITING_FOR_APPROVE, APPROVED, REJECTED, CLOSED
+}
+
+entity Application {
+	id Long,
+    teamName String required,
+    companyName String,
+    description String required,
+    motivation String required,
+    ideasDescription String required,
+    status ApplicationStatus
+}
+
+entity ChallengeUserApplication {
+	id Long,
+    challengeId Long,
+    userId Long,
+    applicationId Long
+}
+
+relationship OneToMany {
+	Challenge {applications} to Application {challenge}
+}
+
+relationship ManyToMany {
+	UserList {applications} to Application {users}
+}
+

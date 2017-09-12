@@ -1,0 +1,99 @@
+
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myChallengeInfoLabel" data-translate="hackathonApp.challengeInfo.home.createOrEditLabel">Create or edit a Challenge Info</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group" ng-show="vm.challengeInfo.id">
+            <label for="id" data-translate="global.field.id">ID</label>
+            <input type="text" class="form-control" id="id" name="id"
+                    ng-model="vm.challengeInfo.id" readonly />
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.challengeInfo.eventStartTime" for="field_eventStartTime">Event Start Time</label>
+                <div class="input-group">
+                    <input id="field_eventStartTime" type="text" class="form-control" name="eventStartTime" datetime-picker="{{dateformat}}" ng-model="vm.challengeInfo.eventStartTime" is-open="vm.datePickerOpenStatus.eventStartTime"
+                    required  />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('eventStartTime')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+            <div ng-show="editForm.eventStartTime.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.eventStartTime.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.eventStartTime.$error.ZonedDateTimelocal" data-translate="entity.validation.ZonedDateTimelocal">
+                    This field should be a date and time.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.challengeInfo.eventEndTime" for="field_eventEndTime">Event End Time</label>
+                <div class="input-group">
+                    <input id="field_eventEndTime" type="text" class="form-control" name="eventEndTime" datetime-picker="{{dateformat}}" ng-model="vm.challengeInfo.eventEndTime" is-open="vm.datePickerOpenStatus.eventEndTime"
+                    required  />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="vm.openCalendar('eventEndTime')"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                </div>
+            <div ng-show="editForm.eventEndTime.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.eventEndTime.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+                <p class="help-block"
+                    ng-show="editForm.eventEndTime.$error.ZonedDateTimelocal" data-translate="entity.validation.ZonedDateTimelocal">
+                    This field should be a date and time.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.challengeInfo.location" for="field_location">Location</label>
+            <input type="text" class="form-control" name="location" id="field_location"
+                    ng-model="vm.challengeInfo.location"
+                    required />
+            <div ng-show="editForm.location.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.location.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.challengeInfo.status" for="field_status">Status</label>
+            <select class="form-control" name="status" ng-model="vm.challengeInfo.status" id="field_status">
+                <option value="DRAFT" data-translate="hackathonApp.ChallengeStatus.DRAFT">DRAFT</option>
+                <option value="ACTIVE" data-translate="hackathonApp.ChallengeStatus.ACTIVE">ACTIVE</option>
+                <option value="INACTIVE" data-translate="hackathonApp.ChallengeStatus.INACTIVE">INACTIVE</option>
+                <option value="REMOVED" data-translate="hackathonApp.ChallengeStatus.REMOVED">REMOVED</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" data-translate="hackathonApp.challengeInfo.prize" for="field_prize">Prize</label>
+            <input type="text" class="form-control" name="prize" id="field_prize"
+                    ng-model="vm.challengeInfo.prize"
+                    required />
+            <div ng-show="editForm.prize.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.prize.$error.required" data-translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

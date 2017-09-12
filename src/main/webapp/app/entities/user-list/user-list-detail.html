@@ -1,0 +1,85 @@
+
+<div>
+    <h2><span data-translate="hackathonApp.userList.detail.title">User List</span> {{vm.userList.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="hackathonApp.userList.email">Email</span></dt>
+        <dd>
+            <span>{{vm.userList.email}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.userList.password">Password</span></dt>
+        <dd>
+            <span>{{vm.userList.password}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.userList.fullName">Full Name</span></dt>
+        <dd>
+            <span>{{vm.userList.fullName}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.userList.phone">Phone</span></dt>
+        <dd>
+            <span>{{vm.userList.phone}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.userList.sex">Sex</span></dt>
+        <dd>
+            <span data-translate="{{'hackathonApp.UserSex.' + vm.userList.sex}}">{{vm.userList.sex}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.userList.companyName">Company Name</span></dt>
+        <dd>
+            <span>{{vm.userList.companyName}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.userList.jobTitle">Job Title</span></dt>
+        <dd>
+            <span>{{vm.userList.jobTitle}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.userList.logoUrl">Logo Url</span></dt>
+        <dd>
+            <span>{{vm.userList.logoUrl}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.userList.country">Country</span></dt>
+        <dd>
+            <span>{{vm.userList.country}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.userList.city">City</span></dt>
+        <dd>
+            <span>{{vm.userList.city}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.userList.nationality">Nationality</span></dt>
+        <dd>
+            <span>{{vm.userList.nationality}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.userList.birthday">Birthday</span></dt>
+        <dd>
+            <span>{{vm.userList.birthday | date:'medium'}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.userList.status">Status</span></dt>
+        <dd>
+            <span data-translate="{{'hackathonApp.UserStatus.' + vm.userList.status}}">{{vm.userList.status}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.userList.userInfo">User Info</span></dt>
+        <dd>
+            <a ui-sref="user-info-detail({id:vm.userList.userInfo.id})">{{vm.userList.userInfo.id}}</a>
+        </dd>
+        <dt><span data-translate="hackathonApp.userList.company">Company</span></dt>
+        <dd>
+            <a ui-sref="company-detail({id:vm.userList.company.id})">{{vm.userList.company.id}}</a>
+        </dd>
+        <dt><span data-translate="hackathonApp.userList.applications">Applications</span></dt>
+        <dd>
+            <span ng-repeat="applications in vm.userList.applications">
+                <a ui-sref="application-detail({id: applications.id})">{{applications.id}}</a>{{$last ? '' : ', '}}
+            </span>
+        </dd>
+    </dl>
+
+    <button type="submit"
+            ui-sref="{{ vm.previousState }}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+    </button>
+
+    <button type="button" ui-sref="user-list-detail.edit({id:vm.userList.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"> Edit</span>
+    </button>
+</div>
