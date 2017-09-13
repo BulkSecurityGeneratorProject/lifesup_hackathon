@@ -1,0 +1,36 @@
+/*Login and signup view*/
+
+body {
+  background: #f8f9fa;
+}
+
+.wrapper {
+  width: 90%;
+  margin: auto;
+}
+
+.container {
+  background: #fefefe;
+  border-radius: 5px;
+  padding: 3em;
+}
+
+.signup-form-wrapper, 
+.login-form-wrapper {
+  width: 100%;
+}
+
+.signup-form-wrapper {
+  margin-right: 2em;
+}
+
+.login-form-wrapper {
+  margin-left: 2em;
+}
+
+#signup-form, 
+#login-form {
+  padding: 1em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
