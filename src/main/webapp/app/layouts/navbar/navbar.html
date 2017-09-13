@@ -94,6 +94,12 @@
                                 <span data-translate="global.menu.account.settings">Settings</span>
                             </a>
                         </li>
+                        <li ui-sref-active="active" >
+                            <a ui-sref="login-signup" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span data-translate="">Login and Signup</span>
+                            </a>
+                        </li>
                         <li ui-sref-active="active" ng-switch-when="true">
                             <a ui-sref="password" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-lock"></span>&nbsp;

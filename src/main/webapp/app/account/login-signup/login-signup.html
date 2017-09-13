@@ -1,30 +1,14 @@
 
-<div class="wrapper">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light d-flex p-0">
-    <a class="navbar-brand" href="#">Lifesup Hackathon</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse navbar-right" id="navbarSupportedContent">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="/login">Login</a>
-        </li>
-      </ul>
-    </div>
-  </nav>
-
-  <section class="container mt-5">
+  <section class="login-signup-wrapper">
     <div class="login-header">
       <h1>Login or sign up</h1>
       <p>Welcome to Lifesup Hackathon!</p>
       <hr>
     </div>
-    <div class="form-wrapper d-flex between">
-      <div class="signup-form-wrapper">
+    <div id="form-wrapper" class="row">
+      <div class="signup-form-wrapper col-md-6 col-lg-6">
         <form name="signup-form" role="form" id='signup-form'>
-          <div class="mb-5">
+          <div class="form-heading">
             <h3>Start by creating your account</h3>
           </div>
           <div class="form-group">
@@ -32,12 +16,12 @@
             <input type="text" class="form-control" id="fullName" placeholder="Full Name">
           </div>
           <div class="form-group">
-            <label for="email">Email*</label>
-            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+            <label for="signup-email">Email*</label>
+            <input type="email" class="form-control" id="signup-email" placeholder="Enter email">
           </div>
           <div class="form-group">
-            <label for="password">Password*</label>
-            <input type="password" class="form-control" id="password" placeholder="Password">
+            <label for="signup-password">Password*</label>
+            <input type="password" class="form-control" id="signup-password" placeholder="Password">
           </div>
           <div class="form-group">
             <label for="password-again">Password again*</label>
@@ -49,21 +33,20 @@
           <button type="submit" class="btn btn-success btn-block">Create account</button>
         </form>
       </div>
-      <div class="login-form-wrapper ml-auto">
+      <div class="login-form-wrapper ml-auto col-md-6 col-lg-6">
         <form name="login-form" role="form" id='login-form' >
-          <div class="mb-5">
+          <div class="form-heading">
             <h3>Login with existing account</h3>
           </div>
           <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            <label for="login-email">Email</label>
+            <input type="email" class="form-control" id="login-email" placeholder="Enter email">
           </div>
           <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <label for="login-password">Password</label>
+            <input type="password" class="form-control" id="login-password" placeholder="Password">
           </div>
-          <div class="float-right">
+          <div class="forgot-password">
             <a href="#">Forgot password?</a>
           </div>
           <button type="submit" class="btn btn-primary btn-block">Submit</button>
@@ -71,4 +54,4 @@
       </div>
     </div>
   </section>
-</div>
+

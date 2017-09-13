@@ -1,36 +1,25 @@
 /*Login and signup view*/
 
-body {
-  background: #f8f9fa;
-}
-
-.wrapper {
-  width: 90%;
-  margin: auto;
-}
-
-.container {
-  background: #fefefe;
+.login-signup-wrapper {
+  width: 100%;
   border-radius: 5px;
   padding: 3em;
-}
-
-.signup-form-wrapper, 
-.login-form-wrapper {
-  width: 100%;
-}
-
-.signup-form-wrapper {
-  margin-right: 2em;
-}
-
-.login-form-wrapper {
-  margin-left: 2em;
+  background: #fefefe;
 }
 
 #signup-form, 
 #login-form {
+  margin-top: 1em;
   padding: 1em;
   border: 1px solid #ccc;
   border-radius: 5px;
+}
+
+.form-heading {
+  margin-bottom: 2em;
+}
+
+.forgot-password {
+  float: right;
+  margin-bottom: 1em;
 }
