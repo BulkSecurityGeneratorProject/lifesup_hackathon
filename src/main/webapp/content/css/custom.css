@@ -1,5 +1,5 @@
 html, body {
-  height: 100%;
+  min-height: 100vh;
   margin: 0;
 }
 
@@ -8,7 +8,7 @@ html, body {
 .login-signup-wrapper {
   width: 100%;
   border-radius: 5px;
-  padding: 3em;
+  padding: 5em 3em;
   background: #fefefe;
 }
 
@@ -34,6 +34,8 @@ html, body {
   background-color: #fefefe;
   box-shadow: 0 2px 2px #ccc;
   font-size: 17px; 
+  font-weight: bold;
+  width: 100%;
 }
 .dropdown-menu {
   padding: 0;
@@ -57,19 +59,21 @@ html, body {
   background: #fefefe;
   box-shadow: 0 -2px 2px #ccc;
   width: 100%;
-  position: relative;
+  max-height: 65px;
+  position: fixed;
   bottom: 0;
-  height: 55px;
+  padding: 10px 0px;
+  margin-top: -100px;
 }
 
 #copyright {
   float: right;
   position: relative;
-  top: 20px;
+  top: 8px;
 }
 
 #logo-footer {
   position: relative;
   width: 100px;
-  top: 10px;
+  top: 3px;
 }
