@@ -1,85 +1,181 @@
-<div>
-    <div class="row">
-        <div class="col-md-8 col-md-offset-2">
-            <h2 data-translate="settings.title" translate-values="{username: '{{vm.settingsAccount.login}}'}">User settings for [<b>{{vm.settingsAccount.login}}</b>]</h2>
+<div class="row" ng-cloak>
 
-            <div class="alert alert-success" ng-show="vm.success" data-translate="settings.messages.success">
-                <strong>Settings saved!</strong>
-            </div>
+    <div class="col-md-3 col-sm-12 col-xs-12 text-center">
+        <img src='content/images/avatar.jpg' class="img img-responsive" style="border-radius:50%">
+        <md-input-container class="md-block" flex-gt-xs>
+            <md-button class="md-raised md-primary" ngf-select="vm.upload($file)">Change</md-button>
+        </md-input-container>
+    </div>
+    <div class="col-md-9 col-sm-12 col-xs-12">
+        <jhi-alert-error></jhi-alert-error>
+        <jhi-alert></jhi-alert>
+        <div layout="column" ng-cloak>
+            <md-content layout-padding>
+                <form name="userForm">
+                    <div layout-gt-xs="row">
 
-           <jhi-alert-error></jhi-alert-error>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label data-translate="settings.form.fullname">Name</label>
+                            <input name="name" ng-model="vm.user.fullName" required>
+                            <div ng-messages="userForm.name.$error" role="alert">
+                                <div ng-message="required" data-translate="settings.messages.validate.fullname.required"></div>
+                            </div>
+                        </md-input-container>
 
-            <form name="form" role="form" novalidate ng-submit="vm.save()" show-validation>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label data-translate="settings.form.birthday"></label>
+                            <md-datepicker name="birthday" ng-model="vm.user.birthday" md-hide-icons="calendar" required></md-datepicker>
 
-                <div class="form-group">
-                    <label class="control-label" for="firstName" data-translate="settings.form.firstname">First Name</label>
-                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="{{'settings.form.firstname.placeholder' | translate}}"
-                           ng-model="vm.settingsAccount.firstName" ng-minlength=1 ng-maxlength=50 required maxlength="50">
-                    <div ng-show="form.firstName.$dirty && form.firstName.$invalid">
-                        <p class="help-block"
-                               ng-show="form.firstName.$error.required" data-translate="settings.messages.validate.firstname.required">
-                            Your first name is required.
-                        </p>
-                        <p class="help-block"
-                               ng-show="form.firstName.$error.minlength" data-translate="settings.messages.validate.firstname.minlength">
-                            Your first name is required to be at least 1 character.
-                        </p>
-                        <p class="help-block"
-                               ng-show="form.firstName.$error.maxlength" data-translate="settings.messages.validate.firstname.maxlength">
-                            Your first name cannot be longer than 50 characters.
-                        </p>
+                            <div ng-messages="userForm.birthday.$error">
+                                <div ng-message="required" data-translate="settings.messages.validate.birthday.required"></div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label data-translate="settings.form.gender">Gender</label>
+                            <md-select name="gender" ng-model="vm.user.sex" required>
+                                <md-option ng-repeat="sex in vm.sexes" value="{{sex}}">
+                                    {{sex}}
+                                </md-option>
+                            </md-select>
+                            <div ng-messages="userForm.gender.$error">
+                                <div ng-message="required" data-translate="settings.messages.validate.gender.required"></div>
+                            </div>
+                        </md-input-container>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="lastName" data-translate="settings.form.lastname">Last Name</label>
-                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="{{'settings.form.lastname.placeholder' | translate}}"
-                           ng-model="vm.settingsAccount.lastName" ng-minlength=1 ng-maxlength=50 required maxlength="50">
-                    <div ng-show="form.lastName.$dirty && form.lastName.$invalid">
-                        <p class="help-block"
-                               ng-show="form.lastName.$error.required" data-translate="settings.messages.validate.lastname.required">
-                            Your last name is required.
-                        </p>
-                        <p class="help-block"
-                               ng-show="form.lastName.$error.minlength" data-translate="settings.messages.validate.lastname.minlength">
-                            Your last name is required to be at least 1 character.
-                        </p>
-                        <p class="help-block"
-                               ng-show="form.lastName.$error.maxlength" data-translate="settings.messages.validate.lastname.maxlength">
-                            Your last name cannot be longer than 50 characters.
-                        </p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="control-label" for="email" data-translate="global.form.email">E-mail</label>
-                    <input type="email" class="form-control" id="email" name="email" placeholder="{{'global.form.email.placeholder' | translate}}"
-                           ng-model="vm.settingsAccount.email" ng-minlength=5 ng-maxlength=100 required maxlength="100">
-                    <div ng-show="form.email.$dirty && form.email.$invalid">
-                        <p class="help-block"
-                               ng-show="form.email.$error.required" data-translate="global.messages.validate.email.required">
-                            Your e-mail is required.
-                        </p>
-                        <p class="help-block"
-                               ng-show="form.email.$error.email" data-translate="global.messages.validate.email.invalid">
-                            Your e-mail is invalid.
-                        </p>
-                        <p class="help-block"
-                               ng-show="form.email.$error.minlength" data-translate="global.messages.validate.email.minlength">
-                            Your e-mail is required to be at least 5 characters.
-                        </p>
-                        <p class="help-block"
-                               ng-show="form.email.$error.maxlength" data-translate="global.messages.validate.email.maxlength">
-                            Your e-mail cannot be longer than 100 characters.
-                        </p>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="langKey" data-translate="settings.form.language">Language</label>
-                    <select id="langKey" name="langKey" class="form-control" ng-model="vm.settingsAccount.langKey" ng-controller="JhiLanguageController as languageVm" ng-options="code as (code | findLanguageFromKey) for code in languageVm.languages"></select>
-                </div>
 
-                <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary" data-translate="settings.form.button">Save</button>
-            </form>
+                    <div layout-gt-xs="row">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label data-translate="settings.form.company">Company</label>
+                            <input name="company" ng-model="vm.user.company">
+                        </md-input-container>
+
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label data-translate="settings.form.jobtitle">Job Title</label>
+                            <input name="title" ng-model="vm.user.jobTitle">
+                        </md-input-container>
+                    </div>
+
+                    <div layout-gt-xs="row">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label data-translate="settings.form.phone">Phone Number</label>
+                            <input name="phone" ng-model="vm.user.phone" required/>
+                            <div ng-messages="userForm.phone.$error">
+                                <div ng-message="required" data-translate="settings.messages.validate.phone.required"></div>
+                            </div>
+                        </md-input-container>
+
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label data-translate="settings.form.email">Email</label>
+                            <input required type="email" name="email" ng-model="vm.user.email" minlength="10" maxlength="100" ng-pattern="/^.+@.+\..+$/"
+                            />
+                            <div ng-messages="userForm.email.$error" role="alert">
+                                <div ng-message="required" data-translate="settings.messages.validate.email.required"></div>
+                                <div ng-message-exp="['minlength', 'maxlength', 'pattern']" data-translate="settings.messages.validate.email.pattern"></div>
+                            </div>
+                        </md-input-container>
+                    </div>
+
+                    <div layout-gt-xs="row">
+
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label data-translate="settings.form.country">Country</label>
+                            <md-select name="country" ng-model="vm.user.country" required>
+                                <md-option ng-repeat="country in vm.countries" ng-value="country">
+                                    {{country}}
+                                </md-option>
+                            </md-select>
+                            <div ng-messages="userForm.country.$error">
+                                <div ng-message="required" data-translate="settings.messages.validate.country.required"></div>
+                            </div>
+                        </md-input-container>
+
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label data-translate="settings.form.city">City</label>
+                            <input name="city" ng-model="vm.user.city">
+                        </md-input-container>
+
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label data-translate="settings.form.nationality">Nationality</label>
+                            <md-select name="nationality" ng-model="vm.user.nationality" required>
+                                <md-option ng-repeat="nationality in vm.nationalities" ng-value="nationality">
+                                    {{nationality}}
+                                </md-option>
+                            </md-select>
+                            <div ng-messages="userForm.nationality.$error">
+                                <div ng-message="required" data-translate="settings.messages.validate.nationality.required"></div>
+                            </div>
+                        </md-input-container>
+                    </div>
+
+                    <div layout-gt-sm="row">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Introduction</label>
+                            <textarea name="introduction" ng-model="vm.user.introduction" md-maxlength="250" rows="5" md-select-on-focus required></textarea>
+                            <div ng-messages="userForm.introduction.$error">
+                                <div ng-message="required" data-translate="settings.messages.validate.introduction.required"></div>
+                            </div>
+                        </md-input-container>
+                    </div>
+
+                    <div layout-gt-xs="row">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label data-translate="settings.form.twitter">Twitter</label>
+                            <input name="twitter" ng-model="vm.user.twitter">
+                        </md-input-container>
+
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label data-translate="settings.form.linkedin">LinkedIn</label>
+                            <input name="linkedin" ng-model="vm.user.linkedin">
+                        </md-input-container>
+
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label data-translate="settings.form.website">Website</label>
+                            <input name="website" ng-model="vm.user.website">
+                        </md-input-container>
+                    </div>
+
+                    <div layout-gt-xs="row">
+
+                        <div layout-gt-xs="column" flex>
+                            <label data-translate="settings.form.skills">Skills</label>
+                            <md-checkbox name="skills" ng-repeat="skill in vm.skills" ng-checked="vm.exists(skill, vm.selectedSkills)" ng-click="vm.toggle(skill, vm.selectedSkills)">
+                                {{ skill }}
+                            </md-checkbox>
+                        </div>
+
+                        <div layout-gt-xs="column" flex>
+                            <label data-translate="settings.form.workAreas">Work Areas</label>
+                            <div ng-repeat="workArea in vm.workAreas">
+                                <md-checkbox ng-checked="vm.exists(workArea, vm.selectedWorkAreas)" ng-click="vm.toggle(workArea, vm.selectedWorkAreas)">
+                                    {{ workArea }}
+                                </md-checkbox>
+                            </div>
+                        </div>
+
+                        <div layout-gt-xs="column" flex>
+                            <label data-translate="settings.form.feedBackFrom">Reference from:</label>
+                            <md-radio-group ng-model="vm.user.referenceFrom" ng-change="vm.print()">
+                                <md-radio-button value="friend">Friend</md-radio-button>
+                                <md-radio-button value="social">Social Media</md-radio-button>
+                                <md-radio-button value="company">A Company</md-radio-button>
+                                <md-radio-button value="">Something Else...</md-radio-button>
+                            </md-radio-group>
+                            <md-input-container ng-show="vm.user.referenceFrom == ''" class="md-block" flex-gt-sm>
+                                <label data-translate="settings.form.other">Other...</label>
+                                <input name="other" ng-model="vm.other">
+                            </md-input-container>
+                        </div>
+                    </div>
+                </form>
+            </md-content>
         </div>
     </div>
+</div>
 
+<div class="row" ng-cloak>
+    <div class="text-center">
+        <md-button class="md-raised md-primary" ng-click="vm.save()" ng-disabled="userForm.$invalid">Save</md-button>
+    </div>
+    <br>
+    <br>
 </div>

@@ -2,12 +2,24 @@
     "settings": {
         "title": "User settings for [<b>{{username}}</b>]",
         "form": {
-            "firstname": "First Name",
-            "firstname.placeholder": "Your first name",
-            "lastname": "Last Name",
-            "lastname.placeholder": "Your last name",
-            "language": "Language",
-            "button": "Save"
+            "fullname": "Full Name",
+            "gender": "Gender",
+            "birthday": "Birthday",
+            "company": "Company",
+            "jobtitle": "Job Title",
+            "phone": "Phone Number",
+            "email": "Email",
+            "country": "Country",
+            "city": "City",
+            "nationality": "Nationality",
+            "introduction": "Introduction",
+            "twitter": "Twitter URL",
+            "linkedin": "LinkedIn URL",
+            "website": "Website URL",
+            "skills": "Choose your skills",
+            "workAreas": "Choose your work area",
+            "feedBackFrom": "Reference from:",
+            "other": "Other..."
         },
         "messages": {
             "error": {
@@ -16,15 +28,35 @@
             },
             "success": "<strong>Settings saved!</strong>",
             "validate": {
-                "firstname": {
-                    "required": "Your first name is required.",
-                    "minlength": "Your first name is required to be at least 1 character",
-                    "maxlength": "Your first name cannot be longer than 50 characters"
+                "fullname": {
+                    "required": "Your name is required.",
+                    "minlength": "Your name is required to be at least 5 character",
+                    "maxlength": "Your name cannot be longer than 50 characters"
                 },
-                "lastname": {
-                    "required": "Your last name is required.",
-                    "minlength": "Your last name is required to be at least 1 character",
-                    "maxlength": "Your last name cannot be longer than 50 characters"
+                "gender": {
+                    "required": "Your gender is required."
+                },
+                "birthday": {
+                    "required": "Your birthday is required."
+                },
+                "country": {
+                    "required": "Please fill out your country."
+                },
+                "nationality": {
+                    "required": "Your nationality is required."
+                },
+                "introduction": {
+                    "required": "Please tell us something about you!"
+                },
+                "skills": {
+                    "required": "Please check your skills!"
+                },
+                "phone": {
+                    "required": "Your phone number is required."
+                },
+                "email": {
+                    "pattern": "Your email must be between 10 and 100 characters long and look like an e-mail address.",
+                    "required": "Your email is required."
                 }
             }
         }
