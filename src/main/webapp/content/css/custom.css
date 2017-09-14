@@ -1,4 +1,9 @@
-/*Login and signup view*/
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+/*============ Login and signup view ==============*/
 
 .login-signup-wrapper {
   width: 100%;
@@ -22,4 +27,49 @@
 .forgot-password {
   float: right;
   margin-bottom: 1em;
+}
+
+/*============= navbar ==============*/
+.navbar {
+  background-color: #fefefe;
+  box-shadow: 0 2px 2px #ccc;
+  font-size: 17px; 
+}
+.dropdown-menu {
+  padding: 0;
+}
+.dropdown-item {
+  text-align: center;
+  text-decoration: none;
+  color: #777;
+  display: block;
+  padding: 15px;
+}
+.dropdown-item:hover{
+  background-color: #eee;
+  text-decoration: none;
+}
+
+
+
+/*============= navbar ==============*/
+.footer {
+  background: #fefefe;
+  box-shadow: 0 -2px 2px #ccc;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+  height: 55px;
+}
+
+#copyright {
+  float: right;
+  position: relative;
+  top: 20px;
+}
+
+#logo-footer {
+  position: relative;
+  width: 100px;
+  top: 10px;
 }
