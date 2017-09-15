@@ -40,7 +40,7 @@
                     "required": "Your birthday is required."
                 },
                 "country": {
-                    "required": "Please fill out your country."
+                    "required": "Please select your country."
                 },
                 "nationality": {
                     "required": "Your nationality is required."

@@ -1,0 +1,34 @@
+
+.main-content {
+    padding: 20px;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+}
+
+h2{
+    margin-top:  5px;
+    font-weight: 700;
+    font-size: 4.5rem;
+}
+
+/* Overide angular material */
+
+.md-datepicker-input-container{
+    width: 100% !important;
+}
+
+.md-card>:not(md-card-content) img, md-card>img {
+    height: 180px !important;
+    object-fit: cover;
+}
+md-card md-card-title{
+    padding: 16px 16px 16px;
+    background-color: #d0f7ab;
+    text-align: center;
+}
+
+.md-headline{
+    font-size: 20px;
+}
+
+/* Additional */

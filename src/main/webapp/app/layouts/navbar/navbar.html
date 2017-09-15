@@ -24,7 +24,7 @@
                 </li>
                  <!-- Manage Challenge (need to change ui-sref to link to challenges list view for admin/manager)-->
                 <li ng-class="{active: vm.$state.includes('admin')}"  ng-switch-when="true" has-authority="ROLE_ADMIN" uib-dropdown class="dropdown pointer nav-item">
-                    <a ui-sref="home" ng-click="vm.collapseNavbar()" id="admin-menu">
+                    <a ui-sref="challenge" ng-click="vm.collapseNavbar()" id="admin-menu">
                         <span class="glyphicon glyphicon-cog"></span>&nbsp;
                         <span class="hidden-sm">Manage challenges</span>
                     </a>
