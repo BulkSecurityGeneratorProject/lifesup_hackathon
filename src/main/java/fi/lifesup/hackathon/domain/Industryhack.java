@@ -1,21 +1,18 @@
 package fi.lifesup.hackathon.domain;
 
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 
-/**
- * A Company.
- */
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 @Entity
-@Table(name = "experience")
-public class Experience implements Serializable {
+@Table(name = "skill")
+public class Industryhack {
 
 	private static final long serialVersionUID = 1L;
 
@@ -26,10 +23,6 @@ public class Experience implements Serializable {
 	@NotNull
 	@Column(name = "name", nullable = false)
 	private String name;
-	
-	@ManyToMany(mappedBy = "experiences")
-    @JsonIgnore
-    private Set<UserList> users = new HashSet<>();
 
 	@Override
 	public boolean equals(Object o) {
@@ -39,11 +32,11 @@ public class Experience implements Serializable {
 		if (o == null || getClass() != o.getClass()) {
 			return false;
 		}
-		Experience Experience = (Experience) o;
-		if (Experience.id == null || id == null) {
+		Industryhack industryhack = (Industryhack) o;
+		if (industryhack.id == null || id == null) {
 			return false;
 		}
-		return Objects.equals(id, Experience.id);
+		return Objects.equals(id, industryhack.id);
 	}
 
 	@Override
@@ -53,7 +46,7 @@ public class Experience implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Company{" + "id=" + id + ", name='" + name + "'" + '}';
+		return "Industryhack{" + "id=" + id + ", name='" + name + "'" + '}';
 	}
 
 	public Long getId() {

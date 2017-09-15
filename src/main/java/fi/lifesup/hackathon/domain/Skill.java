@@ -2,11 +2,16 @@ package fi.lifesup.hackathon.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
- * A Company.
+ * A Skill.
  */
 @Entity
 @Table(name = "skill")
@@ -21,6 +26,18 @@ public class Skill implements Serializable {
 	@NotNull
 	@Column(name = "name", nullable = false)
 	private String name;
+	
+	@ManyToMany(mappedBy = "skills")
+    @JsonIgnore
+    private Set<UserList> users = new HashSet<>();
+
+	public Set<UserList> getUsers() {
+		return users;
+	}
+
+	public void setUsers(Set<UserList> users) {
+		this.users = users;
+	}
 
 	@Override
 	public boolean equals(Object o) {

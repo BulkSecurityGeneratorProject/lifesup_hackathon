@@ -41,10 +41,21 @@ public class ChallengeInfo implements Serializable {
     @NotNull
     @Column(name = "prize", nullable = false)
     private String prize;
+    
+    @Column(name = "apply_end_time", nullable = false)
+    private ZonedDateTime applyEndTime;
+    
+    @Column(name = "apply_start_time", nullable = false)
+    private ZonedDateTime applyStartTime;
+    
+    @Column(name = "active_time")
+    private ZonedDateTime activeTime;
 
     public Long getId() {
         return id;
     }
+    
+   
 
     public void setId(Long id) {
         this.id = id;
@@ -59,7 +70,43 @@ public class ChallengeInfo implements Serializable {
         return this;
     }
 
-    public void setEventStartTime(ZonedDateTime eventStartTime) {
+    public ZonedDateTime getApplyEndTime() {
+		return applyEndTime;
+	}
+
+
+
+	public void setApplyEndTime(ZonedDateTime applyEndTime) {
+		this.applyEndTime = applyEndTime;
+	}
+
+
+
+	public ZonedDateTime getApplyStartTime() {
+		return applyStartTime;
+	}
+
+
+
+	public void setApplyStartTime(ZonedDateTime applyStartTime) {
+		this.applyStartTime = applyStartTime;
+	}
+
+
+
+	public ZonedDateTime getActiveTime() {
+		return activeTime;
+	}
+
+
+
+	public void setActiveTime(ZonedDateTime activeTime) {
+		this.activeTime = activeTime;
+	}
+
+
+
+	public void setEventStartTime(ZonedDateTime eventStartTime) {
         this.eventStartTime = eventStartTime;
     }
 
