@@ -3,11 +3,11 @@
 
     angular
         .module('hackathonApp')
-        .controller('ChallengeDeleteController',ChallengeDeleteController);
+        .controller('ChallengeDeleteController',ChallengeDeleteController)
 
-    ChallengeDeleteController.$inject = ['$uibModalInstance', 'entity', 'Challenge'];
+    ChallengeDeleteController.$inject = ['$scope', '$state', 'entity', 'Challenge', '$mdDialog'];
 
-    function ChallengeDeleteController($uibModalInstance, entity, Challenge) {
+    function ChallengeDeleteController($scope, $state, entity, Challenge, $mdDialog) {
         var vm = this;
 
         vm.challenge = entity;
@@ -15,13 +15,13 @@
         vm.confirmDelete = confirmDelete;
         
         function clear () {
-            $uibModalInstance.dismiss('cancel');
+            $mdDialog.cancel();
         }
 
         function confirmDelete (id) {
             Challenge.delete({id: id},
                 function () {
-                    $uibModalInstance.close(true);
+                    $mdDialog.hide(id);
                 });
         }
     }

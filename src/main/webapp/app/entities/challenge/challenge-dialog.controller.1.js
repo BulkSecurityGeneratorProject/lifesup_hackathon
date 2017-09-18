@@ -15,13 +15,14 @@
 
         vm.clear = clear;
         vm.save = save;
-        vm.applications = Application.query();
-        vm.companies = Company.query();
-
+        vm.infos = ChallengeInfo.query({ filter: 'challenge-is-null' });
+        vm.infoCreated = false;
+        
         load();
 
         function load() {
             if (vm.challenge.id == null) {
+                vm.infoCreated = false;
                 vm.challengeInfo = {
                     activeTime: null,
                     eventStartTime: null,
@@ -33,50 +34,50 @@
                     prize: null,
                     id: null
                 };
-                console.log("We're going to create a challenge");
             }
             else {
+                vm.infoCreated = true;
                 vm.challengeInfo = vm.challenge.info;
-                console.log("We're going to update a challenge");
             }
         }
 
+        $q.all([vm.challenge.$promise, vm.infos.$promise]).then(function () {
+            if (!vm.challenge.info || !vm.challenge.info.id) {
+                return $q.reject();
+            }
+            return ChallengeInfo.get({ id: vm.challenge.info.id }).$promise;
+        }).then(function (info) {
+            vm.infos.push(info);
+        });
+        vm.applications = Application.query();
+        vm.companies = Company.query();
+
+        $timeout(function () {
+            angular.element('.form-group:eq(1)>input').focus();
+        });
+
         function clear() {
+            vm.infoCreated = false;
             $mdDialog.cancel('cancel');
         }
 
         function save() {
             vm.isSaving = true;
-            if (vm.challengeInfo.id !== null) {
-                ChallengeInfo.update(vm.challengeInfo, onSaveInfoSuccess, onSaveInfoError);
+            if (vm.challenge.id !== null) {
+                Challenge.update(vm.challenge, onSaveSuccess, onSaveError);
             } else {
-                ChallengeInfo.save(vm.challengeInfo, onSaveInfoSuccess, onSaveInfoError);
+                Challenge.save(vm.challenge, onSaveSuccess, onSaveError);
             }
         }
 
-        function onSaveInfoSuccess(result) {
-            $scope.$emit('hackathonApp:challengeUpdate', result);
-            if (vm.challenge.id !== null) {
-                Challenge.update(vm.challenge, onSaveSuccess, onSaveError);
-            }
-            else {
-                // vm.challenge.info = ChallengeInfo.get({ id: result.id });
-                Challenge.save(vm.challenge, onSaveSuccess, onSaveError);
-            }
-            // vm.isSaving = false;
-        }
         function onSaveSuccess(result) {
             $scope.$emit('hackathonApp:challengeUpdate', result);
             $mdDialog.hide(result);
             vm.isSaving = false;
         }
 
-        function onSaveInfoError() {
-
-        }
-
         function onSaveError() {
-            // vm.isSaving = false;
+            vm.isSaving = false;
         }
 
 

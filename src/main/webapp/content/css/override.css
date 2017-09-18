@@ -13,7 +13,7 @@ h2{
 
 /* Overide angular material */
 
-.md-datepicker-input-container{
+#birthday .md-datepicker-input-container{
     width: 100% !important;
 }
 
@@ -21,10 +21,17 @@ h2{
     height: 180px !important;
     object-fit: cover;
 }
+
 md-card md-card-title{
     padding: 16px 16px 16px;
     background-color: #d0f7ab;
     text-align: center;
+    overflow: hidden;
+}
+
+.md-tab {
+    text-transform: none;
+    text-overflow: initial;
 }
 
 .md-headline{
@@ -32,3 +39,23 @@ md-card md-card-title{
 }
 
 /* Additional */
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.8);*/ 
+    -webkit-border-radius: 10px;
+    background-color:transparent;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background:#CAC8C8; 
+    /* -webkit-box-shadow: inset 0 0 6px rgba(190, 179, 179, 0.5);  */
+}
+

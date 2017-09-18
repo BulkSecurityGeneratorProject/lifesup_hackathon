@@ -1,8 +1,8 @@
 {
     "hackathonApp": {
-        "challenge" : {
+        "challenge": {
             "home": {
-                "title": "Challenges",
+                "title": "Challenges Management",
                 "createLabel": "Create a new Challenge",
                 "createOrEditLabel": "Create or edit a Challenge",
                 "search": "Search for Challenge"
@@ -23,13 +23,91 @@
             "rewardsText": "Rewards Text",
             "timelineText": "Timeline Text",
             "rulesText": "Rules Text",
-            "bannerUrl": "Banner Url",
+            "bannerUrl": "Banner URL",
             "additionalText": "Additional Text",
             "maxTeamNumber": "Max Team Number",
             "minTeamNumber": "Min Team Number",
             "info": "Info",
             "applications": "Applications",
             "company": "Company"
+        },
+        "challengeInfo": {
+            "eventStartTime": "Event Start",
+            "eventEndTime": "Event End",
+            "applyStartTime": "Apply Start",
+            "applyEndTime": "Apply End",
+            "activeTime": "Active Time",
+            "prize": "Prize",
+            "location": "Location",
+            "status": {
+                "draft": "Draft",
+                "active": "Active",
+                "inactive": "Inactive"
+            }
+        },
+        "messages": {
+            "empty": "Haven't got any challenges? ",
+            "create": "<strong>Create one!</strong>",
+            "error": {
+                "fail": "<strong>An error has occurred!</strong> Settings could not be saved.",
+                "emailexists": "<strong>E-mail is already in use!</strong> Please choose another one."
+            },
+            "success": "<strong>Settings saved!</strong>",
+            "validate": {
+                "name": {
+                    "required": "Challenge name is required.",
+                    "minlength": "Challenge name is required to be at least 5 character",
+                    "maxlength": "Challenge name cannot be longer than 50 characters"
+                },
+                "challengeText": {
+                    "required": "Challenge text is required."
+                },
+                "resourceText": {
+                    "required": "Resource text is required."
+                },
+                "rewardsText": {
+                    "required": "Rewards text is required."
+                },
+                "timelineText": {
+                    "required": "Timeline text is required."
+                },
+                "rulesText": {
+                    "required": "Rules text is required."
+                },
+                "bannerUrl": {
+                    "required": "Banner url is required."
+                },
+                "maxTeamNumber": {
+                    "required": "Max team members is required."
+                },
+                "minTeamNumber": {
+                    "required": "Min team members is required."
+                },
+                "eventStartTime": {
+                    "required": "Event start time is required."
+                },
+                "eventEndTime": {
+                    "required": "Event end time is required."
+                },
+                "applyStartTime": {
+                    "required": "Apply start time is required."
+                },
+                "applyEndTime": {
+                    "required": "Apply end time is required."
+                },
+                "activeTime": {
+                    "required": "Active time is required."
+                },
+                "prize": {
+                    "required": "Challenge prize is required."
+                },
+                "location": {
+                    "required": "Challenge location is required."
+                },
+                "status": {
+                    "required": "Challenge status is required."
+                }
+            }
         }
     }
 }

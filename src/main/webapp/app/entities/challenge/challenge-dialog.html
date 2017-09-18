@@ -1,172 +1,215 @@
-
-<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
-
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                ng-click="vm.clear()">&times;</button>
-        <h4 class="modal-title" id="myChallengeLabel" data-translate="hackathonApp.challenge.home.createOrEditLabel">Create or edit a Challenge</h4>
-    </div>
-    <div class="modal-body">
+<md-dialog aria-label="Create a Challenge">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2 data-translate="hackathonApp.challenge.home.createOrEditLabel">Create or Edit a Challenge</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" aria-label="close" ng-click="vm.clear()">
+                <span class="glyphicon glyphicon-remove"></span>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content style="width:800px;">
         <jhi-alert-error></jhi-alert-error>
-        <div class="form-group" ng-show="vm.challenge.id">
-            <label for="id" data-translate="global.field.id">ID</label>
-            <input type="text" class="form-control" id="id" name="id"
-                    ng-model="vm.challenge.id" readonly />
-        </div>
-        <div class="form-group">
-            <label class="control-label" data-translate="hackathonApp.challenge.name" for="field_name">Name</label>
-            <input type="text" class="form-control" name="name" id="field_name"
-                    ng-model="vm.challenge.name"
-                    required />
-            <div ng-show="editForm.name.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.name.$error.required" data-translate="entity.validation.required">
-                    This field is required.
-                </p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label" data-translate="hackathonApp.challenge.introduction" for="field_introduction">Introduction</label>
-            <input type="text" class="form-control" name="introduction" id="field_introduction"
-                    ng-model="vm.challenge.introduction"
-                    required />
-            <div ng-show="editForm.introduction.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.introduction.$error.required" data-translate="entity.validation.required">
-                    This field is required.
-                </p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label" data-translate="hackathonApp.challenge.challengeText" for="field_challengeText">Challenge Text</label>
-            <input type="text" class="form-control" name="challengeText" id="field_challengeText"
-                    ng-model="vm.challenge.challengeText"
-                    required />
-            <div ng-show="editForm.challengeText.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.challengeText.$error.required" data-translate="entity.validation.required">
-                    This field is required.
-                </p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label" data-translate="hackathonApp.challenge.resourceText" for="field_resourceText">Resource Text</label>
-            <input type="text" class="form-control" name="resourceText" id="field_resourceText"
-                    ng-model="vm.challenge.resourceText"
-                    required />
-            <div ng-show="editForm.resourceText.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.resourceText.$error.required" data-translate="entity.validation.required">
-                    This field is required.
-                </p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label" data-translate="hackathonApp.challenge.rewardsText" for="field_rewardsText">Rewards Text</label>
-            <input type="text" class="form-control" name="rewardsText" id="field_rewardsText"
-                    ng-model="vm.challenge.rewardsText"
-                    required />
-            <div ng-show="editForm.rewardsText.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.rewardsText.$error.required" data-translate="entity.validation.required">
-                    This field is required.
-                </p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label" data-translate="hackathonApp.challenge.timelineText" for="field_timelineText">Timeline Text</label>
-            <input type="text" class="form-control" name="timelineText" id="field_timelineText"
-                    ng-model="vm.challenge.timelineText"
-                    required />
-            <div ng-show="editForm.timelineText.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.timelineText.$error.required" data-translate="entity.validation.required">
-                    This field is required.
-                </p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label" data-translate="hackathonApp.challenge.rulesText" for="field_rulesText">Rules Text</label>
-            <input type="text" class="form-control" name="rulesText" id="field_rulesText"
-                    ng-model="vm.challenge.rulesText"
-                    required />
-            <div ng-show="editForm.rulesText.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.rulesText.$error.required" data-translate="entity.validation.required">
-                    This field is required.
-                </p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label" data-translate="hackathonApp.challenge.bannerUrl" for="field_bannerUrl">Banner Url</label>
-            <input type="text" class="form-control" name="bannerUrl" id="field_bannerUrl"
-                    ng-model="vm.challenge.bannerUrl"
-                    required />
-            <div ng-show="editForm.bannerUrl.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.bannerUrl.$error.required" data-translate="entity.validation.required">
-                    This field is required.
-                </p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label" data-translate="hackathonApp.challenge.additionalText" for="field_additionalText">Additional Text</label>
-            <input type="text" class="form-control" name="additionalText" id="field_additionalText"
-                    ng-model="vm.challenge.additionalText"
-                     />
-        </div>
-        <div class="form-group">
-            <label class="control-label" data-translate="hackathonApp.challenge.maxTeamNumber" for="field_maxTeamNumber">Max Team Number</label>
-            <input type="number" class="form-control" name="maxTeamNumber" id="field_maxTeamNumber"
-                    ng-model="vm.challenge.maxTeamNumber"
-                    required />
-            <div ng-show="editForm.maxTeamNumber.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.maxTeamNumber.$error.required" data-translate="entity.validation.required">
-                    This field is required.
-                </p>
-                <p class="help-block"
-                    ng-show="editForm.maxTeamNumber.$error.number" data-translate="entity.validation.number">
-                    This field should be a number.
-                </p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label" data-translate="hackathonApp.challenge.minTeamNumber" for="field_minTeamNumber">Min Team Number</label>
-            <input type="number" class="form-control" name="minTeamNumber" id="field_minTeamNumber"
-                    ng-model="vm.challenge.minTeamNumber"
-                    required />
-            <div ng-show="editForm.minTeamNumber.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.minTeamNumber.$error.required" data-translate="entity.validation.required">
-                    This field is required.
-                </p>
-                <p class="help-block"
-                    ng-show="editForm.minTeamNumber.$error.number" data-translate="entity.validation.number">
-                    This field should be a number.
-                </p>
-            </div>
-        </div>
+        <md-tabs md-dynamic-height md-dynamic-width md-border-bottom>
+            <md-tab label="Basic">
+                <md-content class="md-padding md-inline-form">
+                    <form name="challengeInfoForm">
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challengeInfo.eventStartTime">Event Start</label>
+                                <md-datepicker name="eventStartTime" ng-model="vm.challengeInfo.eventStartTime" required></md-datepicker>
+                                <div ng-messages="challengeInfoForm.eventStartTime.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.eventStartTime.required"></div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challengeInfo.eventEndTime">Event End</label>
+                                <md-datepicker name="eventEndTime" ng-model="vm.challengeInfo.eventEndTime" required></md-datepicker>
+                                <div ng-messages="challengeInfoForm.eventEndTime.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.eventEndTime.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
 
-        <div class="form-group">
-            <label data-translate="hackathonApp.challenge.info" for="field_info">Info</label>
-            <select class="form-control" id="field_info" name="info" ng-model="vm.challenge.info" ng-options="challengeInfo as challengeInfo.id for challengeInfo in vm.infos | orderBy:'id' track by challengeInfo.id">
-                <option value=""></option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label data-translate="hackathonApp.challenge.company" for="field_company">Company</label>
-            <select class="form-control" id="field_company" name="company" ng-model="vm.challenge.company" ng-options="company as company.id for company in vm.companies track by company.id">
-                <option value=""></option>
-            </select>
-        </div>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challengeInfo.applyStartTime">Apply Start</label>
+                                <md-datepicker name="applyStartTime" ng-model="vm.challengeInfo.applyStartTime" required></md-datepicker>
+                                <div ng-messages="challengeInfoForm.applyStartTime.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.applyStartTime.required"></div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challengeInfo.applyEndTime">Apply End</label>
+                                <md-datepicker name="applyEndTime" ng-model="vm.challengeInfo.applyEndTime" required></md-datepicker>
+
+                                <div ng-messages="challengeInfoForm.applyEndTime.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.applyEndTime.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challengeInfo.activeTime">Active Time</label>
+                                <md-datepicker name="activeTime" ng-model="vm.challengeInfo.activeTime" required></md-datepicker>
+
+                                <div ng-messages="challengeInfoForm.activeTime.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.activeTime.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challengeInfo.location">Location</label>
+                                <input name="location" ng-model="vm.challengeInfo.location" required>
+                                <div ng-messages="challengeInfoForm.location.$error" role="alert">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.location.required"></div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challengeInfo.prize">Prize</label>
+                                <input name="prize" type="number" ng-model="vm.challengeInfo.prize" required/>
+                                <div ng-messages="challengeInfoForm.prize.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.prize.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                        <div class="row">
+                            <md-radio-group ng-model="vm.challengeInfo.status">
+                                <div class="col-md-4">
+                                    <md-radio-button value="DRAFT"><span data-translate="hackathonApp.challengeInfo.status.draft">Draft</span></md-radio-button>
+                                </div>
+                                <div class="col-md-4">
+                                    <md-radio-button value="ACTIVE"><span data-translate="hackathonApp.challengeInfo.status.active">Active</span></md-radio-button>
+                                </div>
+                                <div class="col-md-4">
+                                    <md-radio-button value="INACTIVE"><span data-translate="hackathonApp.challengeInfo.status.inactive">Inactive</span></md-radio-button>
+                                </div>
+                            </md-radio-group>
+                        </div>
+                    </form>
+                </md-content>
+            </md-tab>
+
+            <md-tab label="Detail">
+                <md-content class="md-padding">
+                    <form name="challengeForm">
+                        <!-- <lf-ng-md-file-input lf-files='files' lf-placeholder="Banner Image"> </lf-ng-md-file-input> -->
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challenge.name">Challenge Name</label>
+                                <input name="name" ng-model="vm.challenge.name" required>
+                                <div ng-messages="challengeForm.name.$error" role="alert">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.name.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challenge.bannerUrl">Banner URL</label>
+                                <input name="bannerUrl" ng-model="vm.challenge.bannerUrl" required>
+                                <div ng-messages="challengeForm.bannerUrl.$error" role="alert">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.bannerUrl.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challenge.maxTeamNumber">Max Team Member</label>
+                                <input name="maxTeamNumber" type="number" ng-model="vm.challenge.maxTeamNumber" required/>
+                                <div ng-messages="challengeForm.maxTeamNumber.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.maxTeamNumber.required"></div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challenge.minTeamNumber">Min Team Member</label>
+                                <input name="minTeamNumber" type="number" ng-model="vm.challenge.minTeamNumber" required/>
+                                <div ng-messages="challengeForm.minTeamNumber.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.minTeamNumber.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challenge.introduction">Introduction</label>
+                                <textarea name="introduction" ng-model="vm.challenge.introduction" md-maxlength="250" rows="5" md-select-on-focus required></textarea>
+                                <div ng-messages="challengeForm.introduction.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.introduction.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challenge.challengeText">Challenge Text</label>
+                                <textarea name="challengeText" ng-model="vm.challenge.challengeText" md-maxlength="250" rows="5" md-select-on-focus required></textarea>
+                                <div ng-messages="challengeForm.challengeText.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.challengeText.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challenge.resourceText">Resource Text</label>
+                                <textarea name="resourceText" ng-model="vm.challenge.resourceText" md-maxlength="250" rows="5" md-select-on-focus required></textarea>
+                                <div ng-messages="challengeForm.resourceText.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.resourceText.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challenge.rewardsText">Rewards Text</label>
+                                <textarea name="rewardsText" ng-model="vm.challenge.rewardsText" md-maxlength="250" rows="5" md-select-on-focus required></textarea>
+                                <div ng-messages="challengeForm.rewardsText.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.rewardsText.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challenge.timelineText">Timeline Text</label>
+                                <textarea name="timelineText" ng-model="vm.challenge.timelineText" md-maxlength="250" rows="5" md-select-on-focus required></textarea>
+                                <div ng-messages="challengeForm.timelineText.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.timelineText.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challenge.rulesText">Rules Text</label>
+                                <textarea name="rulesText" ng-model="vm.challenge.rulesText" md-maxlength="250" rows="5" md-select-on-focus required></textarea>
+                                <div ng-messages="challengeForm.rulesText.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.rulesText.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challenge.additionalText">Addtional Info</label>
+                                <textarea name="introduction" ng-model="vm.challenge.additionalText" md-maxlength="250" rows="5" md-select-on-focus></textarea>
+                            </md-input-container>
+                        </div>
+                    </form>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+        <span flex></span>
+        <md-button type="button" ng-click="vm.clear()">
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
-        </button>
-        <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
+        </md-button>
+        <md-button class="md-raised md-primary" ng-click="vm.save()" ng-disabled="challengeForm.$invalid || challengeInfoForm.$invalid || vm.isSaving">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
-        </button>
-    </div>
-</form>
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>
