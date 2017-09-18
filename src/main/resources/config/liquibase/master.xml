@@ -24,6 +24,7 @@
     <include file="classpath:config/liquibase/changelog/20170915155132_add_column_table_UserList.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170915171334_add_column_table_ChallengeInfo.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170915173934_add_column_table_ChallengeInfo(1).xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170917220132_drop_constraints_table_UserList.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->      
     
 </databaseChangeLog>

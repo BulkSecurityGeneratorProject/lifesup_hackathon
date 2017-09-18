@@ -27,17 +27,6 @@ public class Skill implements Serializable {
 	@Column(name = "name", nullable = false)
 	private String name;
 	
-	@ManyToMany(mappedBy = "skills")
-    @JsonIgnore
-    private Set<UserList> users = new HashSet<>();
-
-	public Set<UserList> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Set<UserList> users) {
-		this.users = users;
-	}
 
 	@Override
 	public boolean equals(Object o) {

@@ -27,10 +27,6 @@ public class Experience implements Serializable {
 	@Column(name = "name", nullable = false)
 	private String name;
 	
-	@ManyToMany(mappedBy = "experiences")
-    @JsonIgnore
-    private Set<UserList> users = new HashSet<>();
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) {

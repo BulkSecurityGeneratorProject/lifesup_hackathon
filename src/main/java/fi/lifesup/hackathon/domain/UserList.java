@@ -84,54 +84,13 @@ public class UserList implements Serializable {
     @ManyToOne
     private Company company;
 
-    @ManyToMany
-    @JoinTable(name = "user_list_skill",
-               joinColumns = @JoinColumn(name="user_lists_id", referencedColumnName="ID"),
-               inverseJoinColumns = @JoinColumn(name="skill_id", referencedColumnName="ID"))
-    private Set<Skill> skills = new HashSet<>();
 
     @ManyToMany
     @JoinTable(name = "user_list_applications",
                joinColumns = @JoinColumn(name="user_lists_id", referencedColumnName="ID"),
                inverseJoinColumns = @JoinColumn(name="applications_id", referencedColumnName="ID"))
     private Set<Application> applications = new HashSet<>();
-    
-    @ManyToMany
-    @JoinTable(name = "user_list_experience",
-               joinColumns = @JoinColumn(name="user_lists_id", referencedColumnName="ID"),
-               inverseJoinColumns = @JoinColumn(name="experience_id", referencedColumnName="ID"))
-    private Set<Experience> experiences = new HashSet<>();
-    
-    @ManyToOne    
-    private Industryhack industryhack;
-    
-    @NotNull
-    @Column(name = "jhi_user_id")
-    private Long jhiUserId;
-    
-    public Set<Skill> getSkills() {
-		return skills;
-	}
-
-	public void setSkills(Set<Skill> skills) {
-		this.skills = skills;
-	}
-
-	public Set<Experience> getExperiences() {
-		return experiences;
-	}
-
-	public void setExperiences(Set<Experience> experiences) {
-		this.experiences = experiences;
-	}
-
-	public Industryhack getIndustryhack() {
-		return industryhack;
-	}
-
-	public void setIndustryhack(Industryhack industryhack) {
-		this.industryhack = industryhack;
-	}
+         
     
     public Long getId() {
         return id;
