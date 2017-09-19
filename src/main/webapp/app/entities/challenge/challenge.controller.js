@@ -11,12 +11,16 @@
         var vm = this;
         
         vm.challenges = [];
+        vm.hasNoChallenge = false;
 
         loadAll();
 
         function loadAll() {
             Challenge.query(function(result) {
                 vm.challenges = result;
+                if (!result.length){
+                    vm.hasNoChallenge = true;
+                }
             });
         }
     }

@@ -18,10 +18,18 @@
     <link rel="stylesheet" href="content/css/main.css">
     <!-- build:css content/css/custom.css -->
     <link rel="stylesheet" href="content/css/custom.css">
+    
     <!-- endbuild -->
+<<<<<<< HEAD
     <link rel="stylesheet" href="libs/angular-material/angular-material.min.css">
     <!-- material icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+=======
+    <link rel="stylesheet" href="libs/angular-material/angular-material.css">
+    <link rel="stylesheet" href="libs/lf-ng-md-file-input/lf-ng-md-file-input.css">
+    <link rel="stylesheet" href="content/css/override.css">
+    <link rel="stylesheet" href="content/css/w3.css">
+>>>>>>> ebb6a53c1acc8f92f6f22f265b887d2386fae069
 </head>
 <body ng-app="hackathonApp" ng-strict-di>
     <!--[if lt IE 9]>
@@ -30,7 +38,7 @@
     <page-ribbon></page-ribbon>
     <div ui-view="navbar" ng-cloak></div>
     <div class="container">
-        <div class="card" ui-view="content">
+        <div class="main-content" ui-view="content">
             <!-- Angular views -->
         </div>
     </div>
@@ -230,6 +238,7 @@
     <script src="libs/angular-material/angular-aria.min.js"></script>
     <script src="libs/angular-material/angular-messages.min.js"></script>
     <script src="libs/angular-material/angular-material.min.js"></script>
+    <script src="libs/lf-ng-md-file-input/lf-ng-md-file-input.js"></script>
 
 </body>
 </html>

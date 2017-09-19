@@ -3,6 +3,9 @@ package fi.lifesup.hackathon.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.HashSet;
@@ -81,12 +84,14 @@ public class UserList implements Serializable {
     @ManyToOne
     private Company company;
 
+
     @ManyToMany
     @JoinTable(name = "user_list_applications",
                joinColumns = @JoinColumn(name="user_lists_id", referencedColumnName="ID"),
                inverseJoinColumns = @JoinColumn(name="applications_id", referencedColumnName="ID"))
     private Set<Application> applications = new HashSet<>();
-
+         
+    
     public Long getId() {
         return id;
     }
