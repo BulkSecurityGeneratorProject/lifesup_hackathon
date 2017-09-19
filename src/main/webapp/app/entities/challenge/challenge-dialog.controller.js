@@ -11,6 +11,7 @@
         var vm = this;
 
         vm.challenge = entity;
+        console.log(entity);
         vm.challengeInfo = {};
 
         vm.clear = clear;
@@ -37,6 +38,11 @@
             }
             else {
                 vm.challengeInfo = vm.challenge.info;
+                vm.challengeInfo.eventStartTime = new Date(vm.challenge.info.eventStartTime);
+                vm.challengeInfo.eventEndTime = new Date(vm.challenge.info.eventEndTime);
+                vm.challengeInfo.applyStartTime = new Date(vm.challenge.info.applyStartTime);
+                vm.challengeInfo.applyEndTime = new Date(vm.challenge.info.applyEndTime);
+                vm.challengeInfo.activeTime = new Date(vm.challenge.info.activeTime);
                 console.log("We're going to update a challenge");
             }
         }
@@ -60,10 +66,9 @@
                 Challenge.update(vm.challenge, onSaveSuccess, onSaveError);
             }
             else {
-                // vm.challenge.info = ChallengeInfo.get({ id: result.id });
+                vm.challenge.info = result;
                 Challenge.save(vm.challenge, onSaveSuccess, onSaveError);
             }
-            // vm.isSaving = false;
         }
         function onSaveSuccess(result) {
             $scope.$emit('hackathonApp:challengeUpdate', result);
