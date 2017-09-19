@@ -17,7 +17,7 @@
         Added the entity Experience.
     -->
     <changeSet id="20170915142228" author="jhipster">
-        <createTable tableName="experience">
+        <createTable tableName="user_experience">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -25,22 +25,11 @@
                 <constraints nullable="false" />
             </column>
             
-          </createTable>  
-             
-        <createTable tableName="user_list_experience">
-            <column name="experience_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_lists_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
+        </createTable>  
 
-        <addPrimaryKey columnNames="user_lists_id, experience_id" tableName="user_list_experience"/>
-        
         <loadData encoding="UTF-8"
-                  file="config/liquibase/experience.csv"
+                  file="config/liquibase/user_experiences.csv"
                   separator=";"
-                  tableName="experience"/>
+                  tableName="user_experience"/>
     </changeSet>
 </databaseChangeLog>

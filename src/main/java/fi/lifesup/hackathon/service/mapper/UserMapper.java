@@ -28,6 +28,10 @@ public interface UserMapper {
     @Mapping(target = "resetKey", ignore = true)
     @Mapping(target = "resetDate", ignore = true)
     @Mapping(target = "password", ignore = true)
+    @Mapping(target = "status", ignore = true)
+    @Mapping(target = "userInfo", ignore = true)
+    @Mapping(target = "company", ignore = true)
+    @Mapping(target = "applications", ignore = true)
     User userDTOToUser(UserDTO userDTO);
 
     List<User> userDTOsToUsers(List<UserDTO> userDTOs);

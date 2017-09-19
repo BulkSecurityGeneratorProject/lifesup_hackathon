@@ -1,21 +1,22 @@
 package fi.lifesup.hackathon.domain;
 
-import javax.persistence.*;
-import javax.validation.constraints.*;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.io.Serializable;
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 /**
- * A Skill.
+ * A UserSkill.
  */
 @Entity
-@Table(name = "skill")
-public class Skill implements Serializable {
+@Table(name = "user_skill")
+public class UserSkill implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -36,7 +37,7 @@ public class Skill implements Serializable {
 		if (o == null || getClass() != o.getClass()) {
 			return false;
 		}
-		Skill skill = (Skill) o;
+		UserSkill skill = (UserSkill) o;
 		if (skill.id == null || id == null) {
 			return false;
 		}
@@ -50,7 +51,7 @@ public class Skill implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Company{" + "id=" + id + ", name='" + name + "'" + '}';
+		return "UserSkill{" + "id=" + id + ", name='" + name + "'" + '}';
 	}
 
 	public Long getId() {

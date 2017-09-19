@@ -3,7 +3,11 @@ package fi.lifesup.hackathon.domain;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+
+import fi.lifesup.hackathon.domain.enumeration.UserSex;
+
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.Objects;
 
 /**
@@ -18,6 +22,39 @@ public class UserInfo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    @NotNull
+    @Column(name = "phone", nullable = false)
+    private String phone;
+
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    @Column(name = "sex", nullable = false)
+    private UserSex sex;
+
+    @Column(name = "company_name")
+    private String companyName;
+
+    @Column(name = "job_title")
+    private String jobTitle;
+
+    @Column(name = "logo_url")
+    private String logoUrl;
+
+    @NotNull
+    @Column(name = "country", nullable = false)
+    private String country;
+
+    @NotNull
+    @Column(name = "city", nullable = false)
+    private String city;
+
+    @NotNull
+    @Column(name = "nationality", nullable = false)
+    private String nationality;
+    
+    @Column(name = "birthday")
+    private ZonedDateTime birthday;
 
     @NotNull
     @Column(name = "introduction", nullable = false)
@@ -52,6 +89,123 @@ public class UserInfo implements Serializable {
         this.id = id;
     }
 
+    public String getPhone() {
+        return phone;
+    }
+
+    public UserInfo phone(String phone) {
+        this.phone = phone;
+        return this;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public UserSex getSex() {
+        return sex;
+    }
+
+    public UserInfo sex(UserSex sex) {
+        this.sex = sex;
+        return this;
+    }
+
+    public void setSex(UserSex sex) {
+        this.sex = sex;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public UserInfo companyName(String companyName) {
+        this.companyName = companyName;
+        return this;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public UserInfo jobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
+        return this;
+    }
+
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
+    }
+
+    public String getLogoUrl() {
+        return logoUrl;
+    }
+
+    public UserInfo logoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+        return this;
+    }
+
+    public void setLogoUrl(String logoUrl) {
+        this.logoUrl = logoUrl;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public UserInfo country(String country) {
+        this.country = country;
+        return this;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public UserInfo city(String city) {
+        this.city = city;
+        return this;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getNationality() {
+        return nationality;
+    }
+
+    public UserInfo nationality(String nationality) {
+        this.nationality = nationality;
+        return this;
+    }
+
+    public void setNationality(String nationality) {
+        this.nationality = nationality;
+    }
+
+    public ZonedDateTime getBirthday() {
+        return birthday;
+    }
+
+    public UserInfo birthday(ZonedDateTime birthday) {
+        this.birthday = birthday;
+        return this;
+    }
+    
+    public void setBirthday(ZonedDateTime birthday) {
+        this.birthday = birthday;
+    }
+    
     public String getIntroduction() {
         return introduction;
     }

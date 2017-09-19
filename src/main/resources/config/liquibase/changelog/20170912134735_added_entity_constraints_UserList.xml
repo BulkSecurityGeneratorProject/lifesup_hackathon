@@ -9,25 +9,25 @@
     <changeSet id="20170912134735-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="user_info_id"
-                                 baseTableName="user_list"
-                                 constraintName="fk_user_list_user_info_id"
+                                 baseTableName="jhi_user"
+                                 constraintName="fk_jhi_user_user_info_id"
                                  referencedColumnNames="id"
                                  referencedTableName="user_info"/>
 
         <addForeignKeyConstraint baseColumnNames="company_id"
-                                 baseTableName="user_list"
-                                 constraintName="fk_user_list_company_id"
+                                 baseTableName="jhi_user"
+                                 constraintName="fk_jhi_user_company_id"
                                  referencedColumnNames="id"
                                  referencedTableName="company"/>
 
-        <addForeignKeyConstraint baseColumnNames="user_lists_id"
-                                 baseTableName="user_list_applications"
-                                 constraintName="fk_user_list_applications_user_lists_id"
+        <addForeignKeyConstraint baseColumnNames="users_id"
+                                 baseTableName="user_applications"
+                                 constraintName="fk_jhi_user_applications_jhi_users_id"
                                  referencedColumnNames="id"
-                                 referencedTableName="user_list"/>
+                                 referencedTableName="jhi_user"/>
         <addForeignKeyConstraint baseColumnNames="applications_id"
-                                 baseTableName="user_list_applications"
-                                 constraintName="fk_user_list_applications_applications_id"
+                                 baseTableName="user_applications"
+                                 constraintName="fk_jhi_user_applications_applications_id"
                                  referencedColumnNames="id"
                                  referencedTableName="application"/>
         
