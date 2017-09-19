@@ -24,7 +24,7 @@
 
                         <md-input-container class="md-block" flex-gt-sm>
                             <label data-translate="settings.form.birthday"></label>
-                            <md-datepicker name="birthday" ng-model="vm.user.birthday" md-hide-icons="calendar" required></md-datepicker>
+                            <md-datepicker id="birthday" name="birthday" ng-model="vm.user.birthday" md-hide-icons="calendar" required></md-datepicker>
 
                             <div ng-messages="userForm.birthday.$error">
                                 <div ng-message="required" data-translate="settings.messages.validate.birthday.required"></div>

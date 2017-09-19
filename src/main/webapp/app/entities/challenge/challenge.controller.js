@@ -18,7 +18,6 @@
         function loadAll() {
             Challenge.query(function(result) {
                 vm.challenges = result;
-                console.log(result);
                 if (!result.length){
                     vm.hasNoChallenge = true;
                 }

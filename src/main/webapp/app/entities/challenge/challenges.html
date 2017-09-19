@@ -1,11 +1,11 @@
 <div class="row text-center" ng-cloak>
     <div class="col-md-3"></div>
     <div class="col-md-6">
-        <h2>Challenges Management</h2>
+        <h2 data-translate="hackathonApp.challenge.home.title">Challenges Management</h2>
     </div>
 
     <div class="col-md-3">
-        <md-button ui-sref="challenge.new" class="md-fab md-primary" title="New Challenge" aria-label="New Challenge">
+    <md-button ui-sref="challenge.new" class="md-fab md-primary w3-green" title="Create a new challenge" aria-label="New Challenge">
             <md-icon md-svg-src="content/images/svg/add.svg"></md-icon>
         </md-button>
     </div>
@@ -16,7 +16,10 @@
     <div class="row" ng-if="vm.hasNoChallenge" class="text-center">
         <div class="col-md-3"></div>
         <div class="col-md-6 text-center">
-            <uib-alert type="warning">Haven't got any challenges?. <a ui-sref="challenge.new"><strong>Create one!</strong></a></uib-alert>
+            <uib-alert type="warning"><span data-translate="hackathonApp.messages.empty">Haven't got any challenges? </span><a ui-sref="challenge.new" data-translate="hackathonApp.messages.create"><strong>Create one!</strong></a></uib-alert>
+            <div>
+                <img src='content/images/run.png' class="img img-responsive">
+            </div>
         </div>
         <div class="col-md-3"></div>
     </div>
@@ -25,21 +28,21 @@
             <img ng-src="content/images/challenge.jpg" class="md-card-image" alt="Washed Out">
             <md-card-title>
                 <md-card-title-text>
-                    <span class="md-headline">{{challenge.name}}</span>
+                    <span class="md-headline"><strong>{{challenge.name}}</strong></span>
                 </md-card-title-text>
             </md-card-title>
             <md-card-content>
 
             </md-card-content>
             <md-card-actions layout="row" layout-align="end center">
-                <md-button ui-sref="challenge.delete({id:challenge.id})" class="md-fab md-mini md-hue-3" aria-label="Delete">
+                <md-button ui-sref="challenge.delete({id:challenge.id})" class="md-fab md-mini md-hue-3" title="Delete" aria-label="Delete">
                     <span class="glyphicon glyphicon-remove"></span>
                 </md-button>
-                <md-button ui-sref="challenge.edit({id:challenge.id})" class="md-fab md-mini md-warn" aria-label="Edit">
+                <md-button ui-sref="challenge.edit({id:challenge.id})" class="md-fab md-mini md-warn" title="Quick Edit" aria-label="Edit">
                     <span class="glyphicon glyphicon-pencil"></span>
                 </md-button>
-                <md-button ui-sref="challenge-detail({id:challenge.id})" class="md-fab md-mini md-primary" aria-label="Detail">
-                    <span class="glyphicon glyphicon-align-justify"></span>
+                <md-button ui-sref="challenge-detail({id:challenge.id})" class="md-fab md-mini md-primary" title="Go Detail" aria-label="Detail">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
                 </md-button>
             </md-card-actions>
         </md-card>
