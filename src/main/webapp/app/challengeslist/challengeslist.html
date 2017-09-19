@@ -1,7 +1,7 @@
 <!-- challenge name and challenge's owner filter -->
  <md-content class="md-padding">
     <form ng-submit="$event.preventDefault()">
-      <md-autocomplete 
+      <md-autocomplete
           md-selected-item="vm.selectedItem"
           md-search-text-change="vm.searchTextChange(vm.searchText)"
           md-search-text="vm.searchText"
@@ -29,7 +29,7 @@
           <md-list>
             <md-list-item> <i class="material-icons">place</i>{{challenge.location}}</md-list-item>
             <md-list-item> <i class="material-icons">stars</i> {{challenge.prize}} </md-list-item>
-            <md-list-item> <i class="material-icons">alarm</i>{{Math.floor((challenge.deadline - vm.today)/ (1000 * 60 * 60 * 24))}} days</md-list-item> 
+            <md-list-item> <i class="material-icons">alarm</i>{{Math.floor((challenge.deadline - vm.today)/ (1000 * 60 * 60 * 24))}} days</md-list-item>
           </md-list>
         </md-card-content>
         <md-card-actions ng-switch="challenge.status">
@@ -40,4 +40,3 @@
     </md-card>
   </div>
 </div>
-      

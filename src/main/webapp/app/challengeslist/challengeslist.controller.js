@@ -22,7 +22,7 @@
                 .then(function(data) {
                     vm.challenges = data.challengeslist;
                 });
-        }     
+        }
     }
-   
+
 })();
