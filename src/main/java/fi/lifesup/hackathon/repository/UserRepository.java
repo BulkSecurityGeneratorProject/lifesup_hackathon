@@ -33,4 +33,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Override
     void delete(User t);
 
+    @Query("select user from User user left join fetch user.authorities where user.authorities = :#{[1]} ")
+    User getAuthorities(String authoritie);
 }

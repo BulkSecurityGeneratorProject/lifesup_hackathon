@@ -1,23 +1,32 @@
 package fi.lifesup.hackathon.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import fi.lifesup.hackathon.domain.Challenge;
-
-import fi.lifesup.hackathon.repository.ChallengeRepository;
-import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.inject.Inject;
-import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+
+import javax.inject.Inject;
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.codahale.metrics.annotation.Timed;
+
+import fi.lifesup.hackathon.domain.Challenge;
+import fi.lifesup.hackathon.repository.ChallengeInfoRepository;
+import fi.lifesup.hackathon.repository.ChallengeRepository;
+import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 
 /**
  * REST controller for managing Challenge.
@@ -30,6 +39,9 @@ public class ChallengeResource {
         
     @Inject
     private ChallengeRepository challengeRepository;
+    
+    @Inject 
+    private ChallengeInfoRepository challengeInfoRepository; 
 
     /**
      * POST  /challenges : Create a new challenge.
@@ -44,7 +56,7 @@ public class ChallengeResource {
         log.debug("REST request to save Challenge : {}", challenge);
         if (challenge.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challenge", "idexists", "A new challenge cannot already have an ID")).body(null);
-        }
+        }       
         Challenge result = challengeRepository.save(challenge);
         return ResponseEntity.created(new URI("/api/challenges/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("challenge", result.getId().toString()))
@@ -117,5 +129,6 @@ public class ChallengeResource {
         challengeRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("challenge", id.toString())).build();
     }
+    
 
 }

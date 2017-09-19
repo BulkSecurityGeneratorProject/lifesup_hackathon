@@ -18,5 +18,7 @@ public interface UserListRepository extends JpaRepository<UserList,Long> {
 
     @Query("select userList from UserList userList left join fetch userList.applications where userList.id =:id")
     UserList findOneWithEagerRelationships(@Param("id") Long id);
+    
+    UserList findByEmail(String email);
 
 }

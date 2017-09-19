@@ -12,4 +12,9 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface ChallengeRepository extends JpaRepository<Challenge,Long> {
 
+	List<Challenge> findByCompanyId(Long id);
+	
+	@Query("select c from Challenge c, ChallengeUserApplication cua "
+			+ "where cua.userId = :#{[0]} and c.id = cua.challengeId")
+	List<Challenge> getChallengeforUser(Long userId);
 }

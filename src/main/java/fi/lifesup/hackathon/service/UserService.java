@@ -97,6 +97,7 @@ public class UserService {
         // new user gets registration key
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         authorities.add(authority);
+        
         newUser.setAuthorities(authorities);
         userRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
@@ -220,5 +221,18 @@ public class UserService {
             log.debug("Deleting not activated user {}", user.getLogin());
             userRepository.delete(user);
         }
+    }
+    
+    public boolean checkAuthories(String authories){
+    	User user = getUserWithAuthorities();
+    	Object[] au = user.getAuthorities().toArray();
+    	
+    	for (int i = 0; i < au.length; i++) {
+			Authority authority = (Authority) au[i];
+			if(authority.getName().equals(authories))
+				return true;
+		}
+    	
+    	return false;
     }
 }
