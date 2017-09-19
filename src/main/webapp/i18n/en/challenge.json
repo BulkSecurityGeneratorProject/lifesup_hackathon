@@ -45,6 +45,10 @@
                 "inactive": "Inactive"
             }
         },
+        "search":{
+            "placeHolder" : "Input challenge or company name.",
+            "noResult" : "No result were found."
+        },
         "messages": {
             "empty": "Haven't got any challenges? ",
             "create": "<strong>Create one!</strong>",

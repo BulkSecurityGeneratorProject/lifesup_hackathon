@@ -11,17 +11,19 @@
         var vm = this;
 
         vm.challenge = entity;
-        console.log(entity);
         vm.challengeInfo = {};
 
         vm.clear = clear;
         vm.save = save;
         vm.applications = Application.query();
         vm.companies = Company.query();
+        vm.changeStatus = changeStatus;
+        vm.isDraftStatus = true;
+        vm.activeTime = null;
 
-        load();
+        getChallengeInfo();
 
-        function load() {
+        function getChallengeInfo() {
             if (vm.challenge.id == null) {
                 vm.challengeInfo = {
                     activeTime: null,
@@ -34,7 +36,7 @@
                     prize: null,
                     id: null
                 };
-                console.log("We're going to create a challenge");
+                changeStatus();
             }
             else {
                 vm.challengeInfo = vm.challenge.info;
@@ -42,8 +44,23 @@
                 vm.challengeInfo.eventEndTime = new Date(vm.challenge.info.eventEndTime);
                 vm.challengeInfo.applyStartTime = new Date(vm.challenge.info.applyStartTime);
                 vm.challengeInfo.applyEndTime = new Date(vm.challenge.info.applyEndTime);
-                vm.challengeInfo.activeTime = new Date(vm.challenge.info.activeTime);
-                console.log("We're going to update a challenge");
+                if (vm.challenge.info.activeTime){
+                    vm.activeTime = vm.challenge.info.activeTime;
+                }
+                changeStatus();
+            }
+        }
+
+        function changeStatus(){
+            if (vm.challengeInfo.status == "DRAFT"){
+                vm.isDraftStatus = true;
+                if (vm.activeTime){
+                    vm.challengeInfo.activeTime = new Date(vm.activeTime);
+                }
+            }
+            else{
+                vm.isDraftStatus = false;
+                vm.challengeInfo.activeTime = null;
             }
         }
 

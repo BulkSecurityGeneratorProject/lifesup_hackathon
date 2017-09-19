@@ -49,10 +49,10 @@
                             </md-input-container>
                         </div>
 
-                        <div layout-gt-xs="row">
+                        <div layout-gt-xs="row" ng-show="vm.isDraftStatus">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label data-translate="hackathonApp.challengeInfo.activeTime">Active Time</label>
-                                <md-datepicker name="activeTime" ng-model="vm.challengeInfo.activeTime" required></md-datepicker>
+                                <md-datepicker name="activeTime" ng-model="vm.challengeInfo.activeTime"></md-datepicker>
 
                                 <div ng-messages="challengeInfoForm.activeTime.$error">
                                     <div ng-message="required" data-translate="hackathonApp.messages.validate.activeTime.required"></div>
@@ -78,7 +78,7 @@
                         </div>
 
                         <div class="row">
-                            <md-radio-group ng-model="vm.challengeInfo.status" required>
+                            <md-radio-group ng-change="vm.changeStatus()" ng-model="vm.challengeInfo.status" required>
                                 <div class="col-md-4">
                                     <md-radio-button value="DRAFT"><span data-translate="hackathonApp.challengeInfo.status.draft">Draft</span></md-radio-button>
                                 </div>
