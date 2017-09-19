@@ -1,0 +1,42 @@
+ <md-content class="md-padding">
+    <form ng-submit="$event.preventDefault()">
+      <md-autocomplete 
+          md-selected-item="vm.selectedItem"
+          md-search-text-change="vm.searchTextChange(vm.searchText)"
+          md-search-text="vm.searchText"
+          md-selected-item-change="vm.selectedItemChange(item)"
+          md-items="item in vm.challenges | filter: vm.searchText"
+          md-item-text="item.challengename || item.ownername"
+          placeholder="What is your favorite challenge/company?">
+          <md-item-template>
+            <span md-highlight-text = "vm.searchText" md-highlight-flags = "^i">{{item.challengename}} - </span>
+            <span md-highlight-text = "vm.searchText" md-highlight-flags = "^i">{{item.ownername}}</span>
+          </md-item-template>
+      </md-autocomplete>
+      <br>
+    </form>
+  </md-content>
+
+<div class="row">
+  <div class="col-sm-12 col-md-4" ng-repeat="challenge in vm.challenges | filter: vm.searchText">
+    <md-card class="challenge-container">
+      <img md-card-image ng-src="{{challenge.bannerurl}}" class='challenge-banner'>
+        <md-card-title class='challenge-title'>{{challenge.challengename}}</md-card-title>
+        <md-card-subtitle class='challenge-owner'>{{challenge.ownername}}</md-card-subtitle>
+        <div class="line"></div>
+        <md-card-content class='challenge-content'>
+          <md-list>
+            <md-list-item> <i class="material-icons">place</i>{{challenge.location}}</md-list-item>
+            <md-list-item> <i class="material-icons">stars</i> {{challenge.prize}} </md-list-item>
+            <md-list-item> <i class="material-icons">alarm</i>{{Math.floor((challenge.deadline - vm.today)/ (1000 * 60 * 60 * 24))}} days</md-list-item> 
+          </md-list>
+        </md-card-content>
+        <md-card-actions ng-switch="challenge.status">
+          <button class="btn btn-block challenge-cta btn-active" ng-switch-when="active"><a href="#">Apply now!</a></button>
+          <button class="btn btn-block challenge-cta btn-applied" ng-switch-when="applied"><a href="#">View your application</a></button>
+          <button class="btn btn-block challenge-cta btn-inactive" ng-switch-when="inactive"><a href="#">Applications have closed!</a></button>
+        </md-card-actions>
+    </md-card>
+  </div>
+</div>
+      
