@@ -108,3 +108,84 @@ body {
   width: 100px;
   top: 13px;
 }
+
+/*============= challenge list ==============*/
+.challenge-container {
+  transform: translateY(0);
+  transition: all 0.4s ease-in-out;
+  position: relative;
+}
+
+.challenge-container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 10px #333;
+  cursor: pointer;
+  position: relative;
+  z-index: 333;
+}
+
+.challenge-banner {
+  filter: grayscale(0.1) sepia(0.1);
+}
+.challenge-container:hover .challenge-banner {
+  filter: grayscale(0) sepia(0);
+}
+
+.challenge-title {
+  font-weight: bold;
+  padding-bottom: 0;
+  font-size: 20px;
+}
+
+.challenge-owner {
+  padding: 0 16px;
+}
+
+.challenge-content {
+  padding: 0;
+}
+
+.line {
+  height: 5px;
+  width: calc(100% - 32px);
+  margin: 10px auto 0;
+  background: #ccc;
+}
+
+.material-icons {
+  position: relative;
+  margin-right: 15px;
+  display: inline;
+}
+
+.challenge-cta {
+  border-radius: 1px;
+  box-shadow: 2px 2px 2px #ccc;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.challenge-cta a {
+  color: #F5EFFF;
+  
+}
+
+.challenge-cta a:hover {
+  text-decoration: none;
+}
+
+.btn-active {
+  background: #FF8552;
+}
+
+.btn-applied {
+  background: #297373;
+}
+
+.btn-inactive {
+  background: #E6E6E6;
+}
+
+.btn-inactive a {
+  color: #39393A;
+}
