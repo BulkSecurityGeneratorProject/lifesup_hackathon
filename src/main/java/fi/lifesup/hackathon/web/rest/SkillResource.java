@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 
-import fi.lifesup.hackathon.domain.Skill;
+import fi.lifesup.hackathon.domain.UserSkill;
 import fi.lifesup.hackathon.repository.SkillRepository;
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 
@@ -52,14 +52,14 @@ public class SkillResource {
 	 */
 	@PostMapping("/skills")
 	@Timed
-	public ResponseEntity<Skill> createSkill(@Valid @RequestBody Skill Skill) throws URISyntaxException {
+	public ResponseEntity<UserSkill> createSkill(@Valid @RequestBody UserSkill Skill) throws URISyntaxException {
 		log.debug("REST request to save Skill : {}", Skill);
 		if (Skill.getId() != null) {
 			return ResponseEntity.badRequest().headers(
 					HeaderUtil.createFailureAlert("Skill", "idexists", "A new Skill cannot already have an ID"))
 					.body(null);
 		}
-		Skill result = skillRepository.save(Skill);
+		UserSkill result = skillRepository.save(Skill);
 		return ResponseEntity.created(new URI("/api/skills/" + result.getId()))
 				.headers(HeaderUtil.createEntityCreationAlert("Skill", result.getId().toString())).body(result);
 	}
@@ -78,12 +78,12 @@ public class SkillResource {
 	 */
 	@PutMapping("/skills")
 	@Timed
-	public ResponseEntity<Skill> updateSkill(@Valid @RequestBody Skill Skill) throws URISyntaxException {
+	public ResponseEntity<UserSkill> updateSkill(@Valid @RequestBody UserSkill Skill) throws URISyntaxException {
 		log.debug("REST request to update Skill : {}", Skill);
 		if (Skill.getId() == null) {
 			return createSkill(Skill);
 		}
-		Skill result = skillRepository.save(Skill);
+		UserSkill result = skillRepository.save(Skill);
 		return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert("Skill", Skill.getId().toString()))
 				.body(result);
 	}
@@ -96,9 +96,9 @@ public class SkillResource {
 	 */
 	@GetMapping("/skills")
 	@Timed
-	public List<Skill> getAllskills() {
+	public List<UserSkill> getAllskills() {
 		log.debug("REST request to get all Skills");
-		List<Skill> skills = skillRepository.findAll();
+		List<UserSkill> skills = skillRepository.findAll();
 		return skills;
 	}
 
@@ -112,9 +112,9 @@ public class SkillResource {
 	 */
 	@GetMapping("/skills/{id}")
 	@Timed
-	public ResponseEntity<Skill> getSkill(@PathVariable Long id) {
+	public ResponseEntity<UserSkill> getSkill(@PathVariable Long id) {
 		log.debug("REST request to get Skill : {}", id);
-		Skill Skill = skillRepository.findOne(id);
+		UserSkill Skill = skillRepository.findOne(id);
 		return Optional.ofNullable(Skill).map(result -> new ResponseEntity<>(result, HttpStatus.OK))
 				.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
