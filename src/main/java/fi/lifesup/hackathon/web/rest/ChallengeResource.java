@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import fi.lifesup.hackathon.domain.Challenge;
 
 import fi.lifesup.hackathon.repository.ChallengeRepository;
+import fi.lifesup.hackathon.service.ChallengeService;
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +31,9 @@ public class ChallengeResource {
         
     @Inject
     private ChallengeRepository challengeRepository;
+    
+    @Inject
+    private ChallengeService challengeService;
 
     /**
      * POST  /challenges : Create a new challenge.
@@ -116,6 +120,21 @@ public class ChallengeResource {
         log.debug("REST request to delete Challenge : {}", id);
         challengeRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("challenge", id.toString())).build();
+    }
+    
+    @GetMapping("/challenges-by-user")
+    @Timed
+    public List<Challenge> getChallengeByUser() {
+        log.debug("REST request to get all Challenge by user login : {}");
+        return challengeService.getChallengeByUser();
+    }
+    
+    @GetMapping("/challenges-by-authories")
+    @Timed
+    public List<Challenge> getChallengesBasedOnOwner() {
+        log.debug("REST request to get all Challenges By Authories");
+        List<Challenge> challenges = challengeService.getChallenges();
+        return challenges;
     }
 
 }

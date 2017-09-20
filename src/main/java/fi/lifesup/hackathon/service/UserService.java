@@ -225,4 +225,14 @@ public class UserService {
             userRepository.delete(user);
         }
     }
+    
+    public Boolean checkAuthories(String authories){
+    	User  user = getUserWithAuthorities();
+    	Iterator<Authority> au = user.getAuthorities().iterator();
+    	for(int i=0; i < user.getAuthorities().size(); i++){
+    		if(au.next().getName().equals(authories))
+    			return true;    		
+    	}
+    	return false;
+    }
 }
