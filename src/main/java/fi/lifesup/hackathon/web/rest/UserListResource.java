@@ -38,6 +38,14 @@ public class UserListResource {
      * @return the ResponseEntity with status 201 (Created) and with body the new userList, or with status 400 (Bad Request) if the userList has already an ID
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
+//    @GetMapping("/updateUser")
+//     @Timed
+//     public UserList updateAccount() {
+//         log.debug("REST request to get all UserLists");
+//         UserList userLists = userListRepository.updateAccount();
+//         return userLists;
+//     }
+    
     @PostMapping("/user-lists")
     @Timed
     public ResponseEntity<UserList> createUserList(@Valid @RequestBody UserList userList) throws URISyntaxException {
