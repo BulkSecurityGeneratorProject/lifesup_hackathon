@@ -2,6 +2,7 @@ package fi.lifesup.hackathon.service;
 
 import fi.lifesup.hackathon.domain.Authority;
 import fi.lifesup.hackathon.domain.User;
+import fi.lifesup.hackathon.domain.enumeration.UserStatus;
 import fi.lifesup.hackathon.repository.AuthorityRepository;
 import fi.lifesup.hackathon.repository.UserRepository;
 import fi.lifesup.hackathon.security.AuthoritiesConstants;
@@ -44,6 +45,7 @@ public class UserService {
                 // activate given user for the registration key.
                 user.setActivated(true);
                 user.setActivationKey(null);
+                user.setStatus(UserStatus.ACTIVATED);
                 userRepository.save(user);
                 log.debug("Activated user: {}", user);
                 return user;
@@ -98,6 +100,7 @@ public class UserService {
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         authorities.add(authority);
         newUser.setAuthorities(authorities);
+        newUser.setStatus(UserStatus.INACTIVATED);
         userRepository.save(newUser);
         log.debug("Created Information for User: {}", newUser);
         return newUser;
@@ -126,6 +129,7 @@ public class UserService {
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(ZonedDateTime.now());
         user.setActivated(true);
+       // user.setStatus(UserStatus.INACTIVATED);
         userRepository.save(user);
         log.debug("Created Information for User: {}", user);
         return user;
