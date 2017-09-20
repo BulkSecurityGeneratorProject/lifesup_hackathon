@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <property name="now" value="now()" dbms="mysql,h2"/>
+    <property name="now" value="current_timestamp" dbms="postgresql"/>
+    <property name="now" value="sysdate" dbms="oracle"/>
+
+    <property name="autoIncrement" value="true" dbms="mysql,h2,postgresql,oracle"/>
+
+    <property name="floatType" value="float4" dbms="postgresql, h2"/>
+    <property name="floatType" value="float" dbms="mysql, oracle"/>
+
+    <!--
+        Added the entity UserList.
+    -->
+    <changeSet id="20170920141734" author="jhipster">
+        <addColumn tableName="challenge_info">
+        	<column name="application_close_date" type="timestamp">
+        	<constraints nullable="false"/>
+        	</column>
+        	<column name="selection_inform_date" type="timestamp" ></column>
+        	<column name="kickoff_webinar_date" type="timestamp"></column>
+        	<column name="pilot_submission_close_date" type="timestamp"></column>
+        	<column name="pilot_phase_start_date_pilot_phase_end_date" type="varchar(30)"></column>
+        	
+        </addColumn>           
+        <dropDefaultValue tableName="challenge_info" columnName="application_close_date" columnDataType="datetime"/>
+        <dropDefaultValue tableName="challenge_info" columnName="selection_inform_date" columnDataType="datetime"/>
+        <dropDefaultValue tableName="challenge_info" columnName="kickoff_webinar_date" columnDataType="datetime"/>
+        <dropDefaultValue tableName="challenge_info" columnName="pilot_submission_close_date" columnDataType="datetime"/>
+        
+        <dropColumn tableName="challenge_info" columnName="apply_end_time"></dropColumn>
+        <dropColumn tableName="challenge_info" columnName="apply_start_time"></dropColumn>
+        <dropColumn tableName="challenge_info" columnName="active_time"></dropColumn>
+    </changeSet>
+    
+ 
+</databaseChangeLog>
