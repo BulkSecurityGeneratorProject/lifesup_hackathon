@@ -55,25 +55,27 @@ public class ChallengeInfo implements Serializable {
 	private ZonedDateTime pilotSubmissionCloseDate;
 	
 	@Column(name = "pilot_phase_start_date")
-	private ZonedDateTime pilotStartPhaseDate;
+	private ZonedDateTime pilotPhaseStartDate;
 	
 	@Column(name = "pilot_phase_end_date")
-	private ZonedDateTime pilotEndPhaseDate;
+	private ZonedDateTime pilotPhaseEndDate;
 
-	public ZonedDateTime getPilotStartPhaseDate() {
-		return pilotStartPhaseDate;
+	
+
+	public ZonedDateTime getPilotPhaseStartDate() {
+		return pilotPhaseStartDate;
 	}
 
-	public void setPilotStartPhaseDate(ZonedDateTime pilotStartPhaseDate) {
-		this.pilotStartPhaseDate = pilotStartPhaseDate;
+	public void setPilotPhaseStartDate(ZonedDateTime pilotPhaseStartDate) {
+		this.pilotPhaseStartDate = pilotPhaseStartDate;
 	}
 
-	public ZonedDateTime getPilotEndPhaseDate() {
-		return pilotEndPhaseDate;
+	public ZonedDateTime getPilotPhaseEndDate() {
+		return pilotPhaseEndDate;
 	}
 
-	public void setPilotEndPhaseDate(ZonedDateTime pilotEndPhaseDate) {
-		this.pilotEndPhaseDate = pilotEndPhaseDate;
+	public void setPilotPhaseEndDate(ZonedDateTime pilotPhaseEndDate) {
+		this.pilotPhaseEndDate = pilotPhaseEndDate;
 	}
 
 	public Long getId() {

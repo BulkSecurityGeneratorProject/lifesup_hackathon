@@ -105,6 +105,13 @@ public class ChallengeInfoResource {
         		return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
         	}
         }
+        
+        if(challengeInfo.getPilotSubmissionCloseDate().isBefore(challengeInfo.getEventStartTime())){
+        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challenge", "idexists", "A new challenge cannot already have an ID")).body(null);
+        }
+        if(challengeInfo.getPilotSubmissionCloseDate().isAfter(challengeInfo.getEventEndTime())){
+        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challenge", "idexists", "A new challenge cannot already have an ID")).body(null);
+        }
     		
 //        if((challengeInfo.getKickoffWebinarDate().isAfter(challengeInfo.getPilotSubmissionCloseDate())  
 //        	&&	(challengeInfo.getKickoffWebinarDate().isBefore(challengeInfo.getPilotSubmissionCloseDate())))){
