@@ -10,7 +10,7 @@ function dataservice($http, $log) {
     };
 
     function getData() {
-        return $http.get('app/challengeslist/challengeslist.json')
+        return $http.get('i18n/en/challengeslist.json')
             .then(getDataSuccess)
             .catch(getDataFail);
 
