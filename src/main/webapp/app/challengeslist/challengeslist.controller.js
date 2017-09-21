@@ -5,10 +5,11 @@
         .module('hackathonApp')
         .controller('ChallengesListController', ChallengesListController);
 
-    ChallengesListController.$inject = ['$scope','dataservice','$log', '$timeout', '$q'];
+    ChallengesListController.$inject = ['$scope','dataservice','$log', '$timeout', '$q','Principal'];
 
-    function ChallengesListController($scope, dataservice, $log, $timeout, $q) {
+    function ChallengesListController($scope, dataservice, $log, $timeout, $q, Principal) {
         var vm = this;
+        vm.isAuthenticated = Principal.isAuthenticated;
         vm.Math = Math;
         vm.challenges = [];
         vm.deadline = [];

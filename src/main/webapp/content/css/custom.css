@@ -164,11 +164,13 @@ body {
   box-shadow: 2px 2px 2px #ccc;
   text-transform: uppercase;
   font-weight: bold;
+  padding: 0;
 }
 
 .challenge-cta a {
   color: #F5EFFF;
-  
+  display: block;
+  padding: 6px 12px;
 }
 
 .challenge-cta a:hover {
