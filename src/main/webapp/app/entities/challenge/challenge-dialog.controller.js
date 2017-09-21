@@ -45,8 +45,13 @@
 
         function save() {
             vm.isSaving = true;
+            var now = new Date().getTime();
+            var end = new Date(vm.challengeInfo.applicationCloseDate).getTime();
+            var time = end - now;
+            if (time < 0) {
+                vm.challengeInfo.status = 'CLOSED';
+            }
             if (vm.challengeInfo.id !== null) {
-                console.log("Hello");
                 ChallengeInfo.update(vm.challengeInfo, onSaveInfoSuccess, onSaveInfoError);
             } else {
                 ChallengeInfo.save(vm.challengeInfo, onSaveInfoSuccess, onSaveInfoError);
@@ -63,6 +68,7 @@
                 Challenge.save(vm.challenge, onSaveSuccess, onSaveError);
             }
         }
+
         function onSaveSuccess(result) {
             $scope.$emit('hackathonApp:challengeUpdate', result);
             $mdDialog.hide(result);
@@ -70,11 +76,12 @@
         }
 
         function onSaveInfoError() {
-
+            vm.isSaving = false;
         }
 
         function onSaveError() {
-            ChallengeInfo.delete({id: vm.challenge.info.id});
+            ChallengeInfo.delete({ id: vm.challenge.info.id });
+            vm.isSaving = false;
         }
 
 

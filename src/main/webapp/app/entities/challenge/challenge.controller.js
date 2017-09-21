@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('ChallengeController', ChallengeController);
 
-    ChallengeController.$inject = ['$scope', '$state', 'Challenge', 'ChallengeByAuthority'];
+    ChallengeController.$inject = ['$scope', '$state', 'Challenge', 'ChallengeInfo', 'ChallengeByAuthority'];
 
-    function ChallengeController($scope, $state, Challenge, ChallengeByAuthority) {
+    function ChallengeController($scope, $state, Challenge, ChallengeInfo, ChallengeByAuthority) {
         var vm = this;
 
         vm.challenges = [];
@@ -23,26 +23,30 @@
                 vm.activeChallenges = [];
                 vm.closedChallenges = [];
                 vm.challenges = result;
-                
+                vm.displayChallenges = result;
+                if (!result.length) {
+                    vm.hasNoChallenge = true;
+                    return;
+                }
                 vm.challenges.forEach(function (element) {
+                    if (element.info.status == 'CLOSED') {
+                        vm.closedChallenges.push(element);
+                    }
                     if (element.info.status == 'DRAFT') {
                         vm.draftChallenges.push(element);
                     }
                     if (element.info.status == 'ACTIVE') {
                         vm.activeChallenges.push(element);
+                        var now = new Date().getTime();
+                        var end = new Date(element.info.applicationCloseDate).getTime();
+                        var time = end - now;
+                        if (time < 0) {
+                            element.info.status = 'CLOSED';
+                            ChallengeInfo.update(element.info);
+                        }
+                        element.timeLeft = parseInt(Math.ceil(time / (1000 * 60 * 60 * 24)));
                     }
-                    if (element.info.status == 'CLOSED') {
-                        vm.closedChallenges.push(element);
-                    }
-                    var now = new Date().getTime();
-                    var applyEnd = new Date(element.info.applicationCloseDate).getTime();
-                    var time = applyEnd - now;
-                    element.timeLeft = parseInt(Math.ceil(time / (1000 * 60 * 60 * 24)));
                 }, this);
-                vm.displayChallenges = vm.activeChallenges.concat(vm.draftChallenges);
-                if (!result.length) {
-                    vm.hasNoChallenge = true;
-                }
             });
         }
 
@@ -64,5 +68,22 @@
                 return;
             }
         }
+
+        $(".scroll_on_hover").mouseover(function () {
+            $(this).removeClass("ellipsis");
+            var maxscroll = $(this).width();
+            var speed = maxscroll * 15;
+            $(this).animate({
+                scrollLeft: maxscroll
+            }, speed, "linear");
+        });
+
+        $(".scroll_on_hover").mouseout(function () {
+            $(this).stop();
+            $(this).addClass("ellipsis");
+            $(this).animate({
+                scrollLeft: 0
+            }, 'slow');
+        });
     }
 })();

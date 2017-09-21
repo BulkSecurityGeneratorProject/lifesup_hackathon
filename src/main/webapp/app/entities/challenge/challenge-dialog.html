@@ -8,13 +8,13 @@
             </md-button>
         </div>
     </md-toolbar>
-    <md-dialog-content style="width:800px;">
+    <md-dialog-content class="challenge-dialog">
         <jhi-alert-error></jhi-alert-error>
-        <md-tabs md-dynamic-height md-dynamic-width md-border-bottom>
+        <md-tabs md-dynamic-height md-stretch-tabs="always" md-border-bottom>
             <md-tab label="Basic">
                 <md-content class="md-padding md-inline-form">
                     <form name="challengeInfoForm">
-                        <div layout-gt-xs="row">
+                        <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span data-translate="hackathonApp.challengeInfo.eventStartTime"></span></label>
                                 <md-datepicker id="birthday" md-hide-icons="all" md-open-on-focus name="eventStartTime" ng-model="vm.challengeInfo.eventStartTime" required></md-datepicker>
@@ -31,7 +31,7 @@
                             </md-input-container>
                         </div>
 
-                        <div layout-gt-xs="row">
+                        <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span data-translate="hackathonApp.challengeInfo.applicationCloseDate"></span></label>
                                 <md-datepicker id="birthday" md-hide-icons="all" md-open-on-focus name="applicationCloseDate" ng-model="vm.challengeInfo.applicationCloseDate" required></md-datepicker>
@@ -49,7 +49,7 @@
                             </md-input-container>
                         </div>
 
-                        <div layout-gt-xs="row">
+                        <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span data-translate="hackathonApp.challengeInfo.selectionInformDate"></span></label>
                                 <md-datepicker id="birthday" md-hide-icons="all" md-open-on-focus name="selectionInformDate" ng-model="vm.challengeInfo.selectionInformDate" required></md-datepicker>
@@ -66,7 +66,7 @@
                                 </div>
                             </md-input-container>
                         </div>
-                        <div layout-gt-xs="row">
+                        <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span data-translate="hackathonApp.challengeInfo.pilotPhaseStartDate"></span></label>
                                 <md-datepicker id="birthday" md-hide-icons="all" md-open-on-focus name="pilotPhaseStartDate" ng-model="vm.challengeInfo.pilotPhaseStartDate" required></md-datepicker>
@@ -85,7 +85,7 @@
                         </div>
 
 
-                        <div layout-gt-xs="row">
+                        <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label><span class="glyphicon glyphicon-screenshot"></span>&nbsp;<span data-translate="hackathonApp.challengeInfo.location">Location</span></label>
                                 <input name="location" ng-model="vm.challengeInfo.location" required>
@@ -123,7 +123,7 @@
                 <md-content class="md-padding">
                     <form name="challengeForm">
                         <!-- <lf-ng-md-file-input lf-files='files' lf-placeholder="Banner Image"> </lf-ng-md-file-input> -->
-                        <div layout-gt-xs="row">
+                        <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label data-translate="hackathonApp.challenge.name">Challenge Name</label>
                                 <input name="name" ng-model="vm.challenge.name" required>
@@ -133,7 +133,7 @@
                             </md-input-container>
                         </div>
 
-                        <div layout-gt-xs="row">
+                        <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label data-translate="hackathonApp.challenge.bannerUrl">Banner URL</label>
                                 <input name="bannerUrl" ng-model="vm.challenge.bannerUrl" required>
@@ -143,7 +143,7 @@
                             </md-input-container>
                         </div>
 
-                        <div layout-gt-xs="row">
+                        <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label data-translate="hackathonApp.challenge.maxTeamNumber">Max Team Member</label>
                                 <input name="maxTeamNumber" type="number" ng-model="vm.challenge.maxTeamNumber" required/>
@@ -160,7 +160,7 @@
                             </md-input-container>
                         </div>
 
-                        <div layout-gt-xs="row">
+                        <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label data-translate="hackathonApp.challenge.introduction">Introduction</label>
                                 <textarea name="introduction" ng-model="vm.challenge.introduction" md-maxlength="250" rows="5" md-select-on-focus required></textarea>
@@ -170,7 +170,7 @@
                             </md-input-container>
                         </div>
 
-                        <div layout-gt-xs="row">
+                        <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label data-translate="hackathonApp.challenge.challengeText">Challenge Text</label>
                                 <textarea name="challengeText" ng-model="vm.challenge.challengeText" md-maxlength="250" rows="5" md-select-on-focus required></textarea>
@@ -180,7 +180,7 @@
                             </md-input-container>
                         </div>
 
-                        <div layout-gt-xs="row">
+                        <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label data-translate="hackathonApp.challenge.resourceText">Resource Text</label>
                                 <textarea name="resourceText" ng-model="vm.challenge.resourceText" md-maxlength="250" rows="5" md-select-on-focus required></textarea>
@@ -189,7 +189,7 @@
                                 </div>
                             </md-input-container>
                         </div>
-                        <div layout-gt-xs="row">
+                        <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label data-translate="hackathonApp.challenge.rewardsText">Rewards Text</label>
                                 <textarea name="rewardsText" ng-model="vm.challenge.rewardsText" md-maxlength="250" rows="5" md-select-on-focus required></textarea>
@@ -198,7 +198,7 @@
                                 </div>
                             </md-input-container>
                         </div>
-                        <div layout-gt-xs="row">
+                        <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label data-translate="hackathonApp.challenge.timelineText">Timeline Text</label>
                                 <textarea name="timelineText" ng-model="vm.challenge.timelineText" md-maxlength="250" rows="5" md-select-on-focus required></textarea>
@@ -207,7 +207,7 @@
                                 </div>
                             </md-input-container>
                         </div>
-                        <div layout-gt-xs="row">
+                        <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label data-translate="hackathonApp.challenge.rulesText">Rules Text</label>
                                 <textarea name="rulesText" ng-model="vm.challenge.rulesText" md-maxlength="250" rows="5" md-select-on-focus required></textarea>
@@ -216,7 +216,7 @@
                                 </div>
                             </md-input-container>
                         </div>
-                        <div layout-gt-xs="row">
+                        <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label data-translate="hackathonApp.challenge.additionalText">Addtional Info</label>
                                 <textarea name="introduction" ng-model="vm.challenge.additionalText" md-maxlength="250" rows="5" md-select-on-focus></textarea>

@@ -11,7 +11,7 @@
             "updated": "A Challenge is updated with identifier {{ param }}",
             "deleted": "A Challenge is deleted with identifier {{ param }}",
             "delete": {
-                "question": "Are you sure you want to delete Challenge {{ id }}?"
+                "question": "Are you sure you want to delete challenge <b>{{ id }}</b>?"
             },
             "detail": {
                 "title": "Challenge"
