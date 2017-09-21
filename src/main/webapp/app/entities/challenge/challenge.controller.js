@@ -21,30 +21,25 @@
             Challenge.query(function (result) {
                 vm.draftChallenges = [];
                 vm.activeChallenges = [];
-                vm.inactiveChallenges = [];
+                vm.closedChallenges = [];
                 vm.challenges = result;
-                vm.displayChallenges = result;
+                
                 vm.challenges.forEach(function (element) {
-                    if (element.info.status == 'DRAFT'){
+                    if (element.info.status == 'DRAFT') {
                         vm.draftChallenges.push(element);
                     }
-                    if (element.info.status == 'ACTIVE'){
+                    if (element.info.status == 'ACTIVE') {
                         vm.activeChallenges.push(element);
                     }
-                    if (element.info.status == 'INACTIVE'){
-                        vm.inactiveChallenges.push(element);
+                    if (element.info.status == 'CLOSED') {
+                        vm.closedChallenges.push(element);
                     }
                     var now = new Date().getTime();
-                    var applyEnd = new Date(element.info.applyEndTime).getTime();
+                    var applyEnd = new Date(element.info.applicationCloseDate).getTime();
                     var time = applyEnd - now;
-                    if (time <= 0) {
-                        element.isClosed = true;
-                    }
-                    else{
-                        element.isClosed = false;
-                        element.timeLeft =  parseInt(Math.ceil(time/(1000*60*60*24)));
-                    }
+                    element.timeLeft = parseInt(Math.ceil(time / (1000 * 60 * 60 * 24)));
                 }, this);
+                vm.displayChallenges = vm.activeChallenges.concat(vm.draftChallenges);
                 if (!result.length) {
                     vm.hasNoChallenge = true;
                 }
@@ -62,8 +57,8 @@
                 console.log(vm.displayChallenges);
                 return;
             }
-            if (status == 'inactive') {
-                vm.displayChallenges = vm.inactiveChallenges;
+            if (status == 'closed') {
+                vm.displayChallenges = vm.closedChallenges;
                 console.log(vm.displayChallenges);
                 return;
             }

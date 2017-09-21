@@ -1,10 +1,10 @@
 <div class="row text-center" ng-cloak>
     <div class="col-md-3 md-padding">
-        <div ng-show="!vm.hasNoChallenge">
+        <div>
             <button ng-click="vm.filter('all')" class="btn btn-xs w3-red">All</button>
             <button ng-click="vm.filter('draft')" class="btn btn-xs w3-brown">Draft</button>
             <button ng-click="vm.filter('active')" class="btn btn-xs w3-green">Active</button>
-            <button ng-click="vm.filter('inactive')" class="btn btn-xs w3-grey">Inactive</button>
+            <button ng-click="vm.filter('closed')" class="btn btn-xs w3-grey">Closed</button>
         </div>
         <div>
 
@@ -12,8 +12,7 @@
 
     </div>
     <div class="col-md-6">
-        <h2 ng-show="vm.hasNoChallenge" data-translate="hackathonApp.challenge.home.title">Challenges Management</h2>
-        <md-content ng-show="!vm.hasNoChallenge" class="md-padding">
+        <md-content class="md-padding">
             <form ng-submit="$event.preventDefault()">
                 <md-autocomplete md-selected-item="vm.selectedItem" md-search-text-change="vm.searchTextChange(vm.searchText)" md-search-text="vm.searchText"
                     md-selected-item-change="vm.selectedItemChange(item)" md-items="item in vm.challenges | filter: vm.searchText"
@@ -54,21 +53,21 @@
     <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="challenge in vm.displayChallenges | filter: vm.searchText">
         <md-card class="challenge-card">
 
-            <div ng-if="challenge.info.status == 'ACTIVE' && !challenge.isClosed" class="ribbon-wrapper">
+            <div ng-if="challenge.info.status == 'ACTIVE'" class="ribbon-wrapper">
                 <div class="ribbon-green">Active</div>
             </div>
 
-            <div ng-if="challenge.info.status == 'INACTIVE' && !challenge.isClosed" class="ribbon-wrapper">
-                <div class="ribbon-red">Inactive</div>
+            <div ng-if="challenge.info.status == 'DRAFT'" class="ribbon-wrapper">
+                <div class="ribbon-brown">Draft</div>
             </div>
 
-            <div ng-if="challenge.isClosed" class="ribbon-wrapper">
+            <div ng-if="challenge.info.status == 'CLOSED'" class="ribbon-wrapper">
                 <div class="ribbon-grey">Closed</div>
             </div>
 
-            <img ng-src="content/images/challenge.jpg" ng-class="{'img-grey': challenge.isClosed}" class="md-card-image" alt="Washed Out">
+            <img ng-src="content/images/challenge.jpg" ng-class="{'img-grey': challenge.info.status == 'CLOSED'}" class="md-card-image" alt="Washed Out">
 
-            <md-card-title ng-class="{'w3-grey': challenge.isClosed, 'w3-red': challenge.info.status=='INACTIVE' && !challenge.isClosed, 'w3-light-grey': challenge.info.status=='DRAFT' && !challenge.isClosed}">
+            <md-card-title ng-class="{'w3-green': challenge.info.status == 'ACTIVE', 'w3-grey': challenge.info.status == 'CLOSED', 'w3-brown': challenge.info.status=='DRAFT'}">
                 <md-card-title-text>
                     <span class="md-headline"><strong>{{challenge.name}}</strong></span>
                     <span class="md-subhead"><i>with</i> Company Name</span>
@@ -79,8 +78,8 @@
                 <p><span class="glyphicon glyphicon-calendar"></span>&nbsp;<b>{{challenge.info.eventStartTime | date:'MMM. dd'}} - {{challenge.info.eventEndTime | date:'MMM. dd (yyyy)'}}</b></p>
 
                 <p><span class="glyphicon glyphicon-time"></span>
-                    <b>{{challenge.info.applyStartTime | date:'MMM. dd'}} - {{challenge.info.applyEndTime | date:'MMM. dd'}}</b>
-                    <span ng-if="!challenge.isClosed && challenge.info.status == 'ACTIVE'" class="pull-right w3-text-blue">
+                    <b>{{challenge.info.applicationCloseDate | date:'MMM. dd'}}</b>
+                    <span ng-if="challenge.info.status == 'ACTIVE'" class="pull-right w3-text-blue">
                             <b>Apply in {{challenge.timeLeft}} day(s)</b>
                         </span>
                 </p>

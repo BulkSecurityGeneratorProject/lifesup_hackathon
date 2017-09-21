@@ -17,50 +17,25 @@
         vm.save = save;
         vm.applications = Application.query();
         vm.companies = Company.query();
-        vm.changeStatus = changeStatus;
-        vm.isDraftStatus = true;
-        vm.activeTime = null;
 
         getChallengeInfo();
 
         function getChallengeInfo() {
             if (vm.challenge.id == null) {
                 vm.challengeInfo = {
-                    activeTime: null,
-                    eventStartTime: null,
-                    eventEndTime: null,
-                    applyStartTime: null,
-                    applyEndTime: null,
-                    location: null,
                     status: "DRAFT",
-                    prize: null,
-                    id: null
                 };
-                changeStatus();
             }
             else {
                 vm.challengeInfo = vm.challenge.info;
                 vm.challengeInfo.eventStartTime = new Date(vm.challenge.info.eventStartTime);
                 vm.challengeInfo.eventEndTime = new Date(vm.challenge.info.eventEndTime);
-                vm.challengeInfo.applyStartTime = new Date(vm.challenge.info.applyStartTime);
-                vm.challengeInfo.applyEndTime = new Date(vm.challenge.info.applyEndTime);
-                if (vm.challenge.info.activeTime){
-                    vm.activeTime = vm.challenge.info.activeTime;
-                }
-                changeStatus();
-            }
-        }
-
-        function changeStatus(){
-            if (vm.challengeInfo.status == "DRAFT"){
-                vm.isDraftStatus = true;
-                if (vm.activeTime){
-                    vm.challengeInfo.activeTime = new Date(vm.activeTime);
-                }
-            }
-            else{
-                vm.isDraftStatus = false;
-                vm.challengeInfo.activeTime = null;
+                vm.challengeInfo.pilotPhaseStartDate = new Date(vm.challenge.info.pilotPhaseStartDate);
+                vm.challengeInfo.pilotPhaseEndDate = new Date(vm.challenge.info.pilotPhaseEndDate);
+                vm.challengeInfo.kickoffWebinarDate = new Date(vm.challenge.info.kickoffWebinarDate);
+                vm.challengeInfo.selectionInformDate = new Date(vm.challenge.info.selectionInformDate);
+                vm.challengeInfo.applicationCloseDate = new Date(vm.challenge.info.applicationCloseDate);
+                vm.challengeInfo.pilotSubmissionCloseDate = new Date(vm.challenge.info.pilotSubmissionCloseDate);
             }
         }
 
@@ -83,6 +58,7 @@
                 Challenge.update(vm.challenge, onSaveSuccess, onSaveError);
             }
             else {
+                
                 vm.challenge.info = result;
                 Challenge.save(vm.challenge, onSaveSuccess, onSaveError);
             }
