@@ -17,23 +17,15 @@
             <md-content layout-padding>
                 <form name="userForm">
                     <div layout-gt-xs="row">
-
-                        <md-input-container class="md-block" flex-gt-sm>
+                        <!-- <md-input-container class="md-block" flex-gt-sm>
                             <label data-translate="settings.form.fullname">Name</label>
                             <input name="name" ng-model="vm.user.fullName" required>
                             <div ng-messages="userForm.name.$error" role="alert">
                                 <div ng-message="required" data-translate="settings.messages.validate.fullname.required"></div>
                             </div>
-                        </md-input-container>
+                        </md-input-container> -->
 
-                        <md-input-container class="md-block" flex-gt-sm>
-                            <label data-translate="settings.form.birthday"></label>
-                            <md-datepicker id="birthday" name="birthday" ng-model="vm.user.birthday" md-hide-icons="calendar" required></md-datepicker>
 
-                            <div ng-messages="userForm.birthday.$error">
-                                <div ng-message="required" data-translate="settings.messages.validate.birthday.required"></div>
-                            </div>
-                        </md-input-container>
                         <md-input-container class="md-block" flex-gt-sm>
                             <label data-translate="settings.form.gender">Gender</label>
                             <md-select name="gender" ng-model="vm.user.sex" required>
@@ -45,12 +37,22 @@
                                 <div ng-message="required" data-translate="settings.messages.validate.gender.required"></div>
                             </div>
                         </md-input-container>
+
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label data-translate="settings.form.birthday"></label>
+                            <md-datepicker id="birthday" name="birthday" ng-model="vm.user.birthday" md-hide-icons="all" md-open-on-focus required></md-datepicker>
+
+                            <div ng-messages="userForm.birthday.$error">
+                                <div ng-message="required" data-translate="settings.messages.validate.birthday.required"></div>
+                            </div>
+                        </md-input-container>
+
                     </div>
 
                     <div layout-gt-xs="row">
                         <md-input-container class="md-block" flex-gt-sm>
                             <label data-translate="settings.form.company">Company</label>
-                            <input name="company" ng-model="vm.user.company">
+                            <input name="company" ng-model="vm.user.companyName">
                         </md-input-container>
 
                         <md-input-container class="md-block" flex-gt-sm>
@@ -124,17 +126,17 @@
                     <div layout-gt-xs="row">
                         <md-input-container class="md-block" flex-gt-sm>
                             <label data-translate="settings.form.twitter">Twitter</label>
-                            <input name="twitter" ng-model="vm.user.twitter">
+                            <input name="twitter" ng-model="vm.user.twitterUrl">
                         </md-input-container>
 
                         <md-input-container class="md-block" flex-gt-sm>
                             <label data-translate="settings.form.linkedin">LinkedIn</label>
-                            <input name="linkedin" ng-model="vm.user.linkedin">
+                            <input name="linkedin" ng-model="vm.user.linkedInUrl">
                         </md-input-container>
 
                         <md-input-container class="md-block" flex-gt-sm>
                             <label data-translate="settings.form.website">Website</label>
-                            <input name="website" ng-model="vm.user.website">
+                            <input name="website" ng-model="vm.user.websiteUrl">
                         </md-input-container>
                     </div>
 
@@ -142,29 +144,29 @@
 
                         <div layout-gt-xs="column" flex>
                             <label data-translate="settings.form.skills">Skills</label>
-                            <md-checkbox name="skills" ng-repeat="skill in vm.skills" ng-checked="vm.exists(skill, vm.selectedSkills)" ng-click="vm.toggle(skill, vm.selectedSkills)">
-                                {{ skill }}
+                            <md-checkbox name="skills" ng-repeat="skill in vm.skills" ng-checked="vm.exists(skill.name, vm.selectedSkills)" ng-click="vm.toggle(skill.name, vm.selectedSkills, true)">
+                                {{ skill.name }}
                             </md-checkbox>
                         </div>
 
                         <div layout-gt-xs="column" flex>
                             <label data-translate="settings.form.workAreas">Work Areas</label>
                             <div ng-repeat="workArea in vm.workAreas">
-                                <md-checkbox ng-checked="vm.exists(workArea, vm.selectedWorkAreas)" ng-click="vm.toggle(workArea, vm.selectedWorkAreas)">
-                                    {{ workArea }}
+                                <md-checkbox ng-checked="vm.exists(workArea.name, vm.selectedWorkAreas)" ng-click="vm.toggle(workArea.name, vm.selectedWorkAreas, false)">
+                                    {{ workArea.name }}
                                 </md-checkbox>
                             </div>
                         </div>
 
                         <div layout-gt-xs="column" flex>
                             <label data-translate="settings.form.feedBackFrom">Reference from:</label>
-                            <md-radio-group ng-model="vm.user.referenceFrom" ng-change="vm.print()">
+                            <md-radio-group ng-model="vm.user.feedbackFrom" ng-change="vm.print()">
                                 <md-radio-button value="friend">Friend</md-radio-button>
                                 <md-radio-button value="social">Social Media</md-radio-button>
                                 <md-radio-button value="company">A Company</md-radio-button>
                                 <md-radio-button value="">Something Else...</md-radio-button>
                             </md-radio-group>
-                            <md-input-container ng-show="vm.user.referenceFrom == ''" class="md-block" flex-gt-sm>
+                            <md-input-container ng-show="vm.user.feedbackFrom == ''" class="md-block" flex-gt-sm>
                                 <label data-translate="settings.form.other">Other...</label>
                                 <input name="other" ng-model="vm.other">
                             </md-input-container>

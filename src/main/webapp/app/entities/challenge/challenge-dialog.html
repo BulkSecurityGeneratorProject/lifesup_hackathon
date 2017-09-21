@@ -16,15 +16,15 @@
                     <form name="challengeInfoForm">
                         <div layout-gt-xs="row">
                             <md-input-container class="md-block" flex-gt-sm>
-                                <label data-translate="hackathonApp.challengeInfo.eventStartTime">Event Start</label>
-                                <md-datepicker name="eventStartTime" ng-model="vm.challengeInfo.eventStartTime" required></md-datepicker>
+                                <label><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span data-translate="hackathonApp.challengeInfo.eventStartTime"></span></label>
+                                <md-datepicker id="birthday" md-hide-icons="all" md-open-on-focus name="eventStartTime" ng-model="vm.challengeInfo.eventStartTime" required></md-datepicker>
                                 <div ng-messages="challengeInfoForm.eventStartTime.$error">
                                     <div ng-message="required" data-translate="hackathonApp.messages.validate.eventStartTime.required"></div>
                                 </div>
                             </md-input-container>
                             <md-input-container class="md-block" flex-gt-sm>
-                                <label data-translate="hackathonApp.challengeInfo.eventEndTime">Event End</label>
-                                <md-datepicker name="eventEndTime" ng-model="vm.challengeInfo.eventEndTime" required></md-datepicker>
+                                <label><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span data-translate="hackathonApp.challengeInfo.eventEndTime"></span></label>
+                                <md-datepicker id="birthday" md-hide-icons="all" md-open-on-focus name="eventEndTime" ng-model="vm.challengeInfo.eventEndTime" required></md-datepicker>
                                 <div ng-messages="challengeInfoForm.eventEndTime.$error">
                                     <div ng-message="required" data-translate="hackathonApp.messages.validate.eventEndTime.required"></div>
                                 </div>
@@ -33,43 +33,68 @@
 
                         <div layout-gt-xs="row">
                             <md-input-container class="md-block" flex-gt-sm>
-                                <label data-translate="hackathonApp.challengeInfo.applyStartTime">Apply Start</label>
-                                <md-datepicker name="applyStartTime" ng-model="vm.challengeInfo.applyStartTime" required></md-datepicker>
-                                <div ng-messages="challengeInfoForm.applyStartTime.$error">
-                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.applyStartTime.required"></div>
+                                <label><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span data-translate="hackathonApp.challengeInfo.applicationCloseDate"></span></label>
+                                <md-datepicker id="birthday" md-hide-icons="all" md-open-on-focus name="applicationCloseDate" ng-model="vm.challengeInfo.applicationCloseDate" required></md-datepicker>
+                                <div ng-messages="challengeInfoForm.applicationCloseDate.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.applicationCloseDate.required"></div>
                                 </div>
                             </md-input-container>
                             <md-input-container class="md-block" flex-gt-sm>
-                                <label data-translate="hackathonApp.challengeInfo.applyEndTime">Apply End</label>
-                                <md-datepicker name="applyEndTime" ng-model="vm.challengeInfo.applyEndTime" required></md-datepicker>
+                                <label><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span data-translate="hackathonApp.challengeInfo.pilotSubmissionCloseDate"></span></label>
+                                <md-datepicker id="birthday" md-hide-icons="all" md-open-on-focus name="pilotSubmissionCloseDate" ng-model="vm.challengeInfo.pilotSubmissionCloseDate" required></md-datepicker>
 
-                                <div ng-messages="challengeInfoForm.applyEndTime.$error">
-                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.applyEndTime.required"></div>
-                                </div>
-                            </md-input-container>
-                        </div>
-
-                        <div layout-gt-xs="row" ng-show="vm.isDraftStatus">
-                            <md-input-container class="md-block" flex-gt-sm>
-                                <label data-translate="hackathonApp.challengeInfo.activeTime">Active Time</label>
-                                <md-datepicker name="activeTime" ng-model="vm.challengeInfo.activeTime"></md-datepicker>
-
-                                <div ng-messages="challengeInfoForm.activeTime.$error">
-                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.activeTime.required"></div>
+                                <div ng-messages="challengeInfoForm.pilotSubmissionCloseDate.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.pilotSubmissionCloseDate.required"></div>
                                 </div>
                             </md-input-container>
                         </div>
 
                         <div layout-gt-xs="row">
                             <md-input-container class="md-block" flex-gt-sm>
-                                <label data-translate="hackathonApp.challengeInfo.location">Location</label>
+                                <label><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span data-translate="hackathonApp.challengeInfo.selectionInformDate"></span></label>
+                                <md-datepicker id="birthday" md-hide-icons="all" md-open-on-focus name="selectionInformDate" ng-model="vm.challengeInfo.selectionInformDate" required></md-datepicker>
+                                <div ng-messages="challengeInfoForm.selectionInformDate.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.selectionInformDate.required"></div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span data-translate="hackathonApp.challengeInfo.kickoffWebinarDate"></span></label>
+                                <md-datepicker id="birthday" md-hide-icons="all" md-open-on-focus name="kickoffWebinarDate" ng-model="vm.challengeInfo.kickoffWebinarDate" required></md-datepicker>
+
+                                <div ng-messages="challengeInfoForm.kickoffWebinarDate.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.kickoffWebinarDate.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span data-translate="hackathonApp.challengeInfo.pilotPhaseStartDate"></span></label>
+                                <md-datepicker id="birthday" md-hide-icons="all" md-open-on-focus name="pilotPhaseStartDate" ng-model="vm.challengeInfo.pilotPhaseStartDate" required></md-datepicker>
+                                <div ng-messages="challengeInfoForm.pilotPhaseStartDate.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.pilotPhaseStartDate.required"></div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span data-translate="hackathonApp.challengeInfo.pilotPhaseEndDate"></span></label>
+                                <md-datepicker id="birthday" md-hide-icons="all" md-open-on-focus name="pilotPhaseEndDate" ng-model="vm.challengeInfo.pilotPhaseEndDate" required></md-datepicker>
+
+                                <div ng-messages="challengeInfoForm.pilotPhaseEndDate.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.pilotPhaseEndDate.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+
+                        <div layout-gt-xs="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label><span class="glyphicon glyphicon-screenshot"></span>&nbsp;<span data-translate="hackathonApp.challengeInfo.location">Location</span></label>
                                 <input name="location" ng-model="vm.challengeInfo.location" required>
                                 <div ng-messages="challengeInfoForm.location.$error" role="alert">
                                     <div ng-message="required" data-translate="hackathonApp.messages.validate.location.required"></div>
                                 </div>
                             </md-input-container>
                             <md-input-container class="md-block" flex-gt-sm>
-                                <label data-translate="hackathonApp.challengeInfo.prize">Prize</label>
+                                <label><span class="glyphicon glyphicon-usd"></span>&nbsp;<span data-translate="hackathonApp.challengeInfo.prize"></span></label>
                                 <input name="prize" ng-model="vm.challengeInfo.prize" required/>
                                 <div ng-messages="challengeInfoForm.prize.$error">
                                     <div ng-message="required" data-translate="hackathonApp.messages.validate.prize.required"></div>
@@ -86,7 +111,7 @@
                                     <md-radio-button value="ACTIVE"><span data-translate="hackathonApp.challengeInfo.status.active">Active</span></md-radio-button>
                                 </div>
                                 <div class="col-md-4">
-                                    <md-radio-button value="INACTIVE"><span data-translate="hackathonApp.challengeInfo.status.inactive">Inactive</span></md-radio-button>
+                                    <md-radio-button value="CLOSE"><span data-translate="hackathonApp.challengeInfo.status.close">Close</span></md-radio-button>
                                 </div>
                             </md-radio-group>
                         </div>
