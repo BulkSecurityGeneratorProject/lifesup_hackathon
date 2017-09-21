@@ -18,6 +18,10 @@
         vm.filterByStatus = filterByStatus;
         vm.getStatus = getStatus;
         vm.filter = {};
+        vm.startDate = null;
+        vm.endDate = null;
+        vm.filterByStartDate = filterByStartDate;
+        vm.filterByEndDate = filterByEndDate;
 
         getData();
 
@@ -43,7 +47,15 @@
             return Object.
               keys(filterObj).
               every(function (key) { return !filterObj[key]; });
+        }
+
+        function filterByStartDate(challenge) {
+            return vm.startDate ? vm.startDate > challenge.deadline : vm.challenges;
         }   
+
+        function filterByEndDate(challenge) {
+            return vm.endDate ? vm.endDate < challenge.deadline : vm.challenges;
+        }  
     }
    
 })();

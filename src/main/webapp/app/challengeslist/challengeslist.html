@@ -26,15 +26,15 @@
   </div>
 <!-- challenge filter by date-->
   <div class="md-padding date-filter col-sm-12 col-md-3 col-lg-3">
-    <md-datepicker ng-model="vm.date.start" md-open-on-focus md-placeholder="Start before" md-hide-icons="all" class="date-picker-filter" required></md-datepicker>
-    <md-datepicker ng-model="vm.date.end" md-open-on-focus md-placeholder="End after" md-hide-icons="all" class="date-picker-filter" required></md-datepicker>
+    <md-datepicker ng-model="vm.startDate" md-open-on-focus md-placeholder="Start before" md-hide-icons="all" class="date-picker-filter" required></md-datepicker>
+    <md-datepicker ng-model="vm.endDate" md-open-on-focus md-placeholder="End after" md-hide-icons="all" class="date-picker-filter" required></md-datepicker>
   </div>
 </div>
 <hr />
  
 
 <div class="row">
-  <div class="col-sm-12 col-md-4" ng-repeat="challenge in (vm.challenges | filter: vm.searchText | filter:vm.filterByStatus)">
+  <div class="col-sm-12 col-md-4" ng-repeat="challenge in vm.challenges | filter: vm.searchText | filter:vm.filterByStatus | filter:vm.filterByStartDate | filter:vm.filterByEndDate">
     <md-card class="challenge-container">
       <img md-card-image ng-src="{{challenge.bannerurl}}" class='challenge-banner' ng-class="{'img-grey': challenge.status == 'inactive'}">
         <md-card-title class='challenge-title'>{{challenge.challengename}}</md-card-title>
@@ -44,7 +44,7 @@
           <md-list>
             <md-list-item> <i class="material-icons">place</i>{{challenge.location}}</md-list-item>
             <md-list-item> <i class="material-icons">stars</i> {{challenge.prize}} </md-list-item>
-            <md-list-item> <i class="material-icons">alarm</i>{{vm.Math.floor((challenge.deadline - vm.today)/ (1000 * 60 * 60 * 24))}} days</md-list-item> 
+            <md-list-item> <i class="material-icons">alarm</i>Apply in {{vm.Math.floor((challenge.deadline - vm.today)/ (1000 * 60 * 60 * 24))}} days</md-list-item> 
           </md-list>
         </md-card-content>
         <md-card-actions ng-switch="challenge.status">

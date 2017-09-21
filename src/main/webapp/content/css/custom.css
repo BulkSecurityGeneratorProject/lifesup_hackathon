@@ -201,6 +201,10 @@ body {
   margin-top: .7em;
 }
 
+.date-filter {
+  display: flex;
+  justify-content: space-between;
+}
 .date-picker-filter {
   position: relative;
   top: .7em;
