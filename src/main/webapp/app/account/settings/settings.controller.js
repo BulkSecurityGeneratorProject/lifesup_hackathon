@@ -74,7 +74,6 @@
 
 
         function save() {
-            console.log(vm.user);
             UserInfo.save(vm.user, onSaveSuccess, onSaveError);
             // Auth.updateAccount(vm.settingsAccount).then(function () {
             //     vm.error = null;

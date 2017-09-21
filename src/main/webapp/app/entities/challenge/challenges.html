@@ -1,15 +1,11 @@
 <div class="row text-center" ng-cloak>
     <div class="col-md-3 md-padding">
         <div>
-            <button ng-click="vm.filter('all')" class="btn btn-xs w3-red">All</button>
-            <button ng-click="vm.filter('draft')" class="btn btn-xs w3-brown">Draft</button>
-            <button ng-click="vm.filter('active')" class="btn btn-xs w3-green">Active</button>
-            <button ng-click="vm.filter('closed')" class="btn btn-xs w3-grey">Closed</button>
+            <button ng-click="vm.filter('all')" class="btn btn-sm w3-red">All</button>
+            <button ng-click="vm.filter('active')" class="btn btn-sm w3-green">Active</button>
+            <button ng-click="vm.filter('draft')" class="btn btn-sm w3-brown">Draft</button>
+            <button ng-click="vm.filter('closed')" class="btn btn-sm w3-grey">Closed</button>
         </div>
-        <div>
-
-        </div>
-
     </div>
     <div class="col-md-6">
         <md-content class="md-padding">
@@ -51,39 +47,37 @@
     </div>
 
     <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="challenge in vm.displayChallenges | filter: vm.searchText">
-        <md-card class="challenge-card">
+        <md-card class="challenge-card" ng-switch="challenge.info.status">
 
-            <div ng-if="challenge.info.status == 'ACTIVE'" class="ribbon-wrapper">
+            <div ng-switch-when="ACTIVE" class="ribbon-wrapper">
                 <div class="ribbon-green">Active</div>
             </div>
 
-            <div ng-if="challenge.info.status == 'DRAFT'" class="ribbon-wrapper">
+            <div ng-switch-when="DRAFT" class="ribbon-wrapper">
                 <div class="ribbon-brown">Draft</div>
             </div>
 
-            <div ng-if="challenge.info.status == 'CLOSED'" class="ribbon-wrapper">
+            <div ng-switch-when="CLOSED" class="ribbon-wrapper">
                 <div class="ribbon-grey">Closed</div>
             </div>
 
-            <img ng-src="content/images/challenge.jpg" ng-class="{'img-grey': challenge.info.status == 'CLOSED'}" class="md-card-image" alt="Washed Out">
+            <img ng-src="content/images/challenge.jpg" ng-class="{'img-grey': challenge.info.status == 'CLOSED'}" class="md-card-image"
+                alt="Washed Out">
 
             <md-card-title ng-class="{'w3-green': challenge.info.status == 'ACTIVE', 'w3-grey': challenge.info.status == 'CLOSED', 'w3-brown': challenge.info.status=='DRAFT'}">
                 <md-card-title-text>
                     <span class="md-headline"><strong>{{challenge.name}}</strong></span>
-                    <span class="md-subhead"><i>with</i> Company Name</span>
                 </md-card-title-text>
             </md-card-title>
             <div class="w3-border-top w3-border-light-grey"></div>
-            <md-card-content>
-                <p><span class="glyphicon glyphicon-calendar"></span>&nbsp;<b>{{challenge.info.eventStartTime | date:'MMM. dd'}} - {{challenge.info.eventEndTime | date:'MMM. dd (yyyy)'}}</b></p>
+            <md-card-content class='challenge-content'>
 
-                <p><span class="glyphicon glyphicon-time"></span>
-                    <b>{{challenge.info.applicationCloseDate | date:'MMM. dd'}}</b>
-                    <span ng-if="challenge.info.status == 'ACTIVE'" class="pull-right w3-text-blue">
-                            <b>Apply in {{challenge.timeLeft}} day(s)</b>
-                        </span>
-                </p>
-
+                <md-list>
+                    <md-list-item> <i class="material-icons w3-text-red">pin_drop</i>{{challenge.info.location}}</md-list-item>
+                    <md-list-item><i class="material-icons w3-text-indigo">date_range</i> {{challenge.info.eventStartTime | date:'MMM.
+                        dd'}} - {{challenge.info.eventEndTime | date:'MMM. dd (yyyy)'}} </md-list-item>
+                    <md-list-item> <i class="material-icons w3-text-orange">alarm</i>Apply in {{challenge.timeLeft}} day(s)</md-list-item>
+                </md-list>
             </md-card-content>
             <div class="w3-border-top w3-border-light-grey"></div>
             <md-card-actions layout="row" layout-align="end center">

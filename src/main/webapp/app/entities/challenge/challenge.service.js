@@ -3,16 +3,38 @@
     angular
         .module('hackathonApp')
         .factory('Challenge', Challenge)
+        .factory('ChallengeByAuthority', ChallengeByAuthority)
         .factory('ChallengeInfo', ChallengeInfo);
 
+
+    Challenge.$inject = ['$resource'];
+    ChallengeByAuthority.$inject = ['$resource'];
     ChallengeInfo.$inject = ['$resource', 'DateUtils'];
 
 
 
-    Challenge.$inject = ['$resource'];
+
 
     function Challenge($resource) {
         var resourceUrl = 'api/challenges/:id';
+
+        return $resource(resourceUrl, {}, {
+            'query': { method: 'GET', isArray: true },
+            'get': {
+                method: 'GET',
+                transformResponse: function (data) {
+                    if (data) {
+                        data = angular.fromJson(data);
+                    }
+                    return data;
+                }
+            },
+            'update': { method: 'PUT' },
+        });
+    }
+
+    function ChallengeByAuthority($resource) {
+        var resourceUrl = 'api/challenges-by-authories';
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: true },
@@ -48,7 +70,8 @@
                     return data;
                 }
             },
-            'update': { method: 'PUT' }
+            'update': { method: 'PUT' },
+            'save': { method: 'POST' }
         });
     }
 })();

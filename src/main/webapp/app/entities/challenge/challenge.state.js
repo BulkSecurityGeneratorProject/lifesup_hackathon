@@ -83,10 +83,8 @@
                             }]
                         }
                     }).then(function () {
-                        console.log("Saved");
                         $state.go('challenge-detail', null, { reload: 'challenge-detail' });
                     }, function () {
-                        console.log("Cancelled");
                         $state.go('challenge-detail', null, { reload: 'challenge-detail' });
                     });
                 }]
@@ -123,10 +121,8 @@
                             }
                         }
                     }).then(function () {
-                        console.log("Saved");
                         $state.go('challenge', null, { reload: 'challenge' });
                     }, function () {
-                        console.log("Cancelled");
                         $state.go('^');
                     });
                 }]
@@ -152,10 +148,8 @@
                             }]
                         }
                     }).then(function () {
-                        console.log("Saved");
                         $state.go('challenge', null, { reload: 'challenge' });
                     }, function () {
-                        console.log("Cancelled");
                         $state.go('^');
                     });
                 }]
@@ -179,10 +173,8 @@
                             }]
                         }
                     }).then(function () {
-                        console.log("Deleted");
                         $state.go('challenge', null, { reload: 'challenge' });
                     }, function () {
-                        console.log("Cancelled");
                         $state.go('challenge');
                     });
                 }]

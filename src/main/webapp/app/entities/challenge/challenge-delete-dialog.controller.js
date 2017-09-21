@@ -18,12 +18,8 @@
         }
 
         function confirmDelete(id) {
-            Challenge.delete({ id: id },
-                function () {
-                    ChallengeInfo.delete({ id: vm.challenge.info.id }, function () {
-                        $mdDialog.hide(id);
-                    });
-                });
+            Challenge.delete({ id: id });
+            $mdDialog.hide(id);
         }
     }
 })();

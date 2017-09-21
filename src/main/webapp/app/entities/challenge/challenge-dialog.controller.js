@@ -46,6 +46,7 @@
         function save() {
             vm.isSaving = true;
             if (vm.challengeInfo.id !== null) {
+                console.log("Hello");
                 ChallengeInfo.update(vm.challengeInfo, onSaveInfoSuccess, onSaveInfoError);
             } else {
                 ChallengeInfo.save(vm.challengeInfo, onSaveInfoSuccess, onSaveInfoError);
@@ -58,7 +59,6 @@
                 Challenge.update(vm.challenge, onSaveSuccess, onSaveError);
             }
             else {
-                
                 vm.challenge.info = result;
                 Challenge.save(vm.challenge, onSaveSuccess, onSaveError);
             }
@@ -74,7 +74,7 @@
         }
 
         function onSaveError() {
-            // vm.isSaving = false;
+            ChallengeInfo.delete({id: vm.challenge.info.id});
         }
 
 
