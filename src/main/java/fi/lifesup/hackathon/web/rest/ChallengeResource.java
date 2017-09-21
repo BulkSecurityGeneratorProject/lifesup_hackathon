@@ -50,9 +50,7 @@ public class ChallengeResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challenge", "idexists", "A new challenge cannot already have an ID")).body(null);
         }
         
-        if(challenge.getMaxTeamNumber() >= challenge.getMinTeamNumber()){
-        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challenge", "idexists", "A new challenge cannot already have an ID")).body(null);
-        }
+       
         Challenge result = challengeRepository.save(challenge);
         return ResponseEntity.created(new URI("/api/challenges/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("challenge", result.getId().toString()))

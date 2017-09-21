@@ -45,23 +45,23 @@ public class ChallengeInfoResource {
         if (challengeInfo.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A new challengeInfo cannot already have an ID")).body(null);
         }
-        if(challengeInfo.getEventStartTime().isAfter(challengeInfo.getEventEndTime())){
-        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
-        }
-        
-        if(challengeInfo.getSelectionInformDate().isAfter(challengeInfo.getEventStartTime())
-        		&& challengeInfo.getSelectionInformDate().isBefore(challengeInfo.getApplicationCloseDate())){
-        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
-        }
-      
-        if(challengeInfo.getApplicationCloseDate().isAfter(challengeInfo.getSelectionInformDate())){
-        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
-        }
-        
-        if((challengeInfo.getKickoffWebinarDate().isAfter(challengeInfo.getPilotSubmissionCloseDate())  
-        	&&	(challengeInfo.getKickoffWebinarDate().isBefore(challengeInfo.getPilotSubmissionCloseDate())))){
-        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
-        }
+//        if(challengeInfo.getEventStartTime().isAfter(challengeInfo.getEventEndTime())){
+//        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
+//        }
+//        
+//        if(challengeInfo.getSelectionInformDate().isAfter(challengeInfo.getEventStartTime())
+//        		&& challengeInfo.getSelectionInformDate().isBefore(challengeInfo.getApplicationCloseDate())){
+//        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
+//        }
+//      
+//        if(challengeInfo.getApplicationCloseDate().isAfter(challengeInfo.getSelectionInformDate())){
+//        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
+//        }
+//        
+//        if((challengeInfo.getKickoffWebinarDate().isAfter(challengeInfo.getPilotSubmissionCloseDate())  
+//        	&&	(challengeInfo.getKickoffWebinarDate().isBefore(challengeInfo.getPilotSubmissionCloseDate())))){
+//        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
+//        }
         
         
         ChallengeInfo result = challengeInfoRepository.save(challengeInfo);
@@ -87,32 +87,25 @@ public class ChallengeInfoResource {
             return createChallengeInfo(challengeInfo);
         }
            
-        if(challengeInfo.getEventStartTime().isAfter(challengeInfo.getEventEndTime())){
-        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
-        }       
-        if(challengeInfo.getSelectionInformDate().isAfter(challengeInfo.getEventStartTime())){
-        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);        	
-        }
-        if(challengeInfo.getSelectionInformDate().isBefore(challengeInfo.getApplicationCloseDate())){
-    		return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
-        }
-        
-        if(challengeInfo.getKickoffWebinarDate()!=null){
-        	if(challengeInfo.getKickoffWebinarDate().isBefore(challengeInfo.getSelectionInformDate())){
-        		return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
-        	}
-        	if(!challengeInfo.getKickoffWebinarDate().isBefore(challengeInfo.getEventStartTime())){
-        		return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
-        	}
-        }
-        
-        if(challengeInfo.getPilotSubmissionCloseDate().isBefore(challengeInfo.getEventStartTime())){
-        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challenge", "idexists", "A new challenge cannot already have an ID")).body(null);
-        }
-        if(challengeInfo.getPilotSubmissionCloseDate().isAfter(challengeInfo.getEventEndTime())){
-        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challenge", "idexists", "A new challenge cannot already have an ID")).body(null);
-        }
-    		
+//        if(challengeInfo.getEventStartTime().isAfter(challengeInfo.getEventEndTime())){
+//        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
+//        }       
+//        if(challengeInfo.getSelectionInformDate().isAfter(challengeInfo.getEventStartTime())){
+//        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);        	
+//        }
+//        if(challengeInfo.getSelectionInformDate().isBefore(challengeInfo.getApplicationCloseDate())){
+//    		return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
+//        }
+//        
+//        if(challengeInfo.getKickoffWebinarDate()!=null){
+//        	if(challengeInfo.getKickoffWebinarDate().isBefore(challengeInfo.getSelectionInformDate())){
+//        		return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
+//        	}
+//        	if(!challengeInfo.getKickoffWebinarDate().isBefore(challengeInfo.getEventStartTime())){
+//        		return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
+//        	}
+//       }
+//	
 //        if((challengeInfo.getKickoffWebinarDate().isAfter(challengeInfo.getPilotSubmissionCloseDate())  
 //        	&&	(challengeInfo.getKickoffWebinarDate().isBefore(challengeInfo.getPilotSubmissionCloseDate())))){
 //        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
