@@ -53,9 +53,28 @@ public class ChallengeInfo implements Serializable {
 
 	@Column(name = "pilot_submission_close_date")
 	private ZonedDateTime pilotSubmissionCloseDate;
+	
+	@Column(name = "pilot_phase_start_date")
+	private ZonedDateTime pilotStartPhaseDate;
+	
+	@Column(name = "pilot_phase_end_date")
+	private ZonedDateTime pilotEndPhaseDate;
 
-	@Column(name = "pilot_phase_start_date_pilot_phase_end_date")
-	private String pilotPhaseDate;
+	public ZonedDateTime getPilotStartPhaseDate() {
+		return pilotStartPhaseDate;
+	}
+
+	public void setPilotStartPhaseDate(ZonedDateTime pilotStartPhaseDate) {
+		this.pilotStartPhaseDate = pilotStartPhaseDate;
+	}
+
+	public ZonedDateTime getPilotEndPhaseDate() {
+		return pilotEndPhaseDate;
+	}
+
+	public void setPilotEndPhaseDate(ZonedDateTime pilotEndPhaseDate) {
+		this.pilotEndPhaseDate = pilotEndPhaseDate;
+	}
 
 	public Long getId() {
 		return id;
@@ -95,14 +114,6 @@ public class ChallengeInfo implements Serializable {
 
 	public void setPilotSubmissionCloseDate(ZonedDateTime pilotSubmissionCloseDate) {
 		this.pilotSubmissionCloseDate = pilotSubmissionCloseDate;
-	}
-
-	public String getPilotPhaseDate() {
-		return pilotPhaseDate;
-	}
-
-	public void setPilotPhaseDate(String pilotPhaseDate) {
-		this.pilotPhaseDate = pilotPhaseDate;
 	}
 
 	public ZonedDateTime getEventStartTime() {
