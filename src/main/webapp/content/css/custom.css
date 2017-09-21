@@ -190,3 +190,20 @@ body {
 .btn-inactive a {
   color: #39393A;
 }
+
+/*Filters*/
+.status-checkbox {
+  display: inline-block;
+  float: left;
+  padding-right: 2em;
+  margin-top: .7em;
+}
+
+.date-picker-filter {
+  position: relative;
+  top: .7em;
+}
+
+.md-padding {
+  overflow: hidden;
+}

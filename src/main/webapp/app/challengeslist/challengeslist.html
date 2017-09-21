@@ -1,28 +1,42 @@
  
-<!-- challenge name and challenge's owner filter -->
+<!-- challenge filter by name and owner's name -->
   <md-content class="md-padding">
     <form ng-submit="$event.preventDefault()">
-      <md-autocomplete 
-          md-selected-item="vm.selectedItem"
-          md-search-text-change="vm.searchTextChange(vm.searchText)"
-          md-search-text="vm.searchText"
-          md-selected-item-change="vm.selectedItemChange(item)"
-          md-items="item in vm.challenges | filter: vm.searchText"
-          md-item-text="item.challengename || item.ownername"
-          placeholder="What is your favorite challenge/company?">
-          <md-item-template>
-            <span md-highlight-text = "vm.searchText" md-highlight-flags = "^i">{{item.challengename}} - </span>
-            <span md-highlight-text = "vm.searchText" md-highlight-flags = "^i">{{item.ownername}}</span>
-          </md-item-template>
-      </md-autocomplete>
-      <br>
+      <div class="row">
+        <md-autocomplete 
+            md-selected-item="vm.selectedItem"
+            md-search-text-change="vm.searchTextChange(vm.searchText)"
+            md-search-text="vm.searchText"
+            md-selected-item-change="vm.selectedItemChange(item)"
+            md-items="item in vm.challenges | filter: vm.searchText"
+            md-item-text="item.challengename || item.ownername"
+            placeholder="What is your favorite challenge/company?"
+            class="col-sm-12 col-md-5 col-lg-5">
+            <md-item-template>
+              <span md-highlight-text = "vm.searchText" md-highlight-flags = "^i">{{item.challengename}} - </span>
+              <span md-highlight-text = "vm.searchText" md-highlight-flags = "^i">{{item.ownername}}</span>
+            </md-item-template>
+        </md-autocomplete>
+   <!-- challenge filter by status-->
+        <div class="col-sm-12 col-md-4 col-lg-4 status-filter">
+          <div ng-repeat="status in vm.getStatus()">
+              <md-checkbox type="checkbox" ng-model="vm.filter[status]" class="status-checkbox">{{ status }}</md-checkbox>
+          </div>
+      </div>
+  <!-- challenge filter by date-->
+        <div class="date-filter col-sm-12 col-md-3 col-lg-3">
+          <md-datepicker ng-model="vm.date.start" md-open-on-focus md-placeholder="Start before" md-hide-icons="all" class="date-picker-filter" required></md-datepicker>
+          <md-datepicker ng-model="vm.date.end" md-open-on-focus md-placeholder="End after" md-hide-icons="all" class="date-picker-filter" required></md-datepicker>
+        </div>
+      </div>
+      <hr />
     </form>
   </md-content>
 
 <div class="row">
-  <div class="col-sm-12 col-md-4" ng-repeat="challenge in vm.challenges | filter: vm.searchText">
+  <div class="col-sm-12 col-md-4" ng-repeat="challenge in (vm.challenges | filter: vm.searchText | filter:vm.filterByStatus)">
     <md-card class="challenge-container">
-      <img md-card-image ng-src="{{challenge.bannerurl}}" class='challenge-banner'>
+      <img md-card-image ng-src="{{challenge.bannerurl}}" class='challenge-banner' ng-class="{'img-grey': challenge.status == 'inactive'}">
         <md-card-title class='challenge-title'>{{challenge.challengename}}</md-card-title>
         <md-card-subtitle class='challenge-owner'>{{challenge.ownername}}</md-card-subtitle>
         <div class="line"></div>
@@ -30,7 +44,7 @@
           <md-list>
             <md-list-item> <i class="material-icons">place</i>{{challenge.location}}</md-list-item>
             <md-list-item> <i class="material-icons">stars</i> {{challenge.prize}} </md-list-item>
-            <md-list-item> <i class="material-icons">alarm</i>{{Math.floor((challenge.deadline - vm.today)/ (1000 * 60 * 60 * 24))}} days</md-list-item> 
+            <md-list-item> <i class="material-icons">alarm</i>{{vm.Math.floor((challenge.deadline - vm.today)/ (1000 * 60 * 60 * 24))}} days</md-list-item> 
           </md-list>
         </md-card-content>
         <md-card-actions ng-switch="challenge.status">
