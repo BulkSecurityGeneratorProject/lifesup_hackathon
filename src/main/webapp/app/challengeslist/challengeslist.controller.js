@@ -15,6 +15,8 @@
         vm.getData = getData;
         vm.today = (new Date()).getTime();
 
+
+
         getData();
 
         function getData() {
@@ -23,6 +25,10 @@
                     vm.challenges = data.challengeslist;
                 });
         }
-    }
 
+  
+
+       
+    }
+   
 })();
