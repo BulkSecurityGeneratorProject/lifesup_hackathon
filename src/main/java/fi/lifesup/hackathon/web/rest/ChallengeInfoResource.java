@@ -45,6 +45,25 @@ public class ChallengeInfoResource {
         if (challengeInfo.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A new challengeInfo cannot already have an ID")).body(null);
         }
+        if(challengeInfo.getEventStartTime().isAfter(challengeInfo.getEventEndTime())){
+        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
+        }
+        
+        if(challengeInfo.getSelectionInformDate().isAfter(challengeInfo.getEventStartTime())
+        		&& challengeInfo.getSelectionInformDate().isBefore(challengeInfo.getApplicationCloseDate())){
+        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
+        }
+      
+        if(challengeInfo.getApplicationCloseDate().isAfter(challengeInfo.getSelectionInformDate())){
+        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
+        }
+        
+        if((challengeInfo.getKickoffWebinarDate().isAfter(challengeInfo.getPilotSubmissionCloseDate())  
+        	&&	(challengeInfo.getKickoffWebinarDate().isBefore(challengeInfo.getPilotSubmissionCloseDate())))){
+        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
+        }
+        
+        
         ChallengeInfo result = challengeInfoRepository.save(challengeInfo);
         return ResponseEntity.created(new URI("/api/challenge-infos/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("challengeInfo", result.getId().toString()))
@@ -67,6 +86,30 @@ public class ChallengeInfoResource {
         if (challengeInfo.getId() == null) {
             return createChallengeInfo(challengeInfo);
         }
+           
+        if(challengeInfo.getEventStartTime().isAfter(challengeInfo.getEventEndTime())){
+        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
+        }       
+        if(challengeInfo.getSelectionInformDate().isAfter(challengeInfo.getEventStartTime())){
+        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);        	
+        }
+        if(challengeInfo.getSelectionInformDate().isBefore(challengeInfo.getApplicationCloseDate())){
+    		return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
+        }
+        
+        if(challengeInfo.getKickoffWebinarDate()!=null){
+        	if(challengeInfo.getKickoffWebinarDate().isBefore(challengeInfo.getSelectionInformDate())){
+        		return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
+        	}
+        	if(!challengeInfo.getKickoffWebinarDate().isBefore(challengeInfo.getEventStartTime())){
+        		return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
+        	}
+        }
+    		
+//        if((challengeInfo.getKickoffWebinarDate().isAfter(challengeInfo.getPilotSubmissionCloseDate())  
+//        	&&	(challengeInfo.getKickoffWebinarDate().isBefore(challengeInfo.getPilotSubmissionCloseDate())))){
+//        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A challengeInfo have start date")).body(null);
+//        }
         ChallengeInfo result = challengeInfoRepository.save(challengeInfo);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("challengeInfo", challengeInfo.getId().toString()))
@@ -96,7 +139,7 @@ public class ChallengeInfoResource {
     @Timed
     public ResponseEntity<ChallengeInfo> getChallengeInfo(@PathVariable Long id) {
         log.debug("REST request to get ChallengeInfo : {}", id);
-        ChallengeInfo challengeInfo = challengeInfoRepository.findOne(id);
+        ChallengeInfo challengeInfo = challengeInfoRepository.findOne(id);       
         return Optional.ofNullable(challengeInfo)
             .map(result -> new ResponseEntity<>(
                 result,
