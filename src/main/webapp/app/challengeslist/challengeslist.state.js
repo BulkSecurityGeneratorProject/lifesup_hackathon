@@ -24,7 +24,7 @@
             },
             resolve: {
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                    $translatePartialLoader.addPart('challenge');
+                    $translatePartialLoader.addPart('challenge','challengeslist');
                     return $translate.refresh();
                 }]
             }

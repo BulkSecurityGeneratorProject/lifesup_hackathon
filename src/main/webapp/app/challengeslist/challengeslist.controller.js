@@ -14,9 +14,7 @@
         vm.deadline = [];
         vm.getData = getData;
         vm.today = (new Date()).getTime();
-
-
-
+        
         getData();
 
         function getData() {
@@ -24,11 +22,7 @@
                 .then(function(data) {
                     vm.challenges = data.challengeslist;
                 });
-        }
-
-  
-
-       
+        }   
     }
    
 })();
