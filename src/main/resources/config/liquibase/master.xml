@@ -22,5 +22,5 @@
     <include file="classpath:config/liquibase/changelog/20170915142228_add_entity_Experience.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170915171334_add_column_table_ChallengeInfo.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170920141734_add_column_table_challenge.xml" relativeToChangelogFile="false"/>      
-    
+    <include file="classpath:config/liquibase/changelog/20170921095034_edit_column_table_ChallengeInfo.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
