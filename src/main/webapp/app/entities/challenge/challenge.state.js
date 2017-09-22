@@ -13,7 +13,7 @@
                 parent: 'entity',
                 url: '/challenge',
                 data: {
-                    authorities: ['ROLE_USER'],
+                    authorities: [],
                     pageTitle: 'hackathonApp.challenge.home.title'
                 },
                 views: {
@@ -27,6 +27,7 @@
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('challenge');
                         $translatePartialLoader.addPart('global');
+                        $translatePartialLoader.addPart('challengeslist');
                         return $translate.refresh();
                     }]
                 }

@@ -1,72 +1,61 @@
-(function () {
+(function() {
     'use strict';
 
     angular
         .module('hackathonApp')
         .controller('ChallengeController', ChallengeController);
 
-    ChallengeController.$inject = ['$scope', '$state', 'Challenge'];
+    ChallengeController.$inject = ['$scope','dataservice','$log', '$timeout', '$q','Principal'];
 
-    function ChallengeController($scope, $state, Challenge) {
+    function ChallengeController($scope, dataservice, $log, $timeout, $q, Principal) {
         var vm = this;
-
+        vm.isAuthenticated = Principal.isAuthenticated;
+        vm.Math = Math;
         vm.challenges = [];
-        vm.displayChallenges = [];
-        vm.hasNoChallenge = false;
-        vm.filter = filter;
+        vm.deadline = [];
+        vm.getData = getData;
+        vm.today = (new Date()).getTime();
+        vm.filterByStatus = filterByStatus;
+        vm.getStatus = getStatus;
+        vm.filter = {};
+        vm.startDate = null;
+        vm.endDate = null;
+        vm.filterByStartDate = filterByStartDate;
+        vm.filterByEndDate = filterByEndDate;
 
-        loadAll();
+        getData();
 
-        function loadAll() {
-            Challenge.query(function (result) {
-                vm.draftChallenges = [];
-                vm.activeChallenges = [];
-                vm.closedChallenges = [];
-                vm.challenges = result;
-                
-                vm.challenges.forEach(function (element) {
-                    if (element.info.status == 'DRAFT') {
-                        vm.draftChallenges.push(element);
-                    }
-                    if (element.info.status == 'ACTIVE') {
-                        vm.activeChallenges.push(element);
-                    }
-                    if (element.info.status == 'CLOSED') {
-                        vm.closedChallenges.push(element);
-                    }
-                    var now = new Date().getTime();
-                    var applyEnd = new Date(element.info.applicationCloseDate).getTime();
-                    var time = applyEnd - now;
-                    element.timeLeft = parseInt(Math.ceil(time / (1000 * 60 * 60 * 24)));
-                }, this);
-                vm.displayChallenges = vm.activeChallenges.concat(vm.draftChallenges);
-                if (!result.length) {
-                    vm.hasNoChallenge = true;
-                }
-            });
+        // Functions - Definitions
+        function getData() {
+            return dataservice.getData()
+                .then(function(data) {
+                    vm.challenges = data.challengeslist;
+                });
         }
 
-        function filter(status) {
-            if (status == 'all') {
-                vm.displayChallenges = vm.challenges;
-                console.log(vm.displayChallenges);
-                return;
-            }
-            if (status == 'active') {
-                vm.displayChallenges = vm.activeChallenges;
-                console.log(vm.displayChallenges);
-                return;
-            }
-            if (status == 'closed') {
-                vm.displayChallenges = vm.closedChallenges;
-                console.log(vm.displayChallenges);
-                return;
-            }
-            if (status == 'draft') {
-                vm.displayChallenges = vm.draftChallenges;
-                console.log(vm.displayChallenges);
-                return;
-            }
+        function filterByStatus(challenge) {
+            return vm.filter[challenge.status] || noFilter(vm.filter);
         }
+            
+        function getStatus() {
+            return (vm.challenges || []).
+              map(function (challenge) { return challenge.status; }).
+              filter(function (cat, idx, arr) { return arr.indexOf(cat) === idx; });
+        }
+
+        function noFilter(filterObj) {
+            return Object.
+              keys(filterObj).
+              every(function (key) { return !filterObj[key]; });
+        }
+
+        function filterByStartDate(challenge) {
+            return vm.startDate ? vm.startDate > challenge.deadline : vm.challenges;
+        }   
+
+        function filterByEndDate(challenge) {
+            return vm.endDate ? vm.endDate < challenge.deadline : vm.challenges;
+        }  
     }
+   
 })();
