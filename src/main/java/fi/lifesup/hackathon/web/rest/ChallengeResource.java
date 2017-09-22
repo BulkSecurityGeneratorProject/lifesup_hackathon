@@ -27,6 +27,7 @@ import com.codahale.metrics.annotation.Timed;
 import fi.lifesup.hackathon.domain.Challenge;
 import fi.lifesup.hackathon.repository.ChallengeRepository;
 import fi.lifesup.hackathon.service.ChallengeService;
+import fi.lifesup.hackathon.service.dto.ChallengeImageDTO;
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 
 /**
@@ -175,5 +176,16 @@ public class ChallengeResource {
 		List<Challenge> challenges = new ArrayList<>();
 		challenges = challengeService.getChallengeByDate();
 		return challenges;
+	}
+	
+	@PutMapping("/challenges/banner")
+	@Timed
+	public ResponseEntity<Challenge> updateChallengeBanner(@Valid @RequestBody ChallengeImageDTO imageDTO)
+			throws URISyntaxException {
+		log.debug("REST request to update Challenge banner : {}", imageDTO);
+
+		Challenge result = challengeService.updateChallengeBanner(imageDTO);
+		return ResponseEntity.ok()
+				.headers(HeaderUtil.createEntityUpdateAlert("challenge", imageDTO.getChallengeId().toString())).body(result);
 	}
 }

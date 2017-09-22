@@ -42,6 +42,9 @@ spring:
 liquibase:
     contexts: prod
 
+attach:
+    path: /home/fashionup/hackathon/resource/images/
+
 server:
     port: 8080
     compression:

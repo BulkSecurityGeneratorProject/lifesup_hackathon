@@ -54,6 +54,9 @@ spring:
 
 liquibase:
     contexts: dev
+    
+attach:
+    path: D:/project/hackathon/images/
 
 server:
     port: 1234
