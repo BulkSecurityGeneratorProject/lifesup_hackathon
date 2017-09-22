@@ -50,8 +50,11 @@ public class ChallengeResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challenge", "idexists", "A new challenge cannot already have an ID")).body(null);
         }
         
+        if(challenge.getMinTeamNumber().intValue() >= challenge.getMaxTeamNumber().intValue()){
+        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challenge", "idexists", "Max team number is bigger min team number.")).body(null);
+        }
        
-        Challenge result = challengeRepository.save(challenge);
+        Challenge result = challengeService.saveChallenge(challenge);
         return ResponseEntity.created(new URI("/api/challenges/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("challenge", result.getId().toString()))
             .body(result);
@@ -73,7 +76,10 @@ public class ChallengeResource {
         if (challenge.getId() == null) {
             return createChallenge(challenge);
         }
-        Challenge result = challengeRepository.save(challenge);
+        if(challenge.getMinTeamNumber().intValue() >= challenge.getMaxTeamNumber().intValue()){
+        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challenge", "idexists", "Max team number is bigger min team number.")).body(null);
+        }
+        Challenge result = challengeService.saveChallenge(challenge);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("challenge", challenge.getId().toString()))
             .body(result);
