@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import fi.lifesup.hackathon.domain.Challenge;
 import fi.lifesup.hackathon.domain.User;
 import fi.lifesup.hackathon.repository.ChallengeRepository;
+import fi.lifesup.hackathon.repository.CompanyRepository;
 import fi.lifesup.hackathon.repository.UserRepository;
 
 @Service
@@ -28,6 +29,9 @@ public class ChallengeService {
 
 	@Inject
 	private ChallengeRepository challengeRepository;
+	
+	@Inject 
+	private CompanyRepository companyRepository;
 
 	public List<Challenge> getChallenges() {
 		if (userService.checkAuthories("ROLE_ADMIN")) {
@@ -49,4 +53,11 @@ public class ChallengeService {
 		return challengeRepository.getChallengeByUser(user.getId());
 	}
 
+	public Challenge saveChallenge(Challenge challenge){
+		User user = userService.getUserWithAuthorities();
+		
+		challenge.setCompany(user.getCompany());
+		
+		return challengeRepository.save(challenge);
+	}
 }
