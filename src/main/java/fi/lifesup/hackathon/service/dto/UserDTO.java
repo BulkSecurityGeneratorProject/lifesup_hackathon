@@ -3,6 +3,7 @@ package fi.lifesup.hackathon.service.dto;
 import fi.lifesup.hackathon.config.Constants;
 
 import fi.lifesup.hackathon.domain.Authority;
+import fi.lifesup.hackathon.domain.Company;
 import fi.lifesup.hackathon.domain.User;
 
 import org.hibernate.validator.constraints.Email;
@@ -36,6 +37,7 @@ public class UserDTO {
     private String langKey;
 
     private Set<String> authorities;
+    private Company company;
 
     public UserDTO() {
     }
