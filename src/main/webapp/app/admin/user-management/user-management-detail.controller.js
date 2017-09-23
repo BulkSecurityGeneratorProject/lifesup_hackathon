@@ -1,24 +1,36 @@
-(function() {
+(function () {
     'use strict';
 
     angular
         .module('hackathonApp')
         .controller('UserManagementDetailController', UserManagementDetailController);
 
-    UserManagementDetailController.$inject = ['$stateParams', 'User'];
+    UserManagementDetailController.$inject = ['$scope', '$stateParams', 'User', 'Skill', 'Experience', 'UserDetail'];
 
-    function UserManagementDetailController ($stateParams, User) {
+    function UserManagementDetailController($scope, $stateParams, User, Skill, Experience, UserDetail) {
         var vm = this;
 
-        vm.load = load;
         vm.user = {};
+        vm.rotateCard = rotateCard;
+        vm.skills = [];
+        vm.workAreas = [];
+        UserDetail.get(function (result) {
+            vm.user = result;
+            vm.userInfo = result.userInfo;
+            vm.skills = result.userInfo.skills.split(",");
+            vm.workAreas = result.userInfo.workArea.split(",");
+        });
 
-        vm.load($stateParams.login);
-
-        function load (login) {
-            User.get({login: login}, function(result) {
-                vm.user = result;
-            });
+        function rotateCard(btn) {
+            var card = angular.element(document.querySelector('.card-container'));
+            if (card.hasClass('hover')) {
+                card.removeClass('hover');
+            } else {
+                card.addClass('hover');
+            }
         }
+
+
+
     }
 })();

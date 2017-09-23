@@ -5,14 +5,13 @@
         .module('hackathonApp')
         .controller('ChallengeDialogController', ChallengeDialogController);
 
-    ChallengeDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$mdDialog', '$q', 'entity', 'Challenge', 'ChallengeInfo', 'Application', 'Company'];
+    ChallengeDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$mdDialog', '$q', 'entity', 'Challenge', 'ChallengeInfo', 'Application', 'Company', 'ChallengeBanner'];
 
-    function ChallengeDialogController($timeout, $scope, $stateParams, $mdDialog, $q, entity, Challenge, ChallengeInfo, Application, Company) {
+    function ChallengeDialogController($timeout, $scope, $stateParams, $mdDialog, $q, entity, Challenge, ChallengeInfo, Application, Company, ChallengeBanner) {
         var vm = this;
 
         vm.challenge = entity;
         vm.challengeInfo = {};
-
         vm.clear = clear;
         vm.save = save;
         vm.applications = Application.query();
@@ -62,6 +61,7 @@
             $scope.$emit('hackathonApp:challengeUpdate', result);
             if (vm.challenge.id !== null) {
                 Challenge.update(vm.challenge, onSaveSuccess, onSaveError);
+                
             }
             else {
                 vm.challenge.info = result;
@@ -71,16 +71,37 @@
 
         function onSaveSuccess(result) {
             $scope.$emit('hackathonApp:challengeUpdate', result);
+            if (vm.banner != null) {
+                vm.attach = vm.banner;
+                vm.attach.challengeId = result.id;
+                ChallengeBanner.update(vm.attach, onUploadSuccess, onUploadError);
+            }
+            else{
+                $mdDialog.hide(result); 
+            }
+        }
+
+        function onUploadSuccess(result) {
+            $scope.$emit('hackathonApp:challengeUpdate', result);
             $mdDialog.hide(result);
+            console.log(result);
             vm.isSaving = false;
         }
 
+
         function onSaveInfoError() {
+            alert('Save ChallengeInfo Error');
             vm.isSaving = false;
         }
 
         function onSaveError() {
             ChallengeInfo.delete({ id: vm.challenge.info.id });
+            alert('Save Challenge Error');
+            vm.isSaving = false;
+        }
+
+        function onUploadError() {
+            alert('Upload Banner Error');
             vm.isSaving = false;
         }
 

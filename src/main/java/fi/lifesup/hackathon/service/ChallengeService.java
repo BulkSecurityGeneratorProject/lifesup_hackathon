@@ -34,7 +34,7 @@ public class ChallengeService {
 
 	private final Logger log = LoggerFactory.getLogger(ChallengeService.class);
 
-	@Value("${attach}.path")
+	@Value("src/main/webapp/content/images")
 	private String attachPath;
 
 	@Inject
@@ -101,7 +101,7 @@ public class ChallengeService {
 		String filePath = null;
 		try {
 			// tao thu muc		
-			String dirPath = attachPath + "challenge/" + challenge.getName();
+			String dirPath = attachPath + "/challenge/" + challenge.getId();
 			File dir = new File(dirPath);
 			if (!dir.exists()) {
 				if (dir.mkdirs()) {
@@ -126,7 +126,8 @@ public class ChallengeService {
 			BufferedImage bImageFromConvert = ImageIO.read(in);
 			ImageIO.write(bImageFromConvert, extention, file);
 			
-			challenge.setBannerUrl(filePath);
+			String displayPath = filePath.replace("src/main/webapp/", "");
+			challenge.setBannerUrl(displayPath);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

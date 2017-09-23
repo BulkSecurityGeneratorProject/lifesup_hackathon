@@ -137,7 +137,7 @@ public class UserInfoResource {
 		return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("userInfo", id.toString())).build();
 	}
 
-	@PutMapping("/update-account")
+	@PutMapping("/user-detail")
 	@Timed
 	public void updateAccount(@Valid @RequestBody UserInfo userInfo) {
 		User user = userService.getCurrentUser();
@@ -166,5 +166,13 @@ public class UserInfoResource {
 		}
 
 	}
+	
+	@GetMapping("/user-detail")
+    @Timed
+    public User getUser()
+    {
+        User user = userService.getCurrentUser();
+        return user;
+    }
 
 }

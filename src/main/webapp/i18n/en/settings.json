@@ -42,6 +42,9 @@
                 "country": {
                     "required": "Please select your country."
                 },
+                "city": {
+                    "required": "Please fill out your city."
+                },
                 "nationality": {
                     "required": "Your nationality is required."
                 },

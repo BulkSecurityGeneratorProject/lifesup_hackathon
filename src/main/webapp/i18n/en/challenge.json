@@ -16,7 +16,7 @@
             "detail": {
                 "title": "Challenge"
             },
-            "name": "Name",
+            "name": "Challenge Name",
             "introduction": "Introduction",
             "challengeText": "Challenge Text",
             "resourceText": "Resource Text",

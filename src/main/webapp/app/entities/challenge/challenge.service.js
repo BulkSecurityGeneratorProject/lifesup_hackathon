@@ -4,12 +4,14 @@
         .module('hackathonApp')
         .factory('Challenge', Challenge)
         .factory('ChallengeByAuthority', ChallengeByAuthority)
-        .factory('ChallengeInfo', ChallengeInfo);
+        .factory('ChallengeInfo', ChallengeInfo)
+        .factory('ChallengeBanner', ChallengeBanner);
 
 
     Challenge.$inject = ['$resource'];
     ChallengeByAuthority.$inject = ['$resource'];
     ChallengeInfo.$inject = ['$resource', 'DateUtils'];
+    ChallengeBanner.$inject = ['$resource'];
 
 
 
@@ -29,6 +31,25 @@
                     return data;
                 }
             },
+            'update': { method: 'PUT' },
+        });
+    }
+
+    function ChallengeBanner($resource) {
+        var resourceUrl = 'api/challenges/banner';
+
+        return $resource(resourceUrl, {}, {
+            'query': { method: 'GET', isArray: true },
+            'get': {
+                method: 'GET',
+                transformResponse: function (data) {
+                    if (data) {
+                        data = angular.fromJson(data);
+                    }
+                    return data;
+                }
+            },
+            'save': { method: 'POST' },
             'update': { method: 'PUT' },
         });
     }

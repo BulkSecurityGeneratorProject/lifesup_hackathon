@@ -36,3 +36,9 @@ md-dialog{
     white-space: nowrap;
 }
 
+
+
+.md-datepicker-input{
+    max-width: none;
+}
+

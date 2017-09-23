@@ -8,17 +8,20 @@ h2{
   padding: 20px;
   margin-bottom: 20px;
   border: 1px solid #eee;
+  
 }
 
 .challenge-card {
   transform: translateY(0);
-  transition: all 0.4s ease-in-out;
+  transition: all 0.3s ease-in-out;
   position: relative;
 }
 
 .challenge-card:hover {
+  box-shadow: 0 3px 20px -2px rgba(0, 0, 0, .2);
+  -webkit-transform: translateY(-5px);
+  -ms-transform: translateY(-5px);
   transform: translateY(-5px);
-  box-shadow: 0 0 10px #333;
   cursor: pointer;
   position: relative;
 }
@@ -40,10 +43,12 @@ h2{
 ::-webkit-scrollbar-thumb {
   -webkit-border-radius: 10px;
   border-radius: 10px;
-  background:#CAC8C8; 
+  background:#ADACAC; 
   /* -webkit-box-shadow: inset 0 0 6px rgba(190, 179, 179, 0.5);  */
 }
 
+
+/* Image Effect */
 
 .img-grey{
   filter: grayscale(1);
@@ -54,6 +59,17 @@ h2{
   -webkit-filter: sepia(100%);
 }
 
+.round-img{
+  border-radius: 50%;
+}
+
+.resize-img-50{
+  width:50%;
+  height:50%
+}
+
+
+/* Ribbon */
 .ribbon-wrapper {
   width: 85px;
   height: 88px;
@@ -198,9 +214,23 @@ h2{
 }
 
 
-
+/* Edit Challenge Dialog size on specific screen */
 @media screen and (min-width: 960px) {
   .challenge-dialog{
     width:600px;
   }
 }
+
+.user-info_icon{
+  float: left;
+}
+
+@media screen and (min-width: 800px){
+  .content>.main>.w3-table th{
+    width: 40%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+}
+

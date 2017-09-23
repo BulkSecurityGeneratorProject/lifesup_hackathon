@@ -1,36 +1,111 @@
+<div class="row">
+    <div class="col-md-4">
+        <div class="card-container manual-flip">
+            <div class="card">
+                <div class="front">
+                    <div class="cover">
+                        <img src="content/images/boat.jpg" />
+                    </div>
+                    <div class="user">
+                        <img class="img-circle" src="content/images/Sparrow.png" />
+                    </div>
+                    <div class="content">
+                        <div class="main">
+                            <h3 class="name">{{vm.user.firstName}} {{vm.user.lastName}}</h3>
+                            <p class="profession">{{vm.userInfo.jobTitle}}</p>
+                            <p class="text-center">{{vm.userInfo.introduction}}</p>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-simple" ng-click="vm.rotateCard(this)">
+                                   <i class="fa fa-mail-forward"></i> More
+                               </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="back">
+                    <div class="header">
+                        <h5 class="motto">More infomantion!</h5>
+                    </div>
+                    <div class="content">
+                        <div class="main">
+                            <table class="w3-table">
+                                <tr>
+                                    <th>
+                                        <span class="user-info_icon"><i class="material-icons">wc</i></span><span class="hidden-sm hidden-xs">Gender</span>
+                                    </th>
+                                    <td>
+                                        <span>{{vm.userInfo.sex}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <span class="user-info_icon"><i class="material-icons">cake</i></span><span class="hidden-sm hidden-xs">Birthday</span>
+                                    </th>
+                                    <td>
+                                        <span>{{vm.userInfo.birthday | date: 'dd/MM/yyyy'}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <span class="user-info_icon"><i class="material-icons">email</i></span><span class="hidden-sm hidden-xs">Email</span>
+                                    </th>
+                                    <td>
+                                        <span>{{vm.user.email}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <span class="user-info_icon"><i class="material-icons">call</i></span><span class="hidden-sm hidden-xs">Phone</span>
+                                    </th>
+                                    <td>
+                                        <span>{{vm.userInfo.phone}}</span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>
+                                        <span class="user-info_icon"><i class="material-icons">pin_drop</i></span><span class="hidden-sm hidden-xs">Address</span>
+                                    </th>
+                                    <td>
+                                        <span>{{vm.userInfo.city}}, {{vm.userInfo.country}}</span>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-simple" rel="tooltip" title="Flip Card" ng-click="vm.rotateCard(this)">
+                               <i class="fa fa-reply"></i> Back
+                           </button>
+                        <div class="social-links text-center">
+                            <a href="{{vm.userInfo.websiteUrl}}" target="_blank"><i class="fa fa-link fa-fw"></i></a>
+                            <a href="{{vm.userInfo.linkedInUrl}}" target="_blank"><i class="fa fa-linkedin fa-fw"></i></a>
+                            <a href="{{vm.userInfo.twitterUrl}}" target="_blank"><i class="fa fa-twitter fa-fw"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <ul class="w3-ul w3-border">
+            <li class="w3-highway-red text-center">
+                <h4>Skills</h4>
+            </li>
+            <li ng-repeat="skill in vm.skills">{{skill}}</li>
+        </ul>
+    </div>
+    <div class="col-md-4">
+        <ul class="w3-ul w3-border">
+            <li class="w3-highway-blue text-center">
+                <h4>Work Experience</h4>
+            </li>
+            <li ng-repeat="workArea in vm.workAreas">{{workArea}}</li>
+        </ul>
+    </div>
+</div>
 <div>
-    <h2><span data-translate="userManagement.detail.title">User</span> "{{vm.user.login}}"</h2>
-    <dl class="dl-horizontal">
-        <dt><span data-translate="userManagement.login">Login</span></dt>
-        <dd><span>{{vm.user.login}}</span></dd>
-        <dt><span data-translate="userManagement.firstName">First Name</span></dt>
-        <dd>{{vm.user.firstName}}</dd>
-        <dt><span data-translate="userManagement.lastName">Last Name</span></dt>
-        <dd>{{vm.user.lastName}}</dd>
-        <dt><span data-translate="userManagement.email">Email</span></dt>
-        <dd>{{vm.user.email}}</dd>
-        <dt><span data-translate="userManagement.activated">Activated</span></dt>
-        <dd>{{vm.user.activated}}</dd>
-        <dt><span data-translate="userManagement.langKey">Lang Key</span></dt>
-        <dd>{{vm.user.langKey}}</dd>
-        <dt><span data-translate="userManagement.createdBy">Created By</span></dt>
-        <dd>{{vm.user.createdBy}}</dd>
-        <dt><span data-translate="userManagement.createdDate">Created Date</span></dt>
-        <dd>{{vm.user.createdDate | date:'dd/MM/yy HH:mm' }}</dd>
-        <dt><span data-translate="userManagement.lastModifiedBy">Last Modified By</span></dt>
-        <dd>{{vm.user.lastModifiedBy}}</dd>
-        <dt><span data-translate="userManagement.lastModifiedDate">Last Modified Date</span></dt>
-        <dd>{{vm.user.lastModifiedDate | date:'dd/MM/yy HH:mm'}}</dd>
-        <dt><span data-translate="userManagement.profiles">Profiles</span></dt>
-        <dd>
-            <ul class="list-unstyled">
-                <li ng-repeat="authority in vm.user.authorities"><span>{{authority}}</span></li>
-            </ul>
-        </dd>
-    </dl>
-    <button type="submit"
-            ui-sref="user-management"
-            class="btn btn-info">
-        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
-    </button>
+    <button type="submit" ui-sref="user-management" class="btn btn-info">
+                    <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+                </button>
 </div>

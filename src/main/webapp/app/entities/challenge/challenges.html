@@ -15,7 +15,7 @@
                     md-item-text="item.name || item.company" placeholder="{{'hackathonApp.search.placeHolder' | translate}}">
                     <md-item-template>
                         <span md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.name}} - </span>
-                        <span md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.company}}</span>
+                        <span md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.company.name}}</span>
                     </md-item-template>
                     <md-not-found>
                         <span data-translate="hackathonApp.search.noResult">No result were found.</span>
@@ -61,8 +61,8 @@
                 <div class="ribbon-grey">Closed</div>
             </div>
 
-            <img ng-src="content/images/challenge.jpg" ng-class="{'img-grey': challenge.info.status == 'CLOSED', 'img-blur': challenge.info.status == 'DRAFT'}" class="md-card-image"
-                alt="Washed Out">
+            <img ng-src="{{challenge.bannerUrl}}" ng-class="{'img-grey': challenge.info.status == 'CLOSED', 'img-blur': challenge.info.status == 'DRAFT'}" class="md-card-image"
+                alt="">
 
             <md-card-title ng-class="{'w3-green': challenge.info.status == 'ACTIVE', 'w3-grey': challenge.info.status == 'CLOSED', 'w3-brown': challenge.info.status=='DRAFT'}">
                 <md-card-title-text>
