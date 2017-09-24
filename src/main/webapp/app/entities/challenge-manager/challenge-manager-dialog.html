@@ -1,0 +1,250 @@
+<md-dialog aria-label="Create a Challenge">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2 data-translate="hackathonApp.challenge.home.createOrEditLabel">Create or Edit a Challenge</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" aria-label="close" ng-click="vm.clear()">
+                <span class="glyphicon glyphicon-remove"></span>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="challenge-dialog">
+        <jhi-alert-error></jhi-alert-error>
+        <md-tabs md-dynamic-height md-stretch-tabs="always" md-border-bottom>
+            <md-tab label="Basic">
+                <md-content class="md-padding md-inline-form">
+                    <form name="challengeInfoForm">
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span data-translate="hackathonApp.challengeInfo.eventStartTime"></span></label>
+                                <md-datepicker id="birthday" md-hide-icons="all" md-open-on-focus name="eventStartTime" ng-model="vm.challengeInfo.eventStartTime"
+                                    required></md-datepicker>
+                                <div ng-messages="challengeInfoForm.eventStartTime.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.eventStartTime.required"></div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span data-translate="hackathonApp.challengeInfo.eventEndTime"></span></label>
+                                <md-datepicker id="birthday" md-hide-icons="all" md-open-on-focus name="eventEndTime" ng-model="vm.challengeInfo.eventEndTime"
+                                    required></md-datepicker>
+                                <div ng-messages="challengeInfoForm.eventEndTime.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.eventEndTime.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span data-translate="hackathonApp.challengeInfo.applicationCloseDate"></span></label>
+                                <md-datepicker id="birthday" md-hide-icons="all" md-open-on-focus name="applicationCloseDate" ng-model="vm.challengeInfo.applicationCloseDate"
+                                    required></md-datepicker>
+                                <div ng-messages="challengeInfoForm.applicationCloseDate.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.applicationCloseDate.required"></div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span data-translate="hackathonApp.challengeInfo.pilotSubmissionCloseDate"></span></label>
+                                <md-datepicker id="birthday" md-hide-icons="all" md-open-on-focus name="pilotSubmissionCloseDate" ng-model="vm.challengeInfo.pilotSubmissionCloseDate"
+                                    required></md-datepicker>
+
+                                <div ng-messages="challengeInfoForm.pilotSubmissionCloseDate.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.pilotSubmissionCloseDate.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span data-translate="hackathonApp.challengeInfo.selectionInformDate"></span></label>
+                                <md-datepicker id="birthday" md-hide-icons="all" md-open-on-focus name="selectionInformDate" ng-model="vm.challengeInfo.selectionInformDate"
+                                    required></md-datepicker>
+                                <div ng-messages="challengeInfoForm.selectionInformDate.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.selectionInformDate.required"></div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span data-translate="hackathonApp.challengeInfo.kickoffWebinarDate"></span></label>
+                                <md-datepicker id="birthday" md-hide-icons="all" md-open-on-focus name="kickoffWebinarDate" ng-model="vm.challengeInfo.kickoffWebinarDate"
+                                    required></md-datepicker>
+
+                                <div ng-messages="challengeInfoForm.kickoffWebinarDate.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.kickoffWebinarDate.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span data-translate="hackathonApp.challengeInfo.pilotPhaseStartDate"></span></label>
+                                <md-datepicker id="birthday" md-hide-icons="all" md-open-on-focus name="pilotPhaseStartDate" ng-model="vm.challengeInfo.pilotPhaseStartDate"
+                                    required></md-datepicker>
+                                <div ng-messages="challengeInfoForm.pilotPhaseStartDate.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.pilotPhaseStartDate.required"></div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span data-translate="hackathonApp.challengeInfo.pilotPhaseEndDate"></span></label>
+                                <md-datepicker id="birthday" md-hide-icons="all" md-open-on-focus name="pilotPhaseEndDate" ng-model="vm.challengeInfo.pilotPhaseEndDate"
+                                    required></md-datepicker>
+
+                                <div ng-messages="challengeInfoForm.pilotPhaseEndDate.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.pilotPhaseEndDate.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label><span class="glyphicon glyphicon-screenshot"></span>&nbsp;<span data-translate="hackathonApp.challengeInfo.location">Location</span></label>
+                                <input name="location" ng-model="vm.challengeInfo.location" required>
+                                <div ng-messages="challengeInfoForm.location.$error" role="alert">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.location.required"></div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label><span class="glyphicon glyphicon-usd"></span>&nbsp;<span data-translate="hackathonApp.challengeInfo.prize"></span></label>
+                                <input name="prize" ng-model="vm.challengeInfo.prize" required/>
+                                <div ng-messages="challengeInfoForm.prize.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.prize.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                        <div class="row">
+                            <md-radio-group ng-model="vm.challengeInfo.status" required>
+                                <div class="col-md-4">
+                                    <md-radio-button value="DRAFT"><span data-translate="hackathonApp.challengeInfo.status.draft">Draft</span></md-radio-button>
+                                </div>
+                                <div class="col-md-4">
+                                    <md-radio-button value="ACTIVE"><span data-translate="hackathonApp.challengeInfo.status.active">Active</span></md-radio-button>
+                                </div>
+                                <div class="col-md-4">
+                                    <md-radio-button value="CLOSED"><span data-translate="hackathonApp.challengeInfo.status.close">Close</span></md-radio-button>
+                                </div>
+                            </md-radio-group>
+                        </div>
+                    </form>
+                </md-content>
+            </md-tab>
+
+            <md-tab label="Detail">
+                <md-content class="md-padding">
+                    <form name="challengeForm">
+                        <label>Upload Banner Imange</label>
+                        <input type="file" ng-model="vm.banner" name="banner" base-sixty-four-input maxsize="5000" accept="image/*">
+                        <br>
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challenge.name">Challenge Name</label>
+                                <input name="name" ng-model="vm.challenge.name" required>
+                                <div ng-messages="challengeForm.name.$error" role="alert">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.name.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                        <!-- <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challenge.bannerUrl">Banner URL</label>
+                                <input name="bannerUrl" ng-model="vm.challenge.bannerUrl" required>
+                                <div ng-messages="challengeForm.bannerUrl.$error" role="alert">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.bannerUrl.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div> -->
+
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challenge.maxTeamNumber">Max Team Member</label>
+                                <input name="maxTeamNumber" type="number" ng-model="vm.challenge.maxTeamNumber" required/>
+                                <div ng-messages="challengeForm.maxTeamNumber.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.maxTeamNumber.required"></div>
+                                </div>
+                            </md-input-container>
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challenge.minTeamNumber">Min Team Member</label>
+                                <input name="minTeamNumber" type="number" ng-model="vm.challenge.minTeamNumber" required/>
+                                <div ng-messages="challengeForm.minTeamNumber.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.minTeamNumber.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challenge.introduction">Introduction</label>
+                                <textarea name="introduction" ng-model="vm.challenge.introduction" md-maxlength="250" rows="5" md-select-on-focus required></textarea>
+                                <div ng-messages="challengeForm.introduction.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.introduction.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challenge.challengeText">Challenge Text</label>
+                                <textarea name="challengeText" ng-model="vm.challenge.challengeText" md-maxlength="250" rows="5" md-select-on-focus required></textarea>
+                                <div ng-messages="challengeForm.challengeText.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.challengeText.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challenge.resourceText">Resource Text</label>
+                                <textarea name="resourceText" ng-model="vm.challenge.resourceText" md-maxlength="250" rows="5" md-select-on-focus required></textarea>
+                                <div ng-messages="challengeForm.resourceText.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.resourceText.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challenge.rewardsText">Rewards Text</label>
+                                <textarea name="rewardsText" ng-model="vm.challenge.rewardsText" md-maxlength="250" rows="5" md-select-on-focus required></textarea>
+                                <div ng-messages="challengeForm.rewardsText.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.rewardsText.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challenge.timelineText">Timeline Text</label>
+                                <textarea name="timelineText" ng-model="vm.challenge.timelineText" md-maxlength="250" rows="5" md-select-on-focus required></textarea>
+                                <div ng-messages="challengeForm.timelineText.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.timelineText.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challenge.rulesText">Rules Text</label>
+                                <textarea name="rulesText" ng-model="vm.challenge.rulesText" md-maxlength="250" rows="5" md-select-on-focus required></textarea>
+                                <div ng-messages="challengeForm.rulesText.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.rulesText.required"></div>
+                                </div>
+                            </md-input-container>
+                        </div>
+                        <div layout-gt-sm="row">
+                            <md-input-container class="md-block" flex-gt-sm>
+                                <label data-translate="hackathonApp.challenge.additionalText">Addtional Info</label>
+                                <textarea name="introduction" ng-model="vm.challenge.additionalText" md-maxlength="250" rows="5" md-select-on-focus></textarea>
+                            </md-input-container>
+                        </div>
+                    </form>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+        <span flex></span>
+        <md-button type="button" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+        </md-button>
+        <md-button class="md-raised md-primary" ng-click="vm.save()" ng-disabled="challengeForm.$invalid || challengeInfoForm.$invalid || vm.isSaving">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

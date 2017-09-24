@@ -24,7 +24,7 @@
                 </li>
                  <!-- Manage Challenge (need to change ui-sref to link to challenges list view for admin/manager)-->
                 <li ng-class="{active: vm.$state.includes('admin')}"  ng-switch-when="true" has-authority="ROLE_ADMIN" uib-dropdown class="dropdown pointer nav-item">
-                    <a ui-sref="challenge" ng-click="vm.collapseNavbar()" id="admin-menu">
+                    <a ui-sref="challenge-manager" ng-click="vm.collapseNavbar()" id="admin-menu">
                         <span class="glyphicon glyphicon-cog"></span>&nbsp;
                         <span class="hidden-sm">Manage challenges</span>
                     </a>
@@ -51,6 +51,8 @@
                         <a><span ui-sref-active="active"><a ui-sref="settings" ui-sref-opts="{reload: true}" class="dropdown-item">Setting</a></span></a>
                         <a><span ui-sref-active="active"><a ui-sref="user-management-detail({login: vm.account.login})" ui-sref-opts="{reload: true}" class="dropdown-item">Details</a></span></a>
                         <a><span ui-sref-active="active"><a ui-sref="user-management" ui-sref-opts="{reload: true}" class="dropdown-item">Other User</a></span></a>
+                        <a><span ui-sref-active="active"><a ui-sref="application" ui-sref-opts="{reload: true}" class="dropdown-item">Application</a></span></a>
+                        <a><span ui-sref-active="active"><a ui-sref="docs" ui-sref-opts="{reload: true}" class="dropdown-item">API</a></span></a>
                     </div>
                 </li>
                

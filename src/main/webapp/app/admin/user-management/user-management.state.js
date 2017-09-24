@@ -51,7 +51,7 @@
             parent: 'admin',
             url: '/user/:login',
             data: {
-                authorities: ['ROLE_ADMIN'],
+                authorities: ['ROLE_ADMIN', 'ROLE_USER'],
                 pageTitle: 'user-management.detail.title'
             },
             views: {

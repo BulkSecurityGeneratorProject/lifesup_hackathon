@@ -34,7 +34,6 @@
                 method: 'GET',
                 transformResponse: function (data) {
                     data = angular.fromJson(data);
-                    data.userInfo.birthday = DateUtils.convertDateTimeFromServer(data.userInfo.birthday);
                     return data;
                 }
             },

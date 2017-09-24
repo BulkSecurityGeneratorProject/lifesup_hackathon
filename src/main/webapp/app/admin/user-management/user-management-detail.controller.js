@@ -14,11 +14,15 @@
         vm.rotateCard = rotateCard;
         vm.skills = [];
         vm.workAreas = [];
+        vm.user = {};
         UserDetail.get(function (result) {
             vm.user = result;
-            vm.userInfo = result.userInfo;
-            vm.skills = result.userInfo.skills.split(",");
-            vm.workAreas = result.userInfo.workArea.split(",");
+            if (result.userInfo) {
+                vm.userInfo = result.userInfo;
+                vm.skills = result.userInfo.skills.split(",");
+                vm.workAreas = result.userInfo.workArea.split(",");
+            }
+
         });
 
         function rotateCard(btn) {

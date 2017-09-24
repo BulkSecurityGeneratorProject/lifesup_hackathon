@@ -154,11 +154,12 @@
                                 <md-radio-button value="friends">Friends</md-radio-button>
                                 <md-radio-button value="social">Social Media</md-radio-button>
                                 <md-radio-button value="company">A Company</md-radio-button>
+                                <md-radio-button value="other">Other</md-radio-button>
                             </md-radio-group>
-                            <md-input-container class="md-block" flex-gt-sm>
+                            <!-- <md-input-container class="md-block" flex-gt-sm>
                                 <label data-translate="settings.form.other">Other...</label>
-                                <input name="other" ng-model="vm.user.feedbackFrom" ng-disabled="!editable">
-                            </md-input-container>
+                                <input name="other" ng-model-options="vm.user.feedbackFrom: vm.user.feedbackFrom != social" ng-disabled="!editable">
+                            </md-input-container> -->
                         </div>
                     </div>
                 </form>

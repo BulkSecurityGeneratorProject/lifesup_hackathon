@@ -17,9 +17,12 @@
         vm.selectedSkills = [];
         vm.selectedWorkAreas = [];
         UserDetail.get(function(result){
-            vm.user = result.userInfo;
-            vm.selectedSkills = result.userInfo.skills.split(",");
-            vm.selectedWorkAreas = result.userInfo.workArea.split(",");
+            if (result.userInfo){
+                vm.user = result.userInfo;
+                vm.user.birthday = new Date(result.userInfo.birthday);
+                vm.selectedSkills = result.userInfo.skills.split(",");
+                vm.selectedWorkAreas = result.userInfo.workArea.split(",");
+            }
         });
         vm.upload = upload;
         vm.sexes = ['MALE', 'FEMALE'];
