@@ -27,7 +27,6 @@
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('challenge');
                         $translatePartialLoader.addPart('global');
-                        $translatePartialLoader.addPart('challengeslist');
                         return $translate.refresh();
                     }]
                 }
@@ -36,7 +35,7 @@
                 parent: 'entity',
                 url: '/challenge/{id}',
                 data: {
-                    authorities: ['ROLE_USER'],
+                    authorities: [],
                     pageTitle: 'hackathonApp.challenge.detail.title'
                 },
                 views: {
