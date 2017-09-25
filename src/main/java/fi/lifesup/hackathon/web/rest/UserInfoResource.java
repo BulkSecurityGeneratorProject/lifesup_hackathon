@@ -150,11 +150,13 @@ public class UserInfoResource {
 					&& userInfo.getNationality() != null && userInfo.getBirthday() != null && userInfo.getSex() != null
 					&& userInfo.getSkills() != null && userInfo.getTwitterUrl() != null
 					&& userInfo.getWebsiteUrl() != null && userInfo.getWorkArea() != null) {
+				
 				userInfo.setId(user.getUserInfo().getId());
 				userInfoRepository.save(userInfo);
-				user.setId(user.getId());
+				//user.setId(user.getId());
 				user.setStatus(UserStatus.PROFILE_COMPLETE);
 				userRepository.save(user);
+				
 			} else {
 				userInfoRepository.save(userInfo);
 			}
@@ -164,7 +166,15 @@ public class UserInfoResource {
 			user.setUserInfo(userInfoRepository.save(userInfo));
 			userRepository.save(user);
 		}
+		
 
+	}
+	@GetMapping("/get-user")
+	@Timed
+	public User getUser()
+	{
+		User user = userService.getCurrentUser();
+		return user;
 	}
 
 }
