@@ -1,23 +1,33 @@
 package fi.lifesup.hackathon.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import fi.lifesup.hackathon.domain.Application;
-
-import fi.lifesup.hackathon.repository.ApplicationRepository;
-import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.inject.Inject;
-import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+
+import javax.inject.Inject;
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.codahale.metrics.annotation.Timed;
+
+import fi.lifesup.hackathon.domain.Application;
+import fi.lifesup.hackathon.repository.ApplicationRepository;
+import fi.lifesup.hackathon.service.ApplicationService;
+import fi.lifesup.hackathon.service.dto.ApplicationDTO;
+import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 
 /**
  * REST controller for managing Application.
@@ -31,6 +41,8 @@ public class ApplicationResource {
     @Inject
     private ApplicationRepository applicationRepository;
 
+    @Inject
+    private ApplicationService applicationService;
     /**
      * POST  /applications : Create a new application.
      *
@@ -40,12 +52,12 @@ public class ApplicationResource {
      */
     @PostMapping("/applications")
     @Timed
-    public ResponseEntity<Application> createApplication(@Valid @RequestBody Application application) throws URISyntaxException {
+    public ResponseEntity<Application> createApplication(@Valid @RequestBody ApplicationDTO application) throws URISyntaxException {
         log.debug("REST request to save Application : {}", application);
         if (application.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("application", "idexists", "A new application cannot already have an ID")).body(null);
         }
-        Application result = applicationRepository.save(application);
+        Application result = applicationService.createApplication(application);
         return ResponseEntity.created(new URI("/api/applications/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("application", result.getId().toString()))
             .body(result);
@@ -62,14 +74,14 @@ public class ApplicationResource {
      */
     @PutMapping("/applications")
     @Timed
-    public ResponseEntity<Application> updateApplication(@Valid @RequestBody Application application) throws URISyntaxException {
+    public ResponseEntity<Application> updateApplication(@Valid @RequestBody ApplicationDTO application) throws URISyntaxException {
         log.debug("REST request to update Application : {}", application);
         if (application.getId() == null) {
             return createApplication(application);
         }
-        Application result = applicationRepository.save(application);
+        Application result = applicationService.updateApplication(application);
         return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert("application", application.getId().toString()))
+            .headers(HeaderUtil.createEntityUpdateAlert("application", result.getId().toString()))
             .body(result);
     }
 
@@ -116,6 +128,14 @@ public class ApplicationResource {
         log.debug("REST request to delete Application : {}", id);
         applicationRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("application", id.toString())).build();
+    }
+    
+    @GetMapping("/applications/challenges/{challengeId}")
+    @Timed
+    public List<Application> getApplicationByChallenge(@PathVariable Long challengeId) {
+        log.debug("REST request to get Application by challengeId : {}", challengeId);
+        List<Application> applications = applicationRepository.findByChallengeId(challengeId);
+        return applications;
     }
 
 }
