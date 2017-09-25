@@ -3,18 +3,19 @@
         <h1 class="display-3">This is a banner</h1>
         <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
     </div>
-    <div class="stripe"></div>
+    <!-- <div class="stripe"></div> -->
 </div>
 <!-- challenge details -->
 <div class="row challenge-detail-wrapper">
     <div class="container side-info col-xs-12 col-md-4 col-lg-4 col-lg-push-8">
-        <div class="stripe-1"></div>
         <h3>Apply to challenge</h3>
-        <p><i class="material-icons">date_range</i>{{challenge.deadline | date}}</p><hr>
-        <p><i class="material-icons">place</i>{{challenge.location}}</p><hr>
-        <p><i class="material-icons">star_border</i>{{challenge.prize}}</p><hr>
-        <p><i class="material-icons">alarm</i>Apply in {{vm.Math.floor((challenge.deadline - vm.today)/ (1000 * 60 * 60 * 24))}} days</p><hr>
-        <button class="btn btn-block cta-btn"><a href="#">APPLY!</a></button>
+        <div class="info-wrapper">
+            <p><i class="material-icons">date_range</i>{{challenge.deadline | date}}</p><hr>
+            <p><i class="material-icons">place</i>{{challenge.location}}</p><hr>
+            <p><i class="material-icons">star_border</i>{{challenge.prize}}</p><hr>
+            <p><i class="material-icons">alarm</i>Apply in {{vm.Math.floor((challenge.deadline - vm.today)/ (1000 * 60 * 60 * 24))}} days</p>
+        </div>
+        <button class="cta-btn"><a href="#">APPLY NOW</a></button>
     </div>
     <div class="container main-content col-xs-12 col-md-8 col-lg-8 col-lg-pull-4">
         <div class="row">
