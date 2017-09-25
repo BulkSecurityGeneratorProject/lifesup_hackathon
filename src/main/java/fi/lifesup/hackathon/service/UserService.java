@@ -235,4 +235,15 @@ public class UserService {
     	}
     	return false;
     }
+    
+    @Transactional(readOnly = true)
+    public User getUserWithAuthoritiesByEmail(String email) {
+        Optional<User> optionalUser = userRepository.findOneByEmail(email);
+        User user = null;
+        if (optionalUser.isPresent()) {
+          user = optionalUser.get();
+            user.getAuthorities().size(); // eagerly load the association
+         }
+         return user;
+    }
 }

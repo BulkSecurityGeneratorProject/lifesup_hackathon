@@ -11,5 +11,7 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 public interface ApplicationRepository extends JpaRepository<Application,Long> {
+	
+	List<Application> findByChallengeId(Long challengeId);
 
 }
