@@ -2,12 +2,17 @@ package fi.lifesup.hackathon.web.rest;
 
 import fi.lifesup.hackathon.config.Constants;
 import com.codahale.metrics.annotation.Timed;
+
+
+import fi.lifesup.hackathon.domain.Authority;
 import fi.lifesup.hackathon.domain.User;
+import fi.lifesup.hackathon.domain.enumeration.UserStatus;
 import fi.lifesup.hackathon.repository.UserRepository;
 import fi.lifesup.hackathon.security.AuthoritiesConstants;
 import fi.lifesup.hackathon.service.MailService;
 import fi.lifesup.hackathon.service.UserService;
 import fi.lifesup.hackathon.web.rest.vm.ManagedUserVM;
+
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 import fi.lifesup.hackathon.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -24,6 +29,8 @@ import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
 import javax.servlet.http.HttpServletRequest;
+
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -65,7 +72,8 @@ public class UserResource {
 
     @Inject
     private UserService userService;
-
+   
+ 
     /**
      * POST  /users  : Creates a new user.
      * <p>
@@ -188,4 +196,38 @@ public class UserResource {
         userService.deleteUser(login);
         return ResponseEntity.ok().headers(HeaderUtil.createAlert( "userManagement.deleted", login)).build();
     }
+    @GetMapping("/users/{id}")
+    @Timed
+    public User getUser(@PathVariable Long id) {
+        User user = userRepository.findOne(id);
+        return user;
+    }
+    @GetMapping("/list-user")
+    @Timed
+    public List<User> getAllUsers() {
+        log.debug("REST request to get all Users");
+        return userRepository.listUser();
+        }
+//    @PostMapping("/createUser")
+//    @Timed
+//    public User createUser(@Valid @RequestBody User user)  {
+//    	User result=new User();
+//        if (user.getId() == null) {
+//        	 result = userRepository.save(user);
+//        }
+//     
+//        return result;
+//    }
+    
+    
+    @DeleteMapping("/deleteUsers/{id}")
+    @Timed
+    public void deleteUser(@PathVariable Long id) {
+    	User user= userService.getUserWithAuthorities(id);
+    	user.setStatus(UserStatus.REMOVED);
+        userRepository.save(user);
+       
+    }
+    
+    
 }
