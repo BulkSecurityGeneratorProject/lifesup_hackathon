@@ -56,7 +56,7 @@ liquibase:
     contexts: dev
     
 attach:
-    path: D:/project/hackathon/images/
+    path: E:/project/hackathon/images/
 
 server:
     port: 1234
