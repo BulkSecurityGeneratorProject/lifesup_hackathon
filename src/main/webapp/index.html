@@ -18,17 +18,15 @@
     <link rel="stylesheet" href="content/css/main.css">
     <!-- build:css content/css/custom.css -->
     <link rel="stylesheet" href="content/css/custom.css">
+
     <!-- endbuild -->
+    <link rel="stylesheet" href="libs/angular-material/angular-material.min.css">
     <!-- material icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="libs/angular-material/angular-material.css">
-    <link rel="stylesheet" href="libs/font-awesome/css/font-awesome.css">
     <link rel="stylesheet" href="libs/lf-ng-md-file-input/lf-ng-md-file-input.css">
-    <link rel="stylesheet" href="libs/material-icons/material-icons.css">
     <link rel="stylesheet" href="content/css/override.css">
     <link rel="stylesheet" href="content/css/addition.css">
     <link rel="stylesheet" href="content/css/w3.css">
-    <link rel="stylesheet" href="content/css/rotating-card.css">
 </head>
 <body ng-app="hackathonApp" ng-strict-di>
     <!--[if lt IE 9]>
@@ -76,16 +74,12 @@
     <script src="bower_components/bootstrap-ui-datetime-picker/dist/datetime-picker.js"></script>
     <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
     <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
-    <script src="bower_components/angular-base64-upload/src/angular-base64-upload.js"></script>
     <!-- endinject -->
     <!-- endbuild -->
 
     <!-- build:js app/app.js  -->
     <!-- inject:js -->
     <script src="app/app.module.js"></script>
-    <script src="app/challengeslist/challengeslist.state.js"></script>
-    <script src="app/challengeslist/challengeslist.controller.js"></script>
-    <script src="app/challengeslist/challengeslist.service.js"></script>
     <script src="app/services/user/user.service.js"></script>
     <script src="app/services/user/skill.service.js"></script>
     <script src="app/services/user/experience.service.js"></script>
@@ -140,21 +134,17 @@
     <script src="app/entities/challenge-info/challenge-info.state.js"></script>
     <script src="app/entities/challenge-info/challenge-info.service.js"></script>
     <script src="app/entities/challenge-info/challenge-info.controller.js"></script>
-
     <script src="app/entities/challenge/challenge-dialog.controller.js"></script>
     <script src="app/entities/challenge/challenge-detail.controller.js"></script>
     <script src="app/entities/challenge/challenge-delete-dialog.controller.js"></script>
     <script src="app/entities/challenge/challenge.state.js"></script>
     <script src="app/entities/challenge/challenge.service.js"></script>
     <script src="app/entities/challenge/challenge.controller.js"></script>
-
-    <script src="app/entities/challenge-manager/challenge-manager-dialog.controller.js"></script>
-    <script src="app/entities/challenge-manager/challenge-manager-detail.controller.js"></script>
-    <script src="app/entities/challenge-manager/challenge-manager-delete-dialog.controller.js"></script>
-    <script src="app/entities/challenge-manager/challenge-manager.state.js"></script>
-    <script src="app/entities/challenge-manager/challenge-manager.service.js"></script>
-    <script src="app/entities/challenge-manager/challenge-manager.controller.js"></script>
-
+    <script src="app/entities/challengeslist/challengeslist.controller.js"></script>
+    <script src="app/entities/challengeslist/challengeslist.state.js"></script>
+    <script src="app/entities/challengeslist/challengeslist.service.js"></script>
+    <script src="app/entities/challengeslist/challengeslist-detail.controller.js"></script>
+    <script src="app/entities/challengeslist/challengeslist-scroll.directive.js"></script>
     <script src="app/entities/application/application-dialog.controller.js"></script>
     <script src="app/entities/application/application-detail.controller.js"></script>
     <script src="app/entities/application/application-delete-dialog.controller.js"></script>

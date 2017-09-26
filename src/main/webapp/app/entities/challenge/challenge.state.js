@@ -13,7 +13,7 @@
                 parent: 'entity',
                 url: '/challenge',
                 data: {
-                    authorities: ['ROLE_USER'],
+                    authorities: [],
                     pageTitle: 'hackathonApp.challenge.home.title'
                 },
                 views: {
@@ -35,7 +35,7 @@
                 parent: 'entity',
                 url: '/challenge/{id}',
                 data: {
-                    authorities: ['ROLE_USER'],
+                    authorities: [],
                     pageTitle: 'hackathonApp.challenge.detail.title'
                 },
                 views: {

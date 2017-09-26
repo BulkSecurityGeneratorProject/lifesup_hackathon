@@ -1,11 +1,18 @@
 
 /*============ General style ==============*/
+@import url('https://fonts.googleapis.com/css?family=Righteous|Roboto');
+
+h1,h2,h3,h4,h5,h6 {
+  font-family: 'Righteous', cursive;
+}
 
 body {
   display: flex;
   min-height: 100vh;
   flex-direction: column;
   font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+  font-weight: 300;
+  font-size: 1.5rem;
 }
 
 .card {
@@ -135,6 +142,7 @@ body {
   font-weight: bold;
   padding-bottom: 0;
   font-size: 20px;
+  background: transparent;
 }
 
 .challenge-owner {
@@ -163,11 +171,13 @@ body {
   box-shadow: 2px 2px 2px #ccc;
   text-transform: uppercase;
   font-weight: bold;
+  padding: 0;
 }
 
 .challenge-cta a {
   color: #F5EFFF;
-  
+  display: block;
+  padding: 6px 12px;
 }
 
 .challenge-cta a:hover {
@@ -175,7 +185,7 @@ body {
 }
 
 .btn-active {
-  background: #FF8552;
+  background: #C04444;
 }
 
 .btn-applied {
@@ -188,4 +198,156 @@ body {
 
 .btn-inactive a {
   color: #39393A;
+}
+
+/*Filters*/
+.status-checkbox {
+  display: inline-block;
+  float: left;
+  padding-right: 2em;
+  margin-top: .7em;
+}
+
+.date-filter {
+  display: flex;
+  justify-content: space-between;
+}
+.date-picker-filter {
+  position: relative;
+  top: .7em;
+}
+
+.md-padding {
+  overflow: hidden;
+}
+
+/*============== challenge details ==============*/
+.banner {
+  height: 500px;
+  position: relative;
+  margin: 0;
+  background-color: #176060;
+  background-size: cover;
+   box-shadow: inset 0 -1px 100px #111;
+}
+
+.challenge-detail-wrapper {
+  margin: 0;
+}
+
+.highlight {
+  width: 100%;
+  height: 100px;
+  opacity: 0.9;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.side-info,
+.side-subscribe {
+  background: #fff2f2;
+  color: #730A0A;
+  padding: 0;
+  font-size: 15px;
+  box-shadow: inset 0 0px 5px #C04444;
+}
+
+.side-info hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #730A0A;
+  margin: 1em 0;
+  padding: 0; 
+}
+
+.info-wrapper {
+  padding: 1em;
+}
+
+.sidebarFix {
+  position: fixed;
+  top: 0;
+}
+
+.side-wrapper {
+  padding: 0;
+}
+
+.side-info>h3 {
+  color: #c14747;
+  margin: 0;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 1em;
+  font-weight: bold;
+  background: repeating-linear-gradient(45deg, #aaa, #aaa 30px, #C04444 60px, #C04444 120px) repeat-y;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: textFill 5s linear forwards;
+  -webkit-animation: textFill 5s linear forwards;
+  -webkit-transform: translate3d(0,0,0);
+  -webkit-backface-visibility: hidden;
+}
+
+@keyframes textFill {
+  0% { background-position: -318px; }
+  100% { background-position: 0px; }
+}
+
+.material-icons {
+  vertical-align: middle;
+  margin-right: 1em;
+  font-size: 2em;
+}
+
+.cta-btn a{
+  display: block;
+  text-decoration: none;
+  color: #fefefe;
+  font-weight: bold;
+}
+
+.cta-btn {
+  background-color: #C04444;
+  width: 100%;
+  border: none;
+  padding: 0.5em 0;
+}
+
+.side-subscribe {
+  margin-top: 2em;
+  padding: 1em;
+  text-align: center;
+}
+
+.side-wrapper h3+.line{
+  position: relative;
+  top: -0.3em;
+  margin-bottom: .5em;
+}
+
+.subscribe-btn {
+  background-color: #C04444;
+  color: #fefefe;
+  font-weight: bold;
+}
+
+.subscribe-btn:hover {
+  cursor: pointer;
+}
+
+.challenge-detail-header{
+  margin: 2em auto;
+}
+
+.challenge-detail-header>h5{
+  font-size: 1.618em;
+  position: relative;
+  top: -.8em;
+  color: #ccc;
+  letter-spacing: 2px;
+  font-weight: lighter;
 }
