@@ -32,6 +32,8 @@
                 }
             },
             'update': { method: 'PUT' },
+            'save': { method: 'POST' },
+            'delete': { method: 'DELETE' }
         });
     }
 

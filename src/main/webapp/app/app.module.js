@@ -21,7 +21,6 @@
             'ngMessages',
             'lfNgMdFileInput',
             'naif.base64'
-
         ])
         .run(run);
 

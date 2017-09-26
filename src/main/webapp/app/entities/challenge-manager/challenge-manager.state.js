@@ -169,7 +169,9 @@
                         targetEvent: ev,
                         resolve: {
                             entity: ['Challenge', function (Challenge) {
-                                return Challenge.get({ id: $stateParams.id }).$promise;
+                                var temp = Challenge.get({ id: $stateParams.id }).$promise;
+                                console.log(temp);
+                                return temp;
                             }]
                         }
                     }).then(function () {

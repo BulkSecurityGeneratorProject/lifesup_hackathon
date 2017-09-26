@@ -19,6 +19,7 @@
 
         function loadAll() {
             ChallengeByAuthority.query(function (result) {
+                console.log(result);
                 vm.draftChallenges = [];
                 vm.activeChallenges = [];
                 vm.closedChallenges = [];
