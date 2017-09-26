@@ -2,7 +2,7 @@
     "hackathonApp": {
         "challenge": {
             "home": {
-                "title": "Challenges Management",
+                "title": "Challenge Manager",
                 "createLabel": "Create a new Challenge",
                 "createOrEditLabel": "Create or edit a Challenge",
                 "search": "Search for Challenge"
@@ -14,7 +14,7 @@
                 "question": "Are you sure you want to delete challenge <b>{{ id }}</b>?"
             },
             "detail": {
-                "title": "Challenge"
+                "title": "Challenge Manager Detail"
             },
             "name": "Challenge Name",
             "introduction": "Introduction",

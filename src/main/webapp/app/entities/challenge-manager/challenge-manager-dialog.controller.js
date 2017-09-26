@@ -61,10 +61,10 @@
             $scope.$emit('hackathonApp:challengeUpdate', result);
             if (vm.challenge.id !== null) {
                 Challenge.update(vm.challenge, onSaveSuccess, onSaveError);
-                
             }
             else {
                 vm.challenge.info = result;
+                vm.challenge.bannerUrl = "content/images/challenge.jpg";
                 Challenge.save(vm.challenge, onSaveSuccess, onSaveError);
             }
         }
