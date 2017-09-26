@@ -12,8 +12,8 @@
           md-min-length="0"
           placeholder="What is your favorite challenge/company?">
           <md-item-template>
-            <span md-highlight-text = "vm.searchText" md-highlight-flags = "^i">{{item.challengename}} - </span>
-            <span md-highlight-text = "vm.searchText" md-highlight-flags = "^i">{{item.ownername}}</span>
+            <span md-highlight-text = "vm.searchText" md-highlight-flags = "^i">{{item.name}} - </span>
+            <span md-highlight-text = "vm.searchText" md-highlight-flags = "^i">{{item.company.name}}</span>
           </md-item-template>
       </md-autocomplete>
     </form>
@@ -38,13 +38,13 @@
     <md-card class="challenge-container">
       <img md-card-image ng-src="{{challenge.bannerUrl}}" class='challenge-banner' ui-sref="challengeslist-detail({id:challenge.id})" ng-class="{'img-grey': challenge.status == 'CLOSED'}">          
         <md-card-title class='challenge-title'>{{challenge.name}}</md-card-title>
-        <md-card-subtitle class='challenge-owner'>{{challenge.ownername}}</md-card-subtitle>
+        <md-card-subtitle class='challenge-owner'>{{company.name}}</md-card-subtitle>
         <div class="line"></div>
         <md-card-content class='challenge-content'>
           <md-list>
-            <md-list-item> <i class="material-icons">place</i>{{challenge.location}}</md-list-item>
-            <md-list-item> <i class="material-icons">stars</i> {{challenge.prize}} </md-list-item>
-            <md-list-item> <i class="material-icons">alarm</i>Apply in {{vm.Math.floor((challenge.deadline - vm.today)/ (1000 * 60 * 60 * 24))}} days</md-list-item> 
+            <md-list-item> <i class="material-icons">place</i>{{challenge.info.location}}</md-list-item>
+            <md-list-item> <i class="material-icons">stars</i> {{challenge.info.prize}} </md-list-item>
+            <md-list-item> <i class="material-icons">alarm</i>Apply in {{challenge.timeLeft}} days</md-list-item> 
           </md-list>
         </md-card-content>
         <md-card-actions ng-switch="challenge.status">

@@ -1,25 +1,21 @@
-<div class="banner" style="background-image:url({{vm.challenge.bannerurl}})">
-    <div class="container">
-        <h1 class="display-3">This is a banner</h1>
-        <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
-    </div>
+<div class="banner" style="background-image:url({{vm.challenge.bannerUrl}})">
     <!-- <div class="stripe"></div> -->
 </div>
 <!-- challenge details -->
 <div class="row challenge-detail-wrapper">
-    <div class="side-wrapper col-xs-12 col-md-4 col-lg-4 col-lg-push-8 col-md-push-8">
-        <div class="side-info" scroll ng-class="{sidebarFix:boolChangeClass}">
+    <div scroll class="side-wrapper col-xs-12 col-md-4 col-lg-4 col-md-push-8" ng-class="{sidebarFix:boolChangeClass}">
+        <div class="side-info">
             <h3>Apply to challenge</h3> 
             <div class="line"></div>
             <div class="info-wrapper">
-                <p><i class="material-icons">date_range</i>{{challenge.deadline | date}}</p><hr>
-                <p><i class="material-icons">place</i>{{challenge.location}}</p><hr>
-                <p><i class="material-icons">star_border</i>{{challenge.prize}}</p><hr>
-                <p><i class="material-icons">alarm</i>Apply in {{vm.Math.floor((challenge.deadline - vm.today)/ (1000 * 60 * 60 * 24))}} days</p>
+                <p><i class="material-icons side-icons">date_range</i>{{vm.challenge.info.eventStartTime | date}} - {{vm.challenge.info.eventEndTime | date}}</p><hr>
+                <p><i class="material-icons side-icons">place</i>{{vm.challenge.info.location}}</p><hr>
+                <p><i class="material-icons side-icons">star_border</i>{{vm.challenge.info.prize}}</p><hr>
+                <p><i class="material-icons side-icons">alarm</i>Apply in {{vm.timeLeft}} days</p>
             </div>
             <button class="cta-btn"><a href="#">APPLY NOW</a></button>
         </div>
-        <div class="side-subscribe" scroll ng-class="{sidebarFix:boolChangeClass}">
+        <div class="side-subscribe">
             <h3>Remind me to apply</h3>
             <div class="line"></div>
             <p>Sign up to hear when the application deadline is close.</p>
@@ -29,118 +25,46 @@
             </div>
         </div>
     </div>
-    <div class="container main-content col-xs-12 col-md-8 col-lg-8 col-lg-pull-4 col-md-pull-4">
+    <div class="container challenge-detail-content col-xs-12 col-md-8 col-lg-8 col-md-pull-4" ng-class="{fixBox:boolChangeClass}">
         <!-- test view -->
-       <!--  <div class="challenge-detail-header">
-            <h2>Challenge Name goes here</h2>
-            <h5>with Company name here</h5>
+        <div class="challenge-detail-header">
+            <h2>{{vm.challenge.name}}</h2>
+            <h5>with {{vm.challenge.company.name}}</h5>
         </div>
         <div class="main-info">
-            <div class="Challenge-introduction">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <div class="content-wrapper">
+                <p>{{vm.challenge.introduction}}</p>
             </div>
-            <div class="challenge-text">
-                <h3 class="sub-heading">Challenge</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            <div class="content-wrapper">
+                <h3 class="sub-heading">About the challenge</h3>
+                <p>{{vm.challenge.challengeText}}</p>
             </div>
-            <div class="company-text">
+            <div class="content-wrapper">
                 <h3 class="sub-heading">About Company</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p>{{vm.challenge.company.text}}</p>
             </div>
-        </div> --><!-- end of main info -->
-
-
-        <div class="row">
-                <h2><span>{{vm.challenge.name}}</span></h2>
-            <div class="col-md-3 col-sm-12 col-xs-12"></div>
-        </div>      
-
-        <div>
-            <jhi-alert-error></jhi-alert-error>
-            <dl class="dl-horizontal jh-entity-details">
-                <dt><span data-translate="hackathonApp.challenge.introduction">Introduction</span></dt>
-                <dd>
-                    <span>{{vm.challenge.introduction}}</span>
-                </dd>
-                <dt><span data-translate="hackathonApp.challenge.challengeText">Challenge Text</span></dt>
-                <dd>
-                    <span>{{vm.challenge.challengeText}}</span>
-                </dd>
-                <dt><span data-translate="hackathonApp.challenge.resourceText">Resource Text</span></dt>
-                <dd>
-                    <span>{{vm.challenge.resourceText}}</span>
-                </dd>
-                <dt><span data-translate="hackathonApp.challenge.rewardsText">Rewards Text</span></dt>
-                <dd>
-                    <span>{{vm.challenge.rewardsText}}</span>
-                </dd>
-                <dt><span data-translate="hackathonApp.challenge.timelineText">Timeline Text</span></dt>
-                <dd>
-                    <span>{{vm.challenge.timelineText}}</span>
-                </dd>
-                <dt><span data-translate="hackathonApp.challenge.rulesText">Rules Text</span></dt>
-                <dd>
-                    <span>{{vm.challenge.rulesText}}</span>
-                </dd>
-                <dt><span data-translate="hackathonApp.challenge.bannerUrl">Banner Url</span></dt>
-                <dd>
-                    <span>{{vm.challenge.bannerUrl}}</span>
-                </dd>
-                <dt><span data-translate="hackathonApp.challenge.additionalText">Additional Text</span></dt>
-                <dd>
-                    <span>{{vm.challenge.additionalText}}</span>
-                </dd>
-                <dt><span data-translate="hackathonApp.challenge.maxTeamNumber">Max Team Number</span></dt>
-                <dd>
-                    <span>{{vm.challenge.maxTeamNumber}}</span>
-                </dd>
-                <dt><span data-translate="hackathonApp.challenge.minTeamNumber">Min Team Number</span></dt>
-                <dd>
-                    <span>{{vm.challenge.minTeamNumber}}</span>
-                </dd>
-                <dt><span data-translate="hackathonApp.challenge.info">Info</span></dt>
-                <dd>
-                    <a ui-sref="challenge-info-detail({id:vm.challenge.info.id})">{{vm.challenge.info.id}}</a>
-                </dd>
-                <dt><span data-translate="hackathonApp.challenge.company">Company</span></dt>
-                <dd>
-                    <a ui-sref="company-detail({id:vm.challenge.company.id})">{{vm.challenge.company.id}}</a>
-                </dd>
-            </dl>
-        </div>
-
+            <div class="content-wrapper">
+                <h3 class="sub-heading">Available Resources</h3>
+                <p>{{vm.challenge.resourceText}}</p>
+            </div>
+            <div class="content-wrapper">
+                <h3 class="sub-heading">Rewards</h3>
+                <p>{{vm.challenge.rewardsText}}</p>
+            </div>
+            <div class="content-wrapper">
+                <h3 class="sub-heading">Rules</h3>
+                <p>{{vm.challenge.rulesText}}</p>
+            </div>
+            <div class="content-wrapper">
+                <h3 class="sub-heading">Timelines of the challenge</h3>
+                <p>{{vm.challenge.timelineText}}</p>
+            </div>
+            <div class="content-wrapper">
+                <h3 class="sub-heading">Additional information</h3>
+                <p>{{vm.challenge.additionalText}}</p>
+                <p>Max Team Member: {{vm.challenge.maxTeamNumber}}</p>
+                <p>Min Team Member: {{vm.challenge.minTeamNumber}}</p>
+            </div>
+        </div><!-- end of main info -->
     </div>
 </div>

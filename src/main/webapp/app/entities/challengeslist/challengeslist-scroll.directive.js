@@ -5,18 +5,21 @@
         .module('hackathonApp')
         .directive('scroll', scroll);
 
+    scroll.$inject = ['$window'];
+
     function scroll($window) {
- return function(scope, element, attrs) {
-      
+        return function(scope, element, attrs) {
+        
         angular.element($window).bind("scroll", function() {
-            if (this.pageYOffset >= 100) {
-                 scope.boolChangeClass = true;
-                 console.log('Scrolled below header.');
-             } else {
-                 scope.boolChangeClass = false;
-                 console.log('Header is in view.');
-             }
-            scope.$apply();
+            var clientWidth = document.documentElement.clientWidth;
+            //add class when page offset is greater than 600 and screen size must be greater than 1024
+            if (this.pageYOffset >= 600 && clientWidth > 1024) {                
+                scope.boolChangeClass = true;
+            }
+            else { //otherwise remove that class
+                scope.boolChangeClass = false;
+            }
+             scope.$apply();
         });
     };
     }

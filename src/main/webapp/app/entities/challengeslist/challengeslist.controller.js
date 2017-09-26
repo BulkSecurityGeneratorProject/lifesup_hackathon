@@ -14,7 +14,7 @@
         vm.Math = Math;
         vm.challenges = [];
         vm.loadAll = loadAll;
-        vm.today = (new Date()).getTime();
+        
         vm.filterByStatus = filterByStatus;
         vm.getStatus = getStatus;
         vm.filter = {};
@@ -22,7 +22,7 @@
         vm.endDate = null;
         vm.filterByStartDate = filterByStartDate;
         vm.filterByEndDate = filterByEndDate;
-        
+        vm.timeLeft;
 
         // getData();
 
@@ -39,16 +39,22 @@
             Challenge.query(function (result) {
                 vm.challenges = result;
                 console.log(result);
+                vm.challenges.map(function(challenge){
+                    var today = (new Date()).getTime();
+                    var endDate = new Date(challenge.info.applicationCloseDate).getTime();
+                    var diff = endDate - today;
+                    vm.timeLeft = challenge.timeLeft = parseInt(Math.ceil(diff / (1000 * 60 * 60 * 24)));
+                })
             });
         }
 
         function filterByStatus(challenge) {
-            return vm.filter[challenge.status] || noFilter(vm.filter);
+            return vm.filter[challenge.info.status] || noFilter(vm.filter);
         }
             
         function getStatus() {
             return (vm.challenges || []).
-              map(function (challenge) { return challenge.status; }).
+              map(function (challenge) { return challenge.info.status; }).
               filter(function (cat, idx, arr) { return arr.indexOf(cat) === idx; });
         }
 

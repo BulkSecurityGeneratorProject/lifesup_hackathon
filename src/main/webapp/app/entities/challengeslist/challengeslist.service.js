@@ -29,14 +29,14 @@
     angular
         .module('hackathonApp')
         .factory('Challenge', Challenge)
-        .factory('ChallangeDetails', ChallangeDetails);
+        .factory('ChallengeDetails', ChallengeDetails);
 
-    ChallangeDetails.$inject = ['$resource', 'DateUtils'];
+    ChallengeDetails.$inject = ['$resource', 'DateUtils'];
 
     Challenge.$inject = ['$resource'];
 
     function Challenge($resource) {
-        var resourceUrl = '/api/challenges/{id}';
+        var resourceUrl = '/api/challenges/:id';
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: true },
@@ -53,8 +53,8 @@
         });
     }
 
-    function ChallangeDetails($resource, DateUtils) {
-        var resourceUrl = '/api/challenges/{id}';
+    function ChallengeDetails($resource, DateUtils) {
+        var resourceUrl = '/api/challenges/:id';
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: true },

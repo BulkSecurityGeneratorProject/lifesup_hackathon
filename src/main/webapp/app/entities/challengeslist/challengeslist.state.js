@@ -49,6 +49,8 @@
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('challengeslist');
+                        $translatePartialLoader.addPart('challenge');
+                        $translatePartialLoader.addPart('global');
                         return $translate.refresh();
                     }],
                     entity: ['$stateParams', 'Challenge', function ($stateParams, Challenge) {
