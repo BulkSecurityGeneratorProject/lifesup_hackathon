@@ -36,10 +36,10 @@
     Challenge.$inject = ['$resource'];
 
     function Challenge($resource) {
-        var resourceUrl = 'i18n/en/challengeslist.json';
+        var resourceUrl = '/api/challenges/{id}';
 
         return $resource(resourceUrl, {}, {
-            'query': { method: 'GET', isArray: false },
+            'query': { method: 'GET', isArray: true },
             'get': {
                 method: 'GET',
                 transformResponse: function (data) {
@@ -54,10 +54,10 @@
     }
 
     function ChallangeDetails($resource, DateUtils) {
-        var resourceUrl = 'i18n/en/challengeslist.json';
+        var resourceUrl = '/api/challenges/{id}';
 
         return $resource(resourceUrl, {}, {
-            'query': { method: 'GET', isArray: false },
+            'query': { method: 'GET', isArray: true },
             'get': {
                 method: 'GET',
                 transformResponse: function (data) {

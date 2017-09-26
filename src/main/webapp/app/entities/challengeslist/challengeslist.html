@@ -36,8 +36,8 @@
 <div class="row">
   <div class="col-sm-12 col-md-4" ng-repeat="challenge in vm.challenges | filter: vm.searchText | filter:vm.filterByStatus | filter:vm.filterByStartDate | filter:vm.filterByEndDate">
     <md-card class="challenge-container">
-      <img md-card-image ng-src="{{challenge.bannerurl}}" class='challenge-banner' ui-sref="challengeslist-detail({id:challenge.id})" ng-class="{'img-grey': challenge.status == 'inactive'}">          
-        <md-card-title class='challenge-title'>{{challenge.challengename}}</md-card-title>
+      <img md-card-image ng-src="{{challenge.bannerUrl}}" class='challenge-banner' ui-sref="challengeslist-detail({id:challenge.id})" ng-class="{'img-grey': challenge.status == 'CLOSED'}">          
+        <md-card-title class='challenge-title'>{{challenge.name}}</md-card-title>
         <md-card-subtitle class='challenge-owner'>{{challenge.ownername}}</md-card-subtitle>
         <div class="line"></div>
         <md-card-content class='challenge-content'>

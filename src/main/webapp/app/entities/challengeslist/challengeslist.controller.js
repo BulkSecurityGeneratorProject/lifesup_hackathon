@@ -37,7 +37,8 @@
         loadAll();
         function loadAll() {
             Challenge.query(function (result) {
-                vm.challenges = result.challengeslist;
+                vm.challenges = result;
+                console.log(result);
             });
         }
 
