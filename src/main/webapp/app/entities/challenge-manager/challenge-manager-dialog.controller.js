@@ -63,6 +63,7 @@
                 ChallengeManager.update(vm.challenge, onSaveSuccess, onSaveError);
             }
             else {
+                console.log(vm.challenge);
                 vm.challenge.info = result;
                 vm.challenge.bannerUrl = "content/images/challenge.jpg";
                 ChallengeManager.save(vm.challenge, onSaveSuccess, onSaveError);

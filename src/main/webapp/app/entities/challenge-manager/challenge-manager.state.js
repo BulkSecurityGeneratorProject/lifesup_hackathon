@@ -89,6 +89,31 @@
                     });
                 }]
             })
+            .state('challenge-manager-detail.delete', {
+                parent: 'challenge-manager-detail',
+                url: '/detail/delete',
+                data: {
+                    authorities: ['ROLE_USER']
+                },
+                onEnter: ['$stateParams', '$state', '$uibModal', '$mdDialog', function ($stateParams, $state, $uibModal, $mdDialog, ev) {
+                    $mdDialog.show({
+                        templateUrl: 'app/entities/challenge-manager/challenge-manager-delete-dialog.html',
+                        controller: 'ChallengeManagerDeleteController',
+                        controllerAs: 'vm',
+                        clickOutsideToClose: true,
+                        targetEvent: ev,
+                        resolve: {
+                            entity: ['ChallengeManager', function (ChallengeManager) {
+                                return ChallengeManager.get({ id: $stateParams.id }).$promise;
+                            }]
+                        }
+                    }).then(function () {
+                        $state.go('challenge-manager-detail', null, { reload: 'challenge-manager-detail' });
+                    }, function () {
+                        $state.go('^');
+                    });
+                }]
+            })
             .state('challenge-manager.new', {
                 parent: 'challenge-manager',
                 url: '/new',
@@ -147,7 +172,7 @@
                             }]
                         }
                     }).then(function () {
-                        $state.go('challenge', null, { reload: 'challenge' });
+                        $state.go('challenge-manager', null, { reload: 'challenge-manager' });
                     }, function () {
                         $state.go('^');
                     });
@@ -178,6 +203,7 @@
                     });
                 }]
             });
+            
     }
 
 })();

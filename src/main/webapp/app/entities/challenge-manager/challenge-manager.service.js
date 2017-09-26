@@ -31,9 +31,7 @@
                     return data;
                 }
             },
-            'update': { method: 'PUT' },
-            'save': { method: 'POST' },
-            'delete': { method: 'DELETE' }
+            'update': { method: 'PUT' }
         });
     }
 

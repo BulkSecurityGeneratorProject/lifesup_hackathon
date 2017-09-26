@@ -68,6 +68,16 @@ h2{
   height:50%
 }
 
+.banner-img {
+  overflow: hidden;
+  height: auto;
+  width: 100%;
+  position: relative;
+  margin: auto;
+  background-size: 100%;
+  object-fit: cover;
+}
+
 
 /* Ribbon */
 .ribbon-wrapper {
@@ -234,3 +244,19 @@ h2{
   }
 }
 
+
+.info-column {
+  border: 1px solid #eee;
+  padding: 0;
+  font-size: 15px;
+  margin-left: 10px;
+}
+.info-column>h3 {
+  text-align: center;
+}
+
+.material-icons {
+  position: relative;
+  margin-right: 15px;
+  display: inline;
+}
