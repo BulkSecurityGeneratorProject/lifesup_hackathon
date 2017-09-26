@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('ChallengeManagerDetailController', ChallengeManagerDetailController);
 
-    ChallengeManagerDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'Challenge', 'ChallengeInfo', 'Application', 'Company'];
+    ChallengeManagerDetailController.$inject = ['$scope', '$rootScope', '$stateParams', 'previousState', 'entity', 'ChallengeManager', 'ChallengeInfo', 'Application', 'Company'];
 
-    function ChallengeManagerDetailController($scope, $rootScope, $stateParams, previousState, entity, Challenge, ChallengeInfo, Application, Company) {
+    function ChallengeManagerDetailController($scope, $rootScope, $stateParams, previousState, entity, ChallengeManager, ChallengeInfo, Application, Company) {
         var vm = this;
 
         vm.challenge = entity;

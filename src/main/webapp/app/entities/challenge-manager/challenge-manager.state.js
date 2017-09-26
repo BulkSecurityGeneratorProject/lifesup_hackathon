@@ -50,8 +50,8 @@
                         $translatePartialLoader.addPart('challenge-manager');
                         return $translate.refresh();
                     }],
-                    entity: ['$stateParams', 'Challenge', function ($stateParams, Challenge) {
-                        return Challenge.get({ id: $stateParams.id }).$promise;
+                    entity: ['$stateParams', 'ChallengeManager', function ($stateParams, ChallengeManager) {
+                        return ChallengeManager.get({ id: $stateParams.id }).$promise;
                     }],
                     previousState: ["$state", function ($state) {
                         var currentStateData = {
@@ -78,8 +78,8 @@
                         clickOutsideToClose: true,
                         fullscreen: true,
                         resolve: {
-                            entity: ['Challenge', function (Challenge) {
-                                return Challenge.get({ id: $stateParams.id }).$promise;
+                            entity: ['ChallengeManager', function (ChallengeManager) {
+                                return ChallengeManager.get({ id: $stateParams.id }).$promise;
                             }]
                         }
                     }).then(function () {
@@ -142,9 +142,8 @@
                         clickOutsideToClose: true,
                         fullscreen: true,
                         resolve: {
-                            entity: ['Challenge', function (Challenge) {
-                                var temp = Challenge.get({ id: $stateParams.id }).$promise;
-                                return Challenge.get({ id: $stateParams.id }).$promise;
+                            entity: ['ChallengeManager', function (ChallengeManager) {
+                                return ChallengeManager.get({ id: $stateParams.id }).$promise;
                             }]
                         }
                     }).then(function () {
@@ -168,10 +167,8 @@
                         clickOutsideToClose: true,
                         targetEvent: ev,
                         resolve: {
-                            entity: ['Challenge', function (Challenge) {
-                                var temp = Challenge.get({ id: $stateParams.id }).$promise;
-                                console.log(temp);
-                                return temp;
+                            entity: ['ChallengeManager', function (ChallengeManager) {
+                                return ChallengeManager.get({ id: $stateParams.id }).$promise;
                             }]
                         }
                     }).then(function () {

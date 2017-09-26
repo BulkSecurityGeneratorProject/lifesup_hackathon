@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('ChallengeManagerDeleteController', ChallengeManagerDeleteController)
 
-    ChallengeManagerDeleteController.$inject = ['$scope', '$state', 'entity', 'Challenge', 'ChallengeInfo', '$mdDialog'];
+    ChallengeManagerDeleteController.$inject = ['$scope', '$state', 'entity', 'ChallengeManager', 'ChallengeInfo', '$mdDialog'];
 
-    function ChallengeManagerDeleteController($scope, $state, entity, Challenge, ChallengeInfo, $mdDialog) {
+    function ChallengeManagerDeleteController($scope, $state, entity, ChallengeManager, ChallengeInfo, $mdDialog) {
         var vm = this;
 
         vm.challenge = entity;
@@ -18,7 +18,7 @@
         }
 
         function confirmDelete(id) {
-            Challenge.delete({ id: id });
+            ChallengeManager.delete({ id: id });
             $mdDialog.hide(id);
         }
     }

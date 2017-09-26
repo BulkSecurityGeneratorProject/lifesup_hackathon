@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('ChallengeManagerDialogController', ChallengeManagerDialogController);
 
-    ChallengeManagerDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$mdDialog', '$q', 'entity', 'Challenge', 'ChallengeInfo', 'Application', 'Company', 'ChallengeBanner'];
+    ChallengeManagerDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$mdDialog', '$q', 'entity', 'ChallengeManager', 'ChallengeInfo', 'Application', 'Company', 'ChallengeBanner'];
 
-    function ChallengeManagerDialogController($timeout, $scope, $stateParams, $mdDialog, $q, entity, Challenge, ChallengeInfo, Application, Company, ChallengeBanner) {
+    function ChallengeManagerDialogController($timeout, $scope, $stateParams, $mdDialog, $q, entity, ChallengeManager, ChallengeInfo, Application, Company, ChallengeBanner) {
         var vm = this;
 
         vm.challenge = entity;
@@ -60,12 +60,12 @@
         function onSaveInfoSuccess(result) {
             $scope.$emit('hackathonApp:challengeUpdate', result);
             if (vm.challenge.id !== null) {
-                Challenge.update(vm.challenge, onSaveSuccess, onSaveError);
+                ChallengeManager.update(vm.challenge, onSaveSuccess, onSaveError);
             }
             else {
                 vm.challenge.info = result;
                 vm.challenge.bannerUrl = "content/images/challenge.jpg";
-                Challenge.save(vm.challenge, onSaveSuccess, onSaveError);
+                ChallengeManager.save(vm.challenge, onSaveSuccess, onSaveError);
             }
         }
 

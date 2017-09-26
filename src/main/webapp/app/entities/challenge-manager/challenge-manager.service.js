@@ -2,13 +2,13 @@
     'use strict';
     angular
         .module('hackathonApp')
-        .factory('Challenge', Challenge)
+        .factory('ChallengeManager', ChallengeManager)
         .factory('ChallengeByAuthority', ChallengeByAuthority)
         .factory('ChallengeInfo', ChallengeInfo)
         .factory('ChallengeBanner', ChallengeBanner);
 
 
-    Challenge.$inject = ['$resource'];
+    ChallengeManager.$inject = ['$resource'];
     ChallengeByAuthority.$inject = ['$resource'];
     ChallengeInfo.$inject = ['$resource', 'DateUtils'];
     ChallengeBanner.$inject = ['$resource'];
@@ -17,7 +17,7 @@
 
 
 
-    function Challenge($resource) {
+    function ChallengeManager($resource) {
         var resourceUrl = 'api/challenges/:id';
 
         return $resource(resourceUrl, {}, {
