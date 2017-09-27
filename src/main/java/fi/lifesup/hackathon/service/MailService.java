@@ -1,7 +1,9 @@
 package fi.lifesup.hackathon.service;
 
-import fi.lifesup.hackathon.config.JHipsterProperties;
-import fi.lifesup.hackathon.domain.User;
+import java.util.Locale;
+
+import javax.inject.Inject;
+import javax.mail.internet.MimeMessage;
 
 import org.apache.commons.lang3.CharEncoding;
 import org.slf4j.Logger;
@@ -14,10 +16,9 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring4.SpringTemplateEngine;
 
-
-import javax.inject.Inject;
-import javax.mail.internet.MimeMessage;
-import java.util.Locale;
+import fi.lifesup.hackathon.config.JHipsterProperties;
+import fi.lifesup.hackathon.domain.Application;
+import fi.lifesup.hackathon.domain.User;
 
 /**
  * Service for sending e-mails.
@@ -32,6 +33,7 @@ public class MailService {
 
     private static final String USER = "user";
     private static final String BASE_URL = "baseUrl";
+    private static final String APPLICATION = "application";
 
     @Inject
     private JHipsterProperties jHipsterProperties;
@@ -96,8 +98,22 @@ public class MailService {
         Context context = new Context(locale);
         context.setVariable(USER, user);
         context.setVariable(BASE_URL, baseUrl);
+        
         String content = templateEngine.process("passwordResetEmail", context);
         String subject = messageSource.getMessage("email.reset.title", null, locale);
+        sendEmail(user.getEmail(), subject, content, false, true);
+    }
+    
+    @Async
+    public void sendInvitationMail(User user, String baseUrl,Application application){
+    	log.debug("Sending invitation member e-mail to '{}'", user.getEmail());
+    	Locale locale = Locale.forLanguageTag(user.getLangKey());
+    	Context context = new Context(locale);
+        context.setVariable(USER, user);
+        context.setVariable(BASE_URL, baseUrl);
+        context.setVariable(APPLICATION, application);
+        String content = templateEngine.process("intivationMail", context);
+        String subject = messageSource.getMessage("email.intivation.title", null, locale);
         sendEmail(user.getEmail(), subject, content, false, true);
     }
 }
