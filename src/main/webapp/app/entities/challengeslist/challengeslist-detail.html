@@ -11,9 +11,14 @@
                 <p><i class="material-icons side-icons">date_range</i>{{vm.challenge.info.eventStartTime | date}} - {{vm.challenge.info.eventEndTime | date}}</p><hr>
                 <p><i class="material-icons side-icons">place</i>{{vm.challenge.info.location}}</p><hr>
                 <p><i class="material-icons side-icons">star_border</i>{{vm.challenge.info.prize}}</p><hr>
-                <p><i class="material-icons side-icons">alarm</i>Apply in {{vm.timeLeft}} days</p>
+                <p><i class="material-icons side-icons">alarm</i>Apply in {{vm.timeLeft}} day(s)</p>
             </div>
-            <button class="cta-btn"><a href="#">APPLY NOW</a></button>
+           <!--  <button class="cta-btn"><a href="#">APPLY NOW</a></button> -->
+           <button class="cta-btn" ng-switch="vm.isAuthenticated()">
+                <a href="#" ui-sref="login-signup" ng-switch-when="false">Apply now!</a>
+                <a href="#" ui-sref="settings" ng-switch-when="true">Apply now!</a>
+                <a href="#" ui-sref="application-view" ng-switch-default>Apply now!</a><!-- not yet activated -->
+              </button>
         </div>
         <div class="side-subscribe">
             <h3>Remind me to apply</h3>

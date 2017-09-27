@@ -363,3 +363,76 @@ body {
   letter-spacing: 2px;
   font-weight: lighter;
 }
+
+/*============= Applications List View ================*/
+.application-card {
+  color: #fefefe;
+  transition: all .5s ease-in-out;
+}
+
+.application-card:hover {
+  transform: translateZ(5px) translateY(-5px);
+  box-shadow: 0 5px 10px #ccc;
+  cursor: pointer;
+}
+
+.team-name {
+  background-color: #E91E63;
+  text-transform: uppercase;
+}
+
+.team-name>h3 {
+  display: block;
+  width: 100%;
+  font-size: 2em;
+  padding: 1em 2em;
+  text-align: center;
+}
+
+.company-name {
+  background-color: #C2185B;
+  text-align: center;
+}
+
+.application-description {
+  color: #222;
+  padding: 1em;
+}
+
+.go-detail {
+  text-decoration: none;
+  color: #C2185B;
+}
+
+.action-btn-group {
+  display: flex;
+  justify-content: space-between;
+  padding: 1em;
+  margin: 0;
+}
+
+.action-btn-group a {
+  text-decoration: none;
+  color: #fefefe;
+  text-transform: uppercase;
+}
+
+.action-btn {
+  padding: 0.5em 2em;
+  border: none;
+}
+
+.approve-btn {
+  background-color: #4CAF50;
+  border-bottom: 3px solid #2b542d;
+}
+
+.reject-btn {
+  background-color: #E53935;
+  border-bottom: 3px solid #873634;
+}
+
+.action-btn:active {
+  border-bottom: none;
+  transform: translateY(3px);
+}

@@ -55,16 +55,6 @@
                     }],
                     entity: ['$stateParams', 'Challenge', function ($stateParams, Challenge) {
                         return Challenge.get({ id: $stateParams.id }).$promise;
-                    }],
-                    challenge: ['$http', '$stateParams', function($http, $stateParams) {
-                     $http({
-                            url: 'i18n/en/challengeslist.json',
-                            method: 'GET',
-                            params: {id: $stateParams.id}
-                        })
-                            .then(function(response) {
-                                return response.data;
-                            })
                     }]
                 }
             })
