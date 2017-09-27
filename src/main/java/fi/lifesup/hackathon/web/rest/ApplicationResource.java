@@ -137,5 +137,13 @@ public class ApplicationResource {
         List<Application> applications = applicationRepository.findByChallengeId(challengeId);
         return applications;
     }
+    
+    @GetMapping("/applications/challenges-details/{applicationId}")
+    @Timed
+    public ApplicationDTO getApplicationDetail(@PathVariable Long applicationId) {
+        log.debug("REST request to get Application by challengeId : {}", applicationId);
+       ApplicationDTO application = applicationService.getApplicationDetail(applicationId);
+        return application;
+    }
 
 }

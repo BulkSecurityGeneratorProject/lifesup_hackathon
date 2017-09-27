@@ -12,4 +12,11 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface ChallengeUserApplicationRepository extends JpaRepository<ChallengeUserApplication,Long> {
 
+	void deleteByApplicationId(Long id);
+	
+	List<ChallengeUserApplication> findByApplicationId(Long applicationId);
+	
+	@Query("select u.email from User u, ChallengeUserApplication cua, Application a"
+			+ " where u.id = cua.userId and cua.applicationId = a.id and a.id = :#{[0]}")
+	List<String> getApplicationMember(Long applicationId);
 }
