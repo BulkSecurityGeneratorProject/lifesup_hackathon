@@ -35,6 +35,8 @@
 
 <div class="row">
   <div class="col-sm-12 col-md-4" ng-repeat="challenge in vm.challenges | filter: vm.searchText | filter:vm.filterByStatus | filter:vm.filterByStartDate | filter:vm.filterByEndDate">
+    <!-- testing only -->
+    <a ui-sref="applicationslist">Application list</a>
     <md-card class="challenge-container">
       <img md-card-image ng-src="{{challenge.bannerUrl}}" class='challenge-banner' ui-sref="challengeslist-detail({id:challenge.id})" ng-class="{'img-grey': challenge.status == 'CLOSED'}">          
         <md-card-title class='challenge-title'>{{challenge.name}}</md-card-title>

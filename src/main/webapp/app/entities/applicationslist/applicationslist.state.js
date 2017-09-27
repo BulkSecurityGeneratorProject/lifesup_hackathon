@@ -26,7 +26,6 @@
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('application');
-                        $translatePartialLoader.addPart('applicationslist');
                         return $translate.refresh();
                     }]
                 }
