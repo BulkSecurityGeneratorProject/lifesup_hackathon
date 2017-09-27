@@ -8,7 +8,7 @@
           md-search-text="vm.searchText"
           md-selected-item-change="vm.selectedItemChange(item)"
           md-items="item in vm.challenges | filter: vm.searchText"
-          md-item-text="item.challengename"
+          md-item-text="item.name"
           md-min-length="0"
           placeholder="What is your favorite challenge/company?">
           <md-item-template>
@@ -44,17 +44,17 @@
           <md-list>
             <md-list-item> <i class="material-icons">place</i>{{challenge.info.location}}</md-list-item>
             <md-list-item> <i class="material-icons">stars</i> {{challenge.info.prize}} </md-list-item>
-            <md-list-item> <i class="material-icons">alarm</i>Apply in {{challenge.timeLeft}} days</md-list-item> 
+            <md-list-item> <i class="material-icons">alarm</i>Apply in {{challenge.timeLeft}} day(s)</md-list-item> 
           </md-list>
         </md-card-content>
-        <md-card-actions ng-switch="challenge.status">
-          <button class="btn btn-block challenge-cta btn-active" ng-switch-when="active" ng-switch="vm.isAuthenticated()">
+        <md-card-actions ng-switch="challenge.info.status">
+          <button class="btn btn-block challenge-cta btn-active" ng-switch-when="ACTIVE" ng-switch="vm.isAuthenticated()">
             <a href="#" ui-sref="login-signup" ng-switch-when="false">Apply now!</a>
             <a href="#" ui-sref="settings" ng-switch-when="true">Apply now!</a>
             <a href="#" ui-sref="application-view" ng-switch-default>Apply now!</a><!-- not yet activated -->
           </button>
-          <button class="btn btn-block challenge-cta btn-applied" ng-switch-when="applied"><a href="#">View your application</a></button>
-          <button class="btn btn-block challenge-cta btn-inactive" ng-switch-when="inactive"><a href="#">Applications have closed!</a></button>
+          <button class="btn btn-block challenge-cta btn-applied" ng-switch-when="APPLIED"><a href="#">View your application</a></button>
+          <button class="btn btn-block challenge-cta btn-inactive" ng-switch-when="CLOSED"><a href="#">Applications have closed!</a></button>
         </md-card-actions>
     </md-card>
   </div>

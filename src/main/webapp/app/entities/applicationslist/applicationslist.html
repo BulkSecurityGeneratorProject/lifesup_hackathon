@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-sm-12 col-md-4" ng-repeat="application in vm.applications">
+    <md-card class="application-container">          
+        <md-card-title>{{vm.application.teamName}}</md-card-title>
+        <md-card-subtitle>{{vm.application.companyName}}</md-card-subtitle>
+        <div class="line"></div>
+        <md-card-content class='application-content'>
+          {{vm.application.description}}
+        </md-card-content>
+        <md-card-actions>
+          <button class="btn approve-btn"><a href="#">APPROVE</a></button>
+          <button class="btn reject-btn"><a href="#">REJECT</a></button>
+        </md-card-actions>
+    </md-card>
+  </div>
+</div>
