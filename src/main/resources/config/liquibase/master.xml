@@ -11,20 +11,16 @@
     <include file="classpath:config/liquibase/changelog/20170912134738_added_entity_Challenge.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170912134739_added_entity_ChallengeInfo.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170912134740_added_entity_Application.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20170912134741_added_entity_ChallengeUserApplication.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20170915151334_add_entity_Industryhack.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20170915134432_add_entity_Skill.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20170915142228_add_entity_Experience.xml" relativeToChangelogFile="false"/>   
+    <include file="classpath:config/liquibase/changelog/20170912134741_added_entity_ChallengeUserApplication.xml" relativeToChangelogFile="false"/>     
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="classpath:config/liquibase/changelog/20170912134735_added_entity_constraints_UserList.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170912134738_added_entity_constraints_Challenge.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170912134740_added_entity_constraints_Application.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20170915134433_add_entity_constraints_Skill.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20170915142229_add_entity_constranints_Experience.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20170915155132_add_column_table_UserList.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20170915171334_add_column_table_ChallengeInfo.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20170915173934_add_column_table_ChallengeInfo(1).xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20170917220132_drop_constraints_table_UserList.xml" relativeToChangelogFile="false"/>
-    <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->      
+    <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     
+    <include file="classpath:config/liquibase/changelog/20170915134432_add_entity_Skill.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170915142228_add_entity_Experience.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170915171334_add_column_table_ChallengeInfo.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20170920141734_add_column_table_challenge.xml" relativeToChangelogFile="false"/>      
+    <include file="classpath:config/liquibase/changelog/20170921095034_edit_column_table_ChallengeInfo.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

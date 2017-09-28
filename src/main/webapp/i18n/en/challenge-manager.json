@@ -1,0 +1,129 @@
+{
+    "hackathonApp": {
+        "challenge": {
+            "home": {
+                "title": "Challenge Manager",
+                "createLabel": "Create a new Challenge",
+                "createOrEditLabel": "Create or edit a Challenge",
+                "search": "Search for Challenge"
+            },
+            "created": "A new Challenge is created with identifier {{ param }}",
+            "updated": "A Challenge is updated with identifier {{ param }}",
+            "deleted": "A Challenge is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete challenge <b>{{ id }}</b>?"
+            },
+            "detail": {
+                "title": "Challenge Manager Detail"
+            },
+            "name": "Challenge Name",
+            "introduction": "Introduction",
+            "challengeText": "Challenge Text",
+            "resourceText": "Resource Text",
+            "rewardsText": "Rewards Text",
+            "timelineText": "Timeline Text",
+            "rulesText": "Rules Text",
+            "bannerUrl": "Banner URL",
+            "additionalText": "Additional Text",
+            "maxTeamNumber": "Max Team Number",
+            "minTeamNumber": "Min Team Number",
+            "info": "Info",
+            "applications": "Applications",
+            "company": "Company"
+        },
+        "challengeInfo": {
+            "eventStartTime": "Event Start",
+            "eventEndTime": "Event End",
+            "applicationCloseDate": "Application Close",
+            "kickoffWebinarDate": "Kick Off Webinar",
+            "selectionInformDate": "Inform Date",
+            "pilotSubmissionCloseDate": "Submission Close",
+            "pilotPhaseStartDate": "Pilot Phase Start",
+            "pilotPhaseEndDate": "Pilot Phase End",
+            "prize": "Prize",
+            "location": "Location",
+            "status": {
+                "draft": "Draft",
+                "active": "Active",
+                "close": "Close"
+            }
+        },
+        "search":{
+            "placeHolder" : "Input challenge or company name.",
+            "noResult" : "No result were found."
+        },
+        "messages": {
+            "empty": "Haven't got any challenges? ",
+            "create": "<strong>Create one!</strong>",
+            "error": {
+                "fail": "<strong>An error has occurred!</strong> Settings could not be saved.",
+                "emailexists": "<strong>E-mail is already in use!</strong> Please choose another one."
+            },
+            "success": "<strong>Settings saved!</strong>",
+            "validate": {
+                "name": {
+                    "required": "Challenge name is required.",
+                    "minlength": "Challenge name is required to be at least 5 character",
+                    "maxlength": "Challenge name cannot be longer than 50 characters"
+                },
+                "challengeText": {
+                    "required": "Challenge text is required."
+                },
+                "resourceText": {
+                    "required": "Resource text is required."
+                },
+                "rewardsText": {
+                    "required": "Rewards text is required."
+                },
+                "timelineText": {
+                    "required": "Timeline text is required."
+                },
+                "rulesText": {
+                    "required": "Rules text is required."
+                },
+                "bannerUrl": {
+                    "required": "Banner url is required."
+                },
+                "maxTeamNumber": {
+                    "required": "Max team members is required."
+                },
+                "minTeamNumber": {
+                    "required": "Min team members is required."
+                },
+                "eventStartTime": {
+                    "required": "Event start time is required."
+                },
+                "eventEndTime": {
+                    "required": "Event end time is required."
+                },
+                "applicationCloseDate": {
+                    "required": "Application close time is required."
+                },
+                "kickoffWebinarDate": {
+                    "required": "Kick off webinar time is required."
+                },
+                "selectionInformDate": {
+                    "required": "Inform date is required."
+                },
+                "pilotSubmissionCloseDate": {
+                    "required": "Submission close date is required."
+                },
+                "pilotPhaseStartDate": {
+                    "required": "Pilot phase start date is required."
+                },
+                "pilotPhaseEndDate": {
+                    "required": "Pilot phase end date is required."
+                },
+                "prize": {
+                    "required": "Challenge prize is required."
+                },
+                "location": {
+                    "required": "Challenge location is required."
+                },
+                "status": {
+                    "required": "Challenge status is required."
+                }
+            }
+        }
+    }
+}

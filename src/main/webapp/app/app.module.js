@@ -19,8 +19,8 @@
             'angular-loading-bar',
             'ngMaterial',
             'ngMessages',
-            'lfNgMdFileInput'
-
+            'lfNgMdFileInput',
+            'naif.base64'
         ])
         .run(run);
 

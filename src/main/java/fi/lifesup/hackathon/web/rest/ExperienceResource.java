@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 
-import fi.lifesup.hackathon.domain.Experience;
+import fi.lifesup.hackathon.domain.UserExperience;
 import fi.lifesup.hackathon.repository.ExperienceRepository;
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 
@@ -42,7 +42,7 @@ public class ExperienceResource {
 	/**
 	 * POST /experiences : Create a new Experience.
 	 *
-	 * @param Experience
+	 * @param UserExperience
 	 *            the Experience to create
 	 * @return the ResponseEntity with status 201 (Created) and with body the
 	 *         new Experience, or with status 400 (Bad Request) if the Experience has
@@ -52,14 +52,14 @@ public class ExperienceResource {
 	 */
 	@PostMapping("/experiences")
 	@Timed
-	public ResponseEntity<Experience> createExperience(@Valid @RequestBody Experience experience) throws URISyntaxException {
+	public ResponseEntity<UserExperience> createExperience(@Valid @RequestBody UserExperience experience) throws URISyntaxException {
 		log.debug("REST request to save Experience : {}", experience);
 		if (experience.getId() != null) {
 			return ResponseEntity.badRequest().headers(
 					HeaderUtil.createFailureAlert("Experience", "idexists", "A new Experience cannot already have an ID"))
 					.body(null);
 		}
-		Experience result = experienceRepository.save(experience);
+		UserExperience result = experienceRepository.save(experience);
 		return ResponseEntity.created(new URI("/api/experiences/" + result.getId()))
 				.headers(HeaderUtil.createEntityCreationAlert("Experience", result.getId().toString())).body(result);
 	}
@@ -67,7 +67,7 @@ public class ExperienceResource {
 	/**
 	 * PUT /experiences : Updates an existing Experience.
 	 *
-	 * @param Experience
+	 * @param UserExperience
 	 *            the Experience to update
 	 * @return the ResponseEntity with status 200 (OK) and with body the updated
 	 *         Experience, or with status 400 (Bad Request) if the Experience is not
@@ -78,12 +78,12 @@ public class ExperienceResource {
 	 */
 	@PutMapping("/experiences")
 	@Timed
-	public ResponseEntity<Experience> updateExperience(@Valid @RequestBody Experience experience) throws URISyntaxException {
+	public ResponseEntity<UserExperience> updateExperience(@Valid @RequestBody UserExperience experience) throws URISyntaxException {
 		log.debug("REST request to update Experience : {}", experience);
 		if (experience.getId() == null) {
 			return createExperience(experience);
 		}
-		Experience result = experienceRepository.save(experience);
+		UserExperience result = experienceRepository.save(experience);
 		return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert("Experience", experience.getId().toString()))
 				.body(result);
 	}
@@ -96,9 +96,9 @@ public class ExperienceResource {
 	 */
 	@GetMapping("/experiences")
 	@Timed
-	public List<Experience> getAllexperiences() {
+	public List<UserExperience> getAllexperiences() {
 		log.debug("REST request to get all experiences");
-		List<Experience> experiences = experienceRepository.findAll();
+		List<UserExperience> experiences = experienceRepository.findAll();
 		return experiences;
 	}
 
@@ -112,9 +112,9 @@ public class ExperienceResource {
 	 */
 	@GetMapping("/experiences/{id}")
 	@Timed
-	public ResponseEntity<Experience> getExperience(@PathVariable Long id) {
+	public ResponseEntity<UserExperience> getExperience(@PathVariable Long id) {
 		log.debug("REST request to get Experience : {}", id);
-		Experience experience = experienceRepository.findOne(id);
+		UserExperience experience = experienceRepository.findOne(id);
 		return Optional.ofNullable(experience).map(result -> new ResponseEntity<>(result, HttpStatus.OK))
 				.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}

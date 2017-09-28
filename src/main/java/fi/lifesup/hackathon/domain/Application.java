@@ -52,7 +52,7 @@ public class Application implements Serializable {
 
     @ManyToMany(mappedBy = "applications")
     @JsonIgnore
-    private Set<UserList> users = new HashSet<>();
+    private Set<User> users = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -153,29 +153,29 @@ public class Application implements Serializable {
         this.challenge = challenge;
     }
 
-    public Set<UserList> getUsers() {
+    public Set<User> getUsers() {
         return users;
     }
 
-    public Application users(Set<UserList> userLists) {
-        this.users = userLists;
+    public Application users(Set<User> users) {
+        this.users = users;
         return this;
     }
 
-    public Application addUsers(UserList userList) {
-        users.add(userList);
-        userList.getApplications().add(this);
+    public Application addUsers(User user) {
+        users.add(user);
+        user.getApplications().add(this);
         return this;
     }
 
-    public Application removeUsers(UserList userList) {
-        users.remove(userList);
-        userList.getApplications().remove(this);
+    public Application removeUsers(User user) {
+        users.remove(user);
+        user.getApplications().remove(this);
         return this;
     }
 
-    public void setUsers(Set<UserList> userLists) {
-        this.users = userLists;
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
     @Override

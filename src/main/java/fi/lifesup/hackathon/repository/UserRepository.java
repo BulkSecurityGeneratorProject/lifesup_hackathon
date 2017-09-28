@@ -29,6 +29,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "select distinct user from User user left join fetch user.authorities",
         countQuery = "select count(user) from User user")
     Page<User> findAllWithAuthorities(Pageable pageable);
+    @Query("select u from User u  where u.status not like 'REMOVED'")
+	List<User> listUser();
 
     @Override
     void delete(User t);

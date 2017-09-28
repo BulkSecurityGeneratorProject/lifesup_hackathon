@@ -1,70 +1,45 @@
-<div>
-    <h2 data-translate="hackathonApp.application.home.title">Applications</h2>
-    <jhi-alert></jhi-alert>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-xs-4 no-padding-left">
-                <button class="btn btn-primary" ui-sref="application.new" >
-                    <span class="glyphicon glyphicon-plus"></span>
-                    <span  data-translate="hackathonApp.application.home.createLabel">
-                        Create new Application
-                    </span>
-                </button>
-            </div>
-        </div>
+<div class="row">
+    <div layout="column">
+        <md-content layout-padding>
+            <form name="applicationForm">
+                <div layout-gt-sm="row" flex>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Team Name</label>
+                        <input name="teamName" required>
+                    </md-input-container>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Company (Optional)</label>
+                        <input name="teamName">
+                    </md-input-container>
+                </div>
+
+                <div layout-gt-sm="row" flex>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Description</label>
+                        <textarea md-maxlength="250" ng-model="vm.application.motivation" rows="5" md-select-on-focus></textarea>
+                    </md-input-container>
+                </div>
+
+                <div layout-gt-sm="row" flex>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Motivation</label>
+                        <textarea md-maxlength="250" ng-model="vm.application.motivation" rows="5" md-select-on-focus></textarea>
+                    </md-input-container>
+                </div>
+
+                <div layout-gt-sm="row" flex>
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Ideas Description</label>
+                        <textarea md-maxlength="250" ng-model="vm.application.motivation" rows="5" md-select-on-focus></textarea>
+                    </md-input-container>
+                </div>
+            </form>
+        </md-content>
     </div>
-    <br/>
-    <div class="table-responsive">
-        <table class="jh-table table table-striped">
-            <thead>
-                <tr>
-                    <th><span data-translate="global.field.id">ID</span></th>
-                    <th><span data-translate="hackathonApp.application.teamName">Team Name</span></th>
-                    <th><span data-translate="hackathonApp.application.companyName">Company Name</span></th>
-                    <th><span data-translate="hackathonApp.application.description">Description</span></th>
-                    <th><span data-translate="hackathonApp.application.motivation">Motivation</span></th>
-                    <th><span data-translate="hackathonApp.application.ideasDescription">Ideas Description</span></th>
-                    <th><span data-translate="hackathonApp.application.status">Status</span></th>
-                    <th><span data-translate="hackathonApp.application.challenge">Challenge</span></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="application in vm.applications track by application.id">
-                    <td><a ui-sref="application-detail({id:application.id})">{{application.id}}</a></td>
-                    <td>{{application.teamName}}</td>
-                    <td>{{application.companyName}}</td>
-                    <td>{{application.description}}</td>
-                    <td>{{application.motivation}}</td>
-                    <td>{{application.ideasDescription}}</td>
-                    <td data-translate="{{'hackathonApp.ApplicationStatus.' + application.status}}">{{application.status}}</td>
-                    <td>
-                        <a ui-sref="challenge-detail({id:application.challenge.id})">{{application.challenge.id}}</a>
-                    </td>
-                    <td class="text-right">
-                        <div class="btn-group flex-btn-group-container">
-                            <button type="submit"
-                                    ui-sref="application-detail({id:application.id})"
-                                    class="btn btn-info btn-sm">
-                                <span class="glyphicon glyphicon-eye-open"></span>
-                                <span class="hidden-xs hidden-sm" data-translate="entity.action.view"></span>
-                            </button>
-                            <button type="submit"
-                                    ui-sref="application.edit({id:application.id})"
-                                    class="btn btn-primary btn-sm">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"></span>
-                            </button>
-                            <button type="submit"
-                                    ui-sref="application.delete({id:application.id})"
-                                    class="btn btn-danger btn-sm">
-                                <span class="glyphicon glyphicon-remove-circle"></span>
-                                <span class="hidden-xs hidden-sm" data-translate="entity.action.delete"></span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+</div>
+
+<div class="row" ng-cloak>
+    <div class="text-center">
+        <md-button class="md-raised md-primary" ng-click="vm.save()" ng-disabled="applicationForm.$invalid">Save</md-button>
     </div>
 </div>
