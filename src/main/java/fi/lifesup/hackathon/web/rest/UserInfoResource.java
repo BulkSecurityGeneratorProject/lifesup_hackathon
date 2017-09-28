@@ -186,7 +186,7 @@ public class UserInfoResource {
 	public ResponseEntity<UserInfo> updateUserInfoBanner(@Valid @RequestBody UserInfoImageDTO imageDTO)
 			throws URISyntaxException {
 		log.debug("REST request to update UserInfo banner : {}", imageDTO);
-
+		System.err.println("vvc");
 		UserInfo result =userInfoService.updateUserInfoBanner(imageDTO);
 		return ResponseEntity.ok()
 				.headers(HeaderUtil.createEntityUpdateAlert("challenge", result.getId().toString())).body(result);
