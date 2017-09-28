@@ -78,6 +78,16 @@ h2{
   object-fit: cover;
 }
 
+.img-fill {
+  object-fit: cover;
+}
+
+.avatar {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+}
+
 
 /* Ribbon */
 .ribbon-wrapper {

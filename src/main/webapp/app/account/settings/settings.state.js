@@ -23,6 +23,9 @@
                 }
             },
             resolve: {
+                entity: ['UserDetail', function(UserDetail){
+                    return UserDetail.get().$promise;
+                }],
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('settings');
                     return $translate.refresh();

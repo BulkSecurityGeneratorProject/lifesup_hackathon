@@ -11,11 +11,29 @@
         var vm = this;
         vm.save = save;
         
-        vm.team = entity;
+        vm.entity = entity;
+        vm.team = {};
+
+        load()
+
+        function load(){
+            if (entity.applicationId){
+                Application.get({id: entity.applicationId}, function(result){
+                    vm.team = result;
+                });
+            }
+        }
 
         function save(){
-            console.log(vm.team);
-            Application.save(vm.team, onSaveSuccess, onSaveError);
+            if (entity.applicationId){
+                console.log("Update");
+                Application.update(vm.team, onSaveSuccess, onSaveError);
+            }
+            else{
+                console.log("Save");
+                Application.save(vm.team, onSaveSuccess, onSaveError);
+            }
+            
         }
 
         function onSaveSuccess (result) {
