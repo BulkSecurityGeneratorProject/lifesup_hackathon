@@ -93,7 +93,8 @@ public class ChallengeService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return challengeRepository.getChallengeByDate(start, end);
+		System.err.println(start.toString());
+		return challengeRepository.findByInfoEventStartTimeBetween(end, start);
 	}
 
 	public Challenge updateChallengeBanner(ChallengeImageDTO dto){
