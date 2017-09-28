@@ -60,28 +60,29 @@
             <div ng-switch-when="CLOSED" class="ribbon-wrapper">
                 <div class="ribbon-grey">Closed</div>
             </div>
-            <img ui-sref="challenge-manager-detail({id:challenge.id})" ng-src="{{challenge.bannerUrl}}" ng-class="{'img-grey': challenge.info.status == 'CLOSED', 'img-blur': challenge.info.status == 'DRAFT'}" class="md-card-image"
-                alt="">
+            <img ui-sref="challenge-manager-detail({id:challenge.id})" ng-src="{{challenge.bannerUrl}}" ng-class="{'img-grey': challenge.info.status == 'CLOSED', 'img-blur': challenge.info.status == 'DRAFT'}"
+                class="md-card-image" alt="">
 
             <md-card-title ng-class="{'w3-green': challenge.info.status == 'ACTIVE', 'w3-grey': challenge.info.status == 'CLOSED', 'w3-brown': challenge.info.status=='DRAFT'}">
                 <md-card-title-text>
-                    <span ui-sref="challenge-manager-detail({id:challenge.id})"  class="md-headline"><strong>{{challenge.name}}</strong></span>
+                    <span ui-sref="challenge-manager-detail({id:challenge.id})" class="md-headline"><strong>{{challenge.name}}</strong></span>
                 </md-card-title-text>
             </md-card-title>
             <div class="w3-border-top w3-border-light-grey"></div>
             <md-card-content class="challenge-content" ui-sref="challenge-manager-detail({id:challenge.id})">
                 <md-list>
                     <md-list-item><i class="material-icons w3-text-red">pin_drop</i>{{challenge.info.location}}</md-list-item>
-                    <md-list-item><i class="material-icons w3-text-indigo">date_range</i> {{challenge.info.eventStartTime | date:'MMM dd, yyyy'}} - {{challenge.info.eventEndTime | date:'MMM dd, yyyy'}}</md-list-item>
+                    <md-list-item><i class="material-icons w3-text-indigo">date_range</i> {{challenge.info.eventStartTime | date:'MMM dd,
+                        yyyy'}} - {{challenge.info.eventEndTime | date:'MMM dd, yyyy'}}</md-list-item>
                     <md-list-item ng-if="challenge.info.status == 'ACTIVE'"><i class="material-icons w3-text-orange">alarm</i>Apply in {{challenge.timeLeft}} day(s)</md-list-item>
                     <md-list-item ng-if="challenge.info.status == 'DRAFT'"><i class="material-icons w3-text-khaki">vpn_key</i>Activation required</md-list-item>
                     <md-list-item ng-if="challenge.info.status == 'CLOSED'"><i class="material-icons w3-text-red">close</i>Application has closed</md-list-item>
-                    
+
                 </md-list>
             </md-card-content>
             <div class="w3-border-top w3-border-light-grey"></div>
             <md-card-actions layout="row" layout-align="end center">
-                    <md-button class="w3-border" ui-sref="applicationslist"><b>See Applications</b></md-button>
+                <md-button class="w3-border" ui-sref="applicationslist"><b>See Applications</b></md-button>
                 <span flex></span>
                 <md-button ui-sref="challenge-manager.delete({id:challenge.id})" class="md-fab md-mini md-hue-3" title="Delete" aria-label="Delete">
                     <span class="glyphicon glyphicon-remove"></span>
