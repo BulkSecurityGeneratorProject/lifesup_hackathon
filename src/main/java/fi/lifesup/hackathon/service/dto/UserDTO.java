@@ -5,6 +5,7 @@ import fi.lifesup.hackathon.config.Constants;
 import fi.lifesup.hackathon.domain.Authority;
 import fi.lifesup.hackathon.domain.Company;
 import fi.lifesup.hackathon.domain.User;
+import fi.lifesup.hackathon.domain.UserInfo;
 
 import org.hibernate.validator.constraints.Email;
 
@@ -38,8 +39,25 @@ public class UserDTO {
 
     private Set<String> authorities;
     private Company company;
+    private UserInfo userInfo;
+    
+    public Company getCompany() {
+		return company;
+	}
 
-    public UserDTO() {
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+
+	public UserInfo getUserInfo() {
+		return userInfo;
+	}
+
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
+	}
+
+	public UserDTO() {
     }
 
     public UserDTO(User user) {

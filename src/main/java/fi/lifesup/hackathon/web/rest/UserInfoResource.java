@@ -8,7 +8,10 @@ import fi.lifesup.hackathon.domain.enumeration.UserStatus;
 import fi.lifesup.hackathon.repository.UserInfoRepository;
 import fi.lifesup.hackathon.repository.UserRepository;
 import fi.lifesup.hackathon.security.SecurityUtils;
+import fi.lifesup.hackathon.service.UserInfoService;
 import fi.lifesup.hackathon.service.UserService;
+import fi.lifesup.hackathon.service.dto.UserDTO;
+import fi.lifesup.hackathon.service.dto.UserInfoDTO;
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,6 +44,8 @@ public class UserInfoResource {
 	private UserRepository userRepository;
 	@Inject
 	private UserService userService;
+	@Inject
+	private UserInfoService userInfoService;
 
 	/**
 	 * POST /user-infos : Create a new userInfo.
@@ -160,19 +165,37 @@ public class UserInfoResource {
 			}
 
 		} else {
-			//userInfo.setId(user.getUserInfo().getId());
+			// userInfo.setId(user.getUserInfo().getId());
 			user.setUserInfo(userInfoRepository.save(userInfo));
 			userRepository.save(user);
 		}
 
 	}
-	
+
 	@GetMapping("/user-detail")
-    @Timed
-    public User getUser()
-    {
-        User user = userService.getCurrentUser();
-        return user;
-    }
+	@Timed
+	public User getUser() {
+		User user = userService.getCurrentUser();
+		return user;
+	}
+
+//	@PostMapping("/edit-account-detail")
+//	@Timed
+//	public ResponseEntity<String> saveAccount(@Valid @RequestBody UserInfoDTO userInfoDTO) {
+//		Optional<User> existingUser = userInfoRepository.findOneByEmail(userInfoDTO.getEmail());
+//		if (existingUser.isPresent() && (!existingUser.get().getLogin().equalsIgnoreCase(userInfoDTO.getLogin()))) {
+//			return ResponseEntity.badRequest()
+//					.headers(HeaderUtil.createFailureAlert("user-management", "emailexists", "Email already in use"))
+//					.body(null)
+//		}
+//		return userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).map(u -> {
+//			userInfoService.updateUserInfo(userInfoDTO.getBirthday(), userInfoDTO.getCity(), userInfoDTO.getCompanyName(),
+//					userInfoDTO.getCountry(), userInfoDTO.getFeedbackFrom(), userInfoDTO.getIntroduction(),
+//					userInfoDTO.getJobTitle(), userInfoDTO.getLinkedInUrl(), userInfoDTO.getLogoUrl(),
+//					userInfoDTO.getNationality(), userInfoDTO.getPhone(), userInfoDTO.getSex(), userInfoDTO.getSkills(),
+//					userInfoDTO.getTwitterUrl(), userInfoDTO.getWebsiteUrl(),userInfoDTO.getWorkArea());
+//			return new ResponseEntity<String>(HttpStatus.OK);
+//		}).orElseGet(() -> new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+//	}
 
 }
