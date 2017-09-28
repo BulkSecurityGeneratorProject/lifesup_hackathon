@@ -5,11 +5,12 @@
         .module('hackathonApp')
         .controller('ChallengesListDetailController', ChallengesListDetailController);
 
-    ChallengesListDetailController.$inject = ['$stateParams', 'Challenge', 'entity'];
+    ChallengesListDetailController.$inject = ['$stateParams', 'Challenge', 'entity', 'Principal'];
 
-    function ChallengesListDetailController($stateParams, Challenge, entity) {
+    function ChallengesListDetailController($stateParams, Challenge, entity, Principal) {
         var vm = this;
-
+        vm.isAuthenticated = Principal.isAuthenticated;
+        
         vm.challenge = entity;
 
         var today = (new Date()).getTime();

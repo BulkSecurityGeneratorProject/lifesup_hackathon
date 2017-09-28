@@ -2,6 +2,7 @@ package fi.lifesup.hackathon.service.dto;
 
 import java.util.List;
 
+import fi.lifesup.hackathon.domain.Application;
 import fi.lifesup.hackathon.domain.enumeration.ApplicationStatus;
 
 public class ApplicationDTO {
@@ -40,6 +41,21 @@ public class ApplicationDTO {
 		this.ideasDesscription = ideasDesscription;
 		this.status = status;
 		this.challengeId = challengeId;
+	}
+	
+	
+
+	public ApplicationDTO(Application application, List<String> members) {
+		super();
+		this.id = application.getId();
+		this.teamName = application.getTeamName();
+		this.companyName = application.getCompanyName();
+		this.description = application.getDescription();
+		this.motivation = application.getMotivation();
+		this.ideasDesscription = application.getIdeasDescription();
+		this.status = application.getStatus();
+		this.challengeId = application.getChallenge().getId();
+		this.members = members;
 	}
 
 	public Long getId() {
