@@ -1,0 +1,75 @@
+<div class="banner" style="background-image:url({{vm.challenge.bannerUrl}})">
+    <!-- <div class="stripe"></div> -->
+</div>
+<!-- challenge details -->
+<div class="row challenge-detail-wrapper">
+    <div scroll class="side-wrapper col-xs-12 col-md-4 col-lg-4 col-md-push-8" ng-class="{sidebarFix:boolChangeClass}">
+        <div class="side-info">
+            <h3>Apply to challenge</h3> 
+            <div class="line"></div>
+            <div class="info-wrapper">
+                <p><i class="material-icons side-icons">date_range</i>{{vm.challenge.info.eventStartTime | date}} - {{vm.challenge.info.eventEndTime | date}}</p><hr>
+                <p><i class="material-icons side-icons">place</i>{{vm.challenge.info.location}}</p><hr>
+                <p><i class="material-icons side-icons">star_border</i>{{vm.challenge.info.prize}}</p><hr>
+                <p><i class="material-icons side-icons">alarm</i>Apply in {{vm.timeLeft}} day(s)</p>
+            </div>
+           <!--  <button class="cta-btn"><a href="#">APPLY NOW</a></button> -->
+           <button class="cta-btn" ng-switch="vm.isAuthenticated()">
+                <a href="#" ui-sref="login-signup" ng-switch-when="false">Apply now!</a>
+                <a href="#" ui-sref="settings" ng-switch-when="true">Apply now!</a>
+                <a href="#" ui-sref="application-view" ng-switch-default>Apply now!</a><!-- not yet activated -->
+              </button>
+        </div>
+        <div class="side-subscribe">
+            <h3>Remind me to apply</h3>
+            <div class="line"></div>
+            <p>Sign up to hear when the application deadline is close.</p>
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="yourEmail@example.com"  aria-describedby="btnGroupAddon">
+                <span class="input-group-addon subscribe-btn" id="btnGroupAddon" ui-sref="login-signup">Sign up</span>
+            </div>
+        </div>
+    </div>
+    <div class="container challenge-detail-content col-xs-12 col-md-8 col-lg-8 col-md-pull-4" ng-class="{fixBox:boolChangeClass}">
+        <!-- test view -->
+        <div class="challenge-detail-header">
+            <h2>{{vm.challenge.name}}</h2>
+            <h5>with {{vm.challenge.company.name}}</h5>
+        </div>
+        <div class="main-info">
+            <div class="content-wrapper">
+                <p>{{vm.challenge.introduction}}</p>
+            </div>
+            <div class="content-wrapper">
+                <h3 class="sub-heading">About the challenge</h3>
+                <p>{{vm.challenge.challengeText}}</p>
+            </div>
+            <div class="content-wrapper">
+                <h3 class="sub-heading">About Company</h3>
+                <p>{{vm.challenge.company.text}}</p>
+            </div>
+            <div class="content-wrapper">
+                <h3 class="sub-heading">Available Resources</h3>
+                <p>{{vm.challenge.resourceText}}</p>
+            </div>
+            <div class="content-wrapper">
+                <h3 class="sub-heading">Rewards</h3>
+                <p>{{vm.challenge.rewardsText}}</p>
+            </div>
+            <div class="content-wrapper">
+                <h3 class="sub-heading">Rules</h3>
+                <p>{{vm.challenge.rulesText}}</p>
+            </div>
+            <div class="content-wrapper">
+                <h3 class="sub-heading">Timelines of the challenge</h3>
+                <p>{{vm.challenge.timelineText}}</p>
+            </div>
+            <div class="content-wrapper">
+                <h3 class="sub-heading">Additional information</h3>
+                <p>{{vm.challenge.additionalText}}</p>
+                <p>Max Team Member: {{vm.challenge.maxTeamNumber}}</p>
+                <p>Min Team Member: {{vm.challenge.minTeamNumber}}</p>
+            </div>
+        </div><!-- end of main info -->
+    </div>
+</div>

@@ -23,7 +23,12 @@
         </addColumn>           
         <dropDefaultValue tableName="challenge_info" columnName="apply_end_time" columnDataType="datetime"/>
         <dropDefaultValue tableName="challenge_info" columnName="active_time" columnDataType="datetime"/>
-        
+    </changeSet>
     
+    <changeSet id="20170915173934" author="jhipster">
+        <addColumn tableName="challenge_info">
+        	<column name="apply_start_time" type="timestamp"></column>     	
+        </addColumn>           
+        <dropDefaultValue tableName="challenge_info" columnName="apply_start_time" columnDataType="datetime"/>
     </changeSet>
 </databaseChangeLog>

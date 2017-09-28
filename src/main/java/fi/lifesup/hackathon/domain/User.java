@@ -1,19 +1,34 @@
 package fi.lifesup.hackathon.domain;
 
-import fi.lifesup.hackathon.config.Constants;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.validator.constraints.Email;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
-import java.time.ZonedDateTime;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import fi.lifesup.hackathon.config.Constants;
+import fi.lifesup.hackathon.domain.enumeration.UserStatus;
 
 /**
  * A user.
@@ -80,6 +95,23 @@ public class User extends AbstractAuditingEntity implements Serializable {
         joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
         inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
     private Set<Authority> authorities = new HashSet<>();
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private UserStatus status;
+
+    @OneToOne
+    @JoinColumn(unique = true)
+    private UserInfo userInfo;
+
+    @ManyToOne
+    private Company company;
+
+    @ManyToMany
+    @JoinTable(name = "users_applications",
+               joinColumns = @JoinColumn(name="users_id", referencedColumnName="ID"),
+               inverseJoinColumns = @JoinColumn(name="applications_id", referencedColumnName="ID"))
+    private Set<Application> applications = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -176,6 +208,70 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     public void setAuthorities(Set<Authority> authorities) {
         this.authorities = authorities;
+    }
+
+    public UserStatus getStatus() {
+        return status;
+    }
+
+    public User status(UserStatus status) {
+        this.status = status;
+        return this;
+    }
+
+    public void setStatus(UserStatus status) {
+        this.status = status;
+    }
+
+    public UserInfo getUserInfo() {
+        return userInfo;
+    }
+
+    public User userInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
+        return this;
+    }
+
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public User company(Company company) {
+        this.company = company;
+        return this;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public Set<Application> getApplications() {
+        return applications;
+    }
+
+    public User applications(Set<Application> applications) {
+        this.applications = applications;
+        return this;
+    }
+
+    public User addApplications(Application application) {
+        applications.add(application);
+        application.getUsers().add(this);
+        return this;
+    }
+
+    public User removeApplications(Application application) {
+        applications.remove(application);
+        application.getUsers().remove(this);
+        return this;
+    }
+
+    public void setApplications(Set<Application> applications) {
+        this.applications = applications;
     }
 
     @Override

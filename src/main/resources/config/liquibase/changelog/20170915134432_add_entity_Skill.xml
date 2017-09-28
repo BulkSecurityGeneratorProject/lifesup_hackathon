@@ -17,30 +17,18 @@
         Added the entity UserList.
     -->
     <changeSet id="20170915134432" author="jhipster">
-        <createTable tableName="skill">
+        <createTable tableName="user_skill">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="varchar(255)">
                 <constraints nullable="false" />
-            </column>
-            
-          </createTable>  
-             
-        <createTable tableName="user_list_skill">
-            <column name="skill_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-            <column name="user_lists_id" type="bigint">
-                <constraints nullable="false"/>
-            </column>
-        </createTable>
-
-        <addPrimaryKey columnNames="user_lists_id, skill_id" tableName="user_list_skill"/>
+            </column>        
+        </createTable>  
         
         <loadData encoding="UTF-8"
-                  file="config/liquibase/skill.csv"
+                  file="config/liquibase/user_skills.csv"
                   separator=";"
-                  tableName="skill"/>
+                  tableName="user_skill"/>
     </changeSet>
 </databaseChangeLog>

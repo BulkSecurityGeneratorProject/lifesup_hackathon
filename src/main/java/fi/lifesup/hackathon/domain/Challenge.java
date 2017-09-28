@@ -65,7 +65,7 @@ public class Challenge implements Serializable {
     @Column(name = "min_team_number", nullable = false)
     private Integer minTeamNumber;
 
-    @OneToOne
+    @OneToOne(orphanRemoval = true)
     @JoinColumn(unique = true)
     private ChallengeInfo info;
 

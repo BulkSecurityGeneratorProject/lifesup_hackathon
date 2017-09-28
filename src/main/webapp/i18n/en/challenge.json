@@ -11,12 +11,12 @@
             "updated": "A Challenge is updated with identifier {{ param }}",
             "deleted": "A Challenge is deleted with identifier {{ param }}",
             "delete": {
-                "question": "Are you sure you want to delete Challenge {{ id }}?"
+                "question": "Are you sure you want to delete challenge <b>{{ id }}</b>?"
             },
             "detail": {
                 "title": "Challenge"
             },
-            "name": "Name",
+            "name": "Challenge Name",
             "introduction": "Introduction",
             "challengeText": "Challenge Text",
             "resourceText": "Resource Text",
@@ -34,16 +34,23 @@
         "challengeInfo": {
             "eventStartTime": "Event Start",
             "eventEndTime": "Event End",
-            "applyStartTime": "Apply Start",
-            "applyEndTime": "Apply End",
-            "activeTime": "Active Time",
+            "applicationCloseDate": "Application Close",
+            "kickoffWebinarDate": "Kick Off Webinar",
+            "selectionInformDate": "Inform Date",
+            "pilotSubmissionCloseDate": "Submission Close",
+            "pilotPhaseStartDate": "Pilot Phase Start",
+            "pilotPhaseEndDate": "Pilot Phase End",
             "prize": "Prize",
             "location": "Location",
             "status": {
                 "draft": "Draft",
                 "active": "Active",
-                "inactive": "Inactive"
+                "close": "Close"
             }
+        },
+        "search":{
+            "placeHolder" : "Input challenge or company name.",
+            "noResult" : "No result were found."
         },
         "messages": {
             "empty": "Haven't got any challenges? ",
@@ -89,14 +96,23 @@
                 "eventEndTime": {
                     "required": "Event end time is required."
                 },
-                "applyStartTime": {
-                    "required": "Apply start time is required."
+                "applicationCloseDate": {
+                    "required": "Application close time is required."
                 },
-                "applyEndTime": {
-                    "required": "Apply end time is required."
+                "kickoffWebinarDate": {
+                    "required": "Kick off webinar time is required."
                 },
-                "activeTime": {
-                    "required": "Active time is required."
+                "selectionInformDate": {
+                    "required": "Inform date is required."
+                },
+                "pilotSubmissionCloseDate": {
+                    "required": "Submission close date is required."
+                },
+                "pilotPhaseStartDate": {
+                    "required": "Pilot phase start date is required."
+                },
+                "pilotPhaseEndDate": {
+                    "required": "Pilot phase end date is required."
                 },
                 "prize": {
                     "required": "Challenge prize is required."

@@ -17,14 +17,14 @@
             <ul class="nav navbar-nav navbar-right">
                 <!-- Challenges, should be linked to challenges view? -->
                 <li ui-sref-active="active" class="nav-item">
-                    <a ui-sref="challenges" ng-click="vm.collapseNavbar()">
+                    <a ui-sref="challengeslist" ng-click="vm.collapseNavbar()">
                         <span class="glyphicon glyphicon-flag"></span>&nbsp;
                         <span class="hidden-sm">Challenges</span>
                     </a>
                 </li>
                  <!-- Manage Challenge (need to change ui-sref to link to challenges list view for admin/manager)-->
                 <li ng-class="{active: vm.$state.includes('admin')}"  ng-switch-when="true" has-authority="ROLE_ADMIN" uib-dropdown class="dropdown pointer nav-item">
-                    <a ui-sref="challenge" ng-click="vm.collapseNavbar()" id="admin-menu">
+                    <a ui-sref="challenge-manager" ng-click="vm.collapseNavbar()" id="admin-menu">
                         <span class="glyphicon glyphicon-cog"></span>&nbsp;
                         <span class="hidden-sm">Manage challenges</span>
                     </a>
@@ -48,7 +48,11 @@
                 <li class="dropdown" uib-dropdown ng-switch-when="true" class="nav-item">
                     <a href="" uib-dropdown-toggle ng-disabled="disabled" class="nav-menu" id="avatar"><img class="img-circle" width="22" height="22" ng-src="{{'content/images/logo-jhipster.png'}}" /></a>
                     <div class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="ls">
-                        <a><span ui-sref-active="active"><a ui-sref="settings" ui-sref-opts="{reload: true}" class="dropdown-item">Account details</a></span></a>
+                        <a><span ui-sref-active="active"><a ui-sref="settings" ui-sref-opts="{reload: true}" class="dropdown-item">Setting</a></span></a>
+                        <a><span ui-sref-active="active"><a ui-sref="user-management-detail({login: vm.account.login})" ui-sref-opts="{reload: true}" class="dropdown-item">Details</a></span></a>
+                        <a><span ui-sref-active="active"><a ui-sref="user-management" ui-sref-opts="{reload: true}" class="dropdown-item">Other User</a></span></a>
+                        <a><span ui-sref-active="active"><a ui-sref="application" ui-sref-opts="{reload: true}" class="dropdown-item">Application</a></span></a>
+                        <a><span ui-sref-active="active"><a ui-sref="docs" ui-sref-opts="{reload: true}" class="dropdown-item">API</a></span></a>
                     </div>
                 </li>
                

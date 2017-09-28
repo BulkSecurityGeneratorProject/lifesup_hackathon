@@ -13,7 +13,7 @@
             url: '/login-signup',
             data: {
                 authorities: [],
-                title: "loginsignup"
+                title: "loginsignup.title"
             },
             views: {
                 'content@': {
