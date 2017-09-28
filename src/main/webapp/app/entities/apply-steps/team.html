@@ -1,0 +1,78 @@
+<div>
+    <h2>Team Application</h2>
+    <h5>This part is the actual application for this specific challenge.</h5>
+</div>
+<br>
+<div class="row">
+    <div layout="column">
+        <md-content layout-padding>
+            <form name="teamForm">
+                <div layout-gt-sm="row" flex>
+                    <div class="col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Team Name</label>
+                            <input name="name" ng-model="vm.team.teamName" required>
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Company (Optional)</label>
+                            <input name="company" ng-model="vm.team.companyName">
+                        </md-input-container>
+                    </div>
+                </div>
+
+                <div layout-gt-sm="row" flex>
+                    <div class="col-md-8">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Team Description</label>
+                            <textarea name="description" md-maxlength="1000" ng-model="vm.team.description" rows="7" md-select-on-focus required></textarea>
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-4">
+                        <b>What makes your team unique?</b>
+                        <br>
+                        <small>How do you know each other? Why do you like to work together, and what have you done before?</small>
+                    </div>
+                </div>
+
+                <div layout-gt-sm="row" flex>
+                    <div class="col-md-8">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Motivation</label>
+                            <textarea name="motivation" md-maxlength="1000" ng-model="vm.team.motivation" rows="7" md-select-on-focus required></textarea>
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-4">
+                            <b>Why are you attending?</b>
+                            <br>
+                            <small>Tell us what is your main motivation to apply to this hack. What are your expectations?</small>
+                    </div>
+
+                </div>
+
+                <div layout-gt-sm="row" flex>
+                    <div class="col-md-8">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Ideas Description</label>
+                            <textarea name="ideaDescription" md-maxlength="1000" ng-model="vm.team.ideasDesscription" rows="7" md-select-on-focus required></textarea>
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-4">
+                            <b>What problem will you be solving?</b>
+                            <br>
+                            <small>Share your initial idea of what challenge you are solving, how you intend to do that, and what you'd want to build during the hack.</small>
+                    </div>
+
+                </div>
+            </form>
+        </md-content>
+    </div>
+</div>
+
+<div class="row" ng-cloak>
+    <div class="text-center">
+        <md-button class="md-raised" ui-sref="complete-profile">Back</md-button>
+        <md-button class="md-raised md-primary" ng-click="vm.save()" ng-disabled="teamForm.$invalid">Save Application</md-button>
+    </div>
+</div>

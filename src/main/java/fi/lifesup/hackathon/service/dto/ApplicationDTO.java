@@ -22,13 +22,7 @@ public class ApplicationDTO {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public List<String> getMembers() {
-		return members;
-	}
-
-	public void setMembers(List<String> members) {
-		this.members = members;
-	}
+	
 
 	public ApplicationDTO(Long id, String teamName, String companyteamName, String description, String motivation,
 			String ideasDesscription, ApplicationStatus status, Long challengeId) {
