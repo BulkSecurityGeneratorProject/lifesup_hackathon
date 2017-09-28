@@ -18,7 +18,6 @@ import fi.lifesup.hackathon.repository.ApplicationRepository;
 import fi.lifesup.hackathon.repository.ChallengeRepository;
 import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
 import fi.lifesup.hackathon.service.dto.ApplicationDTO;
-import fi.lifesup.hackathon.service.dto.ApplicationMemberDTO;
 
 @Service
 @Transactional
@@ -47,6 +46,16 @@ public class ApplicationService {
 		return true;
 	}
 
+	public boolean checkMember(List<String> members) {
+
+		for (String member : members) {
+			User user = userService.getUserWithAuthoritiesByEmail(member);
+			if (user.getStatus() != UserStatus.PROFILE_COMPLETE)
+				return false;
+		}
+		return true;
+	}
+
 	public Application createApplication(ApplicationDTO applicationDTO) {
 
 		Application application = new Application();
@@ -60,30 +69,23 @@ public class ApplicationService {
 		if (!checkApplication(applicationDTO)) {
 			application.setStatus(ApplicationStatus.DRAFT);
 		}
+
+		application.setChallenge(challengeRepository.findOne(applicationDTO.getChallengeId()));
 		Application result = applicationRepository.save(application);
-		
-		User user = userService.getUserWithAuthorities();
-		ChallengeUserApplication userApplication = new ChallengeUserApplication();
-		userApplication.setApplicationId(result.getId());
-		userApplication.setChallengeId(applicationDTO.getChallengeId());
-		userApplication.setUserId(user.getId());
-		challengeUserApplicationRepository.save(userApplication);
-//		application.setChallenge(challengeRepository.findOne(applicationDTO.getChallengeId()));
-//		
-//		for (String member : applicationDTO.getMembers()) {
-//			User user = userService.getUserWithAuthoritiesByEmail(member);
-//			if (user != null) {
-//				ChallengeUserApplication userApplication = new ChallengeUserApplication();
-//				userApplication.setApplicationId(result.getId());
-//				userApplication.setChallengeId(applicationDTO.getChallengeId());
-//				userApplication.setUserId(user.getId());
-//				challengeUserApplicationRepository.save(userApplication);
-//				if (user.getStatus() != UserStatus.PROFILE_COMPLETE) {
-//					application.setStatus(ApplicationStatus.DRAFT);
-//				}
-//			}
-//
-//		}
+		for (String member : applicationDTO.getMembers()) {
+			User user = userService.getUserWithAuthoritiesByEmail(member);
+			if (user != null) {
+				ChallengeUserApplication userApplication = new ChallengeUserApplication();
+				userApplication.setApplicationId(result.getId());
+				userApplication.setChallengeId(applicationDTO.getChallengeId());
+				userApplication.setUserId(user.getId());
+				challengeUserApplicationRepository.save(userApplication);
+				if (user.getStatus() != UserStatus.PROFILE_COMPLETE) {
+					application.setStatus(ApplicationStatus.DRAFT);
+				}
+			}
+
+		}
 		return applicationRepository.save(result);
 	}
 
@@ -101,22 +103,22 @@ public class ApplicationService {
 		} else {
 			application.setStatus(ApplicationStatus.DRAFT);
 		}
-//		challengeUserApplicationRepository.deleteByApplicationId(applicationDTO.getId());
+		challengeUserApplicationRepository.deleteByApplicationId(applicationDTO.getId());
 
-//		for (String member : applicationDTO.getMembers()) {
-//			User user = userService.getUserWithAuthoritiesByEmail(member);
-//			if (user != null) {
-//				ChallengeUserApplication userApplication = new ChallengeUserApplication();
-//				userApplication.setApplicationId(applicationDTO.getId());
-//				userApplication.setChallengeId(applicationDTO.getChallengeId());
-//				userApplication.setUserId(user.getId());
-//				challengeUserApplicationRepository.save(userApplication);
-//				if (user.getStatus() != UserStatus.PROFILE_COMPLETE) {
-//					application.setStatus(ApplicationStatus.DRAFT);
-//				}
-//			}
-//
-//		}
+		for (String member : applicationDTO.getMembers()) {
+			User user = userService.getUserWithAuthoritiesByEmail(member);
+			if (user != null) {
+				ChallengeUserApplication userApplication = new ChallengeUserApplication();
+				userApplication.setApplicationId(applicationDTO.getId());
+				userApplication.setChallengeId(applicationDTO.getChallengeId());
+				userApplication.setUserId(user.getId());
+				challengeUserApplicationRepository.save(userApplication);
+				if (user.getStatus() != UserStatus.PROFILE_COMPLETE) {
+					application.setStatus(ApplicationStatus.DRAFT);
+				}
+			}
+
+		}
 		application.setChallenge(challengeRepository.findOne(applicationDTO.getChallengeId()));
 		return applicationRepository.save(application);
 	}
@@ -128,12 +130,4 @@ public class ApplicationService {
 		return dto;
 	}
 
-	public ChallengeUserApplication addMemberApplicaion(ApplicationMemberDTO memberDTO){
-		User user = userService.getUserWithAuthoritiesByEmail(memberDTO.getUserEmail());
-		ChallengeUserApplication userApplication = new ChallengeUserApplication();
-		userApplication.setApplicationId(memberDTO.getApplicatonId());
-		userApplication.setChallengeId(memberDTO.getChallengeId());
-		userApplication.setUserId(user.getId());
-		return challengeUserApplicationRepository.save(userApplication);
-	}
 }

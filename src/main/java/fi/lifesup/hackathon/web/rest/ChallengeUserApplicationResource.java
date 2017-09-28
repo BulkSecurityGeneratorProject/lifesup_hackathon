@@ -4,8 +4,6 @@ import com.codahale.metrics.annotation.Timed;
 import fi.lifesup.hackathon.domain.ChallengeUserApplication;
 
 import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
-import fi.lifesup.hackathon.service.ApplicationService;
-import fi.lifesup.hackathon.service.dto.ApplicationMemberDTO;
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,9 +29,6 @@ public class ChallengeUserApplicationResource {
         
     @Inject
     private ChallengeUserApplicationRepository challengeUserApplicationRepository;
-    
-    @Inject
-    private ApplicationService applicationService;
 
     /**
      * POST  /challenge-user-applications : Create a new challengeUserApplication.
@@ -120,19 +115,6 @@ public class ChallengeUserApplicationResource {
         log.debug("REST request to delete ChallengeUserApplication : {}", id);
         challengeUserApplicationRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("challengeUserApplication", id.toString())).build();
-    }
-    
-    @PostMapping("/challenge-user-applications/members")
-    @Timed
-    public ResponseEntity<ChallengeUserApplication> addMember(@RequestBody ApplicationMemberDTO memberDTO) throws URISyntaxException {
-        log.debug("REST request to save ChallengeUserApplication : {}", memberDTO);
-        if (memberDTO.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeUserApplication", "idexists", "A new challengeUserApplication cannot already have an ID")).body(null);
-        }
-        ChallengeUserApplication result = applicationService.addMemberApplicaion(memberDTO);
-        return ResponseEntity.created(new URI("/api/challenge-user-applications/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("challengeUserApplication", result.getId().toString()))
-            .body(result);
     }
 
 }
