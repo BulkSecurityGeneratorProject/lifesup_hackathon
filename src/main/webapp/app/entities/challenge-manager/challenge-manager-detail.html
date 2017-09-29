@@ -2,6 +2,7 @@
     <img ng-src="{{vm.challenge.bannerUrl}}" class="img img-responsive">
 </div>
 <hr>
+<<<<<<< HEAD
 <jhi-alert-error></jhi-alert-error>
 <div class="row challenge-detail-wrapper">
     <div class="side-wrapper col-xs-12 col-md-4 col-lg-4 col-lg-push-8 col-md-push-8">
@@ -73,6 +74,64 @@
     </div>
 
 
+=======
+<div>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="hackathonApp.challenge.introduction">Introduction</span></dt>
+        <dd>
+            <span>{{vm.challenge.introduction}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.challenge.challengeText">Challenge Text</span></dt>
+        <dd>
+            <span>{{vm.challenge.challengeText}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.challenge.resourceText">Resource Text</span></dt>
+        <dd>
+            <span>{{vm.challenge.resourceText}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.challenge.rewardsText">Rewards Text</span></dt>
+        <dd>
+            <span>{{vm.challenge.rewardsText}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.challenge.timelineText">Timeline Text</span></dt>
+        <dd>
+            <span>{{vm.challenge.timelineText}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.challenge.rulesText">Rules Text</span></dt>
+        <dd>
+            <span>{{vm.challenge.rulesText}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.challenge.bannerUrl">Banner Url</span></dt>
+        <dd>
+            <span>{{vm.challenge.bannerUrl}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.challenge.additionalText">Additional Text</span></dt>
+        <dd>
+            <span>{{vm.challenge.additionalText}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.challenge.maxTeamNumber">Max Team Number</span></dt>
+        <dd>
+            <span>{{vm.challenge.maxTeamNumber}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.challenge.minTeamNumber">Min Team Number</span></dt>
+        <dd>
+            <span>{{vm.challenge.minTeamNumber}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.challenge.info">Info</span></dt>
+        <dd>
+            <a ui-sref="challenge-info-detail({id:vm.challenge.info.id})">{{vm.challenge.info.id}}</a>
+        </dd>
+        <dt><span data-translate="hackathonApp.challenge.company">Company</span></dt>
+        <dd>
+            <a ui-sref="company-detail({id:vm.challenge.company.id})">{{vm.challenge.company.id}}</a>
+        </dd>
+        <dt><span data-translate="hackathonApp.application.home.title">Applications</span></dt>
+        <dd>
+            <a ui-sref="applicationslist">applications list</a>
+        </dd>
+    </dl>
+>>>>>>> feature/applicationslist-view
 
     <div>
         <button type="submit" ui-sref="{{ vm.previousState }}" class="btn btn-info">
@@ -83,9 +142,12 @@
         <span class="glyphicon glyphicon-pencil"></span>
         <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"> Edit</span>
     </button>
+<<<<<<< HEAD
         <button type="button" ui-sref="challenge-manager-detail.delete({id:vm.challenge.id})" class="btn btn-primary btn-danger">
         <span class="glyphicon glyphicon-remove"></span>
         <span class="hidden-xs hidden-sm" data-translate="entity.action.delete"> delete</span>
     </button>
     </div>
+=======
+>>>>>>> feature/applicationslist-view
 </div>

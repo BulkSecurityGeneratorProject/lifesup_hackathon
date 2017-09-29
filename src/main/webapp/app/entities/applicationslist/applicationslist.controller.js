@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('ApplicationsListController', ApplicationsListController);
 
-    ApplicationsListController.$inject = ['$scope', '$state', 'ApplicationsList'];
+    ApplicationsListController.$inject = ['$scope', '$state', 'ApplicationsList', 'Challenge'];
 
-    function ApplicationsListController ($scope, $state, ApplicationsList) {
+    function ApplicationsListController ($scope, $state, ApplicationsList, Challenge) {
         var vm = this;
         
         vm.applications = [];
@@ -18,6 +18,7 @@
         function loadAll() {
             ApplicationsList.query(function(data) {
                 vm.applications = data;
+                console.log(data);
             });
         }
     }
