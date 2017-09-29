@@ -7,10 +7,11 @@
     <div class="col-md-3 col-sm-12 col-xs-12 col-md-push-9 text-center">
         <div class="col-md-12 col-sm-4 col-xs-3"></div>
         <div class="col-md-12 col-sm-4 col-xs-6">
-            <img src='content/images/avatar.jpg' class="img img-responsive" style="border-radius:50%">
-            <md-input-container class="md-block" flex-gt-xs>
-                <md-button class="md-raised md-primary" ngf-select="vm.upload($file)">Change</md-button>
-            </md-input-container>
+            <img ng-src="{{vm.user.logoUrl}}" class="img avatar img-responsive img-fill" ng-cloak>
+            <br>
+            <label class="btn btn-primary">
+                Change <input type="file" base-sixty-four-input maxsize="5000" accept="image/*" ng-model="vm.logo" data-ng-change="vm.uploadLogo()" style="display:none">
+            </label>
         </div>
         <div class="col-md-12 col-sm-4 col-xs-3"></div>
     </div>

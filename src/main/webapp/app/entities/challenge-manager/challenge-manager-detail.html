@@ -25,7 +25,8 @@
                 <hr>
                 <p><i class="material-icons">people</i>{{vm.challenge.minTeamNumber}} - {{vm.challenge.maxTeamNumber}} member(s) / team</p>
                 <hr>
-                <p><i class="material-icons">alarm</i>Application closes in {{vm.challenge.timeLeft}} day(s)</p>
+                <p ng-if="vm.challenge.timeLeft > 0"><i class="material-icons">alarm</i>Application closes in {{vm.challenge.timeLeft}} day(s)</p>
+                <p ng-if="vm.challenge.timeLeft <= 0"><i class="material-icons">close</i>Application has closed</p>
             </div>
         </div>
 
@@ -83,7 +84,7 @@
         <span class="glyphicon glyphicon-pencil"></span>
         <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"> Edit</span>
     </button>
-        <button type="button" ui-sref="challenge-manager-detail.delete({id:vm.challenge.id})" class="btn btn-primary btn-danger">
+        <button type="button" ui-sref="challenge-manager-detail.delete({id:vm.challenge.id})" class="btn btn-primary btn-dangerz">
         <span class="glyphicon glyphicon-remove"></span>
         <span class="hidden-xs hidden-sm" data-translate="entity.action.delete"> delete</span>
     </button>

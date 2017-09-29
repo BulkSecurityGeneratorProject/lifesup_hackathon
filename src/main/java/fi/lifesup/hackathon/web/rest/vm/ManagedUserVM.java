@@ -7,6 +7,7 @@ import java.util.Set;
 import fi.lifesup.hackathon.domain.Company;
 import fi.lifesup.hackathon.domain.User;
 import fi.lifesup.hackathon.domain.UserInfo;
+import fi.lifesup.hackathon.domain.enumeration.UserStatus;
 import fi.lifesup.hackathon.service.dto.UserDTO;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,7 +27,13 @@ public class ManagedUserVM extends UserDTO {
     private ZonedDateTime createdDate;
 
     private String lastModifiedBy;
-
+    private UserStatus status;
+    public UserStatus getStatus() {
+        return status;
+    }
+    public void setStatus(UserStatus status) {
+        this.status = status;
+    }
     public Company getCompany() {
 		return company;
 	}
@@ -64,6 +71,7 @@ public class ManagedUserVM extends UserDTO {
         this.password = null;
         this.company=user.getCompany();
         this.userInfo=user.getUserInfo();
+        this.status=user.getStatus();
     }
 
     public ManagedUserVM(Long id, String createdBy, ZonedDateTime createdDate, String lastModifiedBy,

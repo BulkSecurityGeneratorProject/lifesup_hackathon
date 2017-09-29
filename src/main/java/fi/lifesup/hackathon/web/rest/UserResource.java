@@ -234,7 +234,7 @@ public class UserResource {
 
 	@DeleteMapping("/delete-users/{id}")
 	@Timed
-	public void deleteUser(@PathVariable Long id) {
+	public void deleteAccount(@PathVariable Long id) {
 		User user = userService.getUserWithAuthorities(id);
 		user.setStatus(UserStatus.REMOVED);
 		userRepository.save(user);

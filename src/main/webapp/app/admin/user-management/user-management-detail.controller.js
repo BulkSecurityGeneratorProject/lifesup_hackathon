@@ -5,24 +5,28 @@
         .module('hackathonApp')
         .controller('UserManagementDetailController', UserManagementDetailController);
 
-    UserManagementDetailController.$inject = ['$scope', '$stateParams', 'User', 'Skill', 'Experience', 'UserDetail'];
+    UserManagementDetailController.$inject = ['$scope', '$stateParams', 'User', 'Skill', 'Experience', 'UserDetail', 'Principal'];
 
-    function UserManagementDetailController($scope, $stateParams, User, Skill, Experience, UserDetail) {
+    function UserManagementDetailController($scope, $stateParams, User, Skill, Experience, UserDetail, Principal) {
         var vm = this;
 
         vm.user = {};
+        vm.account = null;
         vm.rotateCard = rotateCard;
         vm.skills = [];
         vm.workAreas = [];
-        vm.user = {};
-        UserDetail.get(function (result) {
+        vm.userInfo = {
+            logoUrl: "content/images/avatar.jpg"
+        }
+
+        User.get({ login: $stateParams.login }, function (result) {
             vm.user = result;
+            console.log(result);
             if (result.userInfo) {
                 vm.userInfo = result.userInfo;
                 vm.skills = result.userInfo.skills.split(",");
                 vm.workAreas = result.userInfo.workArea.split(",");
             }
-
         });
 
         function rotateCard(btn) {

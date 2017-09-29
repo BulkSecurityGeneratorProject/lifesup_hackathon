@@ -5,6 +5,7 @@ import fi.lifesup.hackathon.domain.ChallengeUserApplication;
 
 import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
 import fi.lifesup.hackathon.service.ApplicationService;
+import fi.lifesup.hackathon.service.UserService;
 import fi.lifesup.hackathon.service.dto.ApplicationMemberDTO;
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
@@ -36,6 +37,9 @@ public class ChallengeUserApplicationResource {
     
     @Inject
     private ApplicationService applicationService;
+    
+    @Inject
+    private UserService userService;
 
     /**
      * POST  /challenge-user-applications : Create a new challengeUserApplication.
@@ -143,5 +147,20 @@ public class ChallengeUserApplicationResource {
             .headers(HeaderUtil.createEntityCreationAlert("challengeUserApplication", result.getId().toString()))
             .body(result);
     }
+    
+    @GetMapping("/challenge-user-applications/challenge/{challengeId}")
+    @Timed
+    public ChallengeUserApplication getApplication(@PathVariable Long challengeId) {
+        log.debug("REST request to get ChallengeUserApplication : {}");
+        ChallengeUserApplication challengeUserApplication = challengeUserApplicationRepository.findByChallengeIdAndUserId(challengeId, userService.getCurrentUser().getId());
+        return challengeUserApplication;
+    }
 
+    @GetMapping("/challenge-user-applications/current-user")
+    @Timed
+    public List<ChallengeUserApplication> getAllApplicationsByUser() {
+        log.debug("REST request to get all ChallengeUserApplications");
+        List<ChallengeUserApplication> challengeUserApplications = challengeUserApplicationRepository.findByUserId(userService.getCurrentUser().getId());
+        return challengeUserApplications;
+    }
 }

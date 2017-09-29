@@ -5,12 +5,13 @@
         .module('hackathonApp')
         .controller('UserManagementDeleteController', UserManagementDeleteController);
 
-    UserManagementDeleteController.$inject = ['$uibModalInstance', 'entity', 'User'];
+    UserManagementDeleteController.$inject = ['$uibModalInstance', 'entity', 'DeleteUserByID'];
 
-    function UserManagementDeleteController ($uibModalInstance, entity, User) {
+    function UserManagementDeleteController ($uibModalInstance, entity, DeleteUserByID) {
         var vm = this;
 
         vm.user = entity;
+        console.log(entity);
         vm.clear = clear;
         vm.confirmDelete = confirmDelete;
 
@@ -18,8 +19,8 @@
             $uibModalInstance.dismiss('cancel');
         }
 
-        function confirmDelete (login) {
-            User.delete({login: login},
+        function confirmDelete (id) {
+            DeleteUserByID.delete({id: id},
                 function () {
                     $uibModalInstance.close(true);
                 });

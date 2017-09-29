@@ -108,7 +108,7 @@
                             }]
                         }
                     }).then(function () {
-                        $state.go('challenge-manager-detail', null, { reload: 'challenge-manager-detail' });
+                        $state.go('challenge-manager', null, { reload: 'challenge-manager' });
                     }, function () {
                         $state.go('^');
                     });
