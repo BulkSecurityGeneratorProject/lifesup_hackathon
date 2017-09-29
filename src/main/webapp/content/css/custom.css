@@ -368,6 +368,7 @@ body {
 .application-card {
   color: #fefefe;
   transition: all .5s ease-in-out;
+  margin-bottom: 3em;
 }
 
 .application-card:hover {
@@ -435,4 +436,60 @@ body {
 .action-btn:active {
   border-bottom: none;
   transform: translateY(3px);
+}
+
+/*============= Applications detail View ================*/
+.application-heading {
+  background-color: #E91E63;
+  color: #fefefe;
+  padding: 1em;
+}
+
+.content-wrapper {
+  margin: 0;
+  padding: 0;
+}
+
+.team-info,
+.application-progress {
+  padding: 0;
+}
+
+.horizontal-card {
+  padding: 2em;
+  margin: 1em 0;
+  box-shadow: 0 0 5px #ccc;
+}
+
+.member-avatar {
+  text-align: center;
+}
+
+.skill-badge {
+  padding: 2px 1em;
+  font-size: 12px;
+  background: #1565C0;
+  border-radius: 5px;
+  color: #fefefe;
+  white-space: nowrap;
+}
+
+.horizontal-card:nth-child(odd) .skill-badge {
+  background: #F50057;
+}
+
+.challenge-banner {
+  width: 100%;
+  height: 100px;
+  background: #F50057;
+}
+
+.progress-step {
+  display: flex;
+  justify-content: space-between;
+  margin: 1em 0;
+}
+
+.progress-step i {
+  margin: 0;  
 }
