@@ -493,3 +493,22 @@ body {
 .progress-step i {
   margin: 0;  
 }
+
+.application-status {
+  display: flex;
+  justify-content: center;
+  font-size: 2em;
+  padding: 1em;
+}
+
+.application-status i {
+  font-size: 2em;
+}
+
+.application-valid {
+  color: #1B5E20;
+}
+
+.application-invalid {
+  color: #B71C1C;
+}

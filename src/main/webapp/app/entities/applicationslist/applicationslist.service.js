@@ -3,10 +3,10 @@
     angular
         .module('hackathonApp')
         .factory('ApplicationsList', ApplicationsList)
-        .factory('UserDetails', UserDetails);
+        .factory('UserAccount', UserAccount);
 
     ApplicationsList.$inject = ['$resource'];
-    UserDetails.$inject = ['$resource'];
+    UserAccount.$inject = ['$resource'];
 
     function ApplicationsList ($resource) {
         var resourceUrl =  'api/applications/:id';
@@ -26,8 +26,8 @@
         });
     }
 
-    function UserDetails ($resource) {
-        var resourceUrl = "/api/user-detail";
+    function UserAccount ($resource) {
+        var resourceUrl = "/api/account";
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: false},

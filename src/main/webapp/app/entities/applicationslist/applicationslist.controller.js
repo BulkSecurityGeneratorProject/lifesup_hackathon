@@ -14,6 +14,7 @@
         vm.loadAll = loadAll;
         vm.approve = approve;
         vm.reject = reject;
+        
 
         loadAll();
 
@@ -23,17 +24,17 @@
             });
         }
 
-        function approve() {
-            ApplicationsList.update(function(item) {
-                item.status = "APPROVED";
-                console.log("something");
-            })
+        function approve(id) {
+            vm.app = {
+                id: id,
+                status: "APPROVED"
+            };
+            ApplicationsList.update(vm.app);
         }
 
-        function reject() {
-            ApplicationsList.update(function(item) {
-                item.status = "REJECTED";
-                console.log("something");
+        function reject(id) {
+            ApplicationsList.update(function(id) {
+                id.status = "REJECTED";
             })
         }
 
