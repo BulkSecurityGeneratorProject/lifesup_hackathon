@@ -29,7 +29,13 @@
                 id: id,
                 status: "APPROVED"
             };
-            ApplicationsList.update(vm.app);
+            ApplicationsList.query(function(data) {
+                data.forEach(function(item) {
+                    if (item.id === id) {
+                        ApplicationsList.update(vm.app);
+                    } else {console.log("not there yet");}                    
+                }, this);
+            });
         }
 
         function reject(id) {
@@ -37,7 +43,13 @@
                 id: id,
                 status: "REJECTED"
             };
-            ApplicationsList.update(vm.app);
+            ApplicationsList.query(function(data) {
+                data.forEach(function(item) {
+                    if (item.id === id) {
+                        ApplicationsList.update(vm.app);
+                    } else {console.log("not there yet");}                    
+                }, this);
+            });
         }
     }
 })();
