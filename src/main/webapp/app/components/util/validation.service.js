@@ -9,10 +9,10 @@
 
     function validation ($scope) {
         var validate = {
-			isMinMaxValid: isMinMaxValid;
-			isLowerThan100: isLowerThan100;
-			isDateRangeValid: isDateRangeValid;
-			isDiscountValid: isDiscountValid;
+			isMinMaxValid: isMinMaxValid,
+			isLowerThan100: isLowerThan100,
+			isDateRangeValid: isDateRangeValid,
+			isDiscountValid: isDiscountValid
 		};
 		
 		function isMinMaxValid(min, max) {
