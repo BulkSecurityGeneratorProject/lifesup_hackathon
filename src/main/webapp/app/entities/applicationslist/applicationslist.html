@@ -1,15 +1,15 @@
 <div class="row">
   <div class="col-sm-12 col-md-4" ng-repeat="application in vm.applications">
     <md-card class="application-card">          
-        <md-card-title class="team-name"><h3>{{vm.application.teamName}}</h3></md-card-title>
-        <md-card-subtitle class="company-name"><h5>{{vm.application.companyName}}</h5></md-card-subtitle>
+        <md-card-title class="team-name"><h3>{{application.teamName}}</h3></md-card-title>
+        <md-card-subtitle class="company-name"><h5>{{application.companyName}}</h5></md-card-subtitle>
         <md-card-content class='application-description'>
           <p>{{vm.application.description}}</p>
           <a ui-sref="applicationslist-detail({id:application.id})" class="go-detail">Details</a>
         </md-card-content>
         <md-card-actions class="action-btn-group">
-          <button class="action-btn approve-btn"><a href="#">APPROVE</a></button>
-          <button class="action-btn reject-btn"><a href="#">REJECT</a></button>
+          <button class="action-btn approve-btn" ng-click="vm.approve(application.id)">APPROVE</button>
+          <button class="action-btn reject-btn" ng-click="vm.reject(application.id)">REJECT</button>
         </md-card-actions>
     </md-card>
   </div>
