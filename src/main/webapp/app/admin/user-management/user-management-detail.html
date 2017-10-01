@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="front">
                     <div class="cover">
-                        <img src="content/images/boat.jpg" />
+                        <img src="content/images/default/cover.jpg" />
                     </div>
                     <div class="user">
                         <img class="img-circle" ng-src="{{vm.userInfo.logoUrl}}" />
@@ -12,7 +12,7 @@
                     <div class="content">
                         <div class="main">
                             <h3 class="name">{{vm.user.firstName}} {{vm.user.lastName}}</h3>
-                            <p class="profession">{{vm.userInfo.jobTitle}}</p>
+                            <p class="profession">{{vm.userInfo.jobTitle}} at {{vm.userInfo.companyName}}</p>
                             <p class="text-center">{{vm.userInfo.introduction}}</p>
                         </div>
                         <div class="card-footer">

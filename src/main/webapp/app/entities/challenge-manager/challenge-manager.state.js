@@ -75,7 +75,6 @@
                         controller: 'ChallengeManagerDialogController',
                         controllerAs: 'vm',
                         size: 'lg',
-                        clickOutsideToClose: true,
                         fullscreen: true,
                         resolve: {
                             entity: ['ChallengeManager', function (ChallengeManager) {
@@ -125,7 +124,6 @@
                         templateUrl: 'app/entities/challenge-manager/challenge-manager-dialog.html',
                         controller: 'ChallengeManagerDialogController',
                         controllerAs: 'vm',
-                        clickOutsideToClose: true,
                         fullscreen: true,
                         resolve: {
                             entity: function () {

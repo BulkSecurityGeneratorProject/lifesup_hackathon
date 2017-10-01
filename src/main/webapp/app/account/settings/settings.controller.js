@@ -12,7 +12,7 @@
 
         vm.save = save;
         vm.user = {
-            logoUrl: "content/images/avatar.jpg"
+            logoUrl: "content/images/default/avatar.jpg"
         };
         vm.uploadLogo = uploadLogo;
 

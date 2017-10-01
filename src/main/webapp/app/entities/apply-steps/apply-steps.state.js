@@ -8,30 +8,31 @@
     stateConfig.$inject = ['$stateProvider'];
 
     function stateConfig($stateProvider) {
-        $stateProvider.state('complete-profile', {
-            parent: 'challengeslist',
-            url: '/{id}/complete-profile',
-            data: {
-                authorities: ['ROLE_USER'],
-                pageTitle: 'global.menu.account.settings'
-            },
-            views: {
-                'content@': {
-                    templateUrl: 'app/entities/apply-steps/profile.html',
-                    controller: 'CompleteProfileController',
-                    controllerAs: 'vm'
+        $stateProvider
+            .state('complete-profile', {
+                parent: 'challengeslist',
+                url: '/{id}/complete-profile',
+                data: {
+                    authorities: ['ROLE_USER'],
+                    pageTitle: 'global.menu.account.settings'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'app/entities/apply-steps/profile.html',
+                        controller: 'CompleteProfileController',
+                        controllerAs: 'vm'
+                    }
+                },
+                resolve: {
+                    entity: ['UserDetail', function (UserDetail) {
+                        return UserDetail.get().$promise;
+                    }],
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('settings');
+                        return $translate.refresh();
+                    }]
                 }
-            },
-            resolve: {
-                entity: ['UserDetail', function(UserDetail){
-                    return UserDetail.get().$promise;
-                }],
-                translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                    $translatePartialLoader.addPart('settings');
-                    return $translate.refresh();
-                }]
-            }
-        })
+            })
             .state('team', {
                 parent: 'complete-profile',
                 url: '/team',
@@ -47,9 +48,6 @@
                     }
                 },
                 resolve: {
-                    entity: ['$stateParams', 'UserApplicationByChallengeID', function ($stateParams, UserApplicationByChallengeID) {
-                        return UserApplicationByChallengeID.get({ challengeId: $stateParams.id })
-                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('application');
                         $translatePartialLoader.addPart('applicationStatus');
