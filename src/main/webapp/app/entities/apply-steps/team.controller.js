@@ -5,35 +5,32 @@
         .module('hackathonApp')
         .controller('TeamController', TeamController);
 
-    TeamController.$inject = ['$scope', '$stateParams', '$state', 'Application', 'entity'];
+    TeamController.$inject = ['$scope', '$stateParams', '$state', 'Application', 'UserApplicationByChallengeID'];
 
-    function TeamController ($scope, $stateParams, $state, Application, entity) {
+    function TeamController ($scope, $stateParams, $state, Application, UserApplicationByChallengeID) {
         var vm = this;
         vm.save = save;
         
-        vm.entity = entity;
         vm.team = {};
 
         load()
 
         function load(){
-            if (entity.applicationId){
-                Application.get({id: entity.applicationId}, function(result){
-                    vm.team = result;
-                });
-            }
+            vm.entity = UserApplicationByChallengeID.get({ challengeId: $stateParams.id }, function(result){
+                if (result.applicationId){
+                    Application.get({id: result.applicationId}, function(result){
+                        vm.team = result;
+                    });
+                }
+            });
         }
 
         function save(){
-            if (entity.applicationId){
-                console.log("Update");
+            vm.team.challengeId = $stateParams.id;
+            if (vm.entity.applicationId){
                 Application.update(vm.team, onSaveSuccess, onSaveError);
             }
             else{
-                console.log("Save");
-                vm.team.challengeId = $stateParams.id;
-                console.log(vm.team);
-                
                 Application.save(vm.team, onSaveSuccess, onSaveError);
             }
             
