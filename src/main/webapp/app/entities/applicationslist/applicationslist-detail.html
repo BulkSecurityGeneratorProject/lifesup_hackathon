@@ -1,7 +1,7 @@
 <div ng-hide="vm.application.info.status === 'CLOSED' || vm.application.info.status === 'REJECTED'">
 	<div class="application-heading jumbotron-fluid">
-	  <h1>{{vm.application.teamName}}</h1>
-	  <h3>{{vm.application.companyName}}</h3>
+	  <h1>{{vm.application[0].teamName}}</h1>
+	  <h3>{{vm.application[0].companyName}}</h3>
 	</div>
 
 	<div class="row content-wrapper">
@@ -26,15 +26,15 @@
 	      <div class="horizontal-card">
 	        <div class="team-description">
 	          <h3>Team Description</h3>
-	          <p>{{vm.application.description}}</p>
+	          <p>{{vm.application[0].description}}</p>
 	        </div>
 	        <div class="team-motivation">
 	          <h3>Team Motivation</h3>
-	          <p>{{vm.application.motivation}}</p>
+	          <p>{{vm.application[0].motivation}}</p>
 	        </div>
 	        <div class="team-conclusion">
 	          <h3>Ideas Description</h3>
-	          <p>{{vm.application.ideasDescription}}</p>
+	          <p>{{vm.application[0].ideasDescription}}</p>
 	        </div>
 	        <button class="btn" ui-sref="application.edit({id:application.id})">Edit your application</button>
 	      </div>
@@ -50,12 +50,12 @@
 	  <div class="col-md-1 hidden-xs"></div>
 	  <!--======== challenge and application progress ============-->
 	  <div class="application-progress col-md-3 col-xs-12 horizontal-card">
-	  	<div style="background-image:url({{vm.application.challenge.bannerUrl}})" class="challenge-banner">Challenge Banner Here</div>
+	  	<div style="background-image:url({{vm.application[0].challenge.bannerUrl}})" class="challenge-banner">Challenge Banner Here</div>
 	  	<div>
 	  		<p>You are applying to</p>
-	  		<h3>{{vm.application.challenge.name}}</h3>
+	  		<h3>{{vm.application[0].challenge.name}}</h3>
 	  	</div>
-	  	<div>Application deadline: {{vm.application.challenge.info.eventEndTime | date}}</div>
+	  	<div>Application deadline: {{vm.application[0].challenge.info.eventEndTime | date}}</div>
 	  	<div>
 	  		<p>Application Readiness</p>
 	  		<!-- <div class="progress">

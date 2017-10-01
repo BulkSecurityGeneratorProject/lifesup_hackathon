@@ -25,31 +25,19 @@
         }
 
         function approve(id) {
-            vm.app = {
-                id: id,
-                status: "APPROVED"
-            };
-            ApplicationsList.query(function(data) {
-                data.forEach(function(item) {
-                    if (item.id === id) {
-                        ApplicationsList.update(vm.app);
-                    } else {console.log("not there yet");}                    
-                }, this);
-            });
+            vm.application = ApplicationsList.get({id: id}, function(result){
+                vm.application.status = 'APPROVED';
+                vm.application.challengeId = result.challenge.id;
+                ApplicationsList.update(vm.application);
+            })
         }
 
         function reject(id) {
-            vm.app = {
-                id: id,
-                status: "REJECTED"
-            };
-            ApplicationsList.query(function(data) {
-                data.forEach(function(item) {
-                    if (item.id === id) {
-                        ApplicationsList.update(vm.app);
-                    } else {console.log("not there yet");}                    
-                }, this);
-            });
+            vm.application = ApplicationsList.get({id: id}, function(result){
+                vm.application.status = 'REJECTED';
+                vm.application.challengeId = result.challenge.id;
+                ApplicationsList.update(vm.application);
+            })
         }
     }
 })();

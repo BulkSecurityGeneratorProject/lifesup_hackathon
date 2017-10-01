@@ -5,7 +5,7 @@
         <md-card-subtitle class="company-name"><h5>{{application.companyName}}</h5></md-card-subtitle>
         <md-card-content class='application-description'>
           <p>{{application.description}}</p>
-          <a ui-sref="applicationslist-detail({id:application.id})" class="go-detail">Details</a>
+          <a ui-sref="applicationslist-detail({applicationId:application.id})" class="go-detail">Details</a>
         </md-card-content>
         <md-card-actions class="action-btn-group">
           <button class="action-btn approve-btn" ng-click="vm.approve(application.id)">APPROVE</button>
@@ -16,7 +16,7 @@
 </div>
 
 <!-- testing only -->
-<div class="row">
+<!-- <div class="row">
   <div class="col-sm-12 col-md-4">
     <md-card class="application-card">          
         <md-card-title class="team-name"><h3>TEAM NAME</h3></md-card-title>
@@ -26,7 +26,7 @@
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
         quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
         consequat.</p>
-        <a ui-sref="applicationslist-detail({id:application.id})" class="go-detail">Details</a>
+        <a ui-sref="applicationslist-detail({applicationId:application.id})" class="go-detail">Details</a>
         </md-card-content>
         <md-card-actions class="action-btn-group">
           <button class="action-btn approve-btn" ng-click="vm.approve(application.id)">APPROVE</button>
@@ -34,4 +34,4 @@
         </md-card-actions>
     </md-card>
   </div>
-</div>
+</div> -->
