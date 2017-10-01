@@ -16,7 +16,7 @@
            <!--  <button class="cta-btn"><a href="#">APPLY NOW</a></button> -->
            <button class="cta-btn" ng-switch="vm.isAuthenticated()">
                 <a href="#" ui-sref="login-signup" ng-switch-when="false">Apply now!</a>
-                <a href="#" ui-sref="settings" ng-switch-when="true">Apply now!</a>
+                <a href="#" ui-sref="complete-profile({id: vm.challenge.id})" ng-switch-when="true">Apply now!</a>
                 <a href="#" ui-sref="application-view" ng-switch-default>Apply now!</a><!-- not yet activated -->
               </button>
         </div>

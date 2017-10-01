@@ -16,7 +16,7 @@
         vm.skills = [];
         vm.workAreas = [];
         vm.userInfo = {
-            logoUrl: "content/images/avatar.jpg"
+            logoUrl: "content/images/default/avatar.jpg"
         }
 
         User.get({ login: $stateParams.login }, function (result) {

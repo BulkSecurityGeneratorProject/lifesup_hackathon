@@ -4,12 +4,12 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-xs-4 no-padding-left">
-                <button class="btn btn-primary" ui-sref="application.new" >
+                <!-- <button class="btn btn-primary" ui-sref="application.new" >
                     <span class="glyphicon glyphicon-plus"></span>
                     <span  data-translate="hackathonApp.application.home.createLabel">
                         Create new Application
                     </span>
-                </button>
+                </button> -->
             </div>
         </div>
     </div>
@@ -18,7 +18,7 @@
         <table class="jh-table table table-striped">
             <thead>
                 <tr>
-                    <th><span data-translate="global.field.id">ID</span></th>
+                    <!-- <th><span data-translate="global.field.id">ID</span></th> -->
                     <th><span data-translate="hackathonApp.application.teamName">Team Name</span></th>
                     <th><span data-translate="hackathonApp.application.companyName">Company Name</span></th>
                     <th><span data-translate="hackathonApp.application.description">Description</span></th>
@@ -30,8 +30,8 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="application in vm.applications track by application.id">
-                    <td><a ui-sref="application-detail({id:application.id})">{{application.id}}</a></td>
+                <tr ng-repeat="application in vm.applications">
+                    <!-- <td><a ui-sref="application-detail({id:application.id})">{{application.id}}</a></td> -->
                     <td>{{application.teamName}}</td>
                     <td>{{application.companyName}}</td>
                     <td>{{application.description}}</td>
@@ -39,7 +39,7 @@
                     <td>{{application.ideasDescription}}</td>
                     <td data-translate="{{'hackathonApp.ApplicationStatus.' + application.status}}">{{application.status}}</td>
                     <td>
-                        <a ui-sref="challenge-detail({id:application.challenge.id})">{{application.challenge.id}}</a>
+                        <a ui-sref="challengeslist-detail({id:application.challenge.id})">{{application.challenge.name}}</a>
                     </td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
@@ -49,12 +49,12 @@
                                 <span class="glyphicon glyphicon-eye-open"></span>
                                 <span class="hidden-xs hidden-sm" data-translate="entity.action.view"></span>
                             </button>
-                            <button type="submit"
+                            <!-- <button type="submit"
                                     ui-sref="application.edit({id:application.id})"
                                     class="btn btn-primary btn-sm">
                                 <span class="glyphicon glyphicon-pencil"></span>
                                 <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"></span>
-                            </button>
+                            </button> -->
                             <button type="submit"
                                     ui-sref="application.delete({id:application.id})"
                                     class="btn btn-danger btn-sm">
