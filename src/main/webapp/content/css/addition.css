@@ -70,7 +70,7 @@ h2{
 
 .banner-img {
   overflow: hidden;
-  height: auto;
+  height: 500px;
   width: 100%;
   position: relative;
   margin: auto;
@@ -264,6 +264,7 @@ h2{
 .info-column>h3 {
   text-align: center;
 }
+
 
 .material-icons {
   position: relative;
