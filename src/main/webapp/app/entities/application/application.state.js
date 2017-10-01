@@ -32,97 +32,97 @@
                 }]
             }
         })
-        .state('application-detail', {
-            parent: 'entity',
-            url: '/application/{id}',
-            data: {
-                authorities: ['ROLE_USER'],
-                pageTitle: 'hackathonApp.application.detail.title'
-            },
-            views: {
-                'content@': {
-                    templateUrl: 'app/entities/application/application-detail.html',
-                    controller: 'ApplicationDetailController',
-                    controllerAs: 'vm'
-                }
-            },
-            resolve: {
-                translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                    $translatePartialLoader.addPart('application');
-                    $translatePartialLoader.addPart('applicationStatus');
-                    return $translate.refresh();
-                }],
-                entity: ['$stateParams', 'Application', function($stateParams, Application) {
-                    return Application.get({id : $stateParams.id}).$promise;
-                }],
-                previousState: ["$state", function ($state) {
-                    var currentStateData = {
-                        name: $state.current.name || 'application',
-                        params: $state.params,
-                        url: $state.href($state.current.name, $state.params)
-                    };
-                    return currentStateData;
-                }]
-            }
-        })
-        .state('application-detail.edit', {
-            parent: 'application-detail',
-            url: '/detail/edit',
-            data: {
-                authorities: ['ROLE_USER']
-            },
-            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
-                $uibModal.open({
-                    templateUrl: 'app/entities/application/application-dialog.html',
-                    controller: 'ApplicationDialogController',
-                    controllerAs: 'vm',
-                    backdrop: 'static',
-                    size: 'lg',
-                    resolve: {
-                        entity: ['Application', function(Application) {
-                            return Application.get({id : $stateParams.id}).$promise;
-                        }]
-                    }
-                }).result.then(function() {
-                    $state.go('^', {}, { reload: false });
-                }, function() {
-                    $state.go('^');
-                });
-            }]
-        })
-        .state('application.new', {
-            parent: 'application',
-            url: '/new',
-            data: {
-                authorities: ['ROLE_USER']
-            },
-            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
-                $uibModal.open({
-                    templateUrl: 'app/entities/application/application-dialog.html',
-                    controller: 'ApplicationDialogController',
-                    controllerAs: 'vm',
-                    backdrop: 'static',
-                    size: 'lg',
-                    resolve: {
-                        entity: function () {
-                            return {
-                                teamName: null,
-                                companyName: null,
-                                description: null,
-                                motivation: null,
-                                ideasDescription: null,
-                                status: null,
-                                id: null
-                            };
-                        }
-                    }
-                }).result.then(function() {
-                    $state.go('application', null, { reload: 'application' });
-                }, function() {
-                    $state.go('application');
-                });
-            }]
-        })
+        // .state('application-detail', {
+        //     parent: 'entity',
+        //     url: '/application/{id}',
+        //     data: {
+        //         authorities: ['ROLE_USER'],
+        //         pageTitle: 'hackathonApp.application.detail.title'
+        //     },
+        //     views: {
+        //         'content@': {
+        //             templateUrl: 'app/entities/application/application-detail.html',
+        //             controller: 'ApplicationDetailController',
+        //             controllerAs: 'vm'
+        //         }
+        //     },
+        //     resolve: {
+        //         translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+        //             $translatePartialLoader.addPart('application');
+        //             $translatePartialLoader.addPart('applicationStatus');
+        //             return $translate.refresh();
+        //         }],
+        //         entity: ['$stateParams', 'Application', function($stateParams, Application) {
+        //             return Application.get({id : $stateParams.id}).$promise;
+        //         }],
+        //         previousState: ["$state", function ($state) {
+        //             var currentStateData = {
+        //                 name: $state.current.name || 'application',
+        //                 params: $state.params,
+        //                 url: $state.href($state.current.name, $state.params)
+        //             };
+        //             return currentStateData;
+        //         }]
+        //     }
+        // })
+        // .state('application-detail.edit', {
+        //     parent: 'application-detail',
+        //     url: '/detail/edit',
+        //     data: {
+        //         authorities: ['ROLE_USER']
+        //     },
+        //     onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+        //         $uibModal.open({
+        //             templateUrl: 'app/entities/application/application-dialog.html',
+        //             controller: 'ApplicationDialogController',
+        //             controllerAs: 'vm',
+        //             backdrop: 'static',
+        //             size: 'lg',
+        //             resolve: {
+        //                 entity: ['Application', function(Application) {
+        //                     return Application.get({id : $stateParams.id}).$promise;
+        //                 }]
+        //             }
+        //         }).result.then(function() {
+        //             $state.go('^', {}, { reload: false });
+        //         }, function() {
+        //             $state.go('^');
+        //         });
+        //     }]
+        // })
+        // .state('application.new', {
+        //     parent: 'application',
+        //     url: '/new',
+        //     data: {
+        //         authorities: ['ROLE_USER']
+        //     },
+        //     onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+        //         $uibModal.open({
+        //             templateUrl: 'app/entities/application/application-dialog.html',
+        //             controller: 'ApplicationDialogController',
+        //             controllerAs: 'vm',
+        //             backdrop: 'static',
+        //             size: 'lg',
+        //             resolve: {
+        //                 entity: function () {
+        //                     return {
+        //                         teamName: null,
+        //                         companyName: null,
+        //                         description: null,
+        //                         motivation: null,
+        //                         ideasDescription: null,
+        //                         status: null,
+        //                         id: null
+        //                     };
+        //                 }
+        //             }
+        //         }).result.then(function() {
+        //             $state.go('application', null, { reload: 'application' });
+        //         }, function() {
+        //             $state.go('application');
+        //         });
+        //     }]
+        // })
         .state('application.edit', {
             parent: 'application',
             url: '/{id}/edit',

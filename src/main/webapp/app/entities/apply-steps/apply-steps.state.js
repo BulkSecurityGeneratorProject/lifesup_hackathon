@@ -48,9 +48,6 @@
                     }
                 },
                 resolve: {
-                    entity: ['$stateParams', 'UserApplicationByChallengeID', function ($stateParams, UserApplicationByChallengeID) {
-                        return UserApplicationByChallengeID.get({ challengeId: $stateParams.id })
-                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('application');
                         $translatePartialLoader.addPart('applicationStatus');
