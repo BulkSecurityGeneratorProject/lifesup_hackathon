@@ -26,19 +26,26 @@
 	      <div class="horizontal-card">
 	        <div class="team-description">
 	          <h3>Team Description</h3>
-	          <p>{{vm.application.description}}<p>
+	          <p>{{vm.application.description}}</p>
 	        </div>
 	        <div class="team-motivation">
 	          <h3>Team Motivation</h3>
-	          <p>{{vm.application.motivation}}<p>
+	          <p>{{vm.application.motivation}}</p>
 	        </div>
 	        <div class="team-conclusion">
 	          <h3>Ideas Description</h3>
-	          <p>{{vm.application.ideasDescription}}<p>
+	          <p>{{vm.application.ideasDescription}}</p>
 	        </div>
 	        <button class="btn" ui-sref="application.edit({id:application.id})">Edit your application</button>
 	      </div>
-	    </div>
+	      <!--======== approve/reject buttons ============-->
+	      <div class="horizontal-card" ng-show="vm.isAuthenticated()" has-authority="ROLE_ADMIN">
+	        <div class="action-btn-group">
+              <button class="action-btn approve-btn" ng-click="vm.approve(application.id)">APPROVE</button>
+              <button class="action-btn reject-btn" ng-click="vm.reject(application.id)">REJECT</button>
+		    </div>
+	      </div>
+	  </div>
 	  </div>
 	  <div class="col-md-1 hidden-xs"></div>
 	  <!--======== challenge and application progress ============-->

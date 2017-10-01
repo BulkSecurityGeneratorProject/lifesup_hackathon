@@ -256,17 +256,17 @@ body {
 .side-info,
 .side-subscribe {
   background: #fff2f2;
-  color: #730A0A;
+  color: #C2185B;
   padding: 0;
   font-size: 15px;
-  box-shadow: inset 0 0px 5px #C04444;
+  box-shadow: inset 0 0px 5px #E91E63;
 }
 
 .side-info hr {
   display: block;
   height: 1px;
   border: 0;
-  border-top: 1px solid #730A0A;
+  border-top: 1px solid #C2185B;
   margin: 1em 0;
   padding: 0; 
 }
@@ -287,13 +287,13 @@ body {
 }
 
 .side-info>h3 {
-  color: #c14747;
+  color: #C2185B;
   margin: 0;
   text-align: center;
   text-transform: uppercase;
   padding: 1em;
   font-weight: bold;
-  background: repeating-linear-gradient(45deg, #aaa, #aaa 30px, #C04444 60px, #C04444 120px) repeat-y;
+  background: repeating-linear-gradient(45deg, #aaa, #aaa 30px, #C2185B 60px, #C2185B 120px) repeat-y;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -322,7 +322,7 @@ body {
 }
 
 .cta-btn {
-  background-color: #C04444;
+  background-color: #E91E63;
   width: 100%;
   border: none;
   padding: 0.5em 0;
@@ -342,7 +342,7 @@ body {
 }
 
 .subscribe-btn {
-  background-color: #C04444;
+  background-color: #E91E63;
   color: #fefefe;
   font-weight: bold;
 }
@@ -407,20 +407,16 @@ body {
 
 .action-btn-group {
   display: flex;
-  justify-content: space-between;
-  padding: 1em;
+  justify-content: space-around;
+  padding: 1.5em;
   margin: 0;
-}
-
-.action-btn-group a {
-  text-decoration: none;
   color: #fefefe;
-  text-transform: uppercase;
 }
 
 .action-btn {
   padding: 0.5em 2em;
   border: none;
+  border-radius: 5px;
 }
 
 .approve-btn {

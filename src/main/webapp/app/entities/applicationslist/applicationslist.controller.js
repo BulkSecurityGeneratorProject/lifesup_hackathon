@@ -33,10 +33,11 @@
         }
 
         function reject(id) {
-            ApplicationsList.update(function(id) {
-                id.status = "REJECTED";
-            })
+            vm.app = {
+                id: id,
+                status: "REJECTED"
+            };
+            ApplicationsList.update(vm.app);
         }
-
     }
 })();

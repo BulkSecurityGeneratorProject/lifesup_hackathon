@@ -22,12 +22,12 @@
                     return data;
                 }
             },
-            'update': { method:'PUT' }
+            'update': { method:'PUT', params: {id: '@id'} }
         });
     }
 
     function UserAccount ($resource) {
-        var resourceUrl = "/api/account";
+        var resourceUrl = "api/account";
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: false},

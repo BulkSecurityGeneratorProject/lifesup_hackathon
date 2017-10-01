@@ -17,6 +17,8 @@
         vm.progressCount = progressCount;
         vm.skills = [];
         vm.challenge = entity;
+        vm.approve = approve;
+        vm.reject = reject;
 
         getAccount();
 
@@ -34,8 +36,20 @@
            return vm.determinateValue += 10;
         }
 
-     
-        
+        function approve(id) {
+            vm.app = {
+                id: id,
+                status: "APPROVED"
+            };
+            ApplicationsList.update(vm.app);
+        }
 
+        function reject(id) {
+            vm.app = {
+                id: id,
+                status: "REJECTED"
+            };
+            ApplicationsList.update(vm.app);
+        }
     }
 })();
