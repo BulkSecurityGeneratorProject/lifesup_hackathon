@@ -45,7 +45,7 @@ public class ApplicationService {
 	public boolean checkApplication(ApplicationDTO applicationDTO) {
 
 		if (applicationDTO.getTeamName() == null || applicationDTO.getDescription() == null
-				|| applicationDTO.getIdeasDesscription() == null || applicationDTO.getMotivation() == null) {
+				|| applicationDTO.getIdeasDescription() == null || applicationDTO.getMotivation() == null) {
 			return false;
 		}
 		return true;
@@ -57,7 +57,7 @@ public class ApplicationService {
 		application.setTeamName(applicationDTO.getTeamName());
 		application.setCompanyName(applicationDTO.getCompanyName());
 		application.setDescription(applicationDTO.getDescription());
-		application.setIdeasDescription(applicationDTO.getIdeasDesscription());
+		application.setIdeasDescription(applicationDTO.getIdeasDescription());
 		application.setMotivation(applicationDTO.getMotivation());
 		application.setStatus(ApplicationStatus.WAITING_FOR_APPROVE);
 
@@ -83,7 +83,7 @@ public class ApplicationService {
 		application.setTeamName(applicationDTO.getTeamName());
 		application.setCompanyName(applicationDTO.getCompanyName());
 		application.setDescription(applicationDTO.getDescription());
-		application.setIdeasDescription(applicationDTO.getIdeasDesscription());
+		application.setIdeasDescription(applicationDTO.getIdeasDescription());
 		application.setMotivation(applicationDTO.getMotivation());
 		if (checkApplication(applicationDTO)) {
 			application.setStatus(ApplicationStatus.WAITING_FOR_APPROVE);

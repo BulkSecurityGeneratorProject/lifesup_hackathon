@@ -14,12 +14,10 @@
         vm.challengeInfo = {};
         vm.clear = clear;
         vm.save = save;
-        vm.applications = Application.query();
-        vm.companies = Company.query();
 
-        getChallengeInfo();
+        getChallengesInfo();
 
-        function getChallengeInfo() {
+        function getChallengesInfo() {
             if (vm.challenge.id == null) {
                 vm.challengeInfo = {
                     status: "DRAFT",
@@ -58,19 +56,19 @@
         }
 
         function onSaveInfoSuccess(result) {
-            $scope.$emit('hackathonApp:challengeUpdate', result);
             if (vm.challenge.id !== null) {
+                console.log("Update Challenge");
                 ChallengeManager.update(vm.challenge, onSaveSuccess, onSaveError);
             }
             else {
+                console.log("Save Challenge");
                 vm.challenge.info = result;
-                vm.challenge.bannerUrl = "content/images/challenge.jpg";
+                vm.challenge.bannerUrl = "content/images/default/challenge-cover.jpg";
                 ChallengeManager.save(vm.challenge, onSaveSuccess, onSaveError);
             }
         }
 
         function onSaveSuccess(result) {
-            $scope.$emit('hackathonApp:challengeUpdate', result);
             if (vm.banner != null) {
                 vm.attach = vm.banner;
                 vm.attach.challengeId = result.id;
@@ -82,9 +80,7 @@
         }
 
         function onUploadSuccess(result) {
-            $scope.$emit('hackathonApp:challengeUpdate', result);
             $mdDialog.hide(result);
-            console.log(result);
             vm.isSaving = false;
         }
 

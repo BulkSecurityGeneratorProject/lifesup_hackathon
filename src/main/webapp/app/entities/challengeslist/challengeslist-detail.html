@@ -5,7 +5,7 @@
 <div class="row challenge-detail-wrapper">
     <div scroll class="side-wrapper col-xs-12 col-md-4 col-lg-4 col-md-push-8" ng-class="{sidebarFix:boolChangeClass}">
         <div class="side-info">
-            <h3>Apply to challenge</h3> 
+            <h3>Apply to challenge</h3>
             <div class="line"></div>
             <div class="info-wrapper">
                 <p><i class="material-icons side-icons">date_range</i>{{vm.challenge.info.eventStartTime | date}} - {{vm.challenge.info.eventEndTime | date}}</p><hr>
@@ -17,8 +17,8 @@
             <div ng-switch="vm.challenge.info.status">
               <button class="cta-btn" ng-switch="vm.isAuthenticated()" ng-switch-when="ACTIVE">
                 <a href="#" ui-sref="login-signup" ng-switch-when="false">Apply now!</a>
-                <a href="#" ui-sref="settings" ng-switch-when="true">Apply now!</a>
-                <a href="#" ui-sref="applicationslist-detail({id:application.id})" ng-switch-default>Apply now!</a><!-- not yet activated -->
+                <a href="#" ui-sref="complete-profile({id: vm.challenge.id})" ng-switch-when="true">Apply now!</a>
+                <a href="#" ui-sref="application-view" ng-switch-default>Apply now!</a><!-- not yet activated -->
               </button>
               <button class="cta-btn" ng-switch-when="APPLIED"><a ui-sref="applicationslist-detail({id:application.id})">View your application</a></button>
               <button class="cta-btn" ng-switch-when="CLOSED"><a href="#">Applications have closed!</a></button>

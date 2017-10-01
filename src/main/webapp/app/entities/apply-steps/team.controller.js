@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('TeamController', TeamController);
 
-    TeamController.$inject = ['$scope', '$state', 'Application', 'entity'];
+    TeamController.$inject = ['$scope', '$stateParams', '$state', 'Application', 'entity'];
 
-    function TeamController ($scope, $state, Application, entity) {
+    function TeamController ($scope, $stateParams, $state, Application, entity) {
         var vm = this;
         vm.save = save;
         
@@ -31,6 +31,9 @@
             }
             else{
                 console.log("Save");
+                vm.team.challengeId = $stateParams.id;
+                console.log(vm.team);
+                
                 Application.save(vm.team, onSaveSuccess, onSaveError);
             }
             
