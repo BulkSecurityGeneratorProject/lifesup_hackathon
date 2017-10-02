@@ -1,10 +1,13 @@
+<div>
+    <h2>Fill in your profile</h2>
+    <h5>Your information will not be published.</h5>
+</div>
+<br>
 <div class="row" ng-cloak>
-
-    <div class="col-md-3 col-sm-12 col-xs-12 text-center">
+    <div class="col-md-3 col-sm-12 col-xs-12 col-md-push-9 text-center">
         <div class="col-md-12 col-sm-4 col-xs-3"></div>
-
         <div class="col-md-12 col-sm-4 col-xs-6">
-            <img ng-src="{{vm.user.logoUrl}}" class="img avatar  img-responsive img-fill" ng-cloak>
+            <img ng-src="{{vm.user.logoUrl}}" class="img avatar img-responsive img-fill" ng-cloak>
             <br>
             <label class="btn btn-primary">
                 Change <input type="file" base-sixty-four-input maxsize="5000" accept="image/*" ng-model="vm.logo" data-ng-change="vm.uploadLogo()" style="display:none">
@@ -12,22 +15,17 @@
         </div>
         <div class="col-md-12 col-sm-4 col-xs-3"></div>
     </div>
-    <div class="col-md-9 col-sm-12 col-xs-12">
-        <jhi-alert-error></jhi-alert-error>
-        <!-- <jhi-alert></jhi-alert> -->
 
+    <div class="col-md-9 col-sm-12 col-xs-12 col-md-pull-3">
+        <jhi-alert-error></jhi-alert-error>
+        <jhi-alert></jhi-alert>
         <div layout="column" ng-cloak>
             <md-content layout-padding>
                 <form name="userForm">
                     <div layout-gt-xs="row">
-                        <md-switch ng-model="editable" aria-label="Edit">
-                            Edit
-                        </md-switch>
-                    </div>
-                    <div layout-gt-xs="row">
                         <md-input-container class="md-block" flex-gt-sm>
                             <label data-translate="settings.form.gender">Gender</label>
-                            <md-select name="gender" ng-model="vm.user.sex" ng-disabled="!editable" required>
+                            <md-select name="gender" ng-model="vm.user.sex" required>
                                 <md-option ng-repeat="sex in vm.sexes" value="{{sex}}">
                                     {{sex}}
                                 </md-option>
@@ -39,26 +37,26 @@
 
                         <md-input-container class="md-block" flex-gt-sm>
                             <label><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span  data-translate="settings.form.birthday"></span></label>
-                            <md-datepicker id="birthday" name="birthday" ng-model="vm.user.birthday" md-hide-icons="all" ng-disabled="!editable" md-open-on-focus></md-datepicker>
+                            <md-datepicker id="birthday" name="birthday" ng-model="vm.user.birthday" md-hide-icons="all" md-open-on-focus></md-datepicker>
                         </md-input-container>
                     </div>
 
                     <div layout-gt-xs="row">
                         <md-input-container class="md-block" flex-gt-sm>
                             <label data-translate="settings.form.company">Company</label>
-                            <input name="company" ng-model="vm.user.companyName" ng-disabled="!editable">
+                            <input name="company" ng-model="vm.user.companyName">
                         </md-input-container>
 
                         <md-input-container class="md-block" flex-gt-sm>
                             <label data-translate="settings.form.jobtitle">Job Title</label>
-                            <input name="title" ng-model="vm.user.jobTitle" ng-disabled="!editable">
+                            <input name="title" ng-model="vm.user.jobTitle">
                         </md-input-container>
                     </div>
 
                     <div layout-gt-xs="row">
                         <md-input-container class="md-block" flex-gt-sm>
                             <label data-translate="settings.form.phone">Phone Number</label>
-                            <input name="phone" ng-model="vm.user.phone" ng-disabled="!editable" required/>
+                            <input name="phone" ng-model="vm.user.phone" required/>
                             <div ng-messages="userForm.phone.$error">
                                 <div ng-message="required" data-translate="settings.messages.validate.phone.required"></div>
                             </div>
@@ -66,7 +64,7 @@
 
                         <md-input-container class="md-block" flex-gt-sm>
                             <label data-translate="settings.form.city">City</label>
-                            <input name="city" ng-model="vm.user.city" ng-disabled="!editable" required>
+                            <input name="city" ng-model="vm.user.city" required>
                             <div ng-messages="userForm.city.$error">
                                 <div ng-message="required" data-translate="settings.messages.validate.city.required"></div>
                             </div>
@@ -79,7 +77,7 @@
 
                         <md-input-container class="md-block" flex-gt-sm>
                             <label data-translate="settings.form.country">Country</label>
-                            <md-select name="country" ng-model="vm.user.country" ng-disabled="!editable" required>
+                            <md-select name="country" ng-model="vm.user.country" required>
                                 <md-option ng-repeat="country in vm.countries" ng-value="country">
                                     {{country}}
                                 </md-option>
@@ -93,7 +91,7 @@
 
                         <md-input-container class="md-block" flex-gt-sm>
                             <label data-translate="settings.form.nationality">Nationality</label>
-                            <md-select name="nationality" ng-model="vm.user.nationality" ng-disabled="!editable" required>
+                            <md-select name="nationality" ng-model="vm.user.nationality" required>
                                 <md-option ng-repeat="nationality in vm.nationalities" ng-value="nationality">
                                     {{nationality}}
                                 </md-option>
@@ -107,8 +105,7 @@
                     <div layout-gt-sm="row">
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Introduction</label>
-                            <textarea name="introduction" ng-model="vm.user.introduction" md-maxlength="250" rows="5" md-select-on-focus ng-disabled="!editable"
-                                required></textarea>
+                            <textarea name="introduction" ng-model="vm.user.introduction" md-maxlength="250" rows="5" md-select-on-focus required></textarea>
                             <div ng-messages="userForm.introduction.$error">
                                 <div ng-message="required" data-translate="settings.messages.validate.introduction.required"></div>
                             </div>
@@ -118,17 +115,17 @@
                     <div layout-gt-xs="row">
                         <md-input-container class="md-block" flex-gt-sm>
                             <label data-translate="settings.form.twitter">Twitter</label>
-                            <input name="twitter" ng-model="vm.user.twitterUrl" ng-disabled="!editable">
+                            <input name="twitter" ng-model="vm.user.twitterUrl">
                         </md-input-container>
 
                         <md-input-container class="md-block" flex-gt-sm>
                             <label data-translate="settings.form.linkedin">LinkedIn</label>
-                            <input name="linkedin" ng-model="vm.user.linkedInUrl" ng-disabled="!editable">
+                            <input name="linkedin" ng-model="vm.user.linkedInUrl">
                         </md-input-container>
 
                         <md-input-container class="md-block" flex-gt-sm>
                             <label data-translate="settings.form.website">Website</label>
-                            <input name="website" ng-model="vm.user.websiteUrl" ng-disabled="!editable">
+                            <input name="website" ng-model="vm.user.websiteUrl">
                         </md-input-container>
                     </div>
 
@@ -136,8 +133,7 @@
 
                         <div layout-gt-xs="column" flex>
                             <label data-translate="settings.form.skills">Skills</label>
-                            <md-checkbox name="skills" ng-repeat="skill in vm.skills" ng-checked="vm.exists(skill.name, vm.selectedSkills)" ng-click="vm.toggle(skill.name, vm.selectedSkills, true)"
-                                ng-disabled="!editable">
+                            <md-checkbox name="skills" ng-repeat="skill in vm.skills" ng-checked="vm.exists(skill.name, vm.selectedSkills)" ng-click="vm.toggle(skill.name, vm.selectedSkills, true)">
                                 {{ skill.name }}
                             </md-checkbox>
                         </div>
@@ -145,8 +141,7 @@
                         <div layout-gt-xs="column" flex>
                             <label data-translate="settings.form.workAreas">Work Areas</label>
                             <div ng-repeat="workArea in vm.workAreas">
-                                <md-checkbox ng-checked="vm.exists(workArea.name, vm.selectedWorkAreas)" ng-click="vm.toggle(workArea.name, vm.selectedWorkAreas, false)"
-                                    ng-disabled="!editable">
+                                <md-checkbox ng-checked="vm.exists(workArea.name, vm.selectedWorkAreas)" ng-click="vm.toggle(workArea.name, vm.selectedWorkAreas, false)">
                                     {{ workArea.name }}
                                 </md-checkbox>
                             </div>
@@ -154,16 +149,12 @@
 
                         <div layout-gt-xs="column" flex>
                             <label data-translate="settings.form.feedBackFrom">Reference from:</label>
-                            <md-radio-group ng-model="vm.user.feedbackFrom" ng-disabled="!editable">
+                            <md-radio-group ng-model="vm.user.feedbackFrom">
                                 <md-radio-button value="friends">Friends</md-radio-button>
                                 <md-radio-button value="social">Social Media</md-radio-button>
                                 <md-radio-button value="company">A Company</md-radio-button>
                                 <md-radio-button value="other">Other</md-radio-button>
                             </md-radio-group>
-                            <!-- <md-input-container class="md-block" flex-gt-sm>
-                                <label data-translate="settings.form.other">Other...</label>
-                                <input name="other" ng-model-options="vm.user.feedbackFrom: vm.user.feedbackFrom != social" ng-disabled="!editable">
-                            </md-input-container> -->
                         </div>
                     </div>
                 </form>
@@ -176,7 +167,7 @@
     <div class="col-md-4"></div>
     <div class="col-md-4 text-center">
         <uib-alert class='repeat-item' type="{{alert.type}}" ng-repeat="alert in vm.alerts" dismiss-on-timeout="4000" close="vm.closeAlert($index)">{{alert.msg}}</uib-alert>
-        <md-button class="md-raised md-primary" ng-click="vm.save()" ng-disabled="userForm.$invalid || !editable">Save</md-button>
+        <md-button class="md-raised md-primary" ng-click="vm.save()" ng-disabled="userForm.$invalid">Next Step</md-button>
     </div>
     <div class="col-md-4"></div>
 </div>

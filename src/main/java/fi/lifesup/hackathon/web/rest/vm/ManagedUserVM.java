@@ -4,7 +4,10 @@ import java.time.ZonedDateTime;
 
 import java.util.Set;
 
+import fi.lifesup.hackathon.domain.Company;
 import fi.lifesup.hackathon.domain.User;
+import fi.lifesup.hackathon.domain.UserInfo;
+import fi.lifesup.hackathon.domain.enumeration.UserStatus;
 import fi.lifesup.hackathon.service.dto.UserDTO;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -24,14 +27,39 @@ public class ManagedUserVM extends UserDTO {
     private ZonedDateTime createdDate;
 
     private String lastModifiedBy;
+    private UserStatus status;
+    public UserStatus getStatus() {
+        return status;
+    }
+    public void setStatus(UserStatus status) {
+        this.status = status;
+    }
+    public Company getCompany() {
+		return company;
+	}
 
-    private ZonedDateTime lastModifiedDate;
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+
+	public UserInfo getUserInfo() {
+		return userInfo;
+	}
+
+	public void setUserInfo(UserInfo userInfo) {
+		this.userInfo = userInfo;
+	}
+
+	private ZonedDateTime lastModifiedDate;
+    private Company company;
+    private UserInfo userInfo;
 
     @Size(min = PASSWORD_MIN_LENGTH, max = PASSWORD_MAX_LENGTH)
     private String password;
 
     public ManagedUserVM() {
     }
+    
 
     public ManagedUserVM(User user) {
         super(user);
@@ -41,6 +69,9 @@ public class ManagedUserVM extends UserDTO {
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
         this.password = null;
+        this.company=user.getCompany();
+        this.userInfo=user.getUserInfo();
+        this.status=user.getStatus();
     }
 
     public ManagedUserVM(Long id, String createdBy, ZonedDateTime createdDate, String lastModifiedBy,

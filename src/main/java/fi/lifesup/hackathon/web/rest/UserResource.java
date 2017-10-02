@@ -197,7 +197,6 @@ public class UserResource {
 	@Timed
 	public ResponseEntity<ManagedUserVM> getUser(@PathVariable String login) {
 		log.debug("REST request to get User : {}", login);
-		System.err.println("test ");
 		return userService.getUserWithAuthoritiesByLogin(login).map(ManagedUserVM::new)
 				.map(managedUserVM -> new ResponseEntity<>(managedUserVM, HttpStatus.OK))
 				.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
@@ -235,7 +234,7 @@ public class UserResource {
 
 	@DeleteMapping("/delete-users/{id}")
 	@Timed
-	public void deleteUser(@PathVariable Long id) {
+	public void deleteAccount(@PathVariable Long id) {
 		User user = userService.getUserWithAuthorities(id);
 		user.setStatus(UserStatus.REMOVED);
 		userRepository.save(user);

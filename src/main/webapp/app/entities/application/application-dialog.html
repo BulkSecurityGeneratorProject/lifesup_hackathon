@@ -8,11 +8,6 @@
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
-        <div class="form-group" ng-show="vm.application.id">
-            <label for="id" data-translate="global.field.id">ID</label>
-            <input type="text" class="form-control" id="id" name="id"
-                    ng-model="vm.application.id" readonly />
-        </div>
         <div class="form-group">
             <label class="control-label" data-translate="hackathonApp.application.teamName" for="field_teamName">Team Name</label>
             <input type="text" class="form-control" name="teamName" id="field_teamName"
@@ -66,23 +61,6 @@
                     This field is required.
                 </p>
             </div>
-        </div>
-        <div class="form-group">
-            <label class="control-label" data-translate="hackathonApp.application.status" for="field_status">Status</label>
-            <select class="form-control" name="status" ng-model="vm.application.status" id="field_status">
-                <option value="DRAFT" data-translate="hackathonApp.ApplicationStatus.DRAFT">DRAFT</option>
-                <option value="WAITING_FOR_APPROVE" data-translate="hackathonApp.ApplicationStatus.WAITING_FOR_APPROVE">WAITING_FOR_APPROVE</option>
-                <option value="APPROVED" data-translate="hackathonApp.ApplicationStatus.APPROVED">APPROVED</option>
-                <option value="REJECTED" data-translate="hackathonApp.ApplicationStatus.REJECTED">REJECTED</option>
-                <option value="CLOSED" data-translate="hackathonApp.ApplicationStatus.CLOSED">CLOSED</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label data-translate="hackathonApp.application.challenge" for="field_challenge">Challenge</label>
-            <select class="form-control" id="field_challenge" name="challenge" ng-model="vm.application.challenge" ng-options="challenge as challenge.id for challenge in vm.challenges track by challenge.id">
-                <option value=""></option>
-            </select>
         </div>
     </div>
     <div class="modal-footer">

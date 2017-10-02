@@ -256,17 +256,17 @@ body {
 .side-info,
 .side-subscribe {
   background: #fff2f2;
-  color: #730A0A;
+  color: #C2185B;
   padding: 0;
   font-size: 15px;
-  box-shadow: inset 0 0px 5px #C04444;
+  box-shadow: inset 0 0px 5px #E91E63;
 }
 
 .side-info hr {
   display: block;
   height: 1px;
   border: 0;
-  border-top: 1px solid #730A0A;
+  border-top: 1px solid #C2185B;
   margin: 1em 0;
   padding: 0; 
 }
@@ -287,13 +287,13 @@ body {
 }
 
 .side-info>h3 {
-  color: #c14747;
+  color: #C2185B;
   margin: 0;
   text-align: center;
   text-transform: uppercase;
   padding: 1em;
   font-weight: bold;
-  background: repeating-linear-gradient(45deg, #aaa, #aaa 30px, #C04444 60px, #C04444 120px) repeat-y;
+  background: repeating-linear-gradient(45deg, #aaa, #aaa 30px, #C2185B 60px, #C2185B 120px) repeat-y;
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -322,7 +322,7 @@ body {
 }
 
 .cta-btn {
-  background-color: #C04444;
+  background-color: #E91E63;
   width: 100%;
   border: none;
   padding: 0.5em 0;
@@ -342,7 +342,7 @@ body {
 }
 
 .subscribe-btn {
-  background-color: #C04444;
+  background-color: #E91E63;
   color: #fefefe;
   font-weight: bold;
 }
@@ -368,6 +368,7 @@ body {
 .application-card {
   color: #fefefe;
   transition: all .5s ease-in-out;
+  margin-bottom: 3em;
 }
 
 .application-card:hover {
@@ -406,20 +407,16 @@ body {
 
 .action-btn-group {
   display: flex;
-  justify-content: space-between;
-  padding: 1em;
+  justify-content: space-around;
+  padding: 1.5em;
   margin: 0;
-}
-
-.action-btn-group a {
-  text-decoration: none;
   color: #fefefe;
-  text-transform: uppercase;
 }
 
 .action-btn {
   padding: 0.5em 2em;
   border: none;
+  border-radius: 5px;
 }
 
 .approve-btn {
@@ -435,4 +432,79 @@ body {
 .action-btn:active {
   border-bottom: none;
   transform: translateY(3px);
+}
+
+/*============= Applications detail View ================*/
+.application-heading {
+  background-color: #E91E63;
+  color: #fefefe;
+  padding: 1em;
+}
+
+.content-wrapper {
+  margin: 0;
+  padding: 0;
+}
+
+.team-info,
+.application-progress {
+  padding: 0;
+}
+
+.horizontal-card {
+  padding: 2em;
+  margin: 1em 0;
+  box-shadow: 0 0 5px #ccc;
+}
+
+.member-avatar {
+  text-align: center;
+}
+
+.skill-badge {
+  padding: 2px 1em;
+  font-size: 12px;
+  background: #1565C0;
+  border-radius: 5px;
+  color: #fefefe;
+  white-space: nowrap;
+}
+
+.horizontal-card:nth-child(odd) .skill-badge {
+  background: #F50057;
+}
+
+.challenge-banner {
+  width: 100%;
+  height: 100px;
+  background: #F50057;
+}
+
+.progress-step {
+  display: flex;
+  justify-content: space-between;
+  margin: 1em 0;
+}
+
+.progress-step i {
+  margin: 0;  
+}
+
+.application-status {
+  display: flex;
+  justify-content: center;
+  font-size: 2em;
+  padding: 1em;
+}
+
+.application-status i {
+  font-size: 2em;
+}
+
+.application-valid {
+  color: #1B5E20;
+}
+
+.application-invalid {
+  color: #B71C1C;
 }

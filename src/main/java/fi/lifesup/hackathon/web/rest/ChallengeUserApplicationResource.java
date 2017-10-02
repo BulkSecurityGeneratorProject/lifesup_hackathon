@@ -4,6 +4,9 @@ import com.codahale.metrics.annotation.Timed;
 import fi.lifesup.hackathon.domain.ChallengeUserApplication;
 
 import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
+import fi.lifesup.hackathon.service.ApplicationService;
+import fi.lifesup.hackathon.service.UserService;
+import fi.lifesup.hackathon.service.dto.ApplicationMemberDTO;
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -29,6 +34,12 @@ public class ChallengeUserApplicationResource {
         
     @Inject
     private ChallengeUserApplicationRepository challengeUserApplicationRepository;
+    
+    @Inject
+    private ApplicationService applicationService;
+    
+    @Inject
+    private UserService userService;
 
     /**
      * POST  /challenge-user-applications : Create a new challengeUserApplication.
@@ -116,5 +127,40 @@ public class ChallengeUserApplicationResource {
         challengeUserApplicationRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("challengeUserApplication", id.toString())).build();
     }
+    
+    @PostMapping("/challenge-user-applications/members")
+    @Timed
+    public ResponseEntity<ChallengeUserApplication> addApplicationMember(@RequestBody ApplicationMemberDTO memberDTO, HttpServletRequest request) throws URISyntaxException {
+        log.debug("REST request to save ChallengeUserApplication : {}", memberDTO);
+        if (memberDTO.getId() != null) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeUserApplication", "idexists", "A new challengeUserApplication cannot already have an ID")).body(null);
+        }
+        String baseUrl = request.getScheme() + // "http"
+                "://" +                                // "://"
+                request.getServerName() +              // "myhost"
+                ":" +                                  // ":"
+                request.getServerPort() +              // "80"
+                request.getContextPath();              // "/myContextPath" or "" if deployed in root context
 
+        ChallengeUserApplication result = applicationService.addApplicationMember(memberDTO,baseUrl);
+        return ResponseEntity.created(new URI("/api/challenge-user-applications/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert("challengeUserApplication", result.getId().toString()))
+            .body(result);
+    }
+    
+    @GetMapping("/challenge-user-applications/challenge/{challengeId}")
+    @Timed
+    public ChallengeUserApplication getApplication(@PathVariable Long challengeId) {
+        log.debug("REST request to get ChallengeUserApplication : {}");
+        ChallengeUserApplication challengeUserApplication = challengeUserApplicationRepository.findByChallengeIdAndUserId(challengeId, userService.getCurrentUser().getId());
+        return challengeUserApplication;
+    }
+
+    @GetMapping("/challenge-user-applications/current-user")
+    @Timed
+    public List<ChallengeUserApplication> getAllApplicationsByUser() {
+        log.debug("REST request to get all ChallengeUserApplications");
+        List<ChallengeUserApplication> challengeUserApplications = challengeUserApplicationRepository.findByUserId(userService.getCurrentUser().getId());
+        return challengeUserApplications;
+    }
 }

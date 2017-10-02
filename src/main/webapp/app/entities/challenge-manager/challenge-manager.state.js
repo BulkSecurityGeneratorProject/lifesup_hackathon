@@ -75,7 +75,6 @@
                         controller: 'ChallengeManagerDialogController',
                         controllerAs: 'vm',
                         size: 'lg',
-                        clickOutsideToClose: true,
                         fullscreen: true,
                         resolve: {
                             entity: ['ChallengeManager', function (ChallengeManager) {
@@ -108,7 +107,7 @@
                             }]
                         }
                     }).then(function () {
-                        $state.go('challenge-manager-detail', null, { reload: 'challenge-manager-detail' });
+                        $state.go('challenge-manager', null, { reload: 'challenge-manager' });
                     }, function () {
                         $state.go('^');
                     });
@@ -125,7 +124,6 @@
                         templateUrl: 'app/entities/challenge-manager/challenge-manager-dialog.html',
                         controller: 'ChallengeManagerDialogController',
                         controllerAs: 'vm',
-                        clickOutsideToClose: true,
                         fullscreen: true,
                         resolve: {
                             entity: function () {

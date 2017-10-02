@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fi.lifesup.hackathon.domain.Application;
+import fi.lifesup.hackathon.domain.Challenge;
 import fi.lifesup.hackathon.domain.ChallengeUserApplication;
 import fi.lifesup.hackathon.domain.User;
 import fi.lifesup.hackathon.domain.enumeration.ApplicationStatus;
@@ -18,6 +19,7 @@ import fi.lifesup.hackathon.repository.ApplicationRepository;
 import fi.lifesup.hackathon.repository.ChallengeRepository;
 import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
 import fi.lifesup.hackathon.service.dto.ApplicationDTO;
+import fi.lifesup.hackathon.service.dto.ApplicationMemberDTO;
 
 @Service
 @Transactional
@@ -36,22 +38,15 @@ public class ApplicationService {
 
 	@Inject
 	private ChallengeUserApplicationRepository challengeUserApplicationRepository;
+	
+	@Inject
+    private MailService mailService;
 
 	public boolean checkApplication(ApplicationDTO applicationDTO) {
 
 		if (applicationDTO.getTeamName() == null || applicationDTO.getDescription() == null
-				|| applicationDTO.getIdeasDesscription() == null || applicationDTO.getMotivation() == null) {
+				|| applicationDTO.getIdeasDescription() == null || applicationDTO.getMotivation() == null) {
 			return false;
-		}
-		return true;
-	}
-
-	public boolean checkMember(List<String> members) {
-
-		for (String member : members) {
-			User user = userService.getUserWithAuthoritiesByEmail(member);
-			if (user.getStatus() != UserStatus.PROFILE_COMPLETE)
-				return false;
 		}
 		return true;
 	}
@@ -62,7 +57,7 @@ public class ApplicationService {
 		application.setTeamName(applicationDTO.getTeamName());
 		application.setCompanyName(applicationDTO.getCompanyName());
 		application.setDescription(applicationDTO.getDescription());
-		application.setIdeasDescription(applicationDTO.getIdeasDesscription());
+		application.setIdeasDescription(applicationDTO.getIdeasDescription());
 		application.setMotivation(applicationDTO.getMotivation());
 		application.setStatus(ApplicationStatus.WAITING_FOR_APPROVE);
 
@@ -72,20 +67,12 @@ public class ApplicationService {
 
 		application.setChallenge(challengeRepository.findOne(applicationDTO.getChallengeId()));
 		Application result = applicationRepository.save(application);
-		for (String member : applicationDTO.getMembers()) {
-			User user = userService.getUserWithAuthoritiesByEmail(member);
-			if (user != null) {
-				ChallengeUserApplication userApplication = new ChallengeUserApplication();
-				userApplication.setApplicationId(result.getId());
-				userApplication.setChallengeId(applicationDTO.getChallengeId());
-				userApplication.setUserId(user.getId());
-				challengeUserApplicationRepository.save(userApplication);
-				if (user.getStatus() != UserStatus.PROFILE_COMPLETE) {
-					application.setStatus(ApplicationStatus.DRAFT);
-				}
-			}
-
-		}
+		User user = userService.getUserWithAuthorities();
+		ChallengeUserApplication userApplication = new ChallengeUserApplication();
+		userApplication.setApplicationId(result.getId());
+		userApplication.setChallengeId(applicationDTO.getChallengeId());
+		userApplication.setUserId(user.getId());
+		challengeUserApplicationRepository.save(userApplication);
 		return applicationRepository.save(result);
 	}
 
@@ -96,29 +83,14 @@ public class ApplicationService {
 		application.setTeamName(applicationDTO.getTeamName());
 		application.setCompanyName(applicationDTO.getCompanyName());
 		application.setDescription(applicationDTO.getDescription());
-		application.setIdeasDescription(applicationDTO.getIdeasDesscription());
+		application.setIdeasDescription(applicationDTO.getIdeasDescription());
 		application.setMotivation(applicationDTO.getMotivation());
 		if (checkApplication(applicationDTO)) {
 			application.setStatus(ApplicationStatus.WAITING_FOR_APPROVE);
 		} else {
 			application.setStatus(ApplicationStatus.DRAFT);
 		}
-		challengeUserApplicationRepository.deleteByApplicationId(applicationDTO.getId());
-
-		for (String member : applicationDTO.getMembers()) {
-			User user = userService.getUserWithAuthoritiesByEmail(member);
-			if (user != null) {
-				ChallengeUserApplication userApplication = new ChallengeUserApplication();
-				userApplication.setApplicationId(applicationDTO.getId());
-				userApplication.setChallengeId(applicationDTO.getChallengeId());
-				userApplication.setUserId(user.getId());
-				challengeUserApplicationRepository.save(userApplication);
-				if (user.getStatus() != UserStatus.PROFILE_COMPLETE) {
-					application.setStatus(ApplicationStatus.DRAFT);
-				}
-			}
-
-		}
+				
 		application.setChallenge(challengeRepository.findOne(applicationDTO.getChallengeId()));
 		return applicationRepository.save(application);
 	}
@@ -128,6 +100,17 @@ public class ApplicationService {
 		ApplicationDTO dto = new ApplicationDTO(application,
 				challengeUserApplicationRepository.getApplicationMember(applicationId));
 		return dto;
+	}
+	
+	public ChallengeUserApplication addApplicationMember(ApplicationMemberDTO memberDTO, String baseUrl){
+		User user = userService.getUserWithAuthoritiesByEmail(memberDTO.getUserEmail());
+		Challenge challenge = challengeRepository.findOne(memberDTO.getChallengeId());
+		ChallengeUserApplication userApplication = new ChallengeUserApplication();
+		userApplication.setApplicationId(memberDTO.getApplicationId());
+		userApplication.setChallengeId(memberDTO.getChallengeId());
+		userApplication.setUserId(user.getId());
+		mailService.sendInvitationMail(user, baseUrl, challenge.getName());
+		return challengeUserApplicationRepository.save(userApplication);
 	}
 
 }

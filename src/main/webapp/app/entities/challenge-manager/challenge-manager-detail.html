@@ -1,5 +1,5 @@
 <div class="banner-img">
-    <img ng-src="{{vm.challenge.bannerUrl}}" class="img img-responsive">
+    <img ng-src="{{vm.challenge.bannerUrl}}" class="img img-responsive banner-img">
 </div>
 <hr>
 <jhi-alert-error></jhi-alert-error>
@@ -18,39 +18,42 @@
                 <div class="ribbon-grey">Closed</div>
             </div>
             <h3>Base Info</h3>
+
             <div class="info-wrapper">
-                <p><i class="material-icons">date_range</i>{{vm.challenge.info.eventStartTime | date}} - {{vm.challenge.info.eventEndTime | date}}</p>
+                <p><i class="material-icons">date_range</i>{{vm.challenge.info.eventStartTime | date}} - {{vm.challenge.info.eventEndTime
+                    | date}}</p>
                 <hr>
                 <p><i class="material-icons">pin_drop</i>{{vm.challenge.info.location}}</p>
                 <hr>
-                <p><i class="material-icons">people</i>{{vm.challenge.minTeamNumber}} - {{vm.challenge.maxTeamNumber}} member(s) / team</p>
+                <p><i class="material-icons">people</i>{{vm.challenge.minTeamNumber}} - {{vm.challenge.maxTeamNumber}} member(s)
+                    / team</p>
                 <hr>
-                <p><i class="material-icons">alarm</i>Application closes in {{vm.challenge.timeLeft}} day(s)</p>
+                <p ng-if="vm.challenge.timeLeft > 0"><i class="material-icons">alarm</i>Application closes in {{vm.challenge.timeLeft}} day(s)</p>
+                <p ng-if="vm.challenge.timeLeft <= 0"><i class="material-icons">close</i>Application has closed</p>
             </div>
         </div>
 
     </div>
     <div class="container main-content col-xs-12 col-md-8 col-lg-8 col-lg-pull-4 col-md-pull-4">
         <dl class="dl-horizontal jh-entity-details">
-            <dt><span data-translate="hackathonApp.challenge.introduction">Introduction</span></dt>
-            <dd>
+            <h3><span data-translate="hackathonApp.challenge.introduction">Introduction</span></h3>
+            <p>
                 <span>{{vm.challenge.introduction}}</span>
-            </dd>
-            <dt><span data-translate="hackathonApp.challenge.challengeText">Challenge Content</span></dt>
-            <dd>
+            </p>
+            <h3><span data-translate="hackathonApp.challenge.challengeText">Challenge Content</span></h3>
+            <p>
                 <span>{{vm.challenge.challengeText}}</span>
-            </dd>
-            <dt><span data-translate="hackathonApp.challenge.resourceText">Resource</span></dt>
-            <dd>
+            </p>
+            <h3><span data-translate="hackathonApp.challenge.resourceText">Resource</span></h3>
+            <p>
                 <span>{{vm.challenge.resourceText}}</span>
-            </dd>
-            <dt><span data-translate="hackathonApp.challenge.rewardsText">Rewards</span></dt>
-            <dd>
+            </p>
+            <h3><span data-translate="hackathonApp.challenge.rewardsText">Rewards</span></h3>
+            <p>
                 <span>{{vm.challenge.rewardsText}}</span>
-            </dd>
-            <dt><span data-translate="hackathonApp.challenge.timelineText">Timeline</span></dt>
-            <br>
-            <dd>
+            </p>
+            <h3><span data-translate="hackathonApp.challenge.timelineText">Timeline</span></h3>
+            <p>
                 <p><label>Event Start:</label>&nbsp;{{vm.challenge.info.eventStartTime | date: 'longDate'}}</p>
                 <p><label>Event End:</label>&nbsp;{{vm.challenge.info.eventEndTime | date: 'longDate'}}</p>
                 <p><label>Kich Off Webinar:</label>&nbsp;{{vm.challenge.info.kickoffWebinarDate | date: 'longDate'}}</p>
@@ -59,16 +62,16 @@
                 <p><label>Pilot Submission Close:</label>&nbsp;{{vm.challenge.info.pilotSubmissionCloseDate | date: 'longDate'}}</p>
                 <p><label>Pilot Phase Start Date:</label>&nbsp;{{vm.challenge.info.pilotPhaseStartDate | date: 'longDate'}}</p>
                 <p><label>Pilot Phase End Date:</label>&nbsp;{{vm.challenge.info.pilotPhaseEndDate | date: 'longDate'}}</p>
-            </dd>
-            <dt><span data-translate="hackathonApp.challenge.rulesText">Rules</span></dt>
-            <dd>
+            </p>
+            <h3><span data-translate="hackathonApp.challenge.rulesText">Rules</span></h3>
+            <p>
                 <span>{{vm.challenge.rulesText}}</span>
-            </dd>
+            </p>
 
-            <dt><span data-translate="hackathonApp.challenge.additionalText">Additional</span></dt>
-            <dd>
+            <h3><span data-translate="hackathonApp.challenge.additionalText">Additional</span></h3>
+            <p>
                 <span>{{vm.challenge.additionalText}}</span>
-            </dd>
+            </p>
         </dl>
     </div>
 

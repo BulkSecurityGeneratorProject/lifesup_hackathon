@@ -5,7 +5,7 @@
 <div class="row challenge-detail-wrapper">
     <div scroll class="side-wrapper col-xs-12 col-md-4 col-lg-4 col-md-push-8" ng-class="{sidebarFix:boolChangeClass}">
         <div class="side-info">
-            <h3>Apply to challenge</h3> 
+            <h3>Apply to challenge</h3>
             <div class="line"></div>
             <div class="info-wrapper">
                 <p><i class="material-icons side-icons">date_range</i>{{vm.challenge.info.eventStartTime | date}} - {{vm.challenge.info.eventEndTime | date}}</p><hr>
@@ -14,11 +14,15 @@
                 <p><i class="material-icons side-icons">alarm</i>Apply in {{vm.timeLeft}} day(s)</p>
             </div>
            <!--  <button class="cta-btn"><a href="#">APPLY NOW</a></button> -->
-           <button class="cta-btn" ng-switch="vm.isAuthenticated()">
+            <div ng-switch="vm.challenge.info.status">
+              <button class="cta-btn" ng-switch="vm.isAuthenticated()" ng-switch-when="ACTIVE">
                 <a href="#" ui-sref="login-signup" ng-switch-when="false">Apply now!</a>
-                <a href="#" ui-sref="settings" ng-switch-when="true">Apply now!</a>
+                <a href="#" ui-sref="complete-profile({id: vm.challenge.id})" ng-switch-when="true">Apply now!</a>
                 <a href="#" ui-sref="application-view" ng-switch-default>Apply now!</a><!-- not yet activated -->
               </button>
+              <button class="cta-btn" ng-switch-when="APPLIED"><a ui-sref="applicationslist-detail({id:application.id})">View your application</a></button>
+              <button class="cta-btn" ng-switch-when="CLOSED"><a href="#">Applications have closed!</a></button>
+            </div>
         </div>
         <div class="side-subscribe">
             <h3>Remind me to apply</h3>
@@ -61,8 +65,17 @@
                 <p>{{vm.challenge.rulesText}}</p>
             </div>
             <div class="content-wrapper">
-                <h3 class="sub-heading">Timelines of the challenge</h3>
-                <p>{{vm.challenge.timelineText}}</p>
+                <h3 class="sub-heading">Timeline of the challenge</h3>
+                <div>
+                    <p><strong>Event Start:</strong>&nbsp;{{vm.challenge.info.eventStartTime | date: 'longDate'}}</p>
+                    <p><strong>Event End:</strong>&nbsp;{{vm.challenge.info.eventEndTime | date: 'longDate'}}</p>
+                    <p><strong>Kich Off Webinar:</strong>&nbsp;{{vm.challenge.info.kickoffWebinarDate | date: 'longDate'}}</p>
+                    <p><strong>Application Close:</strong>&nbsp;{{vm.challenge.info.applicationCloseDate | date: 'longDate'}}</p>
+                    <p><strong>Inform Date:</strong>&nbsp;{{vm.challenge.info.selectionInformDate | date: 'longDate'}}</p>
+                    <p><strong>Pilot Submission Close:</strong>&nbsp;{{vm.challenge.info.pilotSubmissionCloseDate | date: 'longDate'}}</p>
+                    <p><strong>Pilot Phase Start Date:</strong>&nbsp;{{vm.challenge.info.pilotPhaseStartDate | date: 'longDate'}}</p>
+                    <p><strong>Pilot Phase End Date:</strong>&nbsp;{{vm.challenge.info.pilotPhaseEndDate | date: 'longDate'}}</p>
+                </div>
             </div>
             <div class="content-wrapper">
                 <h3 class="sub-heading">Additional information</h3>

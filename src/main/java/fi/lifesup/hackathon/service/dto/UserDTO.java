@@ -115,7 +115,7 @@ public class UserDTO {
             ", lastName='" + lastName + '\'' +
             ", email='" + email + '\'' +
             ", activated=" + activated +
-            ", langKey='" + langKey + '\'' +
+            ", langKey='" +// langKey + '\'' +
             ", authorities=" + authorities +
             "}";
     }

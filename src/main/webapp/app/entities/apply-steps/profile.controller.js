@@ -3,11 +3,11 @@
 
     angular
         .module('hackathonApp')
-        .controller('SettingsController', SettingsController);
+        .controller('CompleteProfileController', CompleteProfileController);
 
-    SettingsController.$inject = ['$scope', '$state', 'Principal', 'Auth', 'JhiLanguageService', '$translate', 'Skill', 'Experience', 'UserInfo', 'UserDetail', 'UserLogo', 'entity'];
+    CompleteProfileController.$inject = ['$scope', '$state', 'Principal', 'Auth', 'JhiLanguageService', '$translate', 'Skill', 'Experience', 'UserInfo', 'UserDetail', 'UserLogo', 'entity'];
 
-    function SettingsController($scope, $state, Principal, Auth, JhiLanguageService, $translate, Skill, Experience, UserInfo, UserDetail, UserLogo, entity) {
+    function CompleteProfileController($scope, $state, Principal, Auth, JhiLanguageService, $translate, Skill, Experience, UserInfo, UserDetail, UserLogo, entity) {
         var vm = this;
 
         vm.save = save;
@@ -76,6 +76,7 @@
 
         function onSaveSuccess(result) {
             vm.alerts.push({ msg: 'Your infomation is saved!', type: "success" });
+            $state.go('team');
         }
 
         function onSaveError() {

@@ -7,13 +7,12 @@ import fi.lifesup.hackathon.domain.enumeration.ApplicationStatus;
 
 public class ApplicationDTO {
 	
-	private Long id;
-	
+	private Long id;	
 	private String teamName;
 	private String companyName;
 	private String description;
 	private String motivation;
-	private String ideasDesscription;
+	private String ideasDescription;
 	private ApplicationStatus status;
 	private Long challengeId;
 	private List<String> members;
@@ -22,23 +21,17 @@ public class ApplicationDTO {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public List<String> getMembers() {
-		return members;
-	}
-
-	public void setMembers(List<String> members) {
-		this.members = members;
-	}
+	
 
 	public ApplicationDTO(Long id, String teamName, String companyteamName, String description, String motivation,
-			String ideasDesscription, ApplicationStatus status, Long challengeId) {
+			String ideasDescription, ApplicationStatus status, Long challengeId) {
 		super();
 		this.id = id;
 		this.teamName = teamName;
 		this.companyName = companyteamName;
 		this.description = description;
 		this.motivation = motivation;
-		this.ideasDesscription = ideasDesscription;
+		this.ideasDescription = ideasDescription;
 		this.status = status;
 		this.challengeId = challengeId;
 	}
@@ -52,7 +45,7 @@ public class ApplicationDTO {
 		this.companyName = application.getCompanyName();
 		this.description = application.getDescription();
 		this.motivation = application.getMotivation();
-		this.ideasDesscription = application.getIdeasDescription();
+		this.ideasDescription = application.getIdeasDescription();
 		this.status = application.getStatus();
 		this.challengeId = application.getChallenge().getId();
 		this.members = members;
@@ -98,13 +91,18 @@ public class ApplicationDTO {
 		this.motivation = motivation;
 	}
 
-	public String getIdeasDesscription() {
-		return ideasDesscription;
+	
+	public String getIdeasDescription() {
+		return ideasDescription;
 	}
 
-	public void setIdeasDesscription(String ideasDesscription) {
-		this.ideasDesscription = ideasDesscription;
+
+
+	public void setIdeasDescription(String ideasDescription) {
+		this.ideasDescription = ideasDescription;
 	}
+
+
 
 	public ApplicationStatus getStatus() {
 		return status;

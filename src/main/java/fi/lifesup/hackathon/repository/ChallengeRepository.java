@@ -21,8 +21,8 @@ public interface ChallengeRepository extends JpaRepository<Challenge,Long> {
 			+ "and (challengeInfo.status = 'ACTIVE' or challengeInfo.status = 'INACTIVE')")
 	List<Challenge> getChallengeByUser(Long id);
 	
-	@Query("select challenge from Challenge challenge, ChallengeInfo challengeInfo "
-			+ "where challenge.info.id = challengeInfo.id and "
-			+ "challengeInfo.eventStartTime between :#{[1]} and :#{[2]} group by challenge.id ")
-	List<Challenge> getChallengeByDate(ZonedDateTime startdate, ZonedDateTime endDate);
+//	@Query("select challenge from Challenge challenge, ChallengeInfo challengeInfo "
+//			+ "where challenge.info.id = challengeInfo.id and "
+//			+ "challengeInfo.eventStartTime between :#{[1]} and :#{[2]} group by challenge.id ")
+	List<Challenge> findByInfoEventStartTimeBetween(ZonedDateTime startdate, ZonedDateTime endDate);
 }
