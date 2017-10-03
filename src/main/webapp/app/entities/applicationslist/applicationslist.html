@@ -8,8 +8,13 @@
           <a ui-sref="applicationslist-detail({id:application.id})" class="go-detail">Details</a>
         </md-card-content>
         <md-card-actions class="action-btn-group">
+<<<<<<< HEAD
           <button class="action-btn approve-btn" ng-click="vm.approve(application)">APPROVE</button>
           <button class="action-btn reject-btn" ng-click="vm.reject(application)">REJECT</button>
+=======
+          <button class="action-btn approve-btn" ng-click="vm.approve(application.id)">APPROVE</button>
+          <button class="action-btn reject-btn" ng-click="vm.reject(application.id)">REJECT</button>
+>>>>>>> 9c6eb186b51fd46cacd419193b376ae015530565
         </md-card-actions>
     </md-card>
   </div>
