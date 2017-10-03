@@ -11,7 +11,7 @@
         $stateProvider
             .state('applicationslist', {
                 parent: 'entity',
-                url: '/applicationslist',
+                url: '/applicationslist/{challengeId}',
                 data: {
                     authorities: ['ROLE_ADMIN'],
                     pageTitle: 'hackathonApp.application.home.title'
@@ -32,7 +32,7 @@
             })
             .state('applicationslist-detail', {
                 parent: 'entity',
-                url: '/applicationslist/{id}',
+                url: '/applicationslist-detail/{applicationId}',
                 data: {
                     authorities: ['ROLE_ADMIN'],
                     pageTitle: 'hackathonApp.application.detail.title'

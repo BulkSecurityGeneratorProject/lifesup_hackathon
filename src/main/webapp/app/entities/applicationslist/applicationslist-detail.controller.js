@@ -5,28 +5,31 @@
         .module('hackathonApp')
         .controller('ApplicationsListDetailController', ApplicationsListDetailController);
 
-    ApplicationsListDetailController.$inject = ['$stateParams', 'ApplicationsList', 'entity', 'Principal', 'UserAccount', 'ApplicationsListDetails'];
+    ApplicationsListDetailController.$inject = ['$stateParams', 'ApplicationsList', 'entity', 'Principal', 'UsersInfo', 'ApplicationsListDetails'];
 
-    function ApplicationsListDetailController($stateParams, ApplicationsList, entity, Principal, UserAccount, ApplicationsListDetails) {
+    function ApplicationsListDetailController($stateParams, ApplicationsList, entity, Principal, UsersInfo, ApplicationsListDetails) {
         var vm = this;
         vm.isAuthenticated = Principal.isAuthenticated;
         vm.application = entity;
-        vm.user = [];
-        vm.getAccount = getAccount;
+        vm.users = [];
+        vm.getUsers = getUsers;
         vm.determinateValue = 0;
         vm.progressCount = progressCount;
         vm.skills = [];
         vm.approve = approve;
         vm.reject = reject;
 
-        getAccount();
+        getUsers();
 
-        function getAccount() {
-            UserAccount.query(function(data) {
-                vm.user = data;
-                if (vm.user.userInfo) {
-                    vm.skills = vm.user.userInfo.skills.split(',');
-                }
+        function getUsers() {
+            UsersInfo.query(function(data) {
+                vm.users = data;
+                console.log(vm.users);
+                vm.users.map(function(user) {
+                    if (user.userInfo) {
+                    vm.skills = user.userInfo.skills.split(',');
+                    }
+                });
             })
         }
 

@@ -8,15 +8,15 @@
 	  <div class="team-info col-md-8 col-xs-12">
 	    <div class="card-wrapper">
 	   	<!--======== member card ============-->
-	      <div class="member-wrapper horizontal-card row">
-	        <div class="member-avatar col-md-2 col-xs-12"><img ng-src="{{vm.user.userInfo.logoUrl}}" width="100" height="100"></div>
+	      <div class="member-wrapper horizontal-card row" ng-repeat="user in vm.users">
+	        <div class="member-avatar col-md-2 col-xs-12"><img ng-src="{{user.userInfo.logoUrl}}" width="100" height="100"></div>
 	        <div class="member-info col-md-2 col-xs-12">
-	          <p><strong>{{vm.user.firstName}} {{vm.user.lastName}}</strong></p>
-	          <p>{{vm.user.userInfo.jobTitle}}</p>
-	          <p>{{vm.user.userInfo.companyName}}</p>
+	          <p><strong>{{user.firstName}} {{user.lastName}}</strong></p>
+	          <p>{{user.userInfo.jobTitle}}</p>
+	          <p>{{user.userInfo.companyName}}</p>
 	        </div>
 	        <div class="member-detail col-md-8 col-xs-12">
-	          <div class="member-description">{{vm.user.userInfo.introduction}}</div>
+	          <div class="member-description">{{user.userInfo.introduction}}</div>
 	          <div class="member-skill" ng-repeat="skill in vm.skills">
 	            <span class="skill-badge">{{skill}}</span>
 	          </div>

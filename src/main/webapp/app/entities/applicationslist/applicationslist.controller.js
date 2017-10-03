@@ -21,6 +21,7 @@
         function loadAll() {
             ApplicationsList.query(function(data) {
                 vm.applications = data;
+                console.log(vm.applications);
             });
         }
 

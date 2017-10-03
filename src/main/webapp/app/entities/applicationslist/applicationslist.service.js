@@ -4,11 +4,11 @@
         .module('hackathonApp')
         .factory('ApplicationsList', ApplicationsList)
         .factory('ApplicationsListDetails', ApplicationsListDetails)
-        .factory('UserAccount', UserAccount);
+        .factory('UsersInfo', UsersInfo);
 
     ApplicationsList.$inject = ['$resource'];
     ApplicationsListDetails.$inject = ['$resource'];
-    UserAccount.$inject = ['$resource'];
+    UsersInfo.$inject = ['$resource'];
 
     function ApplicationsList ($resource) {
         var resourceUrl =  'api/applications/challenges/:challengeId';
@@ -29,7 +29,7 @@
     }
 
     function ApplicationsListDetails ($resource) {
-        var resourceUrl =  'api/applications/challenges/:challengeId';
+        var resourceUrl =  '/api/applications/challenges-details/:applicationId';
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: true},
@@ -42,15 +42,15 @@
                     return data;
                 }
             },
-            'update': { method:'PUT', params: {id: '@id'} }
+            'update': { method:'PUT' }
         });
     }
 
-    function UserAccount ($resource) {
-        var resourceUrl = "api/account";
+    function UsersInfo ($resource) {
+        var resourceUrl = "api/users";
 
         return $resource(resourceUrl, {}, {
-            'query': { method: 'GET', isArray: false},
+            'query': { method: 'GET', isArray: true},
             'get': {
                 method: 'GET',
                 transformResponse: function (data) {
