@@ -40,7 +40,7 @@ spring:
         host: smtp.gmail.com
         port: 587
         username: nguyenan1605.mta@gmail.com  
-        password: quynhlamhanchuc
+        password: quynhlamhanchuc         
         protocol: smtp
         tls: true
         properties.mail.smtp:
@@ -54,9 +54,6 @@ spring:
 
 liquibase:
     contexts: dev
-    
-attach:
-    path: E:/project/hackathon/images/
 
 server:
     port: 1234

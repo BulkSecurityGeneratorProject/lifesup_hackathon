@@ -14,12 +14,14 @@ import fi.lifesup.hackathon.domain.Challenge;
 import fi.lifesup.hackathon.domain.ChallengeUserApplication;
 import fi.lifesup.hackathon.domain.User;
 import fi.lifesup.hackathon.domain.enumeration.ApplicationStatus;
+import fi.lifesup.hackathon.domain.enumeration.ChallengeUserApplicationStatus;
 import fi.lifesup.hackathon.domain.enumeration.UserStatus;
 import fi.lifesup.hackathon.repository.ApplicationRepository;
 import fi.lifesup.hackathon.repository.ChallengeRepository;
 import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
 import fi.lifesup.hackathon.service.dto.ApplicationDTO;
 import fi.lifesup.hackathon.service.dto.ApplicationMemberDTO;
+import fi.lifesup.hackathon.service.util.RandomUtil;
 
 @Service
 @Transactional
@@ -38,9 +40,9 @@ public class ApplicationService {
 
 	@Inject
 	private ChallengeUserApplicationRepository challengeUserApplicationRepository;
-	
+
 	@Inject
-    private MailService mailService;
+	private MailService mailService;
 
 	public boolean checkApplication(ApplicationDTO applicationDTO) {
 
@@ -90,7 +92,7 @@ public class ApplicationService {
 		} else {
 			application.setStatus(ApplicationStatus.DRAFT);
 		}
-				
+
 		application.setChallenge(challengeRepository.findOne(applicationDTO.getChallengeId()));
 		return applicationRepository.save(application);
 	}
@@ -101,16 +103,36 @@ public class ApplicationService {
 				challengeUserApplicationRepository.getApplicationMember(applicationId));
 		return dto;
 	}
-	
-	public ChallengeUserApplication addApplicationMember(ApplicationMemberDTO memberDTO, String baseUrl){
-		User user = userService.getUserWithAuthoritiesByEmail(memberDTO.getUserEmail());
-		Challenge challenge = challengeRepository.findOne(memberDTO.getChallengeId());
+
+	public ChallengeUserApplication addApplicationMember(ApplicationMemberDTO memberDTO, String baseUrl) {
+
 		ChallengeUserApplication userApplication = new ChallengeUserApplication();
 		userApplication.setApplicationId(memberDTO.getApplicationId());
 		userApplication.setChallengeId(memberDTO.getChallengeId());
+		userApplication.setAcceptKey(RandomUtil.generateAcceptKey());
+		userApplication.setStatus(ChallengeUserApplicationStatus.DECLINE);
+
+		User user = userService.getUserWithAuthoritiesByEmail(memberDTO.getUserEmail());
+		if (user != null) {
+			mailService.sendInvitationMail(user, baseUrl, userApplication.getAcceptKey());
+		} else {
+			user = userService.createUser(memberDTO.getUserEmail(), memberDTO.getUserEmail(), memberDTO.getUserName(),
+					memberDTO.getUserName(), memberDTO.getUserEmail(), "en");
+		}
 		userApplication.setUserId(user.getId());
-		mailService.sendInvitationMail(user, baseUrl, challenge.getName());
 		return challengeUserApplicationRepository.save(userApplication);
+
 	}
 
+	public void finishAcceptInvitation(String key) {
+		ChallengeUserApplication userApplication = challengeUserApplicationRepository.findByAcceptKey(key);
+		userApplication.setAcceptKey(null);
+		userApplication.setStatus(ChallengeUserApplicationStatus.ACCEPT);
+		challengeUserApplicationRepository.save(userApplication);
+	}
+
+	public void deleteApplication(Long id){
+		challengeUserApplicationRepository.deleteByApplicationId(id);
+		applicationRepository.delete(id);
+	}
 }

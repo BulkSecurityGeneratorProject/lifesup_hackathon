@@ -69,7 +69,7 @@ public class Challenge implements Serializable {
     @JoinColumn(unique = true)
     private ChallengeInfo info;
 
-    @OneToMany(mappedBy = "challenge")
+    @OneToMany(mappedBy = "challenge", orphanRemoval = true)
     @JsonIgnore
     private Set<Application> applications = new HashSet<>();
 

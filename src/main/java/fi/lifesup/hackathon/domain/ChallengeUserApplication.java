@@ -2,6 +2,9 @@ package fi.lifesup.hackathon.domain;
 
 
 import javax.persistence.*;
+
+import fi.lifesup.hackathon.domain.enumeration.ChallengeUserApplicationStatus;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -26,8 +29,32 @@ public class ChallengeUserApplication implements Serializable {
 
     @Column(name = "application_id")
     private Long applicationId;
+    
+    @Column(name = "accept_key")
+    private String acceptKey;
+    
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private ChallengeUserApplicationStatus status;
+    
 
-    public Long getId() {
+    public String getAcceptKey() {
+		return acceptKey;
+	}
+
+	public void setAcceptKey(String acceptKey) {
+		this.acceptKey = acceptKey;
+	}
+
+	public ChallengeUserApplicationStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(ChallengeUserApplicationStatus status) {
+		this.status = status;
+	}
+
+	public Long getId() {
         return id;
     }
 

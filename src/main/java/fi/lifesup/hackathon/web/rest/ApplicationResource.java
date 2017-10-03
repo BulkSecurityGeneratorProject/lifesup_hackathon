@@ -126,7 +126,7 @@ public class ApplicationResource {
     @Timed
     public ResponseEntity<Void> deleteApplication(@PathVariable Long id) {
         log.debug("REST request to delete Application : {}", id);
-        applicationRepository.delete(id);
+        applicationService.deleteApplication(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("application", id.toString())).build();
     }
     

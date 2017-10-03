@@ -26,6 +26,7 @@ import com.codahale.metrics.annotation.Timed;
 
 import fi.lifesup.hackathon.domain.Challenge;
 import fi.lifesup.hackathon.repository.ChallengeRepository;
+import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
 import fi.lifesup.hackathon.service.ChallengeService;
 import fi.lifesup.hackathon.service.dto.ChallengeImageDTO;
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
@@ -149,7 +150,7 @@ public class ChallengeResource {
 	@Timed
 	public ResponseEntity<Void> deleteChallenge(@PathVariable Long id) {
 		log.debug("REST request to delete Challenge : {}", id);
-		challengeRepository.delete(id);
+		challengeService.deleteChanllenge(id);
 		return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("challenge", id.toString())).build();
 	}
 
