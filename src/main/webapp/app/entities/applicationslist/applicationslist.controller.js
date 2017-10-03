@@ -5,25 +5,15 @@
         .module('hackathonApp')
         .controller('ApplicationsListController', ApplicationsListController);
 
-    ApplicationsListController.$inject = ['$scope', '$state', 'ApplicationsList', 'Challenge'];
+    ApplicationsListController.$inject = ['$scope', '$state', 'ApplicationsList', 'Challenge', 'entity' ];
 
-    function ApplicationsListController ($scope, $state, ApplicationsList, Challenge) {
+    function ApplicationsListController ($scope, $state, ApplicationsList, Challenge, entity) {
         var vm = this;
         
-        vm.applications = [];
+        vm.applications = entity;
         vm.loadAll = loadAll;
         vm.approve = approve;
         vm.reject = reject;
-        
-
-        loadAll();
-
-        function loadAll() {
-            ApplicationsList.query(function(data) {
-                vm.applications = data;
-                console.log(vm.applications);
-            });
-        }
 
         function approve(id) {
             vm.application = ApplicationsList.get({id: id}, function(result){

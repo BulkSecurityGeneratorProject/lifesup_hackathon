@@ -27,6 +27,9 @@
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('application');
                         return $translate.refresh();
+                    }],
+                    entity: ['ApplicationsList', function(ApplicationsList){
+                        return ApplicationsList.get().$promise;
                     }]
                 }
             })

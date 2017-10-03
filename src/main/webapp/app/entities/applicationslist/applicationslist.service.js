@@ -11,18 +11,19 @@
     UsersInfo.$inject = ['$resource'];
 
     function ApplicationsList ($resource) {
-        var resourceUrl =  'api/applications/challenges/:challengeId';
+        var resourceUrl =  'api/applications/challenges';
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: true},
             'get': {
                 method: 'GET',
-                transformResponse: function (data) {
+                isArray: true
+                /*transformResponse: function (data) {
                     if (data) {
                         data = angular.fromJson(data);
                     }
                     return data;
-                }
+                }*/
             },
             'update': { method:'PUT' }
         });
