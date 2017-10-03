@@ -38,4 +38,13 @@ public final class RandomUtil {
     public static String generateResetKey() {
         return RandomStringUtils.randomNumeric(DEF_COUNT);
     }
+    
+    /**
+     * Generates a accept key.
+     *
+     * @return the generated accept key
+     */
+     public static String generateAcceptKey() {
+         return RandomStringUtils.randomNumeric(DEF_COUNT);
+     }
 }
