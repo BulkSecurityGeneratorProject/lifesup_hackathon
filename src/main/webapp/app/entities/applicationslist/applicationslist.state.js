@@ -11,7 +11,7 @@
         $stateProvider
             .state('applicationslist', {
                 parent: 'entity',
-                url: '/applicationslist/{challengeId}',
+                url: '/applicationslist/{id}',
                 data: {
                     authorities: ['ROLE_ADMIN'],
                     pageTitle: 'hackathonApp.application.home.title'
@@ -27,12 +27,15 @@
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('application');
                         return $translate.refresh();
+                    }],
+                    entity: ['$stateParams' ,'ApplicationsList', function($stateParams ,ApplicationsList){
+                        return ApplicationsList.query({id:$stateParams.id}).$promise;
                     }]
                 }
             })
             .state('applicationslist-detail', {
                 parent: 'entity',
-                url: '/applicationslist-detail/{applicationId}',
+                url: '/applicationslist-detail/{id}',
                 data: {
                     authorities: ['ROLE_ADMIN'],
                     pageTitle: 'hackathonApp.application.detail.title'
@@ -49,8 +52,8 @@
                         $translatePartialLoader.addPart('application');
                         return $translate.refresh();
                     }],
-                    entity: ['$stateParams', 'ApplicationsList', function ($stateParams, ApplicationsList) {
-                        return ApplicationsList.query({ id: $stateParams.id }).$promise;
+                    entity: ['$stateParams', 'ApplicationsListDetails', function ($stateParams, ApplicationsListDetails) {
+                        return ApplicationsListDetails.query({id: $stateParams.id}).$promise;
                     }]
                 }
             })

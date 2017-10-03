@@ -53,7 +53,13 @@
                 if (Auth.getPreviousState()) {
                     var previousState = Auth.getPreviousState();
                     Auth.resetPreviousState();
+                    if(previousState.name === "home"){
+                        previousState.name = "challengeslist";
+                    }
                     $state.go(previousState.name, previousState.params);
+                }
+                else{
+                    $state.go("challengeslist");
                 }
             }).catch(function () {
                 vm.authenticationError = true;

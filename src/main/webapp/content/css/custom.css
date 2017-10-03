@@ -386,7 +386,6 @@ body {
   display: block;
   width: 100%;
   font-size: 2em;
-  padding: 1em 2em;
   text-align: center;
 }
 
@@ -414,19 +413,18 @@ body {
 }
 
 .action-btn {
-  padding: 0.5em 2em;
+  padding: 0.5em 1em;
   border: none;
   border-radius: 5px;
+  font-size: 12px;
 }
 
 .approve-btn {
   background-color: #4CAF50;
-  border-bottom: 3px solid #2b542d;
 }
 
 .reject-btn {
   background-color: #E53935;
-  border-bottom: 3px solid #873634;
 }
 
 .action-btn:active {
@@ -461,13 +459,19 @@ body {
   text-align: center;
 }
 
+.member-skill {
+  display: inline-flex;
+  margin: 2px;
+}
+
 .skill-badge {
+  display: inline-block;
   padding: 2px 1em;
   font-size: 12px;
   background: #1565C0;
   border-radius: 5px;
   color: #fefefe;
-  white-space: nowrap;
+  white-space: wrap;
 }
 
 .horizontal-card:nth-child(odd) .skill-badge {

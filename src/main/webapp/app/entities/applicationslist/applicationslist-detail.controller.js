@@ -5,35 +5,40 @@
         .module('hackathonApp')
         .controller('ApplicationsListDetailController', ApplicationsListDetailController);
 
-    ApplicationsListDetailController.$inject = ['$stateParams', 'ApplicationsList', 'entity', 'Principal', 'UsersInfo', 'ApplicationsListDetails'];
+    ApplicationsListDetailController.$inject = ['$stateParams', 'ApplicationsList', 'entity', 'Principal', 'ApplicationsListDetails', 'Challenge'];
 
-    function ApplicationsListDetailController($stateParams, ApplicationsList, entity, Principal, UsersInfo, ApplicationsListDetails) {
+    function ApplicationsListDetailController($stateParams, ApplicationsList, entity, Principal, ApplicationsListDetails, Challenge) {
         var vm = this;
         vm.isAuthenticated = Principal.isAuthenticated;
         vm.application = entity;
-        vm.users = [];
-        vm.getUsers = getUsers;
+        vm.getSkills = getSkills;
+        vm.members = vm.application.members;
         vm.determinateValue = 0;
         vm.progressCount = progressCount;
-        vm.skills = [];
         vm.approve = approve;
         vm.reject = reject;
+        vm.getChallengeInfo = getChallengeInfo;
 
-        getUsers();
+        getSkills();
+        getChallengeInfo();
 
-        function getUsers() {
-            UsersInfo.query(function(data) {
-                vm.users = data;
-                console.log(vm.users);
-                vm.users.map(function(user) {
-                    if (user.userInfo) {
-                    vm.skills = user.userInfo.skills.split(',');
-                    }
-                });
-            })
+        function getSkills() {
+            vm.members.map(function(member) {
+                console.log(member.workArea);
+                return vm.skills = member.workArea.split(',');  
+            });
         }
 
-        console.log(vm.application);
+        function getChallengeInfo() {
+            Challenge.query(function(data) {
+                data.map(function(challenge) {
+                    if(challenge.id == vm.application.challengeId) {
+                        vm.challenge = challenge;
+                        console.log(vm.challenge);
+                    }
+                })
+            })
+        }
 
         function progressCount() {
            return vm.determinateValue += 10;

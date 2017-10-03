@@ -1,22 +1,22 @@
-<div ng-hide="vm.application.info.status === 'CLOSED' || vm.application.info.status === 'REJECTED'">
+<div ng-hide="vm.application.status === 'CLOSED' || vm.application.status === 'REJECTED'">
 	<div class="application-heading jumbotron-fluid">
-	  <h1>{{vm.application[0].teamName}}</h1>
-	  <h3>{{vm.application[0].companyName}}</h3>
+	  <h1>{{vm.application.teamName}}</h1>
+	  <h3>{{vm.application.companyName}}</h3>
 	</div>
 
 	<div class="row content-wrapper">
 	  <div class="team-info col-md-8 col-xs-12">
 	    <div class="card-wrapper">
 	   	<!--======== member card ============-->
-	      <div class="member-wrapper horizontal-card row" ng-repeat="user in vm.users">
-	        <div class="member-avatar col-md-2 col-xs-12"><img ng-src="{{user.userInfo.logoUrl}}" width="100" height="100"></div>
+	      <div class="member-wrapper horizontal-card row" ng-repeat="member in vm.members">
+	        <div class="member-avatar col-md-2 col-xs-12"><img ng-src="{{member.logoUrl}}" width="100" height="100"></div>
 	        <div class="member-info col-md-2 col-xs-12">
-	          <p><strong>{{user.firstName}} {{user.lastName}}</strong></p>
-	          <p>{{user.userInfo.jobTitle}}</p>
-	          <p>{{user.userInfo.companyName}}</p>
+	          <p><strong>{{member.firstName}} {{member.lastName}}</strong></p>
+	          <p>{{member.jobTitle}}</p>
+	          <p>{{member.companyName}}</p>
 	        </div>
 	        <div class="member-detail col-md-8 col-xs-12">
-	          <div class="member-description">{{user.userInfo.introduction}}</div>
+	          <div class="member-description">{{member.introduction}}</div>
 	          <div class="member-skill" ng-repeat="skill in vm.skills">
 	            <span class="skill-badge">{{skill}}</span>
 	          </div>
@@ -26,15 +26,15 @@
 	      <div class="horizontal-card">
 	        <div class="team-description">
 	          <h3>Team Description</h3>
-	          <p>{{vm.application[0].description}}</p>
+	          <p>{{vm.application.description}}</p>
 	        </div>
 	        <div class="team-motivation">
 	          <h3>Team Motivation</h3>
-	          <p>{{vm.application[0].motivation}}</p>
+	          <p>{{vm.application.motivation}}</p>
 	        </div>
 	        <div class="team-conclusion">
 	          <h3>Ideas Description</h3>
-	          <p>{{vm.application[0].ideasDescription}}</p>
+	          <p>{{vm.application.ideasDescription}}</p>
 	        </div>
 	        <button class="btn" ui-sref="application.edit({id:application.id})">Edit your application</button>
 	      </div>
@@ -50,12 +50,12 @@
 	  <div class="col-md-1 hidden-xs"></div>
 	  <!--======== challenge and application progress ============-->
 	  <div class="application-progress col-md-3 col-xs-12 horizontal-card">
-	  	<div style="background-image:url({{vm.application[0].challenge.bannerUrl}})" class="challenge-banner">Challenge Banner Here</div>
+	  	<div style="background-image:url({{vm.challenge.bannerUrl}})" class="challenge-banner">Challenge Banner Here</div>
 	  	<div>
 	  		<p>You are applying to</p>
-	  		<h3>{{vm.application[0].challenge.name}}</h3>
+	  		<h3>{{vm.challenge.name}}</h3>
 	  	</div>
-	  	<div>Application deadline: {{vm.application[0].challenge.info.eventEndTime | date}}</div>
+	  	<div>Application deadline: {{vm.challenge.info.eventEndTime | date}}</div>
 	  	<div>
 	  		<p>Application Readiness</p>
 	  		<!-- <div class="progress">

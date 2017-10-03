@@ -4,14 +4,12 @@
         .module('hackathonApp')
         .factory('ApplicationsList', ApplicationsList)
         .factory('ApplicationsListDetails', ApplicationsListDetails)
-        .factory('UsersInfo', UsersInfo);
 
     ApplicationsList.$inject = ['$resource'];
     ApplicationsListDetails.$inject = ['$resource'];
-    UsersInfo.$inject = ['$resource'];
 
     function ApplicationsList ($resource) {
-        var resourceUrl =  'api/applications/challenges/:challengeId';
+        var resourceUrl =  'api/applications/challenges/:id';
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: true},
@@ -29,10 +27,10 @@
     }
 
     function ApplicationsListDetails ($resource) {
-        var resourceUrl =  '/api/applications/challenges-details/:applicationId';
+        var resourceUrl =  '/api/applications/details/:id';
 
         return $resource(resourceUrl, {}, {
-            'query': { method: 'GET', isArray: true},
+            'query': { method: 'GET', isArray: false},
             'get': {
                 method: 'GET',
                 transformResponse: function (data) {
@@ -43,24 +41,6 @@
                 }
             },
             'update': { method:'PUT' }
-        });
-    }
-
-    function UsersInfo ($resource) {
-        var resourceUrl = "api/users";
-
-        return $resource(resourceUrl, {}, {
-            'query': { method: 'GET', isArray: true},
-            'get': {
-                method: 'GET',
-                transformResponse: function (data) {
-                    if (data) {
-                        data = angular.fromJson(data);
-                    }
-                    return data;
-                }
-            },
-            'update': { method: 'PUT' }
         });
     }
 })();
