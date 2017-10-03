@@ -131,4 +131,8 @@ public class ApplicationService {
 		challengeUserApplicationRepository.save(userApplication);
 	}
 
+	public void deleteApplication(Long id){
+		challengeUserApplicationRepository.deleteByApplicationId(id);
+		applicationRepository.delete(id);
+	}
 }

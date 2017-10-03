@@ -26,4 +26,7 @@ public interface ChallengeUserApplicationRepository extends JpaRepository<Challe
 	List<ChallengeUserApplication> findByUserId(Long userId);
 	
 	ChallengeUserApplication findByAcceptKey(String acceptKey);
+	
+	void deleteByChanllengeId(Long challengeId);
+	
 }
