@@ -28,13 +28,8 @@
                         $translatePartialLoader.addPart('application');
                         return $translate.refresh();
                     }],
-<<<<<<< HEAD
                     entity: ['$stateParams' ,'ApplicationsList', function($stateParams ,ApplicationsList){
                         return ApplicationsList.query({id:$stateParams.id}).$promise;
-=======
-                    entity: ['ApplicationsList', function(ApplicationsList){
-                        return ApplicationsList.get().$promise;
->>>>>>> 9c6eb186b51fd46cacd419193b376ae015530565
                     }]
                 }
             })
