@@ -138,11 +138,11 @@ public class ApplicationResource {
         return applications;
     }
     
-    @GetMapping("/applications/challenges-details/{applicationId}")
+    @GetMapping("/applications/details/{applicationId}")
     @Timed
     public ApplicationDTO getApplicationDetail(@PathVariable Long applicationId) {
         log.debug("REST request to get Application by challengeId : {}", applicationId);
-       ApplicationDTO application = applicationService.getApplicationDetail(applicationId);
+        ApplicationDTO application = applicationService.getApplicationDetail(applicationId);
         return application;
     }
 

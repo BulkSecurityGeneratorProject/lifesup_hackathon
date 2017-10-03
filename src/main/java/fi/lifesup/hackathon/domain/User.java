@@ -100,7 +100,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "status")
     private UserStatus status;
 
-    @OneToOne
+    @OneToOne(orphanRemoval = true)
     @JoinColumn(unique = true)
     private UserInfo userInfo;
 

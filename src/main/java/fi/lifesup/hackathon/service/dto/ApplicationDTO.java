@@ -15,7 +15,7 @@ public class ApplicationDTO {
 	private String ideasDescription;
 	private ApplicationStatus status;
 	private Long challengeId;
-	private List<String> members;
+	private List<UserInfoDTO> members;
 	
 	public ApplicationDTO() {
 		// TODO Auto-generated constructor stub
@@ -38,7 +38,7 @@ public class ApplicationDTO {
 	
 	
 
-	public ApplicationDTO(Application application, List<String> members) {
+	public ApplicationDTO(Application application, List<UserInfoDTO> members) {
 		super();
 		this.id = application.getId();
 		this.teamName = application.getTeamName();
@@ -50,6 +50,18 @@ public class ApplicationDTO {
 		this.challengeId = application.getChallenge().getId();
 		this.members = members;
 	}
+
+	public List<UserInfoDTO> getMembers() {
+		return members;
+	}
+
+
+
+	public void setMembers(List<UserInfoDTO> members) {
+		this.members = members;
+	}
+
+
 
 	public Long getId() {
 		return id;

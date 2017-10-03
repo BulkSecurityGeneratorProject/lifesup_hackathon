@@ -3,6 +3,8 @@ package fi.lifesup.hackathon.web.rest;
 import fi.lifesup.hackathon.config.Constants;
 import com.codahale.metrics.annotation.Timed;
 
+import fi.lifesup.hackathon.domain.Application;
+import fi.lifesup.hackathon.domain.Challenge;
 import fi.lifesup.hackathon.domain.User;
 import fi.lifesup.hackathon.domain.UserInfo;
 import fi.lifesup.hackathon.domain.enumeration.UserStatus;
@@ -240,5 +242,18 @@ public class UserResource {
 		userRepository.save(user);
 
 	}
+	
+	@GetMapping("/user/{id}/challenges")
+	@Timed
+	public List<Challenge> getChallengeByUser(@PathVariable Long id) {
+		log.debug("REST request to get all Challenges by user");
+		return userRepository.getChallengeByUser(id);
+	}
 
+	@GetMapping("/user/{id}/applications")
+	@Timed
+	public List<Application> getApplicationByUser(@PathVariable Long id) {
+		log.debug("REST request to get all Applications by user");
+		return userRepository.getApplicationByUser(id);
+	}
 }

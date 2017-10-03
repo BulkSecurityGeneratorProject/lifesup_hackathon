@@ -1,6 +1,7 @@
 package fi.lifesup.hackathon.repository;
 
 import fi.lifesup.hackathon.domain.ChallengeUserApplication;
+import fi.lifesup.hackathon.service.dto.UserInfoDTO;
 
 import org.springframework.data.jpa.repository.*;
 
@@ -16,9 +17,10 @@ public interface ChallengeUserApplicationRepository extends JpaRepository<Challe
 
 	List<ChallengeUserApplication> findByApplicationId(Long applicationId);
 
-	@Query("select u.email from User u, ChallengeUserApplication cua, Application a"
-			+ " where u.id = cua.userId and cua.applicationId = a.id and a.id = :#{[0]}")
-	List<String> getApplicationMember(Long applicationId);
+	@Query("select new fi.lifesup.hackathon.service.dto.UserInfoDTO(u.email, u.firstName, u.lastName, ui)"
+			+ " from User u, ChallengeUserApplication cua, UserInfo ui"
+			+ " where u.id = cua.userId and u.userInfo.id = ui.id and cua.applicationId = :#{[0]}")	
+	List<UserInfoDTO> getApplicationMember(Long applicationId);
 
 	@Query("select cua from ChallengeUserApplication cua" + " where cua.challengeId = :#{[0]} and cua.userId = :#{[1]}")
 	ChallengeUserApplication findByChallengeIdAndUserId(Long challengeId, Long userId);
@@ -27,6 +29,6 @@ public interface ChallengeUserApplicationRepository extends JpaRepository<Challe
 	
 	ChallengeUserApplication findByAcceptKey(String acceptKey);
 	
-	void deleteByChanllengeId(Long challengeId);
+	void deleteByChallengeId(Long challengeId);
 	
 }

@@ -1,5 +1,7 @@
 package fi.lifesup.hackathon.repository;
 
+import fi.lifesup.hackathon.domain.Application;
+import fi.lifesup.hackathon.domain.Challenge;
 import fi.lifesup.hackathon.domain.User;
 
 import java.time.ZonedDateTime;
@@ -34,5 +36,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Override
     void delete(User t);
+    
+    @Query("select c from Challenge c, ChallengeUserApplication cua where c.id = cua.challengeId and cua.userId = :#{[0]} ")
+    List<Challenge> getChallengeByUser(Long id);
+    
+    @Query("select a from Application a, ChallengeUserApplication cua where a.id = cua.applicationId and cua.userId = :#{[0]} ")
+    List<Application>  getApplicationByUser(Long id);
 
 }

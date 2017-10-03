@@ -140,7 +140,7 @@ public class ChallengeService {
 		return challengeRepository.save(challenge);
 	}
 	public void deleteChanllenge(Long id){
-		challengeUserApplicationRepository.deleteByChanllengeId(id);
+		challengeUserApplicationRepository.deleteByChallengeId(id);
 		challengeRepository.delete(id);
 		
 	}
