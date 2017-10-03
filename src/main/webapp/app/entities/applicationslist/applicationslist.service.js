@@ -11,7 +11,7 @@
     UserAccount.$inject = ['$resource'];
 
     function ApplicationsList ($resource) {
-        var resourceUrl =  'api/applications/:id';
+        var resourceUrl =  'api/applications/challenges/:challengeId';
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: true},
@@ -29,7 +29,7 @@
     }
 
     function ApplicationsListDetails ($resource) {
-        var resourceUrl =  'api/applications/:id';
+        var resourceUrl =  'api/applications/challenges/:challengeId';
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: true},

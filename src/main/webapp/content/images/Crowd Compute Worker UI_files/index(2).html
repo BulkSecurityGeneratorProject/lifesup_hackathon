@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<!-- saved from url=(0096)https://crowd-compute.appspot.com/getpluginfile/speech_audio_transcription/index.html#VPCcfyYrps -->
+<html lang="en-US" class="mdl-js"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <script src="./cb=gapi(3).loaded_1" async=""></script><script src="./cb=gapi.loaded_0" async=""></script><script type="text/javascript">CLOSURE_NO_DEPS = true;</script>
+
+  <!-- ccLib.js includes everything plugin needs to talk to crowd compute. -->
+  <script src="./ccLib.js.download"></script><script src="./appconfig"></script><script src="./client.js.download" gapi_processed="true"></script><script src="./api.js.download" gapi_processed="true"></script>
+
+  <!-- This is our plugin's js file.  Note that the name 'plugin' comes from
+       the name of the BUILD rule. -->
+  <script src="./plugin.js.download"></script>
+
+  <script>
+    var audioTranscription = new speech.crowdcompute.AudioTranscription();
+  </script>
+
+  <link rel="stylesheet" href="./icon">
+  <link rel="stylesheet" href="./material.indigo-pink.min.css">
+  <link rel="stylesheet" href="./audio_transcription.css">
+  <script defer="" src="./material.min.js.download"></script>
+</head>
+<body onload="audioTranscription.onload()">
+
+<div id="transcription-panel" style="" class="page-content mdl-grid">
+  <div class="mdl-cell mdl-cell--2-col"></div>
+
+  <div class="mdl-cell mdl-cell--6-col">
+    <h3 id="task-name">Transcribing</h3>
+    <div id="task-instruction"></div>
+    <div id="guideline"><a id="guideline-link" target="_blank" href="https://speech.google.com/annotation/guidelines/vi_vn_test_set/index.html">View Guideline</a></div>
+    <div id="author" style="display: none;">
+      <span class="mdl-chip">
+        <span class="mdl-chip__text">
+          <span id="author-email"></span>
+          <a href="https://crowd-compute.appspot.com/getpluginfile/speech_audio_transcription/index.html" id="see-past-work" title="See recent work of this transcriber" target="_blank">
+            <i class="material-icons">history</i></a>
+        </span>
+      </span>
+    </div>
+    <div>
+      <div id="waveform"></div>
+      <button id="playpause-button" class="mdl-button mdl-js-button mdl-button--primary" data-upgraded=",MaterialButton">
+        Play/Pause</button>
+      <span class="mdl-spinner mdl-js-spinner audio-spinner is-upgraded" data-upgraded=",MaterialSpinner"><div class="mdl-spinner__layer mdl-spinner__layer-1"><div class="mdl-spinner__circle-clipper mdl-spinner__left"><div class="mdl-spinner__circle"></div></div><div class="mdl-spinner__gap-patch"><div class="mdl-spinner__circle"></div></div><div class="mdl-spinner__circle-clipper mdl-spinner__right"><div class="mdl-spinner__circle"></div></div></div><div class="mdl-spinner__layer mdl-spinner__layer-2"><div class="mdl-spinner__circle-clipper mdl-spinner__left"><div class="mdl-spinner__circle"></div></div><div class="mdl-spinner__gap-patch"><div class="mdl-spinner__circle"></div></div><div class="mdl-spinner__circle-clipper mdl-spinner__right"><div class="mdl-spinner__circle"></div></div></div><div class="mdl-spinner__layer mdl-spinner__layer-3"><div class="mdl-spinner__circle-clipper mdl-spinner__left"><div class="mdl-spinner__circle"></div></div><div class="mdl-spinner__gap-patch"><div class="mdl-spinner__circle"></div></div><div class="mdl-spinner__circle-clipper mdl-spinner__right"><div class="mdl-spinner__circle"></div></div></div><div class="mdl-spinner__layer mdl-spinner__layer-4"><div class="mdl-spinner__circle-clipper mdl-spinner__left"><div class="mdl-spinner__circle"></div></div><div class="mdl-spinner__gap-patch"><div class="mdl-spinner__circle"></div></div><div class="mdl-spinner__circle-clipper mdl-spinner__right"><div class="mdl-spinner__circle"></div></div></div></span>
+      <span id="waveform-pos">1.46s</span>
+      <div class="waveform-hint">
+        Click reload icon if Waveform doesn't show.</div>
+    </div>
+
+    <div>
+      <div id="transcription-group">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label is-upgraded" data-upgraded=",MaterialTextfield">
+          <input class="mdl-textfield__input" type="text" id="preamble-text" disabled="">
+          <label class="mdl-textfield__label" for="sample3">Preamble (green section)...</label>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield is-upgraded is-dirty" data-upgraded=",MaterialTextfield">
+          <textarea id="transcription-text" autocomplete="off" class="mdl-textfield__input" type="text" rows="2"></textarea>
+          <label class="mdl-textfield__label" for="transcription-text">Transcription...</label>
+        </div>
+      </div>
+
+      <div id="reject-status" style="display: none;">
+        <strong>Cannot transcribe: <span id="reject-reason-label"></span>.</strong>
+        Type something in the text box if you can transcribe.
+      </div>
+      <div id="training-feedback" style="display: none;">
+        <p id="training-feedback-text"></p>
+        <p>EXPECT: <strong><span id="expected-transcription"></span></strong></p>
+        <p>ACTUAL: <strong><span id="entered-transcription"></span></strong></p>
+      </div>
+    </div>
+
+    <div>
+      <ul id="validation-error-list"></ul>
+    </div>
+
+    <div class="bottom-panel">
+      <div id="category-tree"></div>
+      <div class="submit-panel">
+        <button id="done-button" type="button" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" data-upgraded=",MaterialButton">Done</button>
+        <button id="reject-button" class="mdl-button mdl-js-button mdl-button--raised" data-upgraded=",MaterialButton">
+          Cannot transcribe</button>
+        <span class="mdl-spinner mdl-js-spinner main-spinner is-upgraded" data-upgraded=",MaterialSpinner"><div class="mdl-spinner__layer mdl-spinner__layer-1"><div class="mdl-spinner__circle-clipper mdl-spinner__left"><div class="mdl-spinner__circle"></div></div><div class="mdl-spinner__gap-patch"><div class="mdl-spinner__circle"></div></div><div class="mdl-spinner__circle-clipper mdl-spinner__right"><div class="mdl-spinner__circle"></div></div></div><div class="mdl-spinner__layer mdl-spinner__layer-2"><div class="mdl-spinner__circle-clipper mdl-spinner__left"><div class="mdl-spinner__circle"></div></div><div class="mdl-spinner__gap-patch"><div class="mdl-spinner__circle"></div></div><div class="mdl-spinner__circle-clipper mdl-spinner__right"><div class="mdl-spinner__circle"></div></div></div><div class="mdl-spinner__layer mdl-spinner__layer-3"><div class="mdl-spinner__circle-clipper mdl-spinner__left"><div class="mdl-spinner__circle"></div></div><div class="mdl-spinner__gap-patch"><div class="mdl-spinner__circle"></div></div><div class="mdl-spinner__circle-clipper mdl-spinner__right"><div class="mdl-spinner__circle"></div></div></div><div class="mdl-spinner__layer mdl-spinner__layer-4"><div class="mdl-spinner__circle-clipper mdl-spinner__left"><div class="mdl-spinner__circle"></div></div><div class="mdl-spinner__gap-patch"><div class="mdl-spinner__circle"></div></div><div class="mdl-spinner__circle-clipper mdl-spinner__right"><div class="mdl-spinner__circle"></div></div></div></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="mdl-cell mdl-cell--4-col">
+    <h6 style="color:red">Problems with audio playback?</h6>
+    <div>
+      Please fill out <a href="https://goo.gl/forms/9x2wcyv3redoQxcK2" target="_blank">this survey</a>
+    </div>
+    <div>
+      <strong>Audio freezing issue</strong> Please install Chrome Canary
+      <a href="https://www.google.com/chrome/browser/canary.html" target="_blank">from here</a> and
+      launch it using
+      <img src="./chrome-canary-512.png" style="width:30px;height:30px;"> icon.
+    </div>
+    <h6>Move faster with shortcuts</h6>
+    <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp" data-upgraded=",MaterialDataTable">
+      <thead>
+        <tr>
+          <th class="mdl-data-table__cell--non-numeric">
+            <i class="material-icons" style="vertical-align:middle;">keyboard</i></th>
+          <th class="mdl-data-table__cell--non-numeric">What it does</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="mdl-data-table__cell--non-numeric">Enter (from text box)</td>
+          <td class="mdl-data-table__cell--non-numeric" rowspan="2">Save and move next</td>
+        </tr>
+        <tr>
+          <td class="mdl-data-table__cell--non-numeric">Ctrl+Enter</td>
+        </tr>
+        <tr>
+          <td class="mdl-data-table__cell--non-numeric">Ctrl+r</td>
+          <td class="mdl-data-table__cell--non-numeric">Rewind 5 sec</td>
+        </tr>
+        <tr>
+          <td class="mdl-data-table__cell--non-numeric">Ctrl+Alt+r</td>
+          <td class="mdl-data-table__cell--non-numeric">Replay from beginning</td>
+        </tr>
+        <tr>
+          <td class="mdl-data-table__cell--non-numeric">Ctrl+p</td>
+          <td class="mdl-data-table__cell--non-numeric">Play/Pause audio</td>
+        </tr>
+        <tr>
+          <td class="mdl-data-table__cell--non-numeric">Ctrl+g</td>
+          <td class="mdl-data-table__cell--non-numeric">Search</td>
+        </tr>
+        <tr>
+          <td class="mdl-data-table__cell--non-numeric">Ctrl+Alt+g</td>
+          <td class="mdl-data-table__cell--non-numeric">Open Guidelines</td>
+        </tr>
+        <tr>
+          <td class="mdl-data-table__cell--non-numeric">Ctrl+{0..9}</td>
+          <td class="mdl-data-table__cell--non-numeric">Select numbered category</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<dialog id="error-dialog" class="mdl-dialog">
+  <h3 class="mdl-dialog__title">Problem</h3>
+  <div class="mdl-dialog__content">
+    <div class="mdl-textfield mdl-js-textfield is-dirty is-upgraded" data-upgraded=",MaterialTextfield">
+      <textarea class="dialog-content mdl-textfield__input" type="text" rows="15" readonly="">      </textarea>
+    </div>
+  </div>
+  <div class="mdl-dialog__actions">
+    <button type="button" class="mdl-button close">Close</button>
+  </div>
+</dialog>
+
+<!--
+  A dialog for choosing reject reason when a transcriber cannot transcribe an utterance. Each option
+  corresponds to a reject reason defined in Transcript.RejectReason.
+-->
+<dialog id="reject-reason-dialog" class="mdl-dialog" style="width:500px">
+  <h4 class="mdl-dialog__title">Provide a reason</h4>
+  <div class="mdl-dialog__content">
+    <!-- List with avatar and controls -->
+    <ul class="demo-list-control mdl-list">
+      <li class="mdl-list__item">
+        <span class="mdl-list__item-primary-content">
+          I can't hear anything / The audio doesn't load.
+        </span>
+        <span class="mdl-list__item-secondary-action">
+          <label class="demo-list-radio mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded" for="reject-1" data-upgraded=",MaterialRadio,MaterialRipple">
+            <input type="radio" class="mdl-radio__button" name="reject-reason" id="reject-1" value="1"><span class="mdl-radio__outer-circle"></span><span class="mdl-radio__inner-circle"></span><span class="mdl-radio__ripple-container mdl-js-ripple-effect mdl-ripple--center" data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></label></span>
+      </li>
+      <li class="mdl-list__item">
+        <span class="mdl-list__item-primary-content">
+          Speech is clear. But the speech wasn't intended for the device.
+        </span>
+        <span class="mdl-list__item-secondary-action">
+          <label class="demo-list-radio mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded" for="reject-2" data-upgraded=",MaterialRadio,MaterialRipple">
+            <input type="radio" class="mdl-radio__button" name="reject-reason" id="reject-2" value="2"><span class="mdl-radio__outer-circle"></span><span class="mdl-radio__inner-circle"></span><span class="mdl-radio__ripple-container mdl-js-ripple-effect mdl-ripple--center" data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></label>
+        </span>
+      </li>
+      <li class="mdl-list__item">
+        <span class="mdl-list__item-primary-content">
+          Speech is clear. But it's in another language.
+        </span>
+        <span class="mdl-list__item-secondary-action">
+          <label class="demo-list-radio mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded" for="reject-3" data-upgraded=",MaterialRadio,MaterialRipple">
+            <input type="radio" class="mdl-radio__button" name="reject-reason" id="reject-3" value="3"><span class="mdl-radio__outer-circle"></span><span class="mdl-radio__inner-circle"></span><span class="mdl-radio__ripple-container mdl-js-ripple-effect mdl-ripple--center" data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></label>
+        </span>
+      </li>
+      <li class="mdl-list__item">
+        <span class="mdl-list__item-primary-content">
+          Speech is NOT clear, e.g. people talking in the background.
+        </span>
+        <span class="mdl-list__item-secondary-action">
+          <label class="demo-list-radio mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded" for="reject-4" data-upgraded=",MaterialRadio,MaterialRipple">
+            <input type="radio" class="mdl-radio__button" name="reject-reason" id="reject-4" value="4"><span class="mdl-radio__outer-circle"></span><span class="mdl-radio__inner-circle"></span><span class="mdl-radio__ripple-container mdl-js-ripple-effect mdl-ripple--center" data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></label>
+        </span>
+      </li>
+      <li class="mdl-list__item">
+        <span class="mdl-list__item-primary-content">
+          There is no speech, e.g. only traffic, music, animal barking.
+        </span>
+        <span class="mdl-list__item-secondary-action">
+          <label class="demo-list-radio mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded" for="reject-5" data-upgraded=",MaterialRadio,MaterialRipple">
+            <input type="radio" class="mdl-radio__button" name="reject-reason" id="reject-5" value="5"><span class="mdl-radio__outer-circle"></span><span class="mdl-radio__inner-circle"></span><span class="mdl-radio__ripple-container mdl-js-ripple-effect mdl-ripple--center" data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></label>
+        </span>
+      </li>
+      <li class="mdl-list__item">
+        <span class="mdl-list__item-primary-content">
+          Other reason not listed.
+        </span>
+        <span class="mdl-list__item-secondary-action">
+          <label class="demo-list-radio mdl-radio mdl-js-radio mdl-js-ripple-effect mdl-js-ripple-effect--ignore-events is-upgraded" for="reject-0" data-upgraded=",MaterialRadio,MaterialRipple">
+            <input type="radio" class="mdl-radio__button" name="reject-reason" id="reject-0" value="0"><span class="mdl-radio__outer-circle"></span><span class="mdl-radio__inner-circle"></span><span class="mdl-radio__ripple-container mdl-js-ripple-effect mdl-ripple--center" data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></label>
+        </span>
+      </li>
+    </ul>
+    <p>
+      <strong>'DONE' button will submit the answer and clear entered text.</strong>
+    </p>
+  </div>
+  <div class="mdl-dialog__actions">
+    <button type="button" class="mdl-button ok">Done</button>
+    <button type="button" class="mdl-button close">Cancel</button>
+  </div>
+</dialog>
+
+<div id="toast" class="mdl-js-snackbar mdl-snackbar" data-upgraded=",MaterialSnackbar" aria-hidden="true">
+  <div class="mdl-snackbar__text"></div>
+  <button class="mdl-snackbar__action" type="button" aria-hidden="true"></button>
+</div>
+
+
+
+<iframe name="oauth2relay725134461" id="oauth2relay725134461" src="./postmessageRelay(3).html" tabindex="-1" aria-hidden="true" style="width: 1px; height: 1px; position: absolute; top: -100px;"></iframe><iframe id="apiproxya8ce14303b3ae0922ea2043763143c9e10297a6f0.1368835838" name="apiproxya8ce14303b3ae0922ea2043763143c9e10297a6f0.1368835838" src="./proxy(3).html" tabindex="-1" aria-hidden="true" style="width: 1px; height: 1px; position: absolute; top: -100px; display: none;"></iframe></body></html>

@@ -1,0 +1,41 @@
+.page-content .mdl-textfield {
+  /* Text field should be wide enough to show the entire transcription. */
+  width: 100%;
+}
+#reject-reason-dialog .mdl-list__item label {
+  display: inline;
+}
+.main-spinner {
+  position: relative;
+  top: 10px;
+  left: 10px;
+}
+.waveform-hint {
+  color: #999;
+  float: right;
+  font-size: 12px;
+  line-height: 36px;
+  vertical-align: middle;
+}
+.bottom-panel #category-tree {
+  float: left;
+}
+.bottom-panel .submit-panel {
+  float: right;
+  width: 300px;
+}
+
+/* Training feedback box */
+#training-feedback {
+  background-color: white;
+  border: 1px solid #F44336; /* red */
+  margin: 10px;
+  padding:10px;
+  user-select: none;
+}
+#expected-transcription {
+  color: #4CAF50; /* green */
+}
+#entered-transcription {
+  color: #F44336; /* red */
+}

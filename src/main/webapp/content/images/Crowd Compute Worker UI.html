@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<!-- saved from url=(0046)https://crowd-compute.appspot.com/#!/Workbench -->
+<html lang="en" class="gr__crowd-compute_appspot_com"><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"><style type="text/css">[uib-typeahead-popup].dropdown-menu{display:block;}</style><style type="text/css">.uib-time input{width:50px;}</style><style type="text/css">.uib-datepicker .uib-title{width:100%;}.uib-day button,.uib-month button,.uib-year button{min-width:100%;}.uib-datepicker-popup.dropdown-menu{display:block;}.uib-button-bar{padding:10px 9px 2px;}</style><style type="text/css">.ng-animate.item:not(.left):not(.right){-webkit-transition:0s ease-in-out left;transition:0s ease-in-out left}</style>
+    <!-- Ideally csi_head.js should be inlined to get an accurate start time. -->
+    <script src="./Crowd Compute Worker UI_files/cb=gapi.loaded_2" async=""></script><script src="./Crowd Compute Worker UI_files/cb=gapi.loaded_1" async=""></script><script async="" src="./Crowd Compute Worker UI_files/analytics.js.download"></script><script src="./Crowd Compute Worker UI_files/cb=gapi.loaded_0" async=""></script><script src="./Crowd Compute Worker UI_files/csi_head.js.download"></script>
+    <title>Crowd Compute Worker UI</title>
+
+    <link rel="stylesheet" href="./Crowd Compute Worker UI_files/bootstrap.css">
+    <link rel="stylesheet" href="./Crowd Compute Worker UI_files/crowdcompute.css">
+    <script type="text/javascript">CLOSURE_NO_DEPS = true;</script>
+    <script src="./Crowd Compute Worker UI_files/angular.js.download"></script><style type="text/css">@charset "UTF-8";
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak],
+.ng-cloak, .x-ng-cloak,
+.ng-hide:not(.ng-hide-animate) {
+  display: none !important;
+}
+
+ng\:form {
+  display: block;
+}
+
+.ng-animate-shim {
+  visibility:hidden;
+}
+
+.ng-anchor {
+  position:absolute;
+}
+</style>
+    <script src="./Crowd Compute Worker UI_files/ui_bootstrap_tpls.js.download"></script>
+    <script src="./Crowd Compute Worker UI_files/client.js.download" gapi_processed="true"></script>
+    <script src="./Crowd Compute Worker UI_files/api.js.download" gapi_processed="true"></script>
+    <script src="./Crowd Compute Worker UI_files/jsapi"></script>
+    <script src="./Crowd Compute Worker UI_files/appconfig"></script>
+    <script src="./Crowd Compute Worker UI_files/csi_tail.js.download"></script>
+    <script src="./Crowd Compute Worker UI_files/cc_client_external.js.download"></script>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-45674023-4', 'auto');
+      ga('send', 'pageview');
+    </script>
+  </head>
+  <body ng-app="crowdComputeAppExternal" data-gr-c-s-loaded="true" class="ng-scope">
+    <div class="table-layout ng-scope" ng-controller="MainCtrl as mainCtrl">
+      <div class="table-layout-row" ng-show="!mainCtrl.isTabFullScreen">
+        <div class="table-layout-cell row">
+          <!-- Icon and title. -->
+          <div class="col-md-8">
+            <img src="./Crowd Compute Worker UI_files/cc_logo.png" class="logo">
+            <div class="title">Crowd Compute Worker UI</div>
+          </div>
+          <!-- Login button. Only displayed when not authorized. -->
+          <div class="col-md-8 ng-hide" style="text-align: right" ng-hide="authentication.authorized">
+            <button class="btn btn-primary" ng-click="authentication.authorize()">
+              Login
+            </button>
+          </div>
+          <!-- User email and picture. Only displayed when authorized. -->
+          <div class="col-md-4" style="text-align: right" ng-show="authentication.authorized">
+            <div class="pull-right">
+              <img class="user-profile" alt="lambda-8837f442-0dad-4cf5-b9f3-69794d8ce851@sdoperapera.com" ng-src="https://lh3.googleusercontent.com/-XdUIqdMkCWA/AAAAAAAAAAI/AAAAAAAAAAA/4252rscbv5M/s40/photo.jpg" src="./Crowd Compute Worker UI_files/photo.jpg">
+              <button class="btn btn-danger" ng-click="authentication.logout()">
+                Logout
+              </button>
+            </div>
+            <div class="pull-right ng-binding">
+              <select ng-model="roleService.selectedRole" class="ng-pristine ng-untouched ng-valid ng-not-empty">
+                <!-- ngRepeat: role in roleService.roles --><!-- ngIf: role.person.worker --><option ng-repeat="role in roleService.roles" value="0" ng-if="role.person.worker" class="ng-binding ng-scope" selected="selected">
+                  LEGACY (4295341925)
+                </option><!-- end ngIf: role.person.worker --><!-- end ngRepeat: role in roleService.roles -->
+              </select>
+              <br>
+              <!-- Information about worker. -->
+              <b>language(s)</b>: en |
+              <b>type(s)</b>: vi_vn_y_hps2017_lion
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ngIf: authentication.authorized && !authentication.worker -->
+
+      <!-- Butterbar for urgent user notifications -->
+      <!-- ngInclude: --><div ng-include="" src="&#39;html/messages.html&#39;" class="ng-scope"><div id="notifications" layout="column" layout-align="start center" ng-controller="MessagesController as ctrl" class="ng-scope">
+  <!-- ngRepeat: msg in ctrl.getMessages() track by ctrl.newMsgBarId(msg) -->
+</div>
+</div>
+
+      <!-- Navigation tabs -->
+      <div class="table-layout-row" ng-show="!mainCtrl.isTabFullScreen">
+        <div>
+          <div class="pull-right" style="margin-top: 13px;">
+            <a href="https://www.google.co.in/intl/en/policies/privacy/?fg=1">Privacy</a>&nbsp;|
+            <a href="https://www.google.co.in/intl/en/policies/terms/?fg=1">Terms</a>
+          </div>
+        <div class="ng-isolate-scope">
+  <ul class="nav nav-tabs" ng-class="{&#39;nav-stacked&#39;: vertical, &#39;nav-justified&#39;: justified}" ng-transclude="">
+          <!-- ngRepeat: tab in navigationTabs --><!-- ngIf: $eval(tab.show, roleService.getCurrentRole().person) --><li ng-class="{active: active, disabled: disabled}" class="uib-tab ng-scope ng-isolate-scope" ng-repeat="tab in navigationTabs" heading="Home" active="tab.active" ng-click="mainCtrl.switchTab(tab)" ng-if="$eval(tab.show, roleService.getCurrentRole().person)">
+  <a href="https://crowd-compute.appspot.com/" ng-click="select()" uib-tab-heading-transclude="" class="ng-binding">Home</a>
+</li><!-- end ngIf: $eval(tab.show, roleService.getCurrentRole().person) --><!-- end ngRepeat: tab in navigationTabs --><!-- ngIf: $eval(tab.show, roleService.getCurrentRole().person) --><li ng-class="{active: active, disabled: disabled}" class="uib-tab ng-isolate-scope active" ng-repeat="tab in navigationTabs" heading="Workbench" active="tab.active" ng-click="mainCtrl.switchTab(tab)" ng-if="$eval(tab.show, roleService.getCurrentRole().person)">
+  <a href="https://crowd-compute.appspot.com/" ng-click="select()" uib-tab-heading-transclude="" class="ng-binding">Workbench</a>
+</li><!-- end ngIf: $eval(tab.show, roleService.getCurrentRole().person) --><!-- end ngRepeat: tab in navigationTabs --><!-- ngIf: $eval(tab.show, roleService.getCurrentRole().person) --><li ng-class="{active: active, disabled: disabled}" class="uib-tab ng-isolate-scope" ng-repeat="tab in navigationTabs" heading="Answers" active="tab.active" ng-click="mainCtrl.switchTab(tab)" ng-if="$eval(tab.show, roleService.getCurrentRole().person)">
+  <a href="https://crowd-compute.appspot.com/" ng-click="select()" uib-tab-heading-transclude="" class="ng-binding">Answers</a>
+</li><!-- end ngIf: $eval(tab.show, roleService.getCurrentRole().person) --><!-- end ngRepeat: tab in navigationTabs --><!-- ngIf: $eval(tab.show, roleService.getCurrentRole().person) --><li ng-class="{active: active, disabled: disabled}" class="uib-tab ng-isolate-scope" ng-repeat="tab in navigationTabs" heading="Feedback" active="tab.active" ng-click="mainCtrl.switchTab(tab)" ng-if="$eval(tab.show, roleService.getCurrentRole().person)">
+  <a href="https://crowd-compute.appspot.com/" ng-click="select()" uib-tab-heading-transclude="" class="ng-binding">Feedback</a>
+</li><!-- end ngIf: $eval(tab.show, roleService.getCurrentRole().person) --><!-- end ngRepeat: tab in navigationTabs --></ul>
+  <div class="tab-content">
+    <!-- ngRepeat: tab in tabs --><div class="tab-pane ng-scope" ng-repeat="tab in tabs" ng-class="{active: tab.active}" uib-tab-content-transclude="tab">
+    
+        </div><!-- end ngRepeat: tab in tabs --><div class="tab-pane ng-scope active" ng-repeat="tab in tabs" ng-class="{active: tab.active}" uib-tab-content-transclude="tab">
+    
+        </div><!-- end ngRepeat: tab in tabs --><div class="tab-pane ng-scope" ng-repeat="tab in tabs" ng-class="{active: tab.active}" uib-tab-content-transclude="tab">
+    
+        </div><!-- end ngRepeat: tab in tabs --><div class="tab-pane ng-scope" ng-repeat="tab in tabs" ng-class="{active: tab.active}" uib-tab-content-transclude="tab">
+    
+        </div><!-- end ngRepeat: tab in tabs -->
+  </div>
+</div>
+        </div>
+      </div>
+
+      <!-- Tab contents -->
+      <div class="table-layout-row">
+        <!-- ngRepeat: tab in navigationTabs --><!-- ngIf: $eval(tab.show, roleService.getCurrentRole().person) --><!-- ngInclude: tab.templateUrl --><div ng-repeat="tab in navigationTabs" ng-include="tab.templateUrl" ng-show="tab.active" class="table-layout-cell fill ng-scope ng-hide" ng-if="$eval(tab.show, roleService.getCurrentRole().person)"><div class="container ng-scope" ng-controller="HomeController as homeController">
+  <div class="row text-center">
+    <img src="./Crowd Compute Worker UI_files/cc_puzzle.png">
+  </div>
+  <div ng-hide="authentication.authorized" class="row ng-hide">
+    <p>You are not currently logged in. Click the button below to log in
+      with your Google account.</p>
+    <button class="btn btn-primary" ng-click="authentication.authorize()">
+      Login to CrowdCompute</button>
+  </div>
+  <div class="row" ng-show="authentication.authorized">
+    <span style="text-align: left;" class="ng-binding">Performance stats for
+       workerVendor Lambda:</span>
+     <span class="pull-right ng-binding" ng-hide="homeController.isStatsEmpty(homeController.statsTable)">Last
+      Updated :1-Oct-2017 09:30:00</span>
+    <table class="table table-hover table-condensed table-striped table-bordered">
+      <thead>
+        <tr>
+          <th><a>Date</a></th>
+          <th><a>Question Type</a></th>
+          <th><a>Questions Answered</a></th>
+          <th><a>Time Spent</a></th>
+          <th><a>Quality</a></th>
+        </tr>
+      </thead>
+      <!-- ngRepeat: (date, typeObj) in homeController.statsTable --><tbody ng-repeat="(date, typeObj) in homeController.statsTable" class="ng-scope">
+        <!-- ngRepeat: (type, stats) in typeObj --><tr ng-repeat="(type, stats) in typeObj" ng-hide="homeController.isStatsEmpty(homeController.statsTable)" class="ng-scope">
+          <td class="ng-binding">24-Sep-2017</td>
+          <td class="ng-binding">vi_vn_vs_hps2017_lion</td>
+          <td class="ng-binding">281</td>
+          <td class="ng-binding">2 hours 3 minutes</td>
+          <!-- ngIf: stats['accuracy'] -->
+          <!-- ngIf: !stats['accuracy'] --><td ng-if="!stats[&#39;accuracy&#39;]" class="ng-scope">--</td><!-- end ngIf: !stats['accuracy'] -->
+        </tr><!-- end ngRepeat: (type, stats) in typeObj -->
+      </tbody><!-- end ngRepeat: (date, typeObj) in homeController.statsTable --><tbody ng-repeat="(date, typeObj) in homeController.statsTable" class="ng-scope">
+        <!-- ngRepeat: (type, stats) in typeObj --><tr ng-repeat="(type, stats) in typeObj" ng-hide="homeController.isStatsEmpty(homeController.statsTable)" class="ng-scope">
+          <td class="ng-binding">25-Sep-2017</td>
+          <td class="ng-binding">vi_vn_y_hps2017_lion</td>
+          <td class="ng-binding">20</td>
+          <td class="ng-binding">8 minutes</td>
+          <!-- ngIf: stats['accuracy'] -->
+          <!-- ngIf: !stats['accuracy'] --><td ng-if="!stats[&#39;accuracy&#39;]" class="ng-scope">--</td><!-- end ngIf: !stats['accuracy'] -->
+        </tr><!-- end ngRepeat: (type, stats) in typeObj -->
+      </tbody><!-- end ngRepeat: (date, typeObj) in homeController.statsTable --><tbody ng-repeat="(date, typeObj) in homeController.statsTable" class="ng-scope">
+        <!-- ngRepeat: (type, stats) in typeObj --><tr ng-repeat="(type, stats) in typeObj" ng-hide="homeController.isStatsEmpty(homeController.statsTable)" class="ng-scope">
+          <td class="ng-binding">26-Sep-2017</td>
+          <td class="ng-binding">vi_vn_y_hps2017_lion</td>
+          <td class="ng-binding">381</td>
+          <td class="ng-binding">2 hours 41 minutes</td>
+          <!-- ngIf: stats['accuracy'] -->
+          <!-- ngIf: !stats['accuracy'] --><td ng-if="!stats[&#39;accuracy&#39;]" class="ng-scope">--</td><!-- end ngIf: !stats['accuracy'] -->
+        </tr><!-- end ngRepeat: (type, stats) in typeObj -->
+      </tbody><!-- end ngRepeat: (date, typeObj) in homeController.statsTable --><tbody ng-repeat="(date, typeObj) in homeController.statsTable" class="ng-scope">
+        <!-- ngRepeat: (type, stats) in typeObj --><tr ng-repeat="(type, stats) in typeObj" ng-hide="homeController.isStatsEmpty(homeController.statsTable)" class="ng-scope">
+          <td class="ng-binding">27-Sep-2017</td>
+          <td class="ng-binding">vi_vn_y_hps2017_lion</td>
+          <td class="ng-binding">529</td>
+          <td class="ng-binding">5 hours 11 minutes</td>
+          <!-- ngIf: stats['accuracy'] -->
+          <!-- ngIf: !stats['accuracy'] --><td ng-if="!stats[&#39;accuracy&#39;]" class="ng-scope">--</td><!-- end ngIf: !stats['accuracy'] -->
+        </tr><!-- end ngRepeat: (type, stats) in typeObj -->
+      </tbody><!-- end ngRepeat: (date, typeObj) in homeController.statsTable --><tbody ng-repeat="(date, typeObj) in homeController.statsTable" class="ng-scope">
+        <!-- ngRepeat: (type, stats) in typeObj --><tr ng-repeat="(type, stats) in typeObj" ng-hide="homeController.isStatsEmpty(homeController.statsTable)" class="ng-scope">
+          <td class="ng-binding">28-Sep-2017</td>
+          <td class="ng-binding">vi_vn_y_hps2017_lion</td>
+          <td class="ng-binding">239</td>
+          <td class="ng-binding">1 hour 50 minutes</td>
+          <!-- ngIf: stats['accuracy'] -->
+          <!-- ngIf: !stats['accuracy'] --><td ng-if="!stats[&#39;accuracy&#39;]" class="ng-scope">--</td><!-- end ngIf: !stats['accuracy'] -->
+        </tr><!-- end ngRepeat: (type, stats) in typeObj -->
+      </tbody><!-- end ngRepeat: (date, typeObj) in homeController.statsTable --><tbody ng-repeat="(date, typeObj) in homeController.statsTable" class="ng-scope">
+        <!-- ngRepeat: (type, stats) in typeObj --><tr ng-repeat="(type, stats) in typeObj" ng-hide="homeController.isStatsEmpty(homeController.statsTable)" class="ng-scope">
+          <td class="ng-binding">29-Sep-2017</td>
+          <td class="ng-binding">vi_vn_y_hps2017_lion</td>
+          <td class="ng-binding">6</td>
+          <td class="ng-binding">3 minutes</td>
+          <!-- ngIf: stats['accuracy'] -->
+          <!-- ngIf: !stats['accuracy'] --><td ng-if="!stats[&#39;accuracy&#39;]" class="ng-scope">--</td><!-- end ngIf: !stats['accuracy'] -->
+        </tr><!-- end ngRepeat: (type, stats) in typeObj -->
+      </tbody><!-- end ngRepeat: (date, typeObj) in homeController.statsTable --><tbody ng-repeat="(date, typeObj) in homeController.statsTable" class="ng-scope">
+        <!-- ngRepeat: (type, stats) in typeObj --><tr ng-repeat="(type, stats) in typeObj" ng-hide="homeController.isStatsEmpty(homeController.statsTable)" class="ng-scope">
+          <td class="ng-binding">30-Sep-2017</td>
+          <td class="ng-binding">vi_vn_y_hps2017_lion</td>
+          <td class="ng-binding">232</td>
+          <td class="ng-binding">1 hour 29 minutes</td>
+          <!-- ngIf: stats['accuracy'] -->
+          <!-- ngIf: !stats['accuracy'] --><td ng-if="!stats[&#39;accuracy&#39;]" class="ng-scope">--</td><!-- end ngIf: !stats['accuracy'] -->
+        </tr><!-- end ngRepeat: (type, stats) in typeObj -->
+      </tbody><!-- end ngRepeat: (date, typeObj) in homeController.statsTable --><tbody ng-repeat="(date, typeObj) in homeController.statsTable" class="ng-scope">
+        <!-- ngRepeat: (type, stats) in typeObj --><tr ng-repeat="(type, stats) in typeObj" ng-hide="homeController.isStatsEmpty(homeController.statsTable)" class="ng-scope">
+          <td class="ng-binding">1-Oct-2017</td>
+          <td class="ng-binding">vi_vn_y_hps2017_lion</td>
+          <td class="ng-binding">73</td>
+          <td class="ng-binding">32 minutes</td>
+          <!-- ngIf: stats['accuracy'] -->
+          <!-- ngIf: !stats['accuracy'] --><td ng-if="!stats[&#39;accuracy&#39;]" class="ng-scope">--</td><!-- end ngIf: !stats['accuracy'] -->
+        </tr><!-- end ngRepeat: (type, stats) in typeObj -->
+      </tbody><!-- end ngRepeat: (date, typeObj) in homeController.statsTable -->
+      <tbody><tr ng-show="homeController.isStatsLoading" class="ng-hide">
+        <td colspan="6" style="text-align: center;"><button class="btn btn-lg btn-primary">Loading stats...</button></td>
+      </tr>
+      <tr ng-show="homeController.isStatsEmpty(homeController.statsTable) &amp;&amp; !homeController.isStatsLoading" class="ng-hide">
+        <td colspan="6" style="text-align: center;"><font color="red">No
+            stats available</font></td>
+      </tr>
+    </tbody></table>
+  </div>
+</div>
+</div><!-- end ngIf: $eval(tab.show, roleService.getCurrentRole().person) --><!-- end ngRepeat: tab in navigationTabs --><!-- ngIf: $eval(tab.show, roleService.getCurrentRole().person) --><!-- ngInclude: tab.templateUrl --><div ng-repeat="tab in navigationTabs" ng-include="tab.templateUrl" ng-show="tab.active" class="table-layout-cell fill ng-scope" ng-if="$eval(tab.show, roleService.getCurrentRole().person)"><div class="tab-contents fill ng-scope" ng-controller="IframeWorkbenchCtrl as iframeWorkbenchCtrl">
+  <!-- The div below is always shown, but it's styling changes if we are full screen.  -->
+  <div class="table-layout well well-sm fill" id="fullscreen_worker_div" ng-style="iframeWorkbenchCtrl.getFullscreenStyle()">
+    <div class="form-inline">
+      <div class="form-group" ng-show="iframeWorkbenchCtrl.isTabview">
+        <!-- Fullscreen button. -->
+        <div class="btn btn-default " ng-show="iframeWorkbenchCtrl.canGoFullScreen()" ng-click="iframeWorkbenchCtrl.toggleFullScreenClick()" uib-tooltip="Toggle Fullscreen" id="fullscreen-button">
+          <i class="glyphicon glyphicon-fullscreen"></i>
+        </div>
+        <div class="btn btn-default " ng-show="!iframeWorkbenchCtrl.isFullscreen()" ng-click="iframeWorkbenchCtrl.toggleButtonClick()" uib-tooltip="Toggle Fullscreen in Tab" id="fullscreen-button">
+          <i class="glyphicon glyphicon-resize-full"></i>
+        </div>
+        <!-- Reload button. -->
+        <div class="btn btn-default " ng-click="iframeWorkbenchCtrl.reload()" uib-tooltip="Reload">
+          <i class="glyphicon glyphicon-refresh"></i>
+        </div>
+        <!-- Additional details for plugin and question. -->
+        <div class="btn btn-default " ng-click="iframeWorkbenchCtrl.info()" uib-tooltip="Information">
+          <i class="glyphicon glyphicon-info-sign"></i>
+        </div>
+        <!-- Additional details for plugin and question. -->
+        <div class="btn btn-default ng-hide" ng-show="iframeWorkbenchCtrl.isShowingQuestion() &amp;&amp; iframeWorkbenchCtrl.isFeedbackEnabled()" uib-tooltip="Feedback" ng-click="iframeWorkbenchCtrl.feedback()">
+          <i class="glyphicon glyphicon-pencil"></i>
+        </div>
+      </div>
+      <div ng-show="iframeWorkbenchCtrl.isShowingQuestion()" class="form-group" style="display: none;">
+        <select class="form-control ng-pristine ng-untouched ng-valid ng-not-empty" ng-model="iframeWorkbenchCtrl.skipPick" ng-options="skipOpt.name for skipOpt in iframeWorkbenchCtrl.skipOpts"><option label="Skip Reason" value="object:46" selected="selected">Skip Reason</option><option label="Broken Question" value="object:47">Broken Question</option><option label="Other" value="object:48">Other</option></select>
+        <input type="text" ng-model="iframeWorkbenchCtrl.skipReason" ng-show="iframeWorkbenchCtrl.skipPick.comReq" class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required ng-hide" required="">
+        <button id="skip-button" ng-click="iframeWorkbenchCtrl.skip()" class="btn btn-default">
+          Skip
+        </button>
+      </div>
+      <!-- The awesome box, which shows how many questions are loaded and allows switching -->
+      <div class="form-group">
+        <!-- ngRepeat: (idx, frame) in iframeWorkbenchCtrl.questionGroup.getAllFrames() --><div ng-repeat="(idx, frame) in iframeWorkbenchCtrl.questionGroup.getAllFrames()" class="awesome-box glyphicon ng-scope awesome-box-answered glyphicon-ok" ng-class="{&#39;awesome-box-selected&#39;: idx==iframeWorkbenchCtrl.questionGroup.getCurrentIndex(),
+                        &#39;awesome-box-answered&#39;: frame.getQInfo().answered &amp;&amp; !frame.getQInfo().failed,
+                        &#39;awesome-box-failed&#39;: frame.getQInfo().failed,
+                        &#39;glyphicon-ok&#39;: frame.getQInfo().finished,
+                        &#39;glyphicon-remove&#39;: frame.getQInfo().failed,
+                       &#39;glyphicon-none&#39;: !frame.getQInfo().finished &amp;&amp; !frame.getQInfo().failed}" ng-click="iframeWorkbenchCtrl.awesomeBoxClick(idx)">
+        </div><!-- end ngRepeat: (idx, frame) in iframeWorkbenchCtrl.questionGroup.getAllFrames() --><div ng-repeat="(idx, frame) in iframeWorkbenchCtrl.questionGroup.getAllFrames()" class="awesome-box glyphicon ng-scope awesome-box-answered glyphicon-ok" ng-class="{&#39;awesome-box-selected&#39;: idx==iframeWorkbenchCtrl.questionGroup.getCurrentIndex(),
+                        &#39;awesome-box-answered&#39;: frame.getQInfo().answered &amp;&amp; !frame.getQInfo().failed,
+                        &#39;awesome-box-failed&#39;: frame.getQInfo().failed,
+                        &#39;glyphicon-ok&#39;: frame.getQInfo().finished,
+                        &#39;glyphicon-remove&#39;: frame.getQInfo().failed,
+                       &#39;glyphicon-none&#39;: !frame.getQInfo().finished &amp;&amp; !frame.getQInfo().failed}" ng-click="iframeWorkbenchCtrl.awesomeBoxClick(idx)">
+        </div><!-- end ngRepeat: (idx, frame) in iframeWorkbenchCtrl.questionGroup.getAllFrames() --><div ng-repeat="(idx, frame) in iframeWorkbenchCtrl.questionGroup.getAllFrames()" class="awesome-box glyphicon ng-scope awesome-box-answered glyphicon-ok" ng-class="{&#39;awesome-box-selected&#39;: idx==iframeWorkbenchCtrl.questionGroup.getCurrentIndex(),
+                        &#39;awesome-box-answered&#39;: frame.getQInfo().answered &amp;&amp; !frame.getQInfo().failed,
+                        &#39;awesome-box-failed&#39;: frame.getQInfo().failed,
+                        &#39;glyphicon-ok&#39;: frame.getQInfo().finished,
+                        &#39;glyphicon-remove&#39;: frame.getQInfo().failed,
+                       &#39;glyphicon-none&#39;: !frame.getQInfo().finished &amp;&amp; !frame.getQInfo().failed}" ng-click="iframeWorkbenchCtrl.awesomeBoxClick(idx)">
+        </div><!-- end ngRepeat: (idx, frame) in iframeWorkbenchCtrl.questionGroup.getAllFrames() --><div ng-repeat="(idx, frame) in iframeWorkbenchCtrl.questionGroup.getAllFrames()" class="awesome-box glyphicon ng-scope glyphicon-none awesome-box-selected" ng-class="{&#39;awesome-box-selected&#39;: idx==iframeWorkbenchCtrl.questionGroup.getCurrentIndex(),
+                        &#39;awesome-box-answered&#39;: frame.getQInfo().answered &amp;&amp; !frame.getQInfo().failed,
+                        &#39;awesome-box-failed&#39;: frame.getQInfo().failed,
+                        &#39;glyphicon-ok&#39;: frame.getQInfo().finished,
+                        &#39;glyphicon-remove&#39;: frame.getQInfo().failed,
+                       &#39;glyphicon-none&#39;: !frame.getQInfo().finished &amp;&amp; !frame.getQInfo().failed}" ng-click="iframeWorkbenchCtrl.awesomeBoxClick(idx)">
+        </div><!-- end ngRepeat: (idx, frame) in iframeWorkbenchCtrl.questionGroup.getAllFrames() --><div ng-repeat="(idx, frame) in iframeWorkbenchCtrl.questionGroup.getAllFrames()" class="awesome-box glyphicon ng-scope glyphicon-none" ng-class="{&#39;awesome-box-selected&#39;: idx==iframeWorkbenchCtrl.questionGroup.getCurrentIndex(),
+                        &#39;awesome-box-answered&#39;: frame.getQInfo().answered &amp;&amp; !frame.getQInfo().failed,
+                        &#39;awesome-box-failed&#39;: frame.getQInfo().failed,
+                        &#39;glyphicon-ok&#39;: frame.getQInfo().finished,
+                        &#39;glyphicon-remove&#39;: frame.getQInfo().failed,
+                       &#39;glyphicon-none&#39;: !frame.getQInfo().finished &amp;&amp; !frame.getQInfo().failed}" ng-click="iframeWorkbenchCtrl.awesomeBoxClick(idx)">
+        </div><!-- end ngRepeat: (idx, frame) in iframeWorkbenchCtrl.questionGroup.getAllFrames() --><div ng-repeat="(idx, frame) in iframeWorkbenchCtrl.questionGroup.getAllFrames()" class="awesome-box glyphicon ng-scope glyphicon-none" ng-class="{&#39;awesome-box-selected&#39;: idx==iframeWorkbenchCtrl.questionGroup.getCurrentIndex(),
+                        &#39;awesome-box-answered&#39;: frame.getQInfo().answered &amp;&amp; !frame.getQInfo().failed,
+                        &#39;awesome-box-failed&#39;: frame.getQInfo().failed,
+                        &#39;glyphicon-ok&#39;: frame.getQInfo().finished,
+                        &#39;glyphicon-remove&#39;: frame.getQInfo().failed,
+                       &#39;glyphicon-none&#39;: !frame.getQInfo().finished &amp;&amp; !frame.getQInfo().failed}" ng-click="iframeWorkbenchCtrl.awesomeBoxClick(idx)">
+        </div><!-- end ngRepeat: (idx, frame) in iframeWorkbenchCtrl.questionGroup.getAllFrames() -->
+      </div>
+      <!-- Info when workers fail to answer a question before its expiration.
+           In this case, we stop pushing questions to workers until they
+           acknowledge not idle. -->
+      <div class="form-group">
+        <div class="compact_warning alert ng-isolate-scope ng-hide alert-warning alert-dismissible" ng-class="[&#39;alert-&#39; + (type || &#39;warning&#39;), closeable ? &#39;alert-dismissible&#39; : null]" role="alert" ng-show="iframeWorkbenchCtrl.errorMessage" close="iframeWorkbenchCtrl.errorMessage=&#39;&#39;">
+    <button ng-show="closeable" type="button" class="close" ng-click="close({$event: $event})">
+        <span aria-hidden="true">×</span>
+        <span class="sr-only">Close</span>
+    </button>
+    <div ng-transclude="">
+          
+        </div>
+</div>
+      </div>
+      <div ng-show="iframeWorkbenchCtrl.canGetMoreQuestion()" class="form-group ng-hide">
+        <button class="btn btn-primary" ng-click="questions.startGettingQuestions()">
+            Get more questions</button>
+      </div>
+      <!-- Time Spent. -->
+      <div class="form-group pull-right">
+        <span class="ng-binding">Time : 00:00:20</span>
+        <!-- Answer counter. -->
+        <span class="ng-binding">Answered: 37</span>
+      </div>
+    </div>  <!-- End of table-layout-cell -->
+
+    <div class="table-layout-row fill">
+      <!-- The plugin is injected as a child iframe of this div. -->
+      <div id="qframeParent" class="table-layout-cell qaFrameParent">
+        <!-- PLUGIN. -->
+      <div class="fill" style="display: none;"><iframe name="xpcpeerExeB" id="xpcpeerExeB" class="fill cc-iframe" src="./Crowd Compute Worker UI_files/index.html"></iframe></div><div class="fill" style="display: none;"><iframe name="xpcpeerN2GL" id="xpcpeerN2GL" class="fill cc-iframe" src="./Crowd Compute Worker UI_files/index(1).html"></iframe></div><div class="fill" style="display: none;"><iframe name="xpcpeertPSk" id="xpcpeertPSk" class="fill cc-iframe" src="./Crowd Compute Worker UI_files/index(2).html"></iframe></div><div class="fill" style=""><iframe name="xpcpeerHvRO" id="xpcpeerHvRO" class="fill cc-iframe" src="./Crowd Compute Worker UI_files/index(3).html"></iframe></div><div class="fill" style="display: none;"><iframe name="xpcpeerLJ00" id="xpcpeerLJ00" class="fill cc-iframe" src="./Crowd Compute Worker UI_files/index(4).html"></iframe></div><div class="fill" style="display: none;"><iframe name="xpcpeerHmUJ" id="xpcpeerHmUJ" class="fill cc-iframe" src="./Crowd Compute Worker UI_files/index(5).html"></iframe></div></div>
+    </div>
+  </div>  <!-- End of fullscreen_worker_div -->
+</div>  <!-- End of outer ng-controller. -->
+</div><!-- end ngIf: $eval(tab.show, roleService.getCurrentRole().person) --><!-- end ngRepeat: tab in navigationTabs --><!-- ngIf: $eval(tab.show, roleService.getCurrentRole().person) --><!-- ngInclude: tab.templateUrl --><div ng-repeat="tab in navigationTabs" ng-include="tab.templateUrl" ng-show="tab.active" class="table-layout-cell fill ng-scope ng-hide" ng-if="$eval(tab.show, roleService.getCurrentRole().person)"><div class="tab-contents ng-scope" ng-controller="AnswerSearchCtrl as answerSearchCtrl">
+  <div class="container-fluid">
+
+    <!-- Upper row with search controls. -->
+    <div class="row">
+      <div class="input-group">
+        <span class="input-group-btn">
+          <button id="search" ng-click="answerSearchCtrl.doSearch()" class="btn btn-primary">
+            Search
+          </button>
+        </span>
+        <input class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required" type="text" name="qid" id="qid" ng-model="answerSearchCtrl.questionId" placeholder="Search by Question ID" required="">
+      </div>
+    </div>  <!-- End of the first row. -->
+
+    <!-- Row displaying error messages. -->
+    <div class="row">
+      <!-- ngIf: answerSearchCtrl.errorMessage -->
+    </div>
+
+    <!-- ngIf: answerSearchCtrl.searchDone && !answerSearchCtrl.errorMessage -->
+  </div>  <!-- Container. -->
+</div>
+</div><!-- end ngIf: $eval(tab.show, roleService.getCurrentRole().person) --><!-- end ngRepeat: tab in navigationTabs --><!-- ngIf: $eval(tab.show, roleService.getCurrentRole().person) --><!-- ngInclude: tab.templateUrl --><div ng-repeat="tab in navigationTabs" ng-include="tab.templateUrl" ng-show="tab.active" class="table-layout-cell fill ng-scope ng-hide" ng-if="$eval(tab.show, roleService.getCurrentRole().person)"><div class="tab-contents ng-scope" ng-controller="FeedbackCtrl as feedbackCtrl">
+  <div class="container-fluid">
+
+    <!-- Question Type Dropdown -->
+    <div class="well">
+      <div class="form-inline form-group">
+        <b>Question types:</b>
+        <select ng-model="feedbackCtrl.selectedQuestionType" ng-change="feedbackCtrl.selectionChange()" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty">
+            <!-- ngRepeat: questionType in feedbackCtrl.questionTypes --><option ng-repeat="questionType in feedbackCtrl.questionTypes" value="vi_vn_y_hps2017_lion" class="ng-binding ng-scope" selected="selected">vi_vn_y_hps2017_lion
+        </option><!-- end ngRepeat: questionType in feedbackCtrl.questionTypes --></select>
+        <div class="btn btn-default " ng-click="feedbackCtrl.selectionChange()" uib-tooltip="Refresh">
+          <i class="glyphicon glyphicon-refresh"></i>
+        </div>
+        <!-- ngIf: feedbackCtrl.isLoading -->
+      </div> <!-- End form-group -->
+    </div> <!-- End well -->
+
+    <!-- ngIf: feedbackCtrl.feedbackList.length > 0 -->  <!-- End results div -->
+
+  </div>  <!-- End container-fluid. -->
+</div>
+
+</div><!-- end ngIf: $eval(tab.show, roleService.getCurrentRole().person) --><!-- end ngRepeat: tab in navigationTabs -->
+      </div>
+    </div>
+  
+
+<iframe name="oauth2relay391583928" id="oauth2relay391583928" src="./Crowd Compute Worker UI_files/postmessageRelay.html" tabindex="-1" aria-hidden="true" style="width: 1px; height: 1px; position: absolute; top: -100px;"></iframe><iframe id="apiproxya8ce14303b3ae0922ea2043763143c9e10297a6f0.234075599" name="apiproxya8ce14303b3ae0922ea2043763143c9e10297a6f0.234075599" src="./Crowd Compute Worker UI_files/proxy.html" tabindex="-1" aria-hidden="true" style="width: 1px; height: 1px; position: absolute; top: -100px; display: none;"></iframe><iframe src="./Crowd Compute Worker UI_files/auth.html" aria-hidden="true" style="width: 1px; height: 1px; position: absolute; top: -100px;"></iframe></body></html>
