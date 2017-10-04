@@ -38,26 +38,23 @@
 	        </div>
 	        <button class="btn" ui-sref="application.edit({id:application.id})">Edit your application</button>
 	      </div>
-	      <!--======== approve/reject buttons ============-->
-	      <div class="horizontal-card" ng-show="vm.isAuthenticated()" has-authority="ROLE_ADMIN">
-	        <div class="action-btn-group">
-              <button class="action-btn approve-btn" ng-click="vm.approve(application.id)">APPROVE</button>
-              <button class="action-btn reject-btn" ng-click="vm.reject(application.id)">REJECT</button>
-		    </div>
-	      </div>
+
 	  </div>
 	  </div>
 	  <div class="col-md-1 hidden-xs"></div>
 	  <!--======== challenge and application progress ============-->
 	  <div class="application-progress col-md-3 col-xs-12 horizontal-card">
-	  	<div style="background-image:url({{vm.challenge.bannerUrl}})" class="challenge-banner">Challenge Banner Here</div>
+	  	<div style="background-image:url({{vm.challenge.bannerUrl}})" class="challenge-banner"></div>
 	  	<div>
-	  		<p>You are applying to</p>
-	  		<h3>{{vm.challenge.name}}</h3>
+	  		<p class="application-sub-title">You are applying to _</p>
+	  		<h3 class="challenge-name">{{vm.challenge.name}}</h3>
 	  	</div>
-	  	<div>Application deadline: {{vm.challenge.info.eventEndTime | date}}</div>
 	  	<div>
-	  		<p>Application Readiness</p>
+				<p class="application-sub-title">Application deadline _</p>
+				<span>{{vm.challenge.info.eventEndTime | date}}</span>
+			</div>
+	  	<div>
+	  		<p class="application-sub-title">Application Readiness _</p>
 	  		<!-- <div class="progress">
 			  <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
 			</div> -->
@@ -144,12 +141,20 @@
 						<i class="material-icons">thumb_down</i>
 						<span>Invalid</span>
 					</div>
+					<div class="text-center">After the deadline the application will be screened</div>
 				</div>
 			</div>
 	  	</div>
 	  	<div>
-	  		<button class="btn" ui-sref="challengeslist">VIEW THE CHALLENGE PAGE</button>
+	  		<button class="btn challenge-link" ui-sref="challengeslist">VIEW THE CHALLENGE PAGE</button>
 	  	</div>
+			<!--======== approve/reject buttons ============-->
+			<div ng-show="vm.isAuthenticated()" has-authority="ROLE_ADMIN">
+				<div class="action-btn-group">
+						<button class="action-btn approve-btn" ng-click="vm.approve(vm.application)">APPROVE</button>
+						<button class="action-btn reject-btn" ng-click="vm.reject(vm.application)">REJECT</button>
+				</div>
+			</div>
 	  </div>
 	</div>
 </div>

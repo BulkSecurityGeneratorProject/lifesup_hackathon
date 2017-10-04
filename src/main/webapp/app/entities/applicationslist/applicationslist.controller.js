@@ -19,12 +19,9 @@
             ApplicationsList.update(application);
         }
 
-        function reject(id) {
-            vm.application = ApplicationsList.get({id: id}, function(result){
-                vm.application.status = 'REJECTED';
-                vm.application.challengeId = result.challenge.id;
-                ApplicationsList.update(vm.application);
-            })
+        function reject(application) {
+            application.status = 'REJECTED';
+            ApplicationsList.update(application);
         }
     }
 })();

@@ -24,8 +24,8 @@
 
         function getSkills() {
             vm.members.map(function(member) {
-                console.log(member.workArea);
-                return vm.skills = member.workArea.split(',');  
+                console.log(member.skills);
+                return vm.skills = member.skills.split(',');
             });
         }
 
@@ -44,20 +44,14 @@
            return vm.determinateValue += 10;
         }
 
-        function approve(id) {
-            vm.application = ApplicationsList.get({id: id}, function(result){
-                vm.application.status = 'APPROVED';
-                vm.application.challengeId = result.challenge.id;
-                ApplicationsList.update(vm.application);
-            })
+        function approve(application) {
+            application.status = 'APPROVED';
+            ApplicationsListDetails.update(application);
         }
 
-        function reject(id) {
-            vm.application = ApplicationsList.get({id: id}, function(result){
-                vm.application.status = 'REJECTED';
-                vm.application.challengeId = result.challenge.id;
-                ApplicationsList.update(vm.application);
-            })
+        function reject(application) {
+            application.status = 'REJECTED';
+            ApplicationsListDetails.update(application);
         }
     }
 })();
