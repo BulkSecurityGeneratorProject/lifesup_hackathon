@@ -54,14 +54,14 @@ public class UserInfoDTO {
 		this(userInfo.getPhone(), userInfo.getSex(), userInfo.getCompanyName(), userInfo.getJobTitle(),
 				userInfo.getLogoUrl(), userInfo.getCountry(), userInfo.getCity(), userInfo.getNationality(),
 				userInfo.getBirthday(), userInfo.getIntroduction(), userInfo.getTwitterUrl(), userInfo.getLinkedInUrl(),
-				userInfo.getWebsiteUrl(), userInfo.getSkills(), userInfo.getWorkArea(), userInfo.getFeedbackFrom());
+				userInfo.getSkills(), userInfo.getWorkArea(), userInfo.getFeedbackFrom(), userInfo.getWebsiteUrl());
 	}
 	
 	public UserInfoDTO( String email, String firstName, String lastName, UserInfo userInfo) {
 		this(userInfo.getPhone(), userInfo.getSex(), userInfo.getCompanyName(), userInfo.getJobTitle(),
 				userInfo.getLogoUrl(), userInfo.getCountry(), userInfo.getCity(), userInfo.getNationality(),
 				userInfo.getBirthday(), userInfo.getIntroduction(), userInfo.getTwitterUrl(), userInfo.getLinkedInUrl(),
-				userInfo.getWebsiteUrl(), userInfo.getSkills(), userInfo.getWorkArea(), userInfo.getFeedbackFrom());
+			    userInfo.getSkills(), userInfo.getWorkArea(), userInfo.getFeedbackFrom(), userInfo.getWebsiteUrl());
 		this.email = email;
 		this.firstName = firstName;
 		this.lastName = lastName;
