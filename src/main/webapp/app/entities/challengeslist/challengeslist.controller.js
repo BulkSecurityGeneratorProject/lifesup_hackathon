@@ -5,16 +5,16 @@
         .module('hackathonApp')
         .controller('ChallengesListController', ChallengesListController);
 
-    ChallengesListController.$inject = ['$log', '$timeout', '$q','Principal', 'Challenge'];
+    ChallengesListController.$inject = ['$log', '$timeout', '$q','Principal', 'Challenge', 'ApplicationsByUser'];
 
-    function ChallengesListController($log, $timeout, $q, Principal, Challenge) {
+    function ChallengesListController($log, $timeout, $q, Principal, Challenge, ApplicationsByUser) {
         var vm = this;
         vm.isAuthenticated = Principal.isAuthenticated;
 
         vm.Math = Math;
         vm.challenges = [];
         vm.loadAll = loadAll;
-        
+
         vm.filterByStatus = filterByStatus;
         vm.getStatus = getStatus;
         vm.filter = {};
@@ -23,18 +23,17 @@
         vm.filterByStartDate = filterByStartDate;
         vm.filterByEndDate = filterByEndDate;
         vm.timeLeft;
-
-        // getData();
-
-        // // Functions - Definitions
-        // function getData() {
-        //     return dataservice.getData()
-        //         .then(function(data) {
-        //             vm.challenges = data.challengeslist;
-        //         });
-        // }
+        vm.getChallengeId = getChallengeId;
+        vm.challengeId = [];
+        vm.getApplicationId = getApplicationId;
+        vm.applicationId = [];
+        vm.getApplicationStatus = getApplicationStatus;
+        vm.status = [];
 
         loadAll();
+        getChallengeId();
+        getApplicationId();
+
         function loadAll() {
             Challenge.query(function (result) {
                 vm.challenges = result;
@@ -48,10 +47,39 @@
             });
         }
 
+        function getChallengeId() {
+          ApplicationsByUser.query(function(data) {
+            vm.challengeId = data.map(function(item){
+              return item.challengeId;
+            });
+          })
+        }
+
+        function getApplicationId() {
+          ApplicationsByUser.query(function(data) {
+            vm.applicationId = data.map(function(item){
+              return item.applicationId;
+            });
+          })
+        }
+
+        function getApplicationStatus(challenge) {
+            if (vm.challengeId.indexOf(challenge.id) > -1) {
+              vm.status.push("APPLIED");
+              return "APPLIED";
+            } else if (challenge.timeLeft < 0) {
+              vm.status.push("CLOSED");
+              return "CLOSED";
+            } else {
+              vm.status.push("ACTIVE");
+              return "ACTIVE";
+            }
+        }
+
         function filterByStatus(challenge) {
             return vm.filter[challenge.info.status] || noFilter(vm.filter);
         }
-            
+
         function getStatus() {
             return (vm.challenges || []).
               map(function (challenge) { return challenge.info.status; }).
@@ -66,12 +94,12 @@
 
         function filterByStartDate(challenge) {
             return vm.startDate ? vm.startDate > challenge.deadline : vm.challenges;
-        }   
+        }
 
         function filterByEndDate(challenge) {
             return vm.endDate ? vm.endDate < challenge.deadline : vm.challenges;
         }
 
     }
-   
+
 })();

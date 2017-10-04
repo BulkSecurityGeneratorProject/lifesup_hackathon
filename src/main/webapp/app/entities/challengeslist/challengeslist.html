@@ -2,7 +2,7 @@
  <div class="row">
   <md-content class="md-padding col-sm-12 col-md-5 col-lg-5">
     <form ng-submit="$event.preventDefault()">
-      <md-autocomplete 
+      <md-autocomplete
           md-selected-item="vm.selectedItem"
           md-search-text-change="vm.searchTextChange(vm.searchText)"
           md-search-text="vm.searchText"
@@ -31,12 +31,12 @@
   </div>
 </div>
 <hr />
- 
+
 
 <div class="row">
   <div class="col-sm-12 col-md-4" ng-repeat="challenge in vm.challenges | filter: vm.searchText | filter:vm.filterByStatus | filter:vm.filterByStartDate | filter:vm.filterByEndDate">
     <md-card class="challenge-container">
-      <img md-card-image ng-src="{{challenge.bannerUrl}}" class='challenge-banner' ui-sref="challengeslist-detail({id:challenge.id})" ng-class="{'img-grey': challenge.status == 'CLOSED'}">          
+      <img md-card-image ng-src="{{challenge.bannerUrl}}" class='challenge-banner' ui-sref="challengeslist-detail({id:challenge.id})" ng-class="{'img-grey': vm.getApplicationStatus(challenge) == 'CLOSED'}">
         <md-card-title class='challenge-title'>{{challenge.name}}</md-card-title>
         <md-card-subtitle class='challenge-owner'>{{company.name}}</md-card-subtitle>
         <div class="line"></div>
@@ -44,19 +44,17 @@
           <md-list>
             <md-list-item> <i class="material-icons">place</i>{{challenge.info.location}}</md-list-item>
             <md-list-item> <i class="material-icons">stars</i> {{challenge.info.prize}} </md-list-item>
-            <md-list-item> <i class="material-icons">alarm</i>Apply in {{challenge.timeLeft}} day(s)</md-list-item> 
+            <md-list-item> <i class="material-icons">alarm</i>Apply in {{challenge.timeLeft}} day(s)</md-list-item>
           </md-list>
         </md-card-content>
-        <md-card-actions ng-switch="challenge.info.status">
+        <md-card-actions ng-switch="vm.getApplicationStatus(challenge)">
           <button class="btn btn-block challenge-cta btn-active" ng-switch-when="ACTIVE" ng-switch="vm.isAuthenticated()">
             <a href="#" ui-sref="login-signup" ng-switch-when="false">Apply now!</a>
             <a href="#" ui-sref="complete-profile({id: challenge.id})" ng-switch-when="true">Apply now!</a>
-            <a href="#" ui-sref="application-view" ng-switch-default>Apply now!</a><!-- not yet activated -->
           </button>
-          <button class="btn btn-block challenge-cta btn-applied" ng-switch-when="APPLIED"><a href="#">View your application</a></button>
-          <button class="btn btn-block challenge-cta btn-inactive" ng-switch-when="CLOSED"><a href="#">Applications have closed!</a></button>
+          <button class="btn btn-block challenge-cta btn-applied" ui-sref="applicationslist-detail({id:vm.applicationId})" ng-switch-when="APPLIED"><a href="#">View your application</a></button>
+          <button class="btn btn-block challenge-cta btn-inactive" ng-switch-when="CLOSED" ng-show="challenge.timeLeft < 0"><a href="#">Applications have closed!</a></button>
         </md-card-actions>
     </md-card>
   </div>
 </div>
-      

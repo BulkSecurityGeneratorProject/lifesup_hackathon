@@ -3,11 +3,12 @@
     angular
         .module('hackathonApp')
         .factory('Challenge', Challenge)
-        .factory('ChallengeDetails', ChallengeDetails);
+        .factory('ChallengeDetails', ChallengeDetails)
+        .factory('ApplicationsByUser', ApplicationsByUser);
 
     ChallengeDetails.$inject = ['$resource', 'DateUtils'];
-
     Challenge.$inject = ['$resource'];
+    ApplicationsByUser.$inject = ['$resource'];
 
     function Challenge($resource) {
         var resourceUrl = '/api/challenges/:id';
@@ -29,6 +30,24 @@
 
     function ChallengeDetails($resource, DateUtils) {
         var resourceUrl = '/api/challenges/:id';
+
+        return $resource(resourceUrl, {}, {
+            'query': { method: 'GET', isArray: true },
+            'get': {
+                method: 'GET',
+                transformResponse: function (data) {
+                    if (data) {
+                        data = angular.fromJson(data);
+                    }
+                    return data;
+                }
+            },
+            'update': { method: 'PUT' }
+        });
+    }
+
+    function ApplicationsByUser($resource) {
+        var resourceUrl = '/api/challenge-user-applications/current-user';
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: true },
