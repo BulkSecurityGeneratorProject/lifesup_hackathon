@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 
 import fi.lifesup.hackathon.domain.Application;
+import fi.lifesup.hackathon.domain.enumeration.ApplicationStatus;
 import fi.lifesup.hackathon.repository.ApplicationRepository;
 import fi.lifesup.hackathon.service.ApplicationService;
 import fi.lifesup.hackathon.service.dto.ApplicationDTO;
@@ -144,6 +145,18 @@ public class ApplicationResource {
         log.debug("REST request to get Application by challengeId : {}", applicationId);
         ApplicationDTO application = applicationService.getApplicationDetail(applicationId);
         return application;
+    }
+    
+    @PutMapping("/applications/status")
+    @Timed
+    public ResponseEntity<Application> updateApplicationStatus(@RequestBody ApplicationDTO applicationDTO) throws URISyntaxException {
+        log.debug("REST request to update Application : {}", applicationDTO);
+        Application application = applicationRepository.findOne(applicationDTO.getId());
+        application.setStatus(applicationDTO.getStatus());
+        Application result = applicationRepository.save(application);
+        return ResponseEntity.ok()
+            .headers(HeaderUtil.createEntityUpdateAlert("application", result.getId().toString()))
+            .body(result);
     }
 
 }
