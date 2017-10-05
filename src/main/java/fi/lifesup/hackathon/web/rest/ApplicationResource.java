@@ -158,5 +158,13 @@ public class ApplicationResource {
             .headers(HeaderUtil.createEntityUpdateAlert("application", result.getId().toString()))
             .body(result);
     }
+    
+    @GetMapping("/applications/details-by-acceptkey/{acceptKey}")
+    @Timed
+    public ApplicationDTO getApplicationDetail(@PathVariable String acceptKey) {
+        log.debug("REST request to get Application by acceptKey : {}", acceptKey);
+        ApplicationDTO application = applicationService.getApplicationDetail(acceptKey);
+        return application;
+    }
 
 }

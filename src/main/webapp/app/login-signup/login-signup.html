@@ -20,7 +20,7 @@
     <hr>
   </div>
 
-  <div id="form-wrapper" class="row">
+  <div ng-show="!vm.success" id="form-wrapper" class="row">
 
     <!-- Signup form -->
     <div class="signup-form-wrapper col-md-6 col-lg-6">
@@ -32,10 +32,10 @@
             </div>
             <!-- Full name -->
             <md-input-container class="md-block" flex-gt-sm>
-                <label data-translate="loginsignup.form.fullname">Name</label>
-                <input name="fullname" ng-model="vm.registerAccount.fullName" ng-maxlength=50 required>
-                <div ng-messages="signupForm.fullname.$error" role="alert">
-                    <div ng-message="required" data-translate="loginsignup.messages.validate.fullname.required"></div>
+                <label data-translate="loginsignup.form.username">Name</label>
+                <input name="username" id="username" ng-model="vm.registerAccount.login" ng-maxlength=50 required>
+                <div ng-messages="signupForm.username.$error" role="alert">
+                    <div ng-message="required" data-translate="loginsignup.messages.validate.username.required"></div>
                 </div>
             </md-input-container>
             <!-- Email -->
@@ -63,7 +63,7 @@
             <!-- Confirm password -->
             <md-input-container class="md-block" flex-gt-sm>
                 <label data-translate="loginsignup.form.confirmpassword">Confirm password*</label>
-                <input name="confirmPassword" type="password" ng-model="vm.registerAccount.confirmPassword" ng-minlength=4 ng-maxlength=50 required>
+                <input name="confirmPassword" type="password" ng-model="vm.confirmPassword" ng-minlength=4 ng-maxlength=50 required>
                 <div ng-messages="signupForm.confirmPassword.$error" role="alert">
                     <div ng-message="required" data-translate="loginsignup.messages.validate.confirmpassword.required"></div>
                 </div>

@@ -45,32 +45,7 @@ public class ChallengeInfoResource {
         if (challengeInfo.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "A new challengeInfo cannot already have an ID")).body(null);
         }
-        
-        if(challengeInfo.getApplicationCloseDate().isAfter(challengeInfo.getSelectionInformDate())){
-        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "Application close date is not correctly")).body(null);
-        }
-        if(challengeInfo.getKickoffWebinarDate() != null){
-        	if(challengeInfo.getSelectionInformDate().isAfter(challengeInfo.getKickoffWebinarDate())){
-        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "Selection inform date is not correctly")).body(null);
-        	}
-        }
-        if(challengeInfo.getKickoffWebinarDate().isAfter(challengeInfo.getEventStartTime())){
-        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "Kick off webinar date is not correctly")).body(null);
-        }
-        if(challengeInfo.getEventStartTime().isAfter(challengeInfo.getPilotSubmissionCloseDate())){
-        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "Event start date is not correctly")).body(null);
-        }
-        if(challengeInfo.getPilotSubmissionCloseDate().isAfter(challengeInfo.getPilotPhaseStartDate())){
-        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "Pilot submission close date is not correctly")).body(null);
-        }
-        if(challengeInfo.getPilotPhaseStartDate().isAfter(challengeInfo.getPilotPhaseEndDate())){
-        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "Pilot phase start date is not correctly")).body(null);
-        }
-        if(challengeInfo.getPilotPhaseEndDate().isAfter(challengeInfo.getEventEndTime())){
-        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "Pilot phase close date is not correctly")).body(null);
-        }
-        
-        
+  
         ChallengeInfo result = challengeInfoRepository.save(challengeInfo);
         return ResponseEntity.created(new URI("/api/challenge-infos/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("challengeInfo", result.getId().toString()))
@@ -92,30 +67,6 @@ public class ChallengeInfoResource {
         log.debug("REST request to update ChallengeInfo : {}", challengeInfo);
         if (challengeInfo.getId() == null) {
             return createChallengeInfo(challengeInfo);
-        }
-           
-        if(challengeInfo.getApplicationCloseDate().isAfter(challengeInfo.getSelectionInformDate())){
-        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "Application close date is not correctly")).body(null);
-        }
-        if(challengeInfo.getKickoffWebinarDate() != null){
-        	if(challengeInfo.getSelectionInformDate().isAfter(challengeInfo.getKickoffWebinarDate())){
-        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "Selection inform date is not correctly")).body(null);
-        	}
-        }
-        if(challengeInfo.getKickoffWebinarDate().isAfter(challengeInfo.getEventStartTime())){
-        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "Kick off webinar date is not correctly")).body(null);
-        }
-        if(challengeInfo.getEventStartTime().isAfter(challengeInfo.getPilotSubmissionCloseDate())){
-        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "Event start date is not correctly")).body(null);
-        }
-        if(challengeInfo.getPilotSubmissionCloseDate().isAfter(challengeInfo.getPilotPhaseStartDate())){
-        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "Pilot submission close date is not correctly")).body(null);
-        }
-        if(challengeInfo.getPilotPhaseStartDate().isAfter(challengeInfo.getPilotPhaseEndDate())){
-        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "Pilot phase start date is not correctly")).body(null);
-        }
-        if(challengeInfo.getPilotPhaseEndDate().isAfter(challengeInfo.getEventEndTime())){
-        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeInfo", "idexists", "Pilot phase close date is not correctly")).body(null);
         }
         
         ChallengeInfo result = challengeInfoRepository.save(challengeInfo);
