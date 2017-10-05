@@ -20,4 +20,8 @@ public interface ApplicationRepository extends JpaRepository<Application,Long> {
 			+ " from Application a, ChallengeUserApplication cua"
 			+ " where cua.challengeId = :#{[0]} and cua.applicationId = a.id")
 	List<ApplicationDTO> getapplication(Long challengeId);
+	
+	@Query("select a from Application a, ChallengeUserApplication cua"
+			+ " where cua.acceptKey = :#{[0]} and cua.applicationId = a.id")
+	Application getapplication(String acceptKey);
 }

@@ -197,10 +197,6 @@ public class ChallengeUserApplicationResource {
 			return new ResponseEntity<>("Accept key does not exist", HttpStatus.BAD_REQUEST);
 		}
 		else{
-			User user = userService.getUserWithAuthorities(userApplication.getUserId());
-			if(user.getStatus() == UserStatus.INACTIVATED){
-				userService.activateRegistration(user.getActivationKey());
-			}
 			applicationService.finishAcceptInvitation(key);
 			return new ResponseEntity<>("User accepted!", HttpStatus.OK);
 		}	

@@ -98,9 +98,18 @@ public class ApplicationService {
 	}
 
 	public ApplicationDTO getApplicationDetail(Long applicationId) {
+		
 		Application application = applicationRepository.findOne(applicationId);
 		ApplicationDTO dto = new ApplicationDTO(application,
 				challengeUserApplicationRepository.getApplicationMember(applicationId));
+		return dto;
+	}
+	
+public ApplicationDTO getApplicationDetail(String acceptKey) {
+		
+		Application application = applicationRepository.getapplication(acceptKey);
+		ApplicationDTO dto = new ApplicationDTO(application,
+				challengeUserApplicationRepository.getApplicationMember(application.getId()));
 		return dto;
 	}
 
@@ -114,12 +123,10 @@ public class ApplicationService {
 
 		User user = userService.getUserWithAuthoritiesByEmail(memberDTO.getUserEmail());
 		if (user != null) {
+			userApplication.setUserId(user.getId());
 			mailService.sendInvitationMail(user, baseUrl, userApplication.getAcceptKey());
-		} else {
-			user = userService.createUser(memberDTO.getUserEmail(), memberDTO.getUserEmail(), memberDTO.getUserName(),
-					memberDTO.getUserName(), memberDTO.getUserEmail(), "en");
-		}
-		userApplication.setUserId(user.getId());
+		
+		} 	
 		return challengeUserApplicationRepository.save(userApplication);
 
 	}
