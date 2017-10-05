@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('ApplicationsListDetailController', ApplicationsListDetailController);
 
-    ApplicationsListDetailController.$inject = ['$stateParams', 'ApplicationsList', 'entity', 'Principal', 'ApplicationsListDetails', 'Challenge', 'UserDetail'];
+    ApplicationsListDetailController.$inject = ['$stateParams', 'ApplicationsList', 'entity', 'Principal', 'ApplicationsListDetails', 'Challenge', 'UserDetail', 'ApplicationStatus'];
 
-    function ApplicationsListDetailController($stateParams, ApplicationsList, entity, Principal, ApplicationsListDetails, Challenge, UserDetail) {
+    function ApplicationsListDetailController($stateParams, ApplicationsList, entity, Principal, ApplicationsListDetails, Challenge, UserDetail, ApplicationStatus) {
         var vm = this;
         vm.isAuthenticated = Principal.isAuthenticated;
         vm.application = entity;
@@ -55,12 +55,12 @@
 
         function approve(application) {
             application.status = 'APPROVED';
-            ApplicationsListDetails.update(application);
+            ApplicationStatus.update(application);
         }
 
         function reject(application) {
             application.status = 'REJECTED';
-            ApplicationsListDetails.update(application);
+            ApplicationStatus.update(application);
         }
     }
 })();
