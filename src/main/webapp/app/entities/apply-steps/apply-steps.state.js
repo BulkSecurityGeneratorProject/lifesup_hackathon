@@ -42,7 +42,7 @@
                 },
                 views: {
                     'content@': {
-                        templateUrl: 'app/entities/apply-steps/team.html',
+                        templateUrl: 'app/entities/apply-steps/team-application.html',
                         controller: 'TeamController',
                         controllerAs: 'vm'
                     }
@@ -69,6 +69,27 @@
                         controller: 'SuccessController',
                         controllerAs: 'vm'
                     }
+                }
+            })
+            .state('invitation', {
+                parent: 'app',
+                url: '/{id}/invitation',
+                data: {
+                    authorities: ['ROLE_USER'],
+                    pageTitle: 'hackathonApp.application.home.title'
+                },
+                views: {
+                    'content@': {
+                        templateUrl: 'app/entities/apply-steps/team-invite.html',
+                        controller: 'TeamInviteController',
+                        controllerAs: 'vm'
+                    }
+                },
+                resolve: {
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                        $translatePartialLoader.addPart('loginsignup');
+                        return $translate.refresh();
+                    }]
                 }
             })
     }

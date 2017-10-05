@@ -5,14 +5,16 @@
         .module('hackathonApp')
         .controller('TeamController', TeamController);
 
-    TeamController.$inject = ['$scope', '$stateParams', '$state', 'Application', 'UserApplicationByChallengeID'];
+    TeamController.$inject = ['$scope', '$stateParams', '$state', 'Application', 'UserApplicationByChallengeID', 'InviteMember'];
 
-    function TeamController($scope, $stateParams, $state, Application, UserApplicationByChallengeID) {
+    function TeamController($scope, $stateParams, $state, Application, UserApplicationByChallengeID, InviteMember) {
         var vm = this;
         vm.save = save;
         vm.challengeId = $stateParams.id;
+        vm.applicationId = null;
         vm.team = {};
-        vm.member = [
+        vm.invite = {};
+        vm.members = [
             {
                 name: 'Duc Tran',
                 email: 'ductranplay@gmail.com',
@@ -28,7 +30,7 @@
         vm.emptySlot = emptySlot;
 
         function emptySlot(){
-            return Array(3);
+            return Array(1);
         }
 
         load()
@@ -55,7 +57,21 @@
         }
 
         function onSaveSuccess(result) {
-            $state.go('applicationslist-detail', {id:result.id});
+            if (vm.invite.userName && vm.invite.userEmail){
+                vm.invite.applicationId = result.id;
+                vm.invite.challengeId = result.challenge.id;
+                console.log(vm.invite);
+                InviteMember.save(vm.invite, onInviteSuccess, onInviteError);
+            }
+            vm.applicationId = result.id;
+        }
+
+        function onInviteSuccess(){
+            $state.go('applicationslist-detail', {id:vm.applicationId});
+        }
+
+        function onInviteError(){
+            alert('Invite Member Failed');
         }
 
         function onSaveError() {

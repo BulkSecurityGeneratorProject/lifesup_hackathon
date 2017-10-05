@@ -22,7 +22,7 @@
                     </div>
                 </div>
 
-                <div layout-gt-sm="row" ng-repeat="member in vm.member" flex>
+                <div layout-gt-sm="row" ng-repeat="member in vm.members" flex>
                     <div class="col-md-4">
                         <p>{{member.name}}</p>
                     </div>
@@ -39,13 +39,13 @@
                     <div class="col-md-4">
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Name</label>
-                            <input name="member" ng-model="vm.team.member">
+                            <input name="member" ng-model="vm.invite.userName">
                         </md-input-container>
                     </div>
                     <div class="col-md-4">
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Email</label>
-                            <input name="email" ng-model="vm.team.email">
+                            <input name="email" ng-model="vm.invite.userEmail">
                         </md-input-container>
                     </div>
                 </div>
