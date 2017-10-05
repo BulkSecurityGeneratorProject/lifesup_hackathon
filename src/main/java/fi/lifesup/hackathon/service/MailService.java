@@ -107,8 +107,6 @@ public class MailService {
     @Async
     public void sendInvitationMail(User user, String baseUrl, String accpetKey){
     	log.debug("Sending invitation member e-mail to '{}'", user.getEmail());
-    	System.err.println(baseUrl);
-    	
     	Locale locale = Locale.forLanguageTag(user.getLangKey());
     	Context context = new Context(locale);
         context.setVariable(USER, user);

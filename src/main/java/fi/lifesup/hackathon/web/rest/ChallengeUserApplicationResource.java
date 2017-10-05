@@ -201,4 +201,6 @@ public class ChallengeUserApplicationResource {
 			return new ResponseEntity<>("User accepted!", HttpStatus.OK);
 		}	
 	}
+	
+	
 }

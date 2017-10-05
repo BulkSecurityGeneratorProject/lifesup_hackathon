@@ -167,4 +167,11 @@ public class ApplicationResource {
         return application;
     }
 
+    @GetMapping("/applications/check/{id}")
+    @Timed
+    public Boolean[] getCheckApplication(@PathVariable Long id) {
+        log.debug("REST request to get Application by acceptKey : {}", id);
+        
+        return applicationService.checkApplication(id);
+    }
 }

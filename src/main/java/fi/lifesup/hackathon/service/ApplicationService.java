@@ -1,5 +1,6 @@
 package fi.lifesup.hackathon.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -74,6 +75,7 @@ public class ApplicationService {
 		userApplication.setApplicationId(result.getId());
 		userApplication.setChallengeId(applicationDTO.getChallengeId());
 		userApplication.setUserId(user.getId());
+		userApplication.setStatus(ChallengeUserApplicationStatus.ACCEPT);
 		challengeUserApplicationRepository.save(userApplication);
 		return applicationRepository.save(result);
 	}
@@ -124,9 +126,9 @@ public ApplicationDTO getApplicationDetail(String acceptKey) {
 		User user = userService.getUserWithAuthoritiesByEmail(memberDTO.getUserEmail());
 		if (user != null) {
 			userApplication.setUserId(user.getId());
-			mailService.sendInvitationMail(user, baseUrl, userApplication.getAcceptKey());
-		
+			
 		} 	
+		mailService.sendInvitationMail(user, baseUrl, userApplication.getAcceptKey());
 		return challengeUserApplicationRepository.save(userApplication);
 
 	}
@@ -141,5 +143,57 @@ public ApplicationDTO getApplicationDetail(String acceptKey) {
 	public void deleteApplication(Long id){
 		challengeUserApplicationRepository.deleteByApplicationId(id);
 		applicationRepository.delete(id);
+	}
+	
+	public Boolean[] checkApplication(Long id){
+		Boolean[] list = new Boolean[10];
+		for (int i = 0; i < list.length; i++) {
+			list[i]=false;
+		}
+		
+		ApplicationDTO dto =this.getApplicationDetail(id);
+		
+		List<ApplicationMemberDTO> memberStatus = challengeUserApplicationRepository.getMemberStatus(id);
+		
+		User user = userService.getUserWithAuthorities();
+		if(user != null){
+			list[0] = true;
+		}
+		
+		list[1] = user.getActivated();
+		if(user.getStatus() == UserStatus.PROFILE_COMPLETE){
+			list[2] = true;
+		}
+		
+		if(dto.getTeamName() != null){
+			list[3] = true;
+		}
+		
+		if(dto.getDescription() != null){
+			list[4] = true;
+		}
+		
+		if(dto.getMotivation() != null){
+			list[5] = true;
+		}
+		
+		if(dto.getIdeasDescription() != null){
+			list[6] = true;
+		}
+		
+		if(dto.getMembers().size() > 1){
+			list[7] = true;
+		}
+		
+		for (ApplicationMemberDTO member : memberStatus) {
+			if(member.getStatus() == ChallengeUserApplicationStatus.ACCEPT){
+				list[8] = true;
+			}
+			if(member.getUserStatus() == UserStatus.PROFILE_COMPLETE){
+				list[9] = true;
+			}
+		}
+		
+		return list;		
 	}
 }
