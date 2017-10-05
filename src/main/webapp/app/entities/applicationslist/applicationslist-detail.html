@@ -36,7 +36,7 @@
 	          <h3>Ideas Description</h3>
 	          <p>{{vm.application.ideasDescription}}</p>
 	        </div>
-	        <button class="btn" ui-sref="team({id:vm.application.challengeId})">Edit your application</button>
+	        <button class="btn custom-btn" ui-sref="team({id:vm.application.challengeId})">Edit your application</button>
 	      </div>
 
 	  </div>
@@ -68,7 +68,7 @@
 			</div>
 			<div class="progress-step">
 				<span>Verify your account</span>
-				<span ng-switch="vm.user.activated">
+				<span ng-switch="vm.userInfo.activated">
 					<i class="material-icons green" ng-switch-when="true" ng-init="vm.progressCount()">check</i>
 					<i class="material-icons red" ng-switch-when="false">close</i>
 				</span>
@@ -146,7 +146,7 @@
 			</div>
 	  	</div>
 	  	<div>
-	  		<button class="btn challenge-link" ui-sref="challengeslist">VIEW THE CHALLENGE PAGE</button>
+	  		<button class="btn custom-btn challenge-link" ui-sref="challengeslist">VIEW THE CHALLENGE PAGE</button>
 	  	</div>
 			<!--======== approve/reject buttons ============-->
 			<div ng-show="vm.isAuthenticated()" has-authority="ROLE_ADMIN">

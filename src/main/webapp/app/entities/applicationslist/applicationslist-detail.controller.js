@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('ApplicationsListDetailController', ApplicationsListDetailController);
 
-    ApplicationsListDetailController.$inject = ['$stateParams', 'ApplicationsList', 'entity', 'Principal', 'ApplicationsListDetails', 'Challenge'];
+    ApplicationsListDetailController.$inject = ['$stateParams', 'ApplicationsList', 'entity', 'Principal', 'ApplicationsListDetails', 'Challenge', 'UserDetail'];
 
-    function ApplicationsListDetailController($stateParams, ApplicationsList, entity, Principal, ApplicationsListDetails, Challenge) {
+    function ApplicationsListDetailController($stateParams, ApplicationsList, entity, Principal, ApplicationsListDetails, Challenge, UserDetail) {
         var vm = this;
         vm.isAuthenticated = Principal.isAuthenticated;
         vm.application = entity;
@@ -18,9 +18,12 @@
         vm.approve = approve;
         vm.reject = reject;
         vm.getChallengeInfo = getChallengeInfo;
+        vm.getUserInfo = getUserInfo;
+        vm.userInfo = {};
 
         getSkills();
         getChallengeInfo();
+        getUserInfo();
 
         function getSkills() {
             vm.members.map(function(member) {
@@ -38,6 +41,12 @@
                     }
                 })
             })
+        }
+
+        function getUserInfo() {
+          UserDetail.query(function(data) {
+            return vm.userInfo = data;
+          });
         }
 
         function progressCount() {
