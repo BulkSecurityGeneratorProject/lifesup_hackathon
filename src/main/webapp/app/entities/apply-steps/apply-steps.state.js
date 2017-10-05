@@ -34,8 +34,8 @@
                 }
             })
             .state('team', {
-                parent: 'complete-profile',
-                url: '/team',
+                parent: 'challengeslist',
+                url: '/{id}/team',
                 data: {
                     authorities: ['ROLE_USER'],
                     pageTitle: 'hackathonApp.application.home.title'
@@ -57,8 +57,8 @@
                 }
             })
             .state('success', {
-                parent: 'team',
-                url: '/success',
+                parent: 'challengeslist',
+                url: '/{id}/success',
                 data: {
                     authorities: ['ROLE_USER'],
                     pageTitle: 'hackathonApp.application.home.title'

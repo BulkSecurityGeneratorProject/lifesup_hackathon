@@ -5,12 +5,13 @@
         .module('hackathonApp')
         .controller('CompleteProfileController', CompleteProfileController);
 
-    CompleteProfileController.$inject = ['$scope', '$state', 'Principal', 'Auth', 'JhiLanguageService', '$translate', 'Skill', 'Experience', 'UserInfo', 'UserDetail', 'UserLogo', 'entity'];
+    CompleteProfileController.$inject = ['$scope', '$state', '$stateParams', 'Principal', 'Auth', 'JhiLanguageService', '$translate', 'Skill', 'Experience', 'UserInfo', 'UserDetail', 'UserLogo', 'entity'];
 
-    function CompleteProfileController($scope, $state, Principal, Auth, JhiLanguageService, $translate, Skill, Experience, UserInfo, UserDetail, UserLogo, entity) {
+    function CompleteProfileController($scope, $state, $stateParams, Principal, Auth, JhiLanguageService, $translate, Skill, Experience, UserInfo, UserDetail, UserLogo, entity) {
         var vm = this;
 
         vm.save = save;
+        vm.challengeId = $stateParams.id;
         vm.user = {
             logoUrl: "content/images/default/avatar.jpg"
         };
@@ -76,7 +77,7 @@
 
         function onSaveSuccess(result) {
             vm.alerts.push({ msg: 'Your infomation is saved!', type: "success" });
-            $state.go('team');
+            $state.go('team', {id:vm.challengeId});
         }
 
         function onSaveError() {

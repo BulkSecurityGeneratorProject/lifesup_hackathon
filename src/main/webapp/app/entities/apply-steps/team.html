@@ -22,6 +22,34 @@
                     </div>
                 </div>
 
+                <div layout-gt-sm="row" ng-repeat="member in vm.member" flex>
+                    <div class="col-md-4">
+                        <p>{{member.name}}</p>
+                    </div>
+                    <div class="col-md-4">
+                            <p>{{member.email}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <span ng-if="member.profileComplete"><i class="material-icons w3-text-green">done</i>Profile Complete</span>
+                        <span ng-if="!member.profileComplete"><i class="material-icons w3-text-red">clear</i>Profile not Complete</span>
+                    </div>
+                </div>
+
+                <div layout-gt-sm="row" ng-repeat="i in vm.emptySlot() track by $index" flex>
+                    <div class="col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Name</label>
+                            <input name="member" ng-model="vm.team.member">
+                        </md-input-container>
+                    </div>
+                    <div class="col-md-4">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Email</label>
+                            <input name="email" ng-model="vm.team.email">
+                        </md-input-container>
+                    </div>
+                </div>
+
                 <div layout-gt-sm="row" flex>
                     <div class="col-md-8">
                         <md-input-container class="md-block" flex-gt-sm>
@@ -44,9 +72,9 @@
                         </md-input-container>
                     </div>
                     <div class="col-md-4">
-                            <b>Why are you attending?</b>
-                            <br>
-                            <small>Tell us what is your main motivation to apply to this hack. What are your expectations?</small>
+                        <b>Why are you attending?</b>
+                        <br>
+                        <small>Tell us what is your main motivation to apply to this hack. What are your expectations?</small>
                     </div>
 
                 </div>
@@ -59,9 +87,9 @@
                         </md-input-container>
                     </div>
                     <div class="col-md-4">
-                            <b>What problem will you be solving?</b>
-                            <br>
-                            <small>Share your initial idea of what challenge you are solving, how you intend to do that, and what you'd want to build during the hack.</small>
+                        <b>What problem will you be solving?</b>
+                        <br>
+                        <small>Share your initial idea of what challenge you are solving, how you intend to do that, and what you'd want to build during the hack.</small>
                     </div>
 
                 </div>
@@ -72,7 +100,7 @@
 
 <div class="row" ng-cloak>
     <div class="text-center">
-        <md-button class="md-raised" ui-sref="complete-profile">Back</md-button>
+        <md-button class="md-raised" ui-sref="complete-profile({id: vm.challengeId})">Back</md-button>
         <md-button class="md-raised md-primary" ng-click="vm.save()" ng-disabled="teamForm.$invalid">Save Application</md-button>
     </div>
 </div>

@@ -167,6 +167,7 @@
     <div class="col-md-4"></div>
     <div class="col-md-4 text-center">
         <uib-alert class='repeat-item' type="{{alert.type}}" ng-repeat="alert in vm.alerts" dismiss-on-timeout="4000" close="vm.closeAlert($index)">{{alert.msg}}</uib-alert>
+        <md-button class="md-raised" ui-sref="challengeslist">Back</md-button>
         <md-button class="md-raised md-primary" ng-click="vm.save()" ng-disabled="userForm.$invalid">Next Step</md-button>
     </div>
     <div class="col-md-4"></div>
