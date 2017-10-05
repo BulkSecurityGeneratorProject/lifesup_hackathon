@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('TeamInviteController', TeamInviteController);
 
-    TeamInviteController.$inject = ['$stateParams', 'ApplicationsList', 'Auth', 'Principal', 'ApplicationsListDetails', 'Challenge', 'LoginService', '$state', '$translate', '$timeout', 'AcceptInvitation', 'ApplicationByAcceptKey'];
+    TeamInviteController.$inject = ['$stateParams', 'ApplicationsList', 'Auth', 'Principal', 'ApplicationsListDetails', 'Challenge', 'LoginService', '$state', '$translate', '$timeout', 'AcceptInvitation', 'ApplicationByAcceptKey', 'UserDetail'];
 
-    function TeamInviteController($stateParams, ApplicationsList, Auth, Principal, ApplicationsListDetails, Challenge, LoginService, $state, $translate, $timeout, AcceptInvitation, ApplicationByAcceptKey) {
+    function TeamInviteController($stateParams, ApplicationsList, Auth, Principal, ApplicationsListDetails, Challenge, LoginService, $state, $translate, $timeout, AcceptInvitation, ApplicationByAcceptKey, UserDetail) {
         var vm = this;
 
         vm.application = ApplicationByAcceptKey.get({ acceptKey: $stateParams.id }, function (result) {
@@ -20,6 +20,10 @@
         vm.isAuthenticated = Principal.isAuthenticated;
         vm.determinateValue = 0;
         vm.progressCount = progressCount;
+
+        UserDetail.query(function(data) {
+            return vm.userInfo = data;
+          });
 
         function progressCount() {
             return vm.determinateValue += 10;

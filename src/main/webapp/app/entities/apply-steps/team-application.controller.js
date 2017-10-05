@@ -63,6 +63,10 @@
                 console.log(vm.invite);
                 InviteMember.save(vm.invite, onInviteSuccess, onInviteError);
             }
+            else{
+                console.log("else");
+                $state.go('applicationslist-detail', {id:result.id});
+            }
             vm.applicationId = result.id;
         }
 
