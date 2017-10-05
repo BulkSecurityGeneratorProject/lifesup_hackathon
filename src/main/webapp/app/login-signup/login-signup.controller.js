@@ -25,7 +25,7 @@
         vm.success = null;
         vm.loginAccount = loginAccount;
 
-        $timeout(function (){angular.element('#fullName').focus();});
+        $timeout(function (){angular.element('#username').focus();});
 
         function register () {
             if (vm.registerAccount.password !== vm.confirmPassword) {

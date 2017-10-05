@@ -3,8 +3,8 @@
         "title": "Login or Sign up",
         "subtitle": "Welcome to Lifesup Hackathon!",
         "form": {
-            "fullname": "Full Name",
-            "fullname.placeholder": "Your full name",
+            "username": "Username",
+            "username.placeholder": "Your username",
             "email": "Email",
             "email.placeholder": "Email",
             "password": "Password",
@@ -24,10 +24,10 @@
             },
             "success": "<strong>Registration saved!</strong> Please check your email for confirmation.",
             "validate": {
-                "fullname": {
-                    "required": "Your full name is required.",
-                    "minlength": "Your name is required to be at least 5 character",
-                    "maxlength": "Your name cannot be longer than 50 characters"
+                "username": {
+                    "required": "Your username is required.",
+                    "minlength": "Your username is required to be at least 5 character",
+                    "maxlength": "Your username cannot be longer than 50 characters"
                 },
                 "email": {
                     "pattern": "Your email must be between 10 and 100 characters long and look like an e-mail address.",
