@@ -19,6 +19,10 @@ body {
   flex: 1 0 auto;
 }
 
+button { /*quick fix close button inside md-autocomplete input*/
+  background-color: transparent;
+  border: none;
+}
 /*============ Login and signup view ==============*/
 
 .login-signup-wrapper {
@@ -158,6 +162,15 @@ body {
   width: calc(100% - 32px);
   margin: 10px auto 0;
   background: #ccc;
+}
+
+.list-item {
+  display: flex;
+}
+
+.list-item i,
+.list-item span {
+  align-self: center;
 }
 
 .material-icons {

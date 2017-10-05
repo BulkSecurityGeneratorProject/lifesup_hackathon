@@ -12,8 +12,8 @@
           md-min-length="0"
           placeholder="What is your favorite challenge/company?">
           <md-item-template>
-            <span md-highlight-text = "vm.searchText" md-highlight-flags = "^i">{{item.name}} - </span>
-            <span md-highlight-text = "vm.searchText" md-highlight-flags = "^i">{{item.company.name}}</span>
+            <span md-highlight-flags = "^i">{{item.name}} - </span>
+            <span md-highlight-flags = "^i">{{item.company.name}}</span>
           </md-item-template>
       </md-autocomplete>
     </form>
@@ -34,7 +34,7 @@
 
 
 <div class="row">
-  <div class="col-sm-12 col-md-4" ng-repeat="challenge in vm.challenges | filter: vm.searchText | filter:vm.filterByStatus | filter:vm.filterByStartDate | filter:vm.filterByEndDate">
+  <div class="col-sm-12 col-md-4" ng-repeat="challenge in vm.challenges | filter: vm.searchText | filter: vm.filterByStatus | filter: vm.filterByStartDate | filter: vm.filterByEndDate">
     <md-card class="challenge-container">
       <img md-card-image ng-src="{{challenge.bannerUrl}}" class='challenge-banner' ui-sref="challengeslist-detail({id:challenge.id})" ng-class="{'img-grey': vm.getApplicationStatus(challenge) == 'CLOSED'}">
         <md-card-title class='challenge-title'>{{challenge.name}}</md-card-title>
@@ -42,9 +42,16 @@
         <div class="line"></div>
         <md-card-content class='challenge-content'>
           <md-list>
-            <md-list-item> <i class="material-icons">place</i>{{challenge.info.location}}</md-list-item>
-            <md-list-item> <i class="material-icons">stars</i> {{challenge.info.prize}} </md-list-item>
-            <md-list-item> <i class="material-icons">alarm</i>Apply in {{challenge.timeLeft}} day(s)</md-list-item>
+            <md-list-item>
+              <span class="list-item"><i class="material-icons">place</i><span>{{challenge.info.location}}</span></span>
+            </md-list-item>
+            <md-list-item>
+              <span class="list-item"><i class="material-icons">stars</i><span>{{challenge.info.prize}}</span></span>
+            </md-list-item>
+            <md-list-item>
+              <span ng-show="challenge.timeLeft > 0" class="list-item"><i class="material-icons">alarm</i><span>Apply in {{challenge.timeLeft}} day(s)</span></span>
+              <span ng-if="challenge.timeLeft === 0" class="list-item"><i class="material-icons">alarm</i><span>Deadline Today!</span></span>
+            </md-list-item>
           </md-list>
         </md-card-content>
         <md-card-actions ng-switch="vm.getApplicationStatus(challenge)">
@@ -52,8 +59,8 @@
             <a href="#" ui-sref="login-signup" ng-switch-when="false">Apply now!</a>
             <a href="#" ui-sref="complete-profile({id: challenge.id})" ng-switch-when="true">Apply now!</a>
           </button>
-          <button class="btn btn-block challenge-cta btn-applied" ui-sref="applicationslist-detail({id:vm.applicationId})" ng-switch-when="APPLIED"><a href="#">View your application</a></button>
-          <button class="btn btn-block challenge-cta btn-inactive" ng-switch-when="CLOSED" ng-show="challenge.timeLeft < 0"><a href="#">Applications have closed!</a></button>
+          <button class="btn btn-block challenge-cta btn-applied" ng-click="vm.getApplicationId(challenge.id)" ui-sref="applicationslist-detail({id:vm.applicationId})" ng-switch-when="APPLIED"><a href="#">View your application</a></button>
+          <button class="btn btn-block challenge-cta btn-inactive" ng-switch-when="CLOSED"><a href="#">Applications have closed!</a></button>
         </md-card-actions>
     </md-card>
   </div>
