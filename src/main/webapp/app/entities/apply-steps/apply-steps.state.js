@@ -75,7 +75,7 @@
                 parent: 'app',
                 url: '/{id}/invitation',
                 data: {
-                    authorities: ['ROLE_USER'],
+                    authorities: [],
                     pageTitle: 'hackathonApp.application.home.title'
                 },
                 views: {
