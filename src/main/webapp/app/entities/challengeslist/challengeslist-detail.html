@@ -14,15 +14,14 @@
                 <p><i class="material-icons side-icons">alarm</i>Apply in {{vm.timeLeft}} day(s)</p>
             </div>
            <!--  <button class="cta-btn"><a href="#">APPLY NOW</a></button> -->
-            <div ng-switch="vm.challenge.info.status">
-              <button class="cta-btn" ng-switch="vm.isAuthenticated()" ng-switch-when="ACTIVE">
-                <a href="#" ui-sref="login-signup" ng-switch-when="false">Apply now!</a>
-                <a href="#" ui-sref="complete-profile({id: vm.challenge.id})" ng-switch-when="true">Apply now!</a>
-                <a href="#" ui-sref="application-view" ng-switch-default>Apply now!</a><!-- not yet activated -->
-              </button>
-              <button class="cta-btn" ng-switch-when="APPLIED"><a ui-sref="applicationslist-detail({id:application.id})">View your application</a></button>
-              <button class="cta-btn" ng-switch-when="CLOSED"><a href="#">Applications have closed!</a></button>
-            </div>
+           <div ng-switch="vm.getApplicationStatus()">
+             <button class="cta-btn" ng-switch-when="ACTIVE" ng-switch="vm.isAuthenticated()">
+               <a href="#" ui-sref="login-signup" ng-switch-when="false">Apply now!</a>
+               <a href="#" ui-sref="complete-profile({id: vm.challenge.id})" ng-switch-when="true">Apply now!</a>
+             </button>
+             <button class="cta-btn" ng-click="vm.getApplicationId(vm.challenge.id)" ui-sref="applicationslist-detail({id:vm.applicationId})" ng-switch-when="APPLIED"><a href="#">View your application</a></button>
+             <button class="cta-btn" ng-switch-when="CLOSED"><a href="#">Applications have closed!</a></button>
+           </div>
         </div>
         <div class="side-subscribe">
             <h3>Remind me to apply</h3>

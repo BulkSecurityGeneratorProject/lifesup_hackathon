@@ -36,7 +36,7 @@
                     var today = (new Date()).getTime();
                     var endDate = new Date(challenge.info.applicationCloseDate).getTime();
                     var diff = endDate - today;
-                    vm.timeLeft = challenge.timeLeft = parseInt(Math.ceil(diff / (1000 * 60 * 60 * 24)));
+                    challenge.timeLeft = parseInt(Math.ceil(diff / (1000 * 60 * 60 * 24)));
                 })
             });
         }
