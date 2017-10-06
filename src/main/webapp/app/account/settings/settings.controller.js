@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('SettingsController', SettingsController);
 
-    SettingsController.$inject = ['$scope', '$state', 'Principal', 'Auth', 'JhiLanguageService', '$translate', 'Skill', 'Experience', 'UserInfo', 'UserDetail', 'UserLogo', 'entity'];
+    SettingsController.$inject = ['$scope', '$state', 'Principal', 'Auth', 'JhiLanguageService', '$translate', 'Skill', 'Experience', 'UserInfo', 'UserDetail', 'UserLogo', 'entity', 'ApplicationByCurrentUser', 'Application'];
 
-    function SettingsController($scope, $state, Principal, Auth, JhiLanguageService, $translate, Skill, Experience, UserInfo, UserDetail, UserLogo, entity) {
+    function SettingsController($scope, $state, Principal, Auth, JhiLanguageService, $translate, Skill, Experience, UserInfo, UserDetail, UserLogo, entity, ApplicationByCurrentUser, Application) {
         var vm = this;
 
         vm.save = save;
@@ -30,6 +30,8 @@
         vm.toggle = toggle;
         vm.exists = exists;
 
+        vm.applications = [];
+        
         load();
         function load() {
             if (entity.userInfo) {
@@ -39,6 +41,14 @@
                 vm.selectedSkills = entity.userInfo.skills.split(",");
                 vm.selectedWorkAreas = entity.userInfo.workArea.split(",");
             }
+            ApplicationByCurrentUser.query(function(result) {
+                result.forEach(function(element) {
+                    var temp = Application.get({id: element.applicationId});
+                    vm.applications.push(temp);
+                }, this);
+                // vm.applications = result;
+                console.log(vm.applications);
+            });
         }
 
         function uploadLogo() {

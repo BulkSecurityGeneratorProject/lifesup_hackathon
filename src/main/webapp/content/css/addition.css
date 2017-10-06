@@ -83,9 +83,47 @@ h2{
 }
 
 .avatar {
-  width: 220px;
-  height: 220px;
+  position: relative;
+  /* width: 50%; */
+}
+
+.image {
+  display: block;
+  width: 100%;
+  height: auto;
   border-radius: 50%;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: .5s ease;
+  background-color: grey;
+  border-radius: 50%;
+}
+#avatar-overlay .material-icons{
+  margin-right: 0;
+  font-size: 50px;
+}
+
+.avatar:hover .overlay {
+  opacity: 0.7;
+}
+
+.text {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
 }
 
 
@@ -268,6 +306,21 @@ h2{
 
 .material-icons {
   position: relative;
-  margin-right: 15px;
   display: inline;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.full-width {
+  width: 100%;
+}
+
+/* Your application */
+.white-card {
+  padding: 20px;
+  margin-top: 20px;
+  background-color: #fff;
+  border: 1px solid #eee;
 }
