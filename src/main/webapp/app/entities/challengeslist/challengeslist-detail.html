@@ -11,7 +11,10 @@
                 <p><i class="material-icons side-icons">date_range</i>{{vm.challenge.info.eventStartTime | date}} - {{vm.challenge.info.eventEndTime | date}}</p><hr>
                 <p><i class="material-icons side-icons">place</i>{{vm.challenge.info.location}}</p><hr>
                 <p><i class="material-icons side-icons">star_border</i>{{vm.challenge.info.prize}}</p><hr>
-                <p><i class="material-icons side-icons">alarm</i>Apply in {{vm.timeLeft}} day(s)</p>
+                <p>
+                  <span ng-show="vm.timeLeft > 0" class="list-item"><i class="material-icons">alarm</i><span>Apply in {{vm.timeLeft}} day(s)</span></span>
+                  <span ng-if="vm.timeLeft === 0" class="list-item"><i class="material-icons">alarm</i><span>Deadline Today!</span></span>
+                </p>
             </div>
            <!--  <button class="cta-btn"><a href="#">APPLY NOW</a></button> -->
            <div ng-switch="vm.getApplicationStatus()">
