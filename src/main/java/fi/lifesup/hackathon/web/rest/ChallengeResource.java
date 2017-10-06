@@ -168,16 +168,6 @@ public class ChallengeResource {
 		List<Challenge> challenges = challengeService.getChallenges();
 		return challenges;
 	}
-
-	@GetMapping("/challenges-by-date")
-	@Timed
-	public List<Challenge> getChallengesByDate() {
-		log.debug("REST request to get all Challenges By Authories");
-		
-		List<Challenge> challenges = new ArrayList<>();
-		challenges = challengeService.getChallengeByDate();
-		return challenges;
-	}
 	
 	@PutMapping("/challenges/banner")
 	@Timed

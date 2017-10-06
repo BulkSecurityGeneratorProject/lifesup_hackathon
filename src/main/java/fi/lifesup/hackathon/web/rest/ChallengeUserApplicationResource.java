@@ -165,10 +165,11 @@ public class ChallengeUserApplicationResource {
 				request.getContextPath(); // "/myContextPath" or "" if deployed
 											// in root context
 
-		ChallengeUserApplication result = applicationService.addApplicationMember(memberDTO, baseUrl);
-		return ResponseEntity.created(new URI("/api/challenge-user-applications/" + result.getId()))
-				.headers(HeaderUtil.createEntityCreationAlert("challengeUserApplication", result.getId().toString()))
-				.body(result);
+		if(memberDTO.getStatus() == null){
+			ChallengeUserApplication result = applicationService.addApplicationMember(memberDTO, baseUrl);
+		}	
+		return ResponseEntity.created(new URI("/api/challenge-user-applications/"))
+				.body(null);
 	}
 
 	@GetMapping("/challenge-user-applications/challenge/{challengeId}")
@@ -189,17 +190,11 @@ public class ChallengeUserApplicationResource {
 		return challengeUserApplications;
 	}
 
-	@PostMapping(path = "/challenge-user-applications/{key}/invitation", produces = MediaType.TEXT_PLAIN_VALUE)
+	@PutMapping(path = "/challenge-user-applications/{key}/{accept}/invitation")
 	@Timed
-	public ResponseEntity<String> finishAcceptInvitation(@PathVariable String key) {
-		ChallengeUserApplication userApplication = challengeUserApplicationRepository.findByAcceptKey(key);
-		if (userApplication == null) {
-			return new ResponseEntity<>("Accept key does not exist", HttpStatus.BAD_REQUEST);
-		}
-		else{
-			applicationService.finishAcceptInvitation(key);
-			return new ResponseEntity<>("User accepted!", HttpStatus.OK);
-		}	
+	public ResponseEntity<String> finishAcceptInvitation(@PathVariable String key,@PathVariable Boolean accept) {		
+			String result = applicationService.finishAcceptInvitation(key, accept);
+			return new ResponseEntity<>(result, HttpStatus.OK);	
 	}
 	
 	

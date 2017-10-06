@@ -24,4 +24,5 @@
     <include file="classpath:config/liquibase/changelog/20170920141734_add_column_table_challenge.xml" relativeToChangelogFile="false"/>      
     <include file="classpath:config/liquibase/changelog/20170921095034_edit_column_table_ChallengeInfo.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20170929143500_add_column_table_ChallengeUserApplication.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171006145730_add_column_table_ChallengeUserApplication.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
