@@ -197,5 +197,4 @@ public class ChallengeUserApplicationResource {
 			return new ResponseEntity<>(result, HttpStatus.OK);	
 	}
 	
-	
 }

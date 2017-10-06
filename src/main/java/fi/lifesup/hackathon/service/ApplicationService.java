@@ -144,7 +144,7 @@ public ApplicationDTO getApplicationDetail(String acceptKey) {
 		}
 		else{
 			challengeUserApplicationRepository.deleteByAcceptKey(key);
-			return "User declined?"
+			return "User declined?";
 		}
 		
 	}
