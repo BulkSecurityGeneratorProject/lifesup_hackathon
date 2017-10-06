@@ -15,6 +15,10 @@ import java.util.List;
 public interface ChallengeUserApplicationRepository extends JpaRepository<ChallengeUserApplication, Long> {
 
 	void deleteByApplicationId(Long id);
+	
+	void deleteByChallengeId(Long id);
+	
+	void deleteByAcceptKey(String key);
 
 	List<ChallengeUserApplication> findByApplicationId(Long applicationId);
 

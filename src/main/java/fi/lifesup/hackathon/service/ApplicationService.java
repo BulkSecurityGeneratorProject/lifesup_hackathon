@@ -20,6 +20,7 @@ import fi.lifesup.hackathon.domain.enumeration.UserStatus;
 import fi.lifesup.hackathon.repository.ApplicationRepository;
 import fi.lifesup.hackathon.repository.ChallengeRepository;
 import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
+import fi.lifesup.hackathon.repository.UserRepository;
 import fi.lifesup.hackathon.service.dto.ApplicationDTO;
 import fi.lifesup.hackathon.service.dto.ApplicationMemberDTO;
 import fi.lifesup.hackathon.service.util.RandomUtil;
@@ -44,6 +45,9 @@ public class ApplicationService {
 
 	@Inject
 	private MailService mailService;
+	
+	@Inject 
+	private UserRepository userRepository; 
 
 	public boolean checkApplication(ApplicationDTO applicationDTO) {
 
@@ -122,22 +126,31 @@ public ApplicationDTO getApplicationDetail(String acceptKey) {
 		userApplication.setChallengeId(memberDTO.getChallengeId());
 		userApplication.setAcceptKey(RandomUtil.generateAcceptKey());
 		userApplication.setStatus(ChallengeUserApplicationStatus.DECLINE);
+		userApplication.setInvitedMail(memberDTO.getUserEmail());
 
-		User user = userService.getUserWithAuthoritiesByEmail(memberDTO.getUserEmail());
-		if (user != null) {
-			userApplication.setUserId(user.getId());
-			
-		} 	
-		mailService.sendInvitationMail(user, baseUrl, userApplication.getAcceptKey());
+		mailService.sendInvitationMail(memberDTO, baseUrl, userApplication.getAcceptKey());
 		return challengeUserApplicationRepository.save(userApplication);
 
 	}
 
-	public void finishAcceptInvitation(String key) {
-		ChallengeUserApplication userApplication = challengeUserApplicationRepository.findByAcceptKey(key);
+	public String finishAcceptInvitation(String key, Boolean accept) {
+		if(accept.booleanValue() == true){
+			ChallengeUserApplication userApplication = challengeUserApplicationRepository.findByAcceptKey(key);
 		userApplication.setAcceptKey(null);
+		userApplication.setUserId(userRepository.getUserByAcceptKey(key));
 		userApplication.setStatus(ChallengeUserApplicationStatus.ACCEPT);
 		challengeUserApplicationRepository.save(userApplication);
+		return "User accepted!";
+		}
+		else{
+			challengeUserApplicationRepository.deleteByAcceptKey(key);
+			return "User declined?";
+		}
+		
+	}
+	
+	public void deleteByKey(String key) {
+		challengeUserApplicationRepository.deleteByAcceptKey(key);
 	}
 
 	public void deleteApplication(Long id){

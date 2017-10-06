@@ -22,7 +22,9 @@ import org.springframework.stereotype.Service;
 
 import fi.lifesup.hackathon.domain.Challenge;
 import fi.lifesup.hackathon.domain.User;
+import fi.lifesup.hackathon.domain.enumeration.ChallengeStatus;
 import fi.lifesup.hackathon.domain.util.JSR310PersistenceConverters.ZonedDateTimeConverter;
+import fi.lifesup.hackathon.repository.ApplicationRepository;
 import fi.lifesup.hackathon.repository.ChallengeRepository;
 import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
 import fi.lifesup.hackathon.repository.CompanyRepository;
@@ -52,6 +54,9 @@ public class ChallengeService {
 	
 	@Inject 
 	private ChallengeUserApplicationRepository challengeUserApplicationRepository;
+	
+	@Inject
+	private ApplicationRepository applicationRepository;
 
 	public List<Challenge> getChallenges() {
 		if (userService.checkAuthories("ROLE_ADMIN")) {
