@@ -26,6 +26,7 @@
         getChallengeInfo();
         getUserInfo();
         getApplicationByChallenge();
+        console.log(vm.application);
 
         function getSkills() {
             vm.members.map(function(member) {
