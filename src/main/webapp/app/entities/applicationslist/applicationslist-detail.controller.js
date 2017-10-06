@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('ApplicationsListDetailController', ApplicationsListDetailController);
 
-    ApplicationsListDetailController.$inject = ['entity', 'Principal', 'ApplicationsListDetails', 'Challenge', 'UserDetail', 'ApplicationStatus'];
+    ApplicationsListDetailController.$inject = ['entity', 'Principal', 'ApplicationsListDetails', 'Challenge', 'UserDetail', 'ApplicationStatus', 'ApplicationByChallenge'];
 
-    function ApplicationsListDetailController(entity, Principal, ApplicationsListDetails, Challenge, UserDetail, ApplicationStatus) {
+    function ApplicationsListDetailController(entity, Principal, ApplicationsListDetails, Challenge, UserDetail, ApplicationStatus, ApplicationByChallenge) {
         var vm = this;
         vm.isAuthenticated = Principal.isAuthenticated;
         vm.application = entity;
@@ -20,14 +20,15 @@
         vm.getChallengeInfo = getChallengeInfo;
         vm.getUserInfo = getUserInfo;
         vm.userInfo = {};
+        vm.getApplicationByChallenge = getApplicationByChallenge;
 
         getSkills();
         getChallengeInfo();
         getUserInfo();
+        getApplicationByChallenge();
 
         function getSkills() {
             vm.members.map(function(member) {
-                console.log(member.skills);
                 return vm.skills = member.skills.split(',');
             });
         }
@@ -37,7 +38,6 @@
                 data.map(function(challenge) {
                     if(challenge.id == vm.application.challengeId) {
                         vm.challenge = challenge;
-                        console.log(vm.challenge);
                     }
                 })
             })
@@ -61,6 +61,12 @@
         function reject(application) {
             application.status = 'REJECTED';
             ApplicationStatus.update(application);
+        }
+
+        function getApplicationByChallenge() {
+          ApplicationByChallenge.query({challengeId: vm.application.challengeId}, function(data) {
+            console.log(data);
+          })
         }
     }
 })();
