@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('ApplicationsListDetailController', ApplicationsListDetailController);
 
-    ApplicationsListDetailController.$inject = ['entity', 'Principal', 'ApplicationsListDetails', 'Challenge', 'UserDetail', 'ApplicationStatus', 'ApplicationByChallenge'];
+    ApplicationsListDetailController.$inject = ['entity', 'Principal', 'ApplicationsListDetails', 'Challenge', 'UserDetail', 'ApplicationStatus', 'ApplicationByChallengeId'];
 
-    function ApplicationsListDetailController(entity, Principal, ApplicationsListDetails, Challenge, UserDetail, ApplicationStatus, ApplicationByChallenge) {
+    function ApplicationsListDetailController(entity, Principal, ApplicationsListDetails, Challenge, UserDetail, ApplicationStatus, ApplicationByChallengeId) {
         var vm = this;
         vm.isAuthenticated = Principal.isAuthenticated;
         vm.application = entity;
@@ -26,7 +26,6 @@
         getChallengeInfo();
         getUserInfo();
         getApplicationByChallenge();
-        console.log(vm.application);
 
         function getSkills() {
             vm.members.map(function(member) {
@@ -64,9 +63,10 @@
             ApplicationStatus.update(application);
         }
 
-        function getApplicationByChallenge() {
-          ApplicationByChallenge.query({challengeId: vm.application.challengeId}, function(data) {
+        function getApplicationByChallenge(challengeId) {
+          ApplicationByChallengeId.query({challengeId: vm.application.challengeId}, function(data) {
             console.log(data);
+            console.log(vm.application.challengeId);
           })
         }
     }

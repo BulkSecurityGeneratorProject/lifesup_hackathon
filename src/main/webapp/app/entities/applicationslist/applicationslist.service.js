@@ -6,13 +6,13 @@
         .factory('ApplicationsListDetails', ApplicationsListDetails)
         .factory('UserDetail', UserDetail)
         .factory('ApplicationStatus', ApplicationStatus)
-        .factory('ApplicationByChallenge', ApplicationByChallenge);
+        .factory('ApplicationByChallengeId', ApplicationByChallengeId);
 
     ApplicationsList.$inject = ['$resource'];
     ApplicationsListDetails.$inject = ['$resource'];
     UserDetail.$inject = ['$resource'];
     ApplicationStatus.$inject = ['$resource'];
-    ApplicationByChallenge.$inject = ['$resource'];
+    ApplicationByChallengeId.$inject = ['$resource'];
 
     function ApplicationsList ($resource) {
         var resourceUrl =  'api/applications/challenges/:id';
@@ -76,7 +76,7 @@
         });
     }
 
-    function ApplicationByChallenge($resource) {
+    function ApplicationByChallengeId($resource) {
       var resourceUrl =  '/api/challenge-user-applications/challenge/:challengeId';
 
       return $resource(resourceUrl, {challengeId: "@challengeId"}, {
