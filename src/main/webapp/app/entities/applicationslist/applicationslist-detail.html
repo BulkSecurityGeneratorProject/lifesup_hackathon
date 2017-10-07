@@ -110,21 +110,21 @@
 			</div>
 			<div class="progress-step">
 				<span>Invite other team members</span>
-				<span ng-switch="vm.isAuthenticated()">
+				<span ng-switch="vm.isInvited()">
 					<i class="material-icons green" ng-switch-when="true" ng-init="vm.progressCount()">check</i>
 					<i class="material-icons red" ng-switch-when="false">close</i>
 				</span>
 			</div>
 			<div class="progress-step">
 				<span>Other members have accepted their invitation</span>
-				<span ng-switch="vm.isAuthenticated()">
+				<span ng-switch="vm.isAccepted()">
 					<i class="material-icons green" ng-switch-when="true" ng-init="vm.progressCount()">check</i>
 					<i class="material-icons red" ng-switch-when="false">close</i>
 				</span>
 			</div>
 			<div class="progress-step">
 				<span>Other members have completed their profile</span>
-				<span ng-switch="vm.isAuthenticated()">
+				<span ng-switch="vm.isProfileComplete()">
 					<i class="material-icons green" ng-switch-when="true" ng-init="vm.progressCount()">check</i>
 					<i class="material-icons red" ng-switch-when="false">close</i>
 				</span>

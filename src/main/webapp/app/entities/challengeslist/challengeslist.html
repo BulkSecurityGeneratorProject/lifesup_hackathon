@@ -36,6 +36,8 @@
 <div class="row">
   <div class="col-sm-12 col-md-4" ng-repeat="challenge in vm.challenges | filter: vm.searchText | filter: vm.filterByStatus | filter: vm.filterByStartDate | filter: vm.filterByEndDate">
     <md-card class="challenge-container">
+      <!-- testing -->
+      <md-button class="w3-border" ui-sref="applicationslist({id:challenge.id})"><b>See Applications</b></md-button>
       <img md-card-image ng-src="{{challenge.bannerUrl}}" class='challenge-banner' ui-sref="challengeslist-detail({id:challenge.id})" ng-class="{'img-grey': vm.getApplicationStatus(challenge) == 'CLOSED'}">
         <md-card-title class='challenge-title'>{{challenge.name}}</md-card-title>
         <md-card-subtitle class='challenge-owner'>{{company.name}}</md-card-subtitle>
@@ -60,7 +62,7 @@
             <a href="#" ui-sref="complete-profile({id: challenge.id})" ng-switch-when="true">Apply now!</a>
           </button>
           <button class="btn btn-block challenge-cta btn-applied" ng-click="vm.getApplicationId(challenge.id)" ui-sref="applicationslist-detail({id:vm.applicationId})" ng-switch-when="APPLIED"><a href="#">View your application</a></button>
-          <button class="btn btn-block challenge-cta btn-inactive" ng-switch-when="CLOSED"><a href="#>Applications have closed!</a></button>
+          <button class="btn btn-block challenge-cta btn-inactive" ng-switch-when="CLOSED"><a href="#">Applications have closed!</a></button>
         </md-card-actions>
     </md-card>
   </div>
