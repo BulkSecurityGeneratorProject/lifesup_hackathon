@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('ApplicationsListDetailController', ApplicationsListDetailController);
 
-    ApplicationsListDetailController.$inject = ['entity', 'Principal', 'ApplicationsListDetails', 'Challenge', 'UserDetail', 'ApplicationStatus', 'ApplicationByChallengeId'];
+    ApplicationsListDetailController.$inject = ['entity', 'Principal', 'ApplicationsListDetails', 'Challenge', 'UserDetail', 'ApplicationStatus', 'ApplicationByChallengeId', 'MemberStatusByApplication'];
 
-    function ApplicationsListDetailController(entity, Principal, ApplicationsListDetails, Challenge, UserDetail, ApplicationStatus, ApplicationByChallengeId) {
+    function ApplicationsListDetailController(entity, Principal, ApplicationsListDetails, Challenge, UserDetail, ApplicationStatus, ApplicationByChallengeId, MemberStatusByApplication) {
         var vm = this;
         vm.isAuthenticated = Principal.isAuthenticated;
         vm.application = entity;
@@ -24,17 +24,22 @@
         vm.challengeUserApplication = {};
         vm.isInvited = isInvited;
         vm.isAccepted = isAccepted;
-
+        vm.getMemberStatus = getMemberStatus;
+        vm.memberStatus = [];
+        vm.isProfileComplete = isProfileComplete;
 
         getSkills();
         getChallengeInfo();
         getUserInfo();
         getApplicationByChallenge();
+        getMemberStatus();
 
         function getSkills() {
+          if(vm.members) {
             vm.members.map(function(member) {
                 return vm.skills = member.skills.split(',');
             });
+          }
         }
 
         function getChallengeInfo() {
@@ -49,7 +54,6 @@
 
         function getUserInfo() {
           UserDetail.query(function(data) {
-            console.log(data);
             return vm.userInfo = data;
           });
         }
@@ -71,24 +75,36 @@
         function getApplicationByChallenge(challengeId) {
           ApplicationByChallengeId.query({challengeId: vm.application.challengeId}, function(data) {
             vm.challengeUserApplication = data;
-            console.log(vm.challengeUserApplication);
+          })
+        }
+
+        //team invitation validation
+        function getMemberStatus() {
+          MemberStatusByApplication.query({applicationId: vm.application.id}, function(data) {
+            vm.memberStatus = data;
+            console.log(vm.memberStatus);
           })
         }
 
         function isInvited() {
-          if (vm.challengeUserApplication.invitedMail) {
+          if (vm.memberStatus.invitedMail !== null) {
             return true;
           } else return false;
         }
 
         function isAccepted() {
-          if (vm.challengeUserApplication.invitedMail) {
-            vm.emailList = vm.challengeUserApplication.invitedMail.split(',');
-            vm.emailList.map(function(email) {
-              if (email === vm.userInfo.email) {
+          if (vm.memberStatus.memberStatus === "ACCEPT") {
+            return true;
+          } else {
+            return false;
+          }
+        }
 
-              }
-            })
+        function isProfileComplete() {
+          if (vm.memberStatus.userStatus === "PROFILE_COMPLETE") {
+            return true;
+          } else {
+            return false;
           }
         }
     }
