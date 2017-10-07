@@ -84,6 +84,7 @@ public class ApplicationService {
 		userApplication.setChallengeId(applicationDTO.getChallengeId());
 		userApplication.setUserId(user.getId());
 		userApplication.setStatus(ChallengeUserApplicationStatus.ACCEPT);
+		userApplication.setInvitedMail(user.getEmail());
 		challengeUserApplicationRepository.save(userApplication);
 		return applicationRepository.save(result);
 	}
