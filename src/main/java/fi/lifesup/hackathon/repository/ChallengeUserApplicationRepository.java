@@ -32,6 +32,10 @@ public interface ChallengeUserApplicationRepository extends JpaRepository<Challe
 	@Query("select new fi.lifesup.hackathon.service.dto.ApplicationMemberDTO(cua.id, cua.invitedMail, cua.status)"
 			+ " from ChallengeUserApplication cua" + " where cua.applicationId = :#{[0]}")
 	List<ApplicationMemberDTO> getMemberStatus(Long applicationId);
+	
+	@Query("select new fi.lifesup.hackathon.service.dto.ApplicationMemberDTO(cua.id, cua.invitedMail, u.status)"
+			+ " from ChallengeUserApplication cua, User u where cua.userId = u.id and cua.applicationId = :#{[0]}")
+	List<ApplicationMemberDTO> getUserStatus(Long applicationId);
 
 	@Query("select new fi.lifesup.hackathon.service.dto.ApplicationMemberDTO(cua.id, cua.invitedMail, cua.status)"
 			+ " from ChallengeUserApplication cua where cua.applicationId = :#{[0]}")

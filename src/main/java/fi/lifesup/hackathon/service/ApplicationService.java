@@ -175,8 +175,9 @@ public class ApplicationService {
 		
 		ApplicationDTO dto =this.getApplicationDetail(id);
 		
-		List<ApplicationMemberDTO> memberStatus = challengeUserApplicationRepository.getMemberStatus(id);
+		List<ApplicationMemberDTO> userStatus = challengeUserApplicationRepository.getUserStatus(dto.getId());
 		
+		List<ApplicationMemberDTO> memberStatus = challengeUserApplicationRepository.getMemberStatus(dto.getId());
 		User user = userService.getUserWithAuthorities();
 		if(user != null){
 			list[0] = true;
@@ -206,13 +207,16 @@ public class ApplicationService {
 		if(dto.getMembers().size() > 1){
 			list[7] = true;
 		}
-		
+		list[8] = true;
 		for (ApplicationMemberDTO member : memberStatus) {
-			if(member.getMemberStatus() == ChallengeUserApplicationStatus.ACCEPT){
-				list[8] = true;
-			}
-			if(member.getUserStatus() == UserStatus.PROFILE_COMPLETE){
-				list[9] = true;
+			if(member.getMemberStatus() != ChallengeUserApplicationStatus.ACCEPT){
+				list[8] = false;
+			}			
+		}
+		list[9] = true;
+		for (ApplicationMemberDTO u : userStatus) {
+			if(u.getUserStatus() != UserStatus.PROFILE_COMPLETE){
+				list[9] = false;
 			}
 		}
 		
