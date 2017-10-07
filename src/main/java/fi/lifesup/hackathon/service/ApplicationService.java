@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fi.lifesup.hackathon.domain.Application;
-import fi.lifesup.hackathon.domain.Challenge;
 import fi.lifesup.hackathon.domain.ChallengeUserApplication;
 import fi.lifesup.hackathon.domain.User;
 import fi.lifesup.hackathon.domain.enumeration.ApplicationStatus;
@@ -20,9 +19,11 @@ import fi.lifesup.hackathon.domain.enumeration.UserStatus;
 import fi.lifesup.hackathon.repository.ApplicationRepository;
 import fi.lifesup.hackathon.repository.ChallengeRepository;
 import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
+import fi.lifesup.hackathon.repository.UserInfoRepository;
 import fi.lifesup.hackathon.repository.UserRepository;
 import fi.lifesup.hackathon.service.dto.ApplicationDTO;
 import fi.lifesup.hackathon.service.dto.ApplicationMemberDTO;
+import fi.lifesup.hackathon.service.dto.UserInfoDTO;
 import fi.lifesup.hackathon.service.util.RandomUtil;
 
 @Service
@@ -45,9 +46,12 @@ public class ApplicationService {
 
 	@Inject
 	private MailService mailService;
-	
-	@Inject 
-	private UserRepository userRepository; 
+
+	@Inject
+	private UserRepository userRepository;
+
+	@Inject
+	private UserInfoRepository userInfoRepository;
 
 	public boolean checkApplication(ApplicationDTO applicationDTO) {
 
@@ -104,18 +108,20 @@ public class ApplicationService {
 	}
 
 	public ApplicationDTO getApplicationDetail(Long applicationId) {
-		
-		Application application = applicationRepository.findOne(applicationId);
-		ApplicationDTO dto = new ApplicationDTO(application,
-				challengeUserApplicationRepository.getApplicationMember(applicationId));
-		return dto;
-	}
-	
-public ApplicationDTO getApplicationDetail(String acceptKey) {
-		
-		Application application = applicationRepository.getapplication(acceptKey);
-		ApplicationDTO dto = new ApplicationDTO(application,
-				challengeUserApplicationRepository.getApplicationMember(application.getId()));
+		List<ApplicationMemberDTO> members = challengeUserApplicationRepository
+				.getApplicationMemberDeatil(applicationId);
+		List<UserInfoDTO> info = userInfoRepository.getUserInfo(applicationId);
+		Application a = applicationRepository.findOne(applicationId);
+		List<ApplicationMemberDTO> result = new ArrayList<>();
+		for (UserInfoDTO userInfoDTO : info) {
+			for (ApplicationMemberDTO m : members) {
+				if (userInfoDTO.getEmail().equals(m.getInvitedMail())) {
+					m.setUserInfo(userInfoDTO);
+
+				}
+			}
+		}
+		ApplicationDTO dto = new ApplicationDTO(a, members);
 		return dto;
 	}
 
@@ -126,7 +132,7 @@ public ApplicationDTO getApplicationDetail(String acceptKey) {
 		userApplication.setChallengeId(memberDTO.getChallengeId());
 		userApplication.setAcceptKey(RandomUtil.generateAcceptKey());
 		userApplication.setStatus(ChallengeUserApplicationStatus.DECLINE);
-		userApplication.setInvitedMail(memberDTO.getUserEmail());
+		userApplication.setInvitedMail(memberDTO.getInvitedMail());
 
 		mailService.sendInvitationMail(memberDTO, baseUrl, userApplication.getAcceptKey());
 		return challengeUserApplicationRepository.save(userApplication);
@@ -134,79 +140,92 @@ public ApplicationDTO getApplicationDetail(String acceptKey) {
 	}
 
 	public String finishAcceptInvitation(String key, Boolean accept) {
-		if(accept.booleanValue() == true){
+		if (accept.booleanValue() == true) {
 			ChallengeUserApplication userApplication = challengeUserApplicationRepository.findByAcceptKey(key);
-		userApplication.setAcceptKey(null);
-		userApplication.setUserId(userRepository.getUserByAcceptKey(key));
-		userApplication.setStatus(ChallengeUserApplicationStatus.ACCEPT);
-		challengeUserApplicationRepository.save(userApplication);
-		return "User accepted!";
-		}
-		else{
+			userApplication.setAcceptKey(null);
+			userApplication.setUserId(userRepository.getUserByAcceptKey(key));
+			userApplication.setStatus(ChallengeUserApplicationStatus.ACCEPT);
+			challengeUserApplicationRepository.save(userApplication);
+			return "User accepted!";
+		} else {
 			challengeUserApplicationRepository.deleteByAcceptKey(key);
 			return "User declined?";
 		}
-		
+
 	}
-	
+
 	public void deleteByKey(String key) {
 		challengeUserApplicationRepository.deleteByAcceptKey(key);
 	}
 
-	public void deleteApplication(Long id){
+	public void deleteApplication(Long id) {
 		challengeUserApplicationRepository.deleteByApplicationId(id);
 		applicationRepository.delete(id);
 	}
-	
-	public Boolean[] checkApplication(Long id){
-		Boolean[] list = new Boolean[10];
-		for (int i = 0; i < list.length; i++) {
-			list[i]=false;
-		}
-		
-		ApplicationDTO dto =this.getApplicationDetail(id);
-		
+
+	public List<ApplicationMemberDTO> getStatus(Long id) {
+		List<ApplicationMemberDTO> userStatus = challengeUserApplicationRepository.getUserStatus(id);
+
 		List<ApplicationMemberDTO> memberStatus = challengeUserApplicationRepository.getMemberStatus(id);
 		
+		for (ApplicationMemberDTO u :userStatus) {
+			for (ApplicationMemberDTO m : memberStatus) {
+				if(m.getInvitedMail().equals(u.getInvitedMail())){
+					m.setUserStatus(u.getUserStatus());
+				}
+			}
+		}
+		return memberStatus;
+	}
+
+	public Boolean[] checkApplication(Long id) {
+		Boolean[] list = new Boolean[10];
+		for (int i = 0; i < list.length; i++) {
+			list[i] = false;
+		}
+
+		ApplicationDTO dto = this.getApplicationDetail(id);
+
+		List<ApplicationMemberDTO> status = getStatus(dto.getId());
 		User user = userService.getUserWithAuthorities();
-		if(user != null){
+		if (user != null) {
 			list[0] = true;
 		}
-		
+
 		list[1] = user.getActivated();
-		if(user.getStatus() == UserStatus.PROFILE_COMPLETE){
+		if (user.getStatus() == UserStatus.PROFILE_COMPLETE) {
 			list[2] = true;
 		}
-		
-		if(dto.getTeamName() != null){
+
+		if (dto.getTeamName() != null) {
 			list[3] = true;
 		}
-		
-		if(dto.getDescription() != null){
+
+		if (dto.getDescription() != null) {
 			list[4] = true;
 		}
-		
-		if(dto.getMotivation() != null){
+
+		if (dto.getMotivation() != null) {
 			list[5] = true;
 		}
-		
-		if(dto.getIdeasDescription() != null){
+
+		if (dto.getIdeasDescription() != null) {
 			list[6] = true;
 		}
-		
-		if(dto.getMembers().size() > 1){
+
+		if (dto.getMembers().size() > 1) {
 			list[7] = true;
 		}
-		
-		for (ApplicationMemberDTO member : memberStatus) {
-			if(member.getStatus() == ChallengeUserApplicationStatus.ACCEPT){
-				list[8] = true;
+		list[8] = true;
+		list[9] = true;
+		for (ApplicationMemberDTO m : status) {
+			if (m.getMemberStatus() != ChallengeUserApplicationStatus.ACCEPT) {
+				list[8] = false;
 			}
-			if(member.getUserStatus() == UserStatus.PROFILE_COMPLETE){
-				list[9] = true;
+			if(m.getUserStatus() != UserStatus.PROFILE_COMPLETE){
+				list[9] = false;
 			}
 		}
-		
-		return list;		
+		return list;
 	}
 }

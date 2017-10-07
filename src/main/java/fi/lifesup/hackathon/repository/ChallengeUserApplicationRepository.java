@@ -2,7 +2,7 @@ package fi.lifesup.hackathon.repository;
 
 import fi.lifesup.hackathon.domain.ChallengeUserApplication;
 import fi.lifesup.hackathon.service.dto.ApplicationMemberDTO;
-import fi.lifesup.hackathon.service.dto.UserInfoDTO;
+
 
 import org.springframework.data.jpa.repository.*;
 
@@ -15,27 +15,29 @@ import java.util.List;
 public interface ChallengeUserApplicationRepository extends JpaRepository<ChallengeUserApplication, Long> {
 
 	void deleteByApplicationId(Long id);
-	
+
 	void deleteByChallengeId(Long id);
-	
+
 	void deleteByAcceptKey(String key);
 
 	List<ChallengeUserApplication> findByApplicationId(Long applicationId);
-
-	@Query("select new fi.lifesup.hackathon.service.dto.UserInfoDTO(u.email, u.firstName, u.lastName, ui)"
-			+ " from User u, ChallengeUserApplication cua, UserInfo ui"
-			+ " where u.id = cua.userId and u.userInfo.id = ui.id and cua.applicationId = :#{[0]}")	
-	List<UserInfoDTO> getApplicationMember(Long applicationId);
 
 	@Query("select cua from ChallengeUserApplication cua" + " where cua.challengeId = :#{[0]} and cua.userId = :#{[1]}")
 	ChallengeUserApplication findByChallengeIdAndUserId(Long challengeId, Long userId);
 
 	List<ChallengeUserApplication> findByUserId(Long userId);
-	
+
 	ChallengeUserApplication findByAcceptKey(String acceptKey);
-	
-	@Query("select new fi.lifesup.hackathon.service.dto.ApplicationMemberDTO(cua.id, u.status, cua.status)"
-			+ " from User u, ChallengeUserApplication cua"
-			+ " where u.id = cua.userId and cua.applicationId = :#{[0]}")	
+
+	@Query("select new fi.lifesup.hackathon.service.dto.ApplicationMemberDTO(cua.id, cua.invitedMail, cua.status)"
+			+ " from ChallengeUserApplication cua" + " where cua.applicationId = :#{[0]}")
 	List<ApplicationMemberDTO> getMemberStatus(Long applicationId);
+	
+	@Query("select new fi.lifesup.hackathon.service.dto.ApplicationMemberDTO(cua.id, cua.invitedMail, u.status)"
+			+ " from ChallengeUserApplication cua, User u where cua.userId = u.id and cua.applicationId = :#{[0]}")
+	List<ApplicationMemberDTO> getUserStatus(Long applicationId);
+
+	@Query("select new fi.lifesup.hackathon.service.dto.ApplicationMemberDTO(cua.id, cua.invitedMail, cua.status)"
+			+ " from ChallengeUserApplication cua where cua.applicationId = :#{[0]}")
+	List<ApplicationMemberDTO> getApplicationMemberDeatil(Long applicationId);
 }

@@ -29,6 +29,7 @@ import fi.lifesup.hackathon.repository.ChallengeRepository;
 import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
 import fi.lifesup.hackathon.repository.CompanyRepository;
 import fi.lifesup.hackathon.repository.UserRepository;
+import fi.lifesup.hackathon.security.SecurityUtils;
 import fi.lifesup.hackathon.service.dto.ChallengeImageDTO;
 
 @Service
@@ -59,13 +60,14 @@ public class ChallengeService {
 	private ApplicationRepository applicationRepository;
 
 	public List<Challenge> getChallenges() {
-		if (userService.checkAuthories("ROLE_ADMIN")) {
-			return challengeRepository.findAll();
+		User user = userRepository.getUserByAuthority(SecurityUtils.getCurrentUserLogin(), "ROLE_ADMIN");
+		if (user == null) {
+			return challengeRepository.listChallenge();
 		}
 
 		else {
-			if (userService.checkAuthories("ROLE_HOST")) {
-				User user = userService.getUserWithAuthorities();
+		    user = userRepository.getUserByAuthority(SecurityUtils.getCurrentUserLogin(), "ROLE_HOST");
+			if (user == null) {
 				return challengeRepository.findByCompanyId(user.getCompany().getId());
 			}
 		}
@@ -86,25 +88,6 @@ public class ChallengeService {
 		return challengeRepository.save(challenge);
 	}
 
-	public List<Challenge> getChallengeByDate() {
-		// public List<Challenge> getChallengeByDate(String startDate, String
-		// endDate) {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E MMM d yyyy");
-		String date1 = "Sat Sep 23 2017";
-		String date2 = "Sat Sep 16 2017";
-		ZonedDateTimeConverter convert = new ZonedDateTimeConverter();
-		ZonedDateTime start = null;
-		ZonedDateTime end = null;
-		try {
-			start = convert.convertToEntityAttribute(simpleDateFormat.parse(date1));
-			end = convert.convertToEntityAttribute(simpleDateFormat.parse(date2));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.err.println(start.toString());
-		return challengeRepository.findByInfoEventStartTimeBetween(end, start);
-	}
 
 	public Challenge updateChallengeBanner(ChallengeImageDTO dto){
 		Challenge challenge = challengeRepository.findOne(dto.getChallengeId());

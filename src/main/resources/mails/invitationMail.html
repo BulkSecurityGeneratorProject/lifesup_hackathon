@@ -5,10 +5,10 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     </head>
     <body>
-        <p th:text="#{email.invitation.greeting}">
+        <p th:text="#{email.invitation.greeting(${user.firstName})}">
             Dear
         </p>
-        <p th:text="#{email.invitation.text1(${challenge})}">
+        <p th:text="#{email.invitation.text1(${challenge}) }">
         </p>
         <p th:text="#{email.invitation.text2}"> 
         </p>

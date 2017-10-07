@@ -25,4 +25,5 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
 			+ " where cua.acceptKey = :#{[0]} and cua.applicationId = a.id")
 	Application getapplication(String acceptKey);
 
+	
 }

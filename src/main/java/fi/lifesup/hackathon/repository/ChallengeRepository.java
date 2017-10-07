@@ -13,7 +13,11 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface ChallengeRepository extends JpaRepository<Challenge,Long> {
 
+	@Query("select c from Challenge c  where c.company.id = ?1 and c.info.status not like 'REMOVED'")
 	List<Challenge> findByCompanyId(Long id);
+	
+	@Query("select c from Challenge c  where c.info.status not like 'REMOVED'")
+	List<Challenge> listChallenge();
 	
 	@Query("select challenge from Challenge challenge, ChallengeInfo challengeInfo, "
 			+ "ChallengeUserApplication challengeUserApplication where challengeUserApplication.userId = :#{[0]} "
@@ -21,8 +25,4 @@ public interface ChallengeRepository extends JpaRepository<Challenge,Long> {
 			+ "and (challengeInfo.status = 'ACTIVE' or challengeInfo.status = 'INACTIVE')")
 	List<Challenge> getChallengeByUser(Long id);
 	
-//	@Query("select challenge from Challenge challenge, ChallengeInfo challengeInfo "
-//			+ "where challenge.info.id = challengeInfo.id and "
-//			+ "challengeInfo.eventStartTime between :#{[1]} and :#{[2]} group by challenge.id ")
-	List<Challenge> findByInfoEventStartTimeBetween(ZonedDateTime startdate, ZonedDateTime endDate);
 }

@@ -8,6 +8,7 @@ import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
 import fi.lifesup.hackathon.service.ApplicationService;
 import fi.lifesup.hackathon.service.UserService;
 import fi.lifesup.hackathon.service.dto.ApplicationMemberDTO;
+import fi.lifesup.hackathon.service.dto.MemberDTO;
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 import fi.lifesup.hackathon.web.rest.vm.KeyAndPasswordVM;
 
@@ -165,7 +166,7 @@ public class ChallengeUserApplicationResource {
 				request.getContextPath(); // "/myContextPath" or "" if deployed
 											// in root context
 
-		if(memberDTO.getStatus() == null){
+		if(memberDTO.getMemberStatus() == null){
 			ChallengeUserApplication result = applicationService.addApplicationMember(memberDTO, baseUrl);
 		}	
 		return ResponseEntity.created(new URI("/api/challenge-user-applications/"))
@@ -195,6 +196,14 @@ public class ChallengeUserApplicationResource {
 	public ResponseEntity<String> finishAcceptInvitation(@PathVariable String key,@PathVariable Boolean accept) {		
 			String result = applicationService.finishAcceptInvitation(key, accept);
 			return new ResponseEntity<>(result, HttpStatus.OK);	
+	}
+	
+	@GetMapping("/challenge-user-applications/member-status/{applicationId}")
+	@Timed
+	public List<ApplicationMemberDTO> getMemberStatus(@PathVariable Long applicationId) {
+		log.debug("REST request to get all ChallengeUserApplications");
+		List<ApplicationMemberDTO> challengeUserApplications = applicationService.getStatus(applicationId);
+		return challengeUserApplications;
 	}
 	
 }
