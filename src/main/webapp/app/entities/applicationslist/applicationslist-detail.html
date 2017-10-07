@@ -110,7 +110,7 @@
 			</div>
 			<div class="progress-step">
 				<span>Invite other team members</span>
-				<span ng-switch="vm.isAuthenticated()">
+				<span ng-switch="vm.members.length > 1">
 					<i class="material-icons green" ng-switch-when="true" ng-init="vm.progressCount()">check</i>
 					<i class="material-icons red" ng-switch-when="false">close</i>
 				</span>
