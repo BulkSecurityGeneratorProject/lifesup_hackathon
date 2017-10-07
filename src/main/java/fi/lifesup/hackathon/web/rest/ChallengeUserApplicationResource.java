@@ -202,8 +202,7 @@ public class ChallengeUserApplicationResource {
 	@Timed
 	public List<ApplicationMemberDTO> getMemberStatus(@PathVariable Long applicationId) {
 		log.debug("REST request to get all ChallengeUserApplications");
-		List<ApplicationMemberDTO> challengeUserApplications = challengeUserApplicationRepository
-				.getMemberStatus(applicationId);
+		List<ApplicationMemberDTO> challengeUserApplications = applicationService.getStatus(applicationId);
 		return challengeUserApplications;
 	}
 	
