@@ -37,7 +37,7 @@
                         <p>{{vm.application.ideasDescription}}</p>
                     </div>
                 </div>
-                
+
             </div>
             <section class="login-signup-wrapper" style="padding: 1em 0em 1em 1em; background: none" ng-cloak>
                 <div class="login-header">
@@ -120,8 +120,21 @@
                     </div>
 
                     <!-- Login Form -->
-                    <div class="login-form-wrapper ml-auto col-md-6 col-lg-6">
-                        <form name="login-form" role="form" id='login-form' ng-show="!vm.success" name="form" role="form" novalidate ng-submit="vm.login($event)"
+                    <div class="login-form-wrapper ml-auto col-md-6 col-lg-6" ng-switch="vm.isAuthenticated()">
+                        <form ng-switch-when="false" class="form" role="form" ng-submit="vm.login($event)" id='login-form'>
+                            <div class="form-group">
+                                <label for="username" data-translate="global.form.username">Login</label>
+                                <input type="text" class="form-control" id="username" placeholder="{{'global.form.username.placeholder' | translate}}" ng-model="vm.username">
+                            </div>
+                            <div class="form-group">
+                                <label for="password" data-translate="login.form.password">Password</label>
+                                <input type="password" class="form-control" id="password" placeholder="{{'login.form.password.placeholder' | translate}}"
+                                    ng-model="vm.password">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block" data-translate="login.form.button">Sign in</button>
+                        </form>
+                        
+                        <form ng-switch-when="true" name="logged-in" role="form" id='login-form' ng-show="!vm.success" name="form" role="form" novalidate ng-submit="vm.acceptInvite()"
                             show-validation>
                             <div class="form-heading">
                                 <h4>Login with existing account</h4>
@@ -131,7 +144,7 @@
                         </form>
                         <!-- <p></p>
                 <p class="text-center">OR</p> -->
-                        <form name="login-form" role="form" id='login-form' ng-show="!vm.success" name="form" role="form" novalidate ng-submit="vm.login($event)"
+                        <form name="decline" role="form" id='login-form' ng-show="!vm.success" name="form" role="form" novalidate ng-submit="vm.declineInvite()"
                             show-validation>
                             <div class="form-heading">
                                 <h4>Decline request</h4>

@@ -57,7 +57,7 @@
         }
 
         function onSaveSuccess(result) {
-            if (vm.invite.userName && vm.invite.userEmail){
+            if (vm.invite.invitedMail){
                 vm.invite.applicationId = result.id;
                 vm.invite.challengeId = result.challenge.id;
                 console.log(vm.invite);
@@ -71,7 +71,7 @@
         }
 
         function onInviteSuccess(){
-            $state.go('applicationslist-detail', {id:vm.applicationId});
+            // $state.go('applicationslist-detail', {id:vm.applicationId});
         }
 
         function onInviteError(){

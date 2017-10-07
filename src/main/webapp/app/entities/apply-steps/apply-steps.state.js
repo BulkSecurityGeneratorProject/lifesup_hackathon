@@ -88,6 +88,7 @@
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('loginsignup');
+                        $translatePartialLoader.addPart('login');
                         return $translate.refresh();
                     }]
                 }
