@@ -49,16 +49,6 @@ public class ApplicationMemberDTO {
 		this.invitedMail = userEmail;
 		this.firstName = userName;
 	}
-
-	public ApplicationMemberDTO(Long id, String invitedMail,  UserStatus userStatus, ChallengeUserApplicationStatus status) {
-		super();
-		this.id = id;
-		this.userStatus = userStatus;
-		this.memberStatus = status;
-		this.invitedMail = invitedMail;
-	}
-	
-	
 	
 	public ApplicationMemberDTO(Long id, String invitedMail, ChallengeUserApplicationStatus memberStatus) {
 		super();

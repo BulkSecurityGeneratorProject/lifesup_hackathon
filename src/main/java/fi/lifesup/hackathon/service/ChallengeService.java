@@ -29,6 +29,7 @@ import fi.lifesup.hackathon.repository.ChallengeRepository;
 import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
 import fi.lifesup.hackathon.repository.CompanyRepository;
 import fi.lifesup.hackathon.repository.UserRepository;
+import fi.lifesup.hackathon.security.SecurityUtils;
 import fi.lifesup.hackathon.service.dto.ChallengeImageDTO;
 
 @Service
@@ -59,13 +60,14 @@ public class ChallengeService {
 	private ApplicationRepository applicationRepository;
 
 	public List<Challenge> getChallenges() {
-		if (userService.checkAuthories("ROLE_ADMIN")) {
-			return challengeRepository.findAll();
+		User user = userRepository.getUserByAuthority(SecurityUtils.getCurrentUserLogin(), "ROLE_ADMIN");
+		if (user == null) {
+			return challengeRepository.listChallenge();
 		}
 
 		else {
-			if (userService.checkAuthories("ROLE_HOST")) {
-				User user = userService.getUserWithAuthorities();
+		    user = userRepository.getUserByAuthority(SecurityUtils.getCurrentUserLogin(), "ROLE_HOST");
+			if (user == null) {
 				return challengeRepository.findByCompanyId(user.getCompany().getId());
 			}
 		}

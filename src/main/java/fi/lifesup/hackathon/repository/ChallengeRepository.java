@@ -13,7 +13,11 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface ChallengeRepository extends JpaRepository<Challenge,Long> {
 
+	@Query("select c from Challenge c  where c.company.id = ?1 and c.info.status not like 'REMOVED'")
 	List<Challenge> findByCompanyId(Long id);
+	
+	@Query("select c from Challenge c  where c.info.status not like 'REMOVED'")
+	List<Challenge> listChallenge();
 	
 	@Query("select challenge from Challenge challenge, ChallengeInfo challengeInfo, "
 			+ "ChallengeUserApplication challengeUserApplication where challengeUserApplication.userId = :#{[0]} "
