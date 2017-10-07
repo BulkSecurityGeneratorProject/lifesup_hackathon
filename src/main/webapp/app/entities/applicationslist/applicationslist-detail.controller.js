@@ -21,6 +21,10 @@
         vm.getUserInfo = getUserInfo;
         vm.userInfo = {};
         vm.getApplicationByChallenge = getApplicationByChallenge;
+        vm.challengeUserApplication = {};
+        vm.isInvited = isInvited;
+        vm.isAccepted = isAccepted;
+
 
         getSkills();
         getChallengeInfo();
@@ -45,6 +49,7 @@
 
         function getUserInfo() {
           UserDetail.query(function(data) {
+            console.log(data);
             return vm.userInfo = data;
           });
         }
@@ -65,9 +70,26 @@
 
         function getApplicationByChallenge(challengeId) {
           ApplicationByChallengeId.query({challengeId: vm.application.challengeId}, function(data) {
-            console.log(data);
-            console.log(vm.application.challengeId);
+            vm.challengeUserApplication = data;
+            console.log(vm.challengeUserApplication);
           })
+        }
+
+        function isInvited() {
+          if (vm.challengeUserApplication.invitedMail) {
+            return true;
+          } else return false;
+        }
+
+        function isAccepted() {
+          if (vm.challengeUserApplication.invitedMail) {
+            vm.emailList = vm.challengeUserApplication.invitedMail.split(',');
+            vm.emailList.map(function(email) {
+              if (email === vm.userInfo.email) {
+
+              }
+            })
+          }
         }
     }
 })();
