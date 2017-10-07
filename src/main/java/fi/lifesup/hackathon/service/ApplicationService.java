@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fi.lifesup.hackathon.domain.Application;
-import fi.lifesup.hackathon.domain.Challenge;
 import fi.lifesup.hackathon.domain.ChallengeUserApplication;
 import fi.lifesup.hackathon.domain.User;
 import fi.lifesup.hackathon.domain.enumeration.ApplicationStatus;
@@ -20,9 +19,11 @@ import fi.lifesup.hackathon.domain.enumeration.UserStatus;
 import fi.lifesup.hackathon.repository.ApplicationRepository;
 import fi.lifesup.hackathon.repository.ChallengeRepository;
 import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
+import fi.lifesup.hackathon.repository.UserInfoRepository;
 import fi.lifesup.hackathon.repository.UserRepository;
 import fi.lifesup.hackathon.service.dto.ApplicationDTO;
 import fi.lifesup.hackathon.service.dto.ApplicationMemberDTO;
+import fi.lifesup.hackathon.service.dto.UserInfoDTO;
 import fi.lifesup.hackathon.service.util.RandomUtil;
 
 @Service
@@ -48,6 +49,9 @@ public class ApplicationService {
 	
 	@Inject 
 	private UserRepository userRepository; 
+	
+	@Inject
+	private UserInfoRepository userInfoRepository;
 
 	public boolean checkApplication(ApplicationDTO applicationDTO) {
 
@@ -103,21 +107,26 @@ public class ApplicationService {
 		return applicationRepository.save(application);
 	}
 
-	public ApplicationDTO getApplicationDetail(Long applicationId) {
-		
-		Application application = applicationRepository.findOne(applicationId);
-		ApplicationDTO dto = new ApplicationDTO(application,
-				challengeUserApplicationRepository.getApplicationMember(applicationId));
+	public ApplicationDTO getApplicationDetail(Long applicationId){
+		List<ApplicationMemberDTO> members = challengeUserApplicationRepository.getApplicationMemberDeatil(applicationId);
+		List<UserInfoDTO> info = userInfoRepository.getUserInfo(applicationId);
+		Application a = applicationRepository.findOne(applicationId);
+		List<ApplicationMemberDTO> result = new ArrayList<>();
+		for (UserInfoDTO userInfoDTO : info) {
+			
+			
+			for (ApplicationMemberDTO m : members) {
+				if(userInfoDTO.getEmail().equals(m.getInvitedMail())){
+					m.setUserInfo(userInfoDTO);
+					
+				}
+			}
+		} 
+		ApplicationDTO dto = new ApplicationDTO(a, members);
 		return dto;
 	}
 	
-public ApplicationDTO getApplicationDetail(String acceptKey) {
-		
-		Application application = applicationRepository.getapplication(acceptKey);
-		ApplicationDTO dto = new ApplicationDTO(application,
-				challengeUserApplicationRepository.getApplicationMember(application.getId()));
-		return dto;
-	}
+
 
 	public ChallengeUserApplication addApplicationMember(ApplicationMemberDTO memberDTO, String baseUrl) {
 
@@ -126,7 +135,7 @@ public ApplicationDTO getApplicationDetail(String acceptKey) {
 		userApplication.setChallengeId(memberDTO.getChallengeId());
 		userApplication.setAcceptKey(RandomUtil.generateAcceptKey());
 		userApplication.setStatus(ChallengeUserApplicationStatus.DECLINE);
-		userApplication.setInvitedMail(memberDTO.getUserEmail());
+		userApplication.setInvitedMail(memberDTO.getInvitedMail());
 
 		mailService.sendInvitationMail(memberDTO, baseUrl, userApplication.getAcceptKey());
 		return challengeUserApplicationRepository.save(userApplication);
@@ -199,7 +208,7 @@ public ApplicationDTO getApplicationDetail(String acceptKey) {
 		}
 		
 		for (ApplicationMemberDTO member : memberStatus) {
-			if(member.getStatus() == ChallengeUserApplicationStatus.ACCEPT){
+			if(member.getMemberStatus() == ChallengeUserApplicationStatus.ACCEPT){
 				list[8] = true;
 			}
 			if(member.getUserStatus() == UserStatus.PROFILE_COMPLETE){

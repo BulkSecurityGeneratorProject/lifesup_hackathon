@@ -107,7 +107,7 @@ public class MailService {
     
     @Async
     public void sendInvitationMail(ApplicationMemberDTO member, String baseUrl, String accpetKey){
-    	log.debug("Sending invitation member e-mail to '{}'", member.getUserEmail());
+    	log.debug("Sending invitation member e-mail to '{}'", member.getInvitedMail());
     	Locale locale = Locale.forLanguageTag("en");
     	Context context = new Context(locale);
         context.setVariable(USER, member);
@@ -116,6 +116,6 @@ public class MailService {
         
         String content = templateEngine.process("invitationMail", context);
         String subject = messageSource.getMessage("email.invitation.title", null, locale);
-        sendEmail(member.getUserEmail(), subject, content, false, true);
+        sendEmail(member.getInvitedMail(), subject, content, false, true);
     }
 }

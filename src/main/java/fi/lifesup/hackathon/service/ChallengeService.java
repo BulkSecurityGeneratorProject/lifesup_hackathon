@@ -86,25 +86,6 @@ public class ChallengeService {
 		return challengeRepository.save(challenge);
 	}
 
-	public List<Challenge> getChallengeByDate() {
-		// public List<Challenge> getChallengeByDate(String startDate, String
-		// endDate) {
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("E MMM d yyyy");
-		String date1 = "Sat Sep 23 2017";
-		String date2 = "Sat Sep 16 2017";
-		ZonedDateTimeConverter convert = new ZonedDateTimeConverter();
-		ZonedDateTime start = null;
-		ZonedDateTime end = null;
-		try {
-			start = convert.convertToEntityAttribute(simpleDateFormat.parse(date1));
-			end = convert.convertToEntityAttribute(simpleDateFormat.parse(date2));
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.err.println(start.toString());
-		return challengeRepository.findByInfoEventStartTimeBetween(end, start);
-	}
 
 	public Challenge updateChallengeBanner(ChallengeImageDTO dto){
 		Challenge challenge = challengeRepository.findOne(dto.getChallengeId());
