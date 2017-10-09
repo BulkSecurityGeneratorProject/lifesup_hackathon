@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('TeamController', TeamController);
 
-    TeamController.$inject = ['$scope', '$stateParams', '$state', 'Application', 'UserApplicationByChallengeID', 'InviteMember'];
+    TeamController.$inject = ['$scope', '$stateParams', '$state', 'Application', 'UserApplicationByChallengeID', 'InviteMember', 'MemberStatusByApplication'];
 
-    function TeamController($scope, $stateParams, $state, Application, UserApplicationByChallengeID, InviteMember) {
+    function TeamController($scope, $stateParams, $state, Application, UserApplicationByChallengeID, InviteMember, MemberStatusByApplication) {
         var vm = this;
         vm.save = save;
         vm.challengeId = $stateParams.id;
@@ -29,11 +29,11 @@
 
         vm.emptySlot = emptySlot;
 
-        function emptySlot(){
+        function emptySlot() {
             return Array(1);
         }
 
-        load()
+        load();
 
         function load() {
             vm.entity = UserApplicationByChallengeID.get({ challengeId: $stateParams.id }, function (result) {
@@ -41,6 +41,10 @@
                     Application.get({ id: result.applicationId }, function (result) {
                         vm.team = result;
                     });
+                    MemberStatusByApplication.query({ applicationId: result.applicationId }, function (data) {
+                        vm.members = data;
+                        console.log(vm.members);
+                    })
                 }
             });
         }
@@ -57,24 +61,24 @@
         }
 
         function onSaveSuccess(result) {
-            if (vm.invite.invitedMail){
+            if (vm.invite.invitedMail) {
                 vm.invite.applicationId = result.id;
                 vm.invite.challengeId = result.challenge.id;
                 console.log(vm.invite);
                 InviteMember.save(vm.invite, onInviteSuccess, onInviteError);
             }
-            else{
+            else {
                 console.log("else");
-                $state.go('applicationslist-detail', {id:result.id});
+                $state.go('applicationslist-detail', { id: result.id });
             }
             vm.applicationId = result.id;
         }
 
-        function onInviteSuccess(){
-            $state.go('applicationslist-detail', {id:vm.applicationId});
+        function onInviteSuccess() {
+            $state.go('applicationslist-detail', { id: vm.applicationId });
         }
 
-        function onInviteError(){
+        function onInviteError() {
             alert('Invite Member Failed');
         }
 
