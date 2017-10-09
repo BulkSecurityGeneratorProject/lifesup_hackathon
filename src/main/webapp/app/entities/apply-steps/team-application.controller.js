@@ -71,7 +71,7 @@
         }
 
         function onInviteSuccess(){
-            // $state.go('applicationslist-detail', {id:vm.applicationId});
+            $state.go('applicationslist-detail', {id:vm.applicationId});
         }
 
         function onInviteError(){

@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('ChallengeManagerController', ChallengeManagerController);
 
-    ChallengeManagerController.$inject = ['$scope', '$state', 'ChallengeManager', 'ChallengeInfo', 'ChallengeByAuthority'];
+    ChallengeManagerController.$inject = ['$scope', '$state', 'ChallengeManager', 'ChallengeInfo', 'ChallengeByAuthority', 'Challenge'];
 
-    function ChallengeManagerController($scope, $state, ChallengeManager, ChallengeInfo, ChallengeByAuthority) {
+    function ChallengeManagerController($scope, $state, ChallengeManager, ChallengeInfo, ChallengeByAuthority, Challenge) {
         var vm = this;
 
         vm.challenges = [];
@@ -18,7 +18,8 @@
         loadAll();
 
         function loadAll() {
-            ChallengeByAuthority.query(function (result) {
+            Challenge.query(function (result) {
+                console.log(result);
                 vm.draftChallenges = [];
                 vm.activeChallenges = [];
                 vm.closedChallenges = [];
