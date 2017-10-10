@@ -61,13 +61,13 @@ public class ChallengeService {
 
 	public List<Challenge> getChallenges() {
 		User user = userRepository.getUserByAuthority(SecurityUtils.getCurrentUserLogin(), "ROLE_ADMIN");
-		if (user == null) {
+		if (user != null) {
 			return challengeRepository.listChallenge();
 		}
 
 		else {
 		    user = userRepository.getUserByAuthority(SecurityUtils.getCurrentUserLogin(), "ROLE_HOST");
-			if (user == null) {
+			if (user != null) {
 				return challengeRepository.findByCompanyId(user.getCompany().getId());
 			}
 		}
