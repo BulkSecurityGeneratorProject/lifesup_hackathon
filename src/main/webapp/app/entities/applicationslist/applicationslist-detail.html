@@ -38,8 +38,7 @@
 	        </div>
 	        <button class="btn custom-btn" ui-sref="team({id:vm.application.challengeId})">Edit your application</button>
 	      </div>
-
-	  </div>
+	  	</div>
 	  </div>
 	  <div class="col-md-1 hidden-xs"></div>
 	  <!--======== challenge and application progress ============-->
@@ -53,78 +52,14 @@
 				<p class="application-sub-title">Application deadline _</p>
 				<span>{{vm.challenge.info.eventEndTime | date}}</span>
 			</div>
-	  	<div>
+			<div>
 	  		<p class="application-sub-title">Application Readiness _</p>
-	  		<!-- <div class="progress">
-			  <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-			</div> -->
-			<md-progress-linear md-mode="determinate" value="{{vm.determinateValue}}"></md-progress-linear>
-			<div class="progress-step">
-				<span>Create account or login</span>
-				<span ng-switch="vm.isAuthenticated()">
-					<i class="material-icons green" ng-switch-when="true" ng-init="vm.progressCount()">check</i>
-					<i class="material-icons red" ng-switch-when="false">close</i>
-				</span>
+				<md-progress-linear md-mode="determinate" value="{{vm.determinateValue}}"></md-progress-linear>
 			</div>
-			<div class="progress-step">
-				<span>Verify your account</span>
-				<span ng-switch="vm.userInfo.activated">
-					<i class="material-icons green" ng-switch-when="true" ng-init="vm.progressCount()">check</i>
-					<i class="material-icons red" ng-switch-when="false">close</i>
-				</span>
-			</div>
-			<div class="progress-step">
-				<span>Complete your profile</span>
-				<span ng-switch="vm.isAuthenticated()">
-					<i class="material-icons green" ng-switch-when="true" ng-init="vm.progressCount()">check</i>
-					<i class="material-icons red" ng-switch-when="false">close</i>
-				</span>
-			</div>
-			<div class="progress-step">
-				<span>Name your team</span>
-				<span ng-switch="!!vm.application.teamName">
-					<i class="material-icons green" ng-switch-when="true" ng-init="vm.progressCount()">check</i>
-					<i class="material-icons red" ng-switch-when="false">close</i>
-				</span>
-			</div>
-			<div class="progress-step">
-				<span>Describe your team</span>
-				<span ng-switch="!!vm.application.description">
-					<i class="material-icons green" ng-switch-when="true" ng-init="vm.progressCount()">check</i>
-					<i class="material-icons red" ng-switch-when="false">close</i>
-				</span>
-			</div>
-			<div class="progress-step">
-				<span>Fill in your motivation</span>
-				<span ng-switch="!!vm.application.motivation">
-					<i class="material-icons green" ng-switch-when="true" ng-init="vm.progressCount()">check</i>
-					<i class="material-icons red" ng-switch-when="false">close</i>
-				</span>
-			</div>
-			<div class="progress-step">
-				<span>Fill in your idea</span>
-				<span ng-switch="!!vm.application.ideasDescription">
-					<i class="material-icons green" ng-switch-when="true" ng-init="vm.progressCount()">check</i>
-					<i class="material-icons red" ng-switch-when="false">close</i>
-				</span>
-			</div>
-			<div class="progress-step">
-				<span>Invite other team members</span>
-				<span ng-switch="vm.isInvited()">
-					<i class="material-icons green" ng-switch-when="true" ng-init="vm.progressCount()">check</i>
-					<i class="material-icons red" ng-switch-when="false">close</i>
-				</span>
-			</div>
-			<div class="progress-step">
-				<span>Other members have accepted their invitation</span>
-				<span ng-switch="vm.isAccepted()">
-					<i class="material-icons green" ng-switch-when="true" ng-init="vm.progressCount()">check</i>
-					<i class="material-icons red" ng-switch-when="false">close</i>
-				</span>
-			</div>
-			<div class="progress-step">
-				<span>Other members have completed their profile</span>
-				<span ng-switch="vm.isProfileComplete()">
+				<!-- team validation -->
+			<div class="progress-step" ng-repeat="validation in vm.validations">
+				<span>{{ validation[0] }}</span>
+				<span ng-switch="{{ validation[1] }}">
 					<i class="material-icons green" ng-switch-when="true" ng-init="vm.progressCount()">check</i>
 					<i class="material-icons red" ng-switch-when="false">close</i>
 				</span>
@@ -144,7 +79,6 @@
 					<div class="text-center">After the deadline the application will be screened</div>
 				</div>
 			</div>
-	  	</div>
 	  	<div>
 	  		<button class="btn custom-btn challenge-link" ui-sref="challengeslist">VIEW THE CHALLENGE PAGE</button>
 	  	</div>

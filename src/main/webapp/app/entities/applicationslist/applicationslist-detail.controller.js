@@ -5,9 +5,9 @@
     .module('hackathonApp')
     .controller('ApplicationsListDetailController', ApplicationsListDetailController);
 
-  ApplicationsListDetailController.$inject = ['entity', 'Principal', 'ApplicationsListDetails', 'Challenge', 'UserDetail', 'ApplicationStatus', 'ApplicationByChallengeId', 'MemberStatusByApplication'];
+  ApplicationsListDetailController.$inject = ['entity', 'Principal', 'ApplicationsListDetails', 'Challenge', 'UserDetail', 'ApplicationStatus', 'ApplicationByChallengeId', 'ApplicationValidation'];
 
-  function ApplicationsListDetailController(entity, Principal, ApplicationsListDetails, Challenge, UserDetail, ApplicationStatus, ApplicationByChallengeId, MemberStatusByApplication) {
+  function ApplicationsListDetailController(entity, Principal, ApplicationsListDetails, Challenge, UserDetail, ApplicationStatus, ApplicationByChallengeId, ApplicationValidation) {
     var vm = this;
     vm.isAuthenticated = Principal.isAuthenticated;
     vm.application = entity;
@@ -22,17 +22,16 @@
     vm.userInfo = {};
     vm.getApplicationByChallenge = getApplicationByChallenge;
     vm.challengeUserApplication = {};
-    vm.isInvited = isInvited;
-    vm.isAccepted = isAccepted;
-    vm.getMemberStatus = getMemberStatus;
-    vm.memberStatus = [];
-    vm.isProfileComplete = isProfileComplete;
+    vm.validateApplication = validateApplication;
+    vm.validations = [];
 
     getSkills();
     getChallengeInfo();
     getUserInfo();
     getApplicationByChallenge();
-    getMemberStatus();
+    // getMemberStatus();
+    validateApplication();
+
 
     function getSkills() {
       if (vm.members) {
@@ -81,33 +80,14 @@
     }
 
     //team invitation validation
-    function getMemberStatus() {
-      MemberStatusByApplication.query({ applicationId: vm.application.id }, function (data) {
-        vm.memberStatus = data;
-        console.log(vm.memberStatus);
+    function validateApplication() {
+      ApplicationValidation.query({applicationId: vm.application.id}, function(data) {
+        vm.validations = data;
+        vm.validations = vm.validations.map(function(item) {
+          return item.split(',');
+        })
+        console.log(vm.validations);
       })
-    }
-
-    function isInvited() {
-      if (vm.memberStatus.invitedMail !== null) {
-        return true;
-      } else return false;
-    }
-
-    function isAccepted() {
-      if (vm.memberStatus.memberStatus === "ACCEPT") {
-        return true;
-      } else {
-        return false;
-      }
-    }
-
-    function isProfileComplete() {
-      if (vm.memberStatus.userStatus === "PROFILE_COMPLETE") {
-        return true;
-      } else {
-        return false;
-      }
     }
   }
 })();

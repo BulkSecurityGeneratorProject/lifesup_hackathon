@@ -7,14 +7,16 @@
         .factory('UserDetail', UserDetail)
         .factory('ApplicationStatus', ApplicationStatus)
         .factory('ApplicationByChallengeId', ApplicationByChallengeId)
-        .factory('MemberStatusByApplication', MemberStatusByApplication);
+        // .factory('MemberStatusByApplication', MemberStatusByApplication)
+        .factory('ApplicationValidation', ApplicationValidation);
 
     ApplicationsList.$inject = ['$resource'];
     ApplicationsListDetails.$inject = ['$resource'];
     UserDetail.$inject = ['$resource'];
     ApplicationStatus.$inject = ['$resource'];
     ApplicationByChallengeId.$inject = ['$resource'];
-    MemberStatusByApplication.$inject = ['$resource'];
+    // MemberStatusByApplication.$inject = ['$resource'];
+    ApplicationValidation.$inject = ['$resource'];
 
     function ApplicationsList ($resource) {
         var resourceUrl =  'api/applications/challenges/:id';
@@ -96,8 +98,26 @@
       });
     }
 
-    function MemberStatusByApplication($resource) {
-      var resourceUrl =  '/api/challenge-user-applications/member-status/:applicationId';
+    // function MemberStatusByApplication($resource) {
+    //   var resourceUrl =  '/api/challenge-user-applications/member-status/:applicationId';
+    //
+    //   return $resource(resourceUrl, {applicationId: "@applicationId"}, {
+    //       'query': { method: 'GET', isArray: true},
+    //       'get': {
+    //           method: 'GET',
+    //           transformResponse: function (data) {
+    //               if (data) {
+    //                   data = angular.fromJson(data);
+    //               }
+    //               return data;
+    //           }
+    //       },
+    //       'update': { method:'PUT' }
+    //   });
+    // }
+
+    function ApplicationValidation($resource) {
+      var resourceUrl =  '/api/applications/check/:applicationId';
 
       return $resource(resourceUrl, {applicationId: "@applicationId"}, {
           'query': { method: 'GET', isArray: true},
