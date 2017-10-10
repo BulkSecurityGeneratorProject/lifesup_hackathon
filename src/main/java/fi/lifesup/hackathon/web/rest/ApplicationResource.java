@@ -6,12 +6,14 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +29,7 @@ import fi.lifesup.hackathon.domain.Application;
 import fi.lifesup.hackathon.domain.enumeration.ApplicationStatus;
 import fi.lifesup.hackathon.repository.ApplicationRepository;
 import fi.lifesup.hackathon.service.ApplicationService;
+import fi.lifesup.hackathon.service.dto.ApplicationBasicDTO;
 import fi.lifesup.hackathon.service.dto.ApplicationDTO;
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 
@@ -53,12 +56,19 @@ public class ApplicationResource {
      */
     @PostMapping("/applications")
     @Timed
-    public ResponseEntity<Application> createApplication(@Valid @RequestBody ApplicationDTO application) throws URISyntaxException {
+    public ResponseEntity<Application> createApplication(@Valid @RequestBody ApplicationBasicDTO application, HttpServletRequest request) throws URISyntaxException {
         log.debug("REST request to save Application : {}", application);
         if (application.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("application", "idexists", "A new application cannot already have an ID")).body(null);
         }
-        Application result = applicationService.createApplication(application);
+        String baseUrl = request.getScheme() + // "http"
+				"://" + // "://"
+				request.getServerName() + // "myhost"
+				":" + // ":"
+				request.getServerPort() + // "80"
+				request.getContextPath(); // "/myContextPath" or "" if deployed
+											// in root context
+        Application result = applicationService.createApplication(application, baseUrl);
         return ResponseEntity.created(new URI("/api/applications/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("application", result.getId().toString()))
             .body(result);
@@ -75,12 +85,20 @@ public class ApplicationResource {
      */
     @PutMapping("/applications")
     @Timed
-    public ResponseEntity<Application> updateApplication(@Valid @RequestBody ApplicationDTO application) throws URISyntaxException {
+    public ResponseEntity<Application> updateApplication(@Valid @RequestBody ApplicationBasicDTO application,HttpServletRequest request) throws URISyntaxException {
         log.debug("REST request to update Application : {}", application);
+        String baseUrl = request.getScheme() + // "http"
+				"://" + // "://"
+				request.getServerName() + // "myhost"
+				":" + // ":"
+				request.getServerPort() + // "80"
+				request.getContextPath(); // "/myContextPath" or "" if deployed
+											// in root context
         if (application.getId() == null) {
-            return createApplication(application);
+            return createApplication(application, request);
         }
-        Application result = applicationService.updateApplication(application);
+        
+        Application result = applicationService.updateApplication(application, baseUrl);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("application", result.getId().toString()))
             .body(result);
@@ -147,6 +165,14 @@ public class ApplicationResource {
         return application;
     }
     
+    @GetMapping("/applications/basics/{applicationId}")
+    @Timed
+    public ApplicationBasicDTO getApplicationBasic(@PathVariable Long applicationId) {
+        log.debug("REST request to get Application by challengeId : {}", applicationId);
+        ApplicationBasicDTO application = applicationService.getApplicationBasic(applicationId);
+        return application;
+    }
+    
     @PutMapping("/applications/status")
     @Timed
     public ResponseEntity<Application> updateApplicationStatus(@RequestBody ApplicationDTO applicationDTO) throws URISyntaxException {
@@ -162,7 +188,7 @@ public class ApplicationResource {
 
     @GetMapping("/applications/check/{id}")
     @Timed
-    public Boolean[] getCheckApplication(@PathVariable Long id) {
+    public List<String> getCheckApplication(@PathVariable Long id) {
         log.debug("REST request to get Application by acceptKey : {}", id);
         
         return applicationService.checkApplication(id);

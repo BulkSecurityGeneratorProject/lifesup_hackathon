@@ -1,5 +1,6 @@
 package fi.lifesup.hackathon.service;
 
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,16 +12,19 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fi.lifesup.hackathon.domain.Application;
+import fi.lifesup.hackathon.domain.ApplicationInviteEmail;
 import fi.lifesup.hackathon.domain.ChallengeUserApplication;
 import fi.lifesup.hackathon.domain.User;
 import fi.lifesup.hackathon.domain.enumeration.ApplicationStatus;
 import fi.lifesup.hackathon.domain.enumeration.ChallengeUserApplicationStatus;
 import fi.lifesup.hackathon.domain.enumeration.UserStatus;
+import fi.lifesup.hackathon.repository.ApplicationInviteEmailReponsitory;
 import fi.lifesup.hackathon.repository.ApplicationRepository;
 import fi.lifesup.hackathon.repository.ChallengeRepository;
 import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
 import fi.lifesup.hackathon.repository.UserInfoRepository;
 import fi.lifesup.hackathon.repository.UserRepository;
+import fi.lifesup.hackathon.service.dto.ApplicationBasicDTO;
 import fi.lifesup.hackathon.service.dto.ApplicationDTO;
 import fi.lifesup.hackathon.service.dto.ApplicationMemberDTO;
 import fi.lifesup.hackathon.service.dto.UserInfoDTO;
@@ -52,8 +56,11 @@ public class ApplicationService {
 
 	@Inject
 	private UserInfoRepository userInfoRepository;
+	
+	@Inject 
+	private ApplicationInviteEmailReponsitory applicationInviteEmailReponsitory;
 
-	public boolean checkApplication(ApplicationDTO applicationDTO) {
+	public boolean checkApplication(ApplicationBasicDTO applicationDTO) {
 
 		if (applicationDTO.getTeamName() == null || applicationDTO.getDescription() == null
 				|| applicationDTO.getIdeasDescription() == null || applicationDTO.getMotivation() == null) {
@@ -61,8 +68,14 @@ public class ApplicationService {
 		}
 		return true;
 	}
+	public String checkApplication(String s, Long id ) {
+		
+		String s1 = challengeUserApplicationRepository.checkChallengeUserApplication(s,id);
+		
+		return s1;
+	}
 
-	public Application createApplication(ApplicationDTO applicationDTO) {
+	public Application createApplication(ApplicationBasicDTO applicationDTO, String baseUrl) {
 
 		Application application = new Application();
 		application.setTeamName(applicationDTO.getTeamName());
@@ -75,157 +88,290 @@ public class ApplicationService {
 		if (!checkApplication(applicationDTO)) {
 			application.setStatus(ApplicationStatus.DRAFT);
 		}
-
 		application.setChallenge(challengeRepository.findOne(applicationDTO.getChallengeId()));
 		Application result = applicationRepository.save(application);
+		for (String a : applicationDTO.getMembers()) {
+			String[] s = a.split(",");
+			String check = challengeUserApplicationRepository.checkChallengeUserApplication(s[0], applicationDTO.getId());
+			if(check == null){
+				ApplicationInviteEmail invited = new ApplicationInviteEmail();
+				invited.setEmail(s[0]);
+				invited.setApplication(result);
+				invited.setSend(true);
+				invited.setSendTime(ZonedDateTime.now());
+				invited.setAcceptKey(RandomUtil.generateAcceptKey());
+				applicationInviteEmailReponsitory.save(invited);
+				mailService.sendInvitationMail(invited, baseUrl, invited.getAcceptKey());
+			}
+		}
 		User user = userService.getUserWithAuthorities();
 		ChallengeUserApplication userApplication = new ChallengeUserApplication();
 		userApplication.setApplicationId(result.getId());
 		userApplication.setChallengeId(applicationDTO.getChallengeId());
-		userApplication.setUserId(user.getId());
-		userApplication.setStatus(ChallengeUserApplicationStatus.ACCEPT);
-		userApplication.setInvitedMail(user.getEmail());
+		userApplication.setUserId(user.getId());		
 		challengeUserApplicationRepository.save(userApplication);
 		return applicationRepository.save(result);
 	}
 
-	public Application updateApplication(ApplicationDTO applicationDTO) {
+	public Application updateApplication(ApplicationBasicDTO applicationDTO, String baseUrl) {
 
-		Application application = new Application();
-		application.setId(applicationDTO.getId());
+		Application application = applicationRepository.findOne(applicationDTO.getId());
 		application.setTeamName(applicationDTO.getTeamName());
 		application.setCompanyName(applicationDTO.getCompanyName());
 		application.setDescription(applicationDTO.getDescription());
 		application.setIdeasDescription(applicationDTO.getIdeasDescription());
 		application.setMotivation(applicationDTO.getMotivation());
-		if (checkApplication(applicationDTO)) {
-			application.setStatus(ApplicationStatus.WAITING_FOR_APPROVE);
-		} else {
+		application.setStatus(ApplicationStatus.WAITING_FOR_APPROVE);
+
+		if (!checkApplication(applicationDTO)) {
 			application.setStatus(ApplicationStatus.DRAFT);
 		}
-
-		application.setChallenge(challengeRepository.findOne(applicationDTO.getChallengeId()));
-		return applicationRepository.save(application);
+		
+		Application result = applicationRepository.save(application);
+		for (String a : applicationDTO.getMembers()) {
+			String[] s = a.split(",");
+			String check = challengeUserApplicationRepository.checkChallengeUserApplication(s[0], applicationDTO.getId());
+			if(check == null){
+				ApplicationInviteEmail invited = new ApplicationInviteEmail();
+				invited.setEmail(s[0]);
+				invited.setApplication(result);
+				invited.setSend(true);
+				invited.setSendTime(ZonedDateTime.now());
+				invited.setAcceptKey(RandomUtil.generateAcceptKey());
+				applicationInviteEmailReponsitory.save(invited);
+				mailService.sendInvitationMail(invited, baseUrl, invited.getAcceptKey());
+			}
+		}
+		return result;
 	}
 
 	public ApplicationDTO getApplicationDetail(Long applicationId) {
-		List<ApplicationMemberDTO> members = challengeUserApplicationRepository
-				.getApplicationMemberDeatil(applicationId);
-		List<UserInfoDTO> info = userInfoRepository.getUserInfo(applicationId);
-		Application a = applicationRepository.findOne(applicationId);
-		List<ApplicationMemberDTO> result = new ArrayList<>();
-		for (UserInfoDTO userInfoDTO : info) {
-			for (ApplicationMemberDTO m : members) {
-				if (userInfoDTO.getEmail().equals(m.getInvitedMail())) {
-					m.setUserInfo(userInfoDTO);
-
-				}
+		ApplicationDTO dto = applicationRepository.getapplicationById(applicationId);
+		List<ChallengeUserApplication> members = challengeUserApplicationRepository.findByApplicationId(applicationId);
+		List<ApplicationInviteEmail> invites = applicationInviteEmailReponsitory.findByApplicationId(applicationId);
+		List<ApplicationMemberDTO>  memberDtos = new ArrayList<>();
+		for (ChallengeUserApplication m : members) {
+			User u = userService.getUserWithAuthorities(m.getUserId());
+			ApplicationMemberDTO d = new ApplicationMemberDTO();
+			d.setId(m.getId());
+			d.setUserId(m.getUserId());
+			d.setInvitedMail(u.getEmail());
+			d.setFirstName(u.getFirstName());
+			d.setLastName(u.getLastName());
+			if(u.getUserInfo() != null){
+				d.setPhone(u.getUserInfo().getPhone());
+				d.setSex(u.getUserInfo().getSex());
+				d.setCompanyName(u.getUserInfo().getCompanyName());
+				d.setJobTitle(u.getUserInfo().getJobTitle());
+				d.setLogoUrl(u.getUserInfo().getLogoUrl());
+				d.setCountry(u.getUserInfo().getCountry());
+				d.setCity(u.getUserInfo().getCity());
+				d.setNationality(u.getUserInfo().getNationality());
+				d.setBirthday(u.getUserInfo().getBirthday());
+				d.setIntroduction(u.getUserInfo().getIntroduction());
+				d.setTwitterUrl(u.getUserInfo().getTwitterUrl());
+				d.setWebsiteUrl(u.getUserInfo().getWebsiteUrl());
+				d.setLinkedInUrl(u.getUserInfo().getLinkedInUrl());
+				d.setSkills(u.getUserInfo().getSkills());
+				d.setWorkArea(u.getUserInfo().getWorkArea());
+				d.setFeedbackFrom(u.getUserInfo().getFeedbackFrom());
 			}
+			memberDtos.add(d);
 		}
-		ApplicationDTO dto = new ApplicationDTO(a, members);
+		for (ApplicationInviteEmail a : invites) {
+			ApplicationMemberDTO d = new ApplicationMemberDTO();
+			d.setInvitedMail(a.getEmail());
+			memberDtos.add(d);
+		}
+		dto.setMembers(memberDtos);
+		return dto;
+	}
+	
+	public ApplicationBasicDTO getApplicationBasic(Long id){
+		Application application = applicationRepository.findOne(id);
+		List<String> emails = new ArrayList<>();
+		ApplicationBasicDTO dto = new ApplicationBasicDTO();
+		dto.setId(id);
+		dto.setTeamName(application.getTeamName());
+		dto.setChallengeId(application.getChallenge().getId());
+		dto.setCompanyName(application.getCompanyName());
+		dto.setDescription(application.getDescription());
+		dto.setMotivation(application.getMotivation());
+		dto.setIdeasDescription(application.getIdeasDescription());
+		dto.setStatus(application.getStatus());
+		List<ChallengeUserApplication> members = challengeUserApplicationRepository.findByApplicationId(id);
+		List<ApplicationInviteEmail> invites = applicationInviteEmailReponsitory.findByApplicationId(id);
+		for (ChallengeUserApplication m : members) {
+			User user = userService.getUserWithAuthorities(m.getUserId());
+			String s = user.getEmail() + "," + user.getStatus();
+			emails.add(s);
+		}
+		for (ApplicationInviteEmail a : invites) {
+			String s = a.getEmail() + ",false";
+			emails.add(s);
+		}
+		dto.setMembers(emails);
 		return dto;
 	}
 
-	public ChallengeUserApplication addApplicationMember(ApplicationMemberDTO memberDTO, String baseUrl) {
+	public ApplicationInviteEmail addApplicationMember(ApplicationMemberDTO memberDTO, String baseUrl) {
 
-		ChallengeUserApplication userApplication = new ChallengeUserApplication();
-		userApplication.setApplicationId(memberDTO.getApplicationId());
-		userApplication.setChallengeId(memberDTO.getChallengeId());
-		userApplication.setAcceptKey(RandomUtil.generateAcceptKey());
-		userApplication.setStatus(ChallengeUserApplicationStatus.DECLINE);
-		userApplication.setInvitedMail(memberDTO.getInvitedMail());
-
-		mailService.sendInvitationMail(memberDTO, baseUrl, userApplication.getAcceptKey());
-		return challengeUserApplicationRepository.save(userApplication);
+		ApplicationInviteEmail inviteEmail = new ApplicationInviteEmail();
+		//inviteEmail.setEmail(memberDTO.getEmail());
+		inviteEmail.setSend(true);
+		inviteEmail.setSendTime(ZonedDateTime.now());
+		inviteEmail.setAcceptKey(RandomUtil.generateAcceptKey());
+		//mailService.sendInvitationMail(memberDTO, baseUrl, inviteEmail.getAcceptKey());
+		return applicationInviteEmailReponsitory.save(inviteEmail);
 
 	}
 
 	public String finishAcceptInvitation(String key, Boolean accept) {
 		if (accept.booleanValue() == true) {
-			ChallengeUserApplication userApplication = challengeUserApplicationRepository.findByAcceptKey(key);
-			userApplication.setAcceptKey(null);
-			userApplication.setUserId(userRepository.getUserByAcceptKey(key));
-			userApplication.setStatus(ChallengeUserApplicationStatus.ACCEPT);
+			ApplicationInviteEmail inviteEmail = applicationInviteEmailReponsitory.findByAcceptKey(key);
+			User user = userService.getUserWithAuthoritiesByEmail(inviteEmail.getEmail());
+			ChallengeUserApplication userApplication = new ChallengeUserApplication();
+			userApplication.setUserId(user.getId());
+			userApplication.setApplicationId(inviteEmail.getApplication().getId());
+			userApplication.setChallengeId(inviteEmail.getApplication().getChallenge().getId());
 			challengeUserApplicationRepository.save(userApplication);
 			return "User accepted!";
 		} else {
-			challengeUserApplicationRepository.deleteByAcceptKey(key);
+			applicationInviteEmailReponsitory.deleteByAcceptKey(key);
 			return "User declined?";
 		}
 
 	}
 
-	public void deleteByKey(String key) {
-		challengeUserApplicationRepository.deleteByAcceptKey(key);
-	}
+	
 
 	public void deleteApplication(Long id) {
 		challengeUserApplicationRepository.deleteByApplicationId(id);
 		applicationRepository.delete(id);
 	}
 
-	public List<ApplicationMemberDTO> getStatus(Long id) {
-		List<ApplicationMemberDTO> userStatus = challengeUserApplicationRepository.getUserStatus(id);
 
-		List<ApplicationMemberDTO> memberStatus = challengeUserApplicationRepository.getMemberStatus(id);
-		
-		for (ApplicationMemberDTO u :userStatus) {
-			for (ApplicationMemberDTO m : memberStatus) {
-				if(m.getInvitedMail().equals(u.getInvitedMail())){
-					m.setUserStatus(u.getUserStatus());
-				}
-			}
-		}
-		return memberStatus;
-	}
-
-	public Boolean[] checkApplication(Long id) {
-		Boolean[] list = new Boolean[10];
-		for (int i = 0; i < list.length; i++) {
-			list[i] = false;
-		}
-
-		ApplicationDTO dto = this.getApplicationDetail(id);
-
-		List<ApplicationMemberDTO> status = getStatus(dto.getId());
+//	public String[] checkApplication(Long id) {
+//		Boolean[] list = new Boolean[10];
+//		for (int i = 0; i < list.length; i++) {
+//			list[i] = false;
+//		}
+//
+//		ApplicationDTO dto = this.getApplicationDetail(id);
+//
+//		
+//		
+//		List<ApplicationInviteEmail> inviteEmails = applicationInviteEmailReponsitory.findByApplicationId(id);
+//		User user = userService.getUserWithAuthorities();
+//		if (user != null) {
+//			list[0] = true;
+//		}
+//
+//		list[1] = user.getActivated();
+//		if (user.getStatus() == UserStatus.PROFILE_COMPLETE) {
+//			list[2] = true;
+//		}
+//
+//		if (dto.getTeamName() != null) {
+//			list[3] = true;
+//		}
+//
+//		if (dto.getDescription() != null) {
+//			list[4] = true;
+//		}
+//
+//		if (dto.getMotivation() != null) {
+//			list[5] = true;
+//		}
+//
+//		if (dto.getIdeasDescription() != null) {
+//			list[6] = true;
+//		}
+//
+//		if (!inviteEmails.isEmpty() || status.size() > 1 ) {
+//			list[7] = true;
+//		}
+//		
+//		
+//		if(inviteEmails.isEmpty()){
+//			list[8] = true;
+//		}
+//		list[9] = true;
+//		for (ApplicationMemberDTO a : status) {
+//			if(a.getUserStatus()!=null || a.getUserStatus() != UserStatus.PROFILE_COMPLETE ){
+//				list[9] = false;
+//			}
+//		}	
+//		return list;
+//	}
+	
+	public List<String> checkApplication(Long id) {
+		List<String> list = new ArrayList<>();
+		Application a = applicationRepository.findOne(id);
 		User user = userService.getUserWithAuthorities();
 		if (user != null) {
-			list[0] = true;
+			list.add("Create account or login," + true);
+		}
+		else{
+			list.add("Create account or login," + false);
 		}
 
-		list[1] = user.getActivated();
+		list.add("Verify your account," + user.getActivated());
 		if (user.getStatus() == UserStatus.PROFILE_COMPLETE) {
-			list[2] = true;
+			list.add("Complete your profile," + true);
+		}
+		else{
+			list.add("Complete your profile," + false);
 		}
 
-		if (dto.getTeamName() != null) {
-			list[3] = true;
+		if (a.getTeamName() != null) {
+			list.add("Name your team," + true);
 		}
+		else{
+			list.add("Name your team," + false);
+		}
+		if (a.getDescription() != null) {
+			list.add("Describe your team," + true);
+		}
+		else{
+			list.add("Describe your team," + false);
+		}
+		if (a.getMotivation() != null) {
+			list.add("Fill in your motivation," + true);
+		}
+		else{
+			list.add("Fill in your motivation," + false);
+		}
+		if (a.getIdeasDescription() != null) {
+			list.add("Fill in your idea," + true);
+		}
+		else{
+			list.add("Fill in your idea," + false);
+		}
+		
+		List<ChallengeUserApplication> members = challengeUserApplicationRepository.findByApplicationId(id);
+		List<ApplicationInviteEmail> invites = applicationInviteEmailReponsitory.findByApplicationId(id);
 
-		if (dto.getDescription() != null) {
-			list[4] = true;
+		if (!invites.isEmpty() || members.size() > 1 ) {
+			list.add("Invite other team members," + true);
 		}
-
-		if (dto.getMotivation() != null) {
-			list[5] = true;
+		else{
+			list.add("Invite other team members," + false);
 		}
-
-		if (dto.getIdeasDescription() != null) {
-			list[6] = true;
+		
+		
+		if(invites.isEmpty()){
+			list.add("Other members have accepted their invitation," + true);
 		}
-
-		if (dto.getMembers().size() > 1) {
-			list[7] = true;
+		else{
+			list.add("Other members have accepted their invitation," + false);
 		}
-		list[8] = true;
-		list[9] = true;
-		for (ApplicationMemberDTO m : status) {
-			if (m.getMemberStatus() != ChallengeUserApplicationStatus.ACCEPT) {
-				list[8] = false;
-			}
-			if(m.getUserStatus() != UserStatus.PROFILE_COMPLETE){
-				list[9] = false;
-			}
+		String s = challengeUserApplicationRepository.checkUserStatus(id);
+		if(s != null && invites.isEmpty()){
+			list.add("Other member have completed their profile," + true);
+		}
+		else{
+			list.add("Other member have completed their profile," + false);
 		}
 		return list;
 	}

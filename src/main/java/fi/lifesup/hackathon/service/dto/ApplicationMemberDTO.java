@@ -9,12 +9,11 @@ import fi.lifesup.hackathon.domain.enumeration.UserStatus;
 public class ApplicationMemberDTO {
 
 	private Long id;
-	private Long applicationId;
-	private Long challengeId;
+	private Long userId;
+	
+
 	private String invitedMail;
 	private String firstName;
-	private UserStatus userStatus;
-	private ChallengeUserApplicationStatus memberStatus;
 	private String lastName;
 	private String phone;
 	private UserSex sex;
@@ -32,38 +31,11 @@ public class ApplicationMemberDTO {
 	private String skills;
 	private String workArea;
 	private String feedbackFrom;
-	
-	public ApplicationMemberDTO(Long id, Long applicationId, Long challengeId, String userEmail) {
-		super();
-		this.id = id;
-		this.applicationId = applicationId;
-		this.challengeId = challengeId;
-		this.invitedMail = userEmail;
-	}
-
-	public ApplicationMemberDTO(Long id, Long applicationId, Long challengeId, String userEmail, String userName) {
-		super();
-		this.id = id;
-		this.applicationId = applicationId;
-		this.challengeId = challengeId;
-		this.invitedMail = userEmail;
-		this.firstName = userName;
-	}
-	
-	
-	
-	public ApplicationMemberDTO(Long id, String invitedMail, UserStatus userStatus) {
+		
+	public ApplicationMemberDTO(Long id, String invitedMail) {
 		super();
 		this.id = id;
 		this.invitedMail = invitedMail;
-		this.userStatus = userStatus;
-	}
-
-	public ApplicationMemberDTO(Long id, String invitedMail, ChallengeUserApplicationStatus memberStatus) {
-		super();
-		this.id = id;
-		this.invitedMail = invitedMail;
-		this.memberStatus = memberStatus;
 	}
 
 	public void setUserInfo(UserInfoDTO ui){
@@ -87,6 +59,13 @@ public class ApplicationMemberDTO {
 		this.feedbackFrom = ui.getFeedbackFrom();
 	}
 
+	public Long getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
 	public String getFirstName() {
 		return firstName;
 	}
@@ -234,25 +213,6 @@ public class ApplicationMemberDTO {
 	public ApplicationMemberDTO() {
 		// TODO Auto-generated constructor stub
 	}
-
-	
-
-	public ChallengeUserApplicationStatus getMemberStatus() {
-		return memberStatus;
-	}
-
-	public void setMemberStatus(ChallengeUserApplicationStatus memberStatus) {
-		this.memberStatus = memberStatus;
-	}
-
-	public UserStatus getUserStatus() {
-		return userStatus;
-	}
-
-	public void setUserStatus(UserStatus userStatus) {
-		this.userStatus = userStatus;
-	}
-
 	
 	public Long getId() {
 		return id;
@@ -262,21 +222,6 @@ public class ApplicationMemberDTO {
 		this.id = id;
 	}
 
-	public Long getApplicationId() {
-		return applicationId;
-	}
-
-	public void setApplicationId(Long applicationId) {
-		this.applicationId = applicationId;
-	}
-
-	public Long getChallengeId() {
-		return challengeId;
-	}
-
-	public void setChallengeId(Long challengeId) {
-		this.challengeId = challengeId;
-	}
 
 	public String getInvitedMail() {
 		return invitedMail;

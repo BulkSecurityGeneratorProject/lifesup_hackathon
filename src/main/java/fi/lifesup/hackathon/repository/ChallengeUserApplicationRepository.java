@@ -18,26 +18,22 @@ public interface ChallengeUserApplicationRepository extends JpaRepository<Challe
 
 	void deleteByChallengeId(Long id);
 
-	void deleteByAcceptKey(String key);
-
 	List<ChallengeUserApplication> findByApplicationId(Long applicationId);
 
 	@Query("select cua from ChallengeUserApplication cua" + " where cua.challengeId = :#{[0]} and cua.userId = :#{[1]}")
 	ChallengeUserApplication findByChallengeIdAndUserId(Long challengeId, Long userId);
 
 	List<ChallengeUserApplication> findByUserId(Long userId);
+	@Query("select 'true' from User u, ChallengeUserApplication cua, ApplicationInviteEmail aie"
+			+ " where (u.id = cua.userId and u.email = ?1 and cua.applicationId = ?2) "
+			+ " or (aie.email = ?1 and aie.application.id = ?2)")
+	String checkChallengeUserApplication(String email, Long applicationId);
 
-	ChallengeUserApplication findByAcceptKey(String acceptKey);
-
-	@Query("select new fi.lifesup.hackathon.service.dto.ApplicationMemberDTO(cua.id, cua.invitedMail, cua.status)"
-			+ " from ChallengeUserApplication cua" + " where cua.applicationId = :#{[0]}")
-	List<ApplicationMemberDTO> getMemberStatus(Long applicationId);
+	@Query("select 'true' from User u, ChallengeUserApplication cua"
+			+ " where (u.id = cua.userId and cua.applicationId = ?1 and u.status = 'PROFILE_COMPLETE') ")
+	String checkUserStatus(Long applicationId);
 	
-	@Query("select new fi.lifesup.hackathon.service.dto.ApplicationMemberDTO(cua.id, cua.invitedMail, u.status)"
-			+ " from ChallengeUserApplication cua, User u where cua.userId = u.id and cua.applicationId = :#{[0]}")
-	List<ApplicationMemberDTO> getUserStatus(Long applicationId);
-
-	@Query("select new fi.lifesup.hackathon.service.dto.ApplicationMemberDTO(cua.id, cua.invitedMail, cua.status)"
-			+ " from ChallengeUserApplication cua where cua.applicationId = :#{[0]}")
+	@Query("select new fi.lifesup.hackathon.service.dto.ApplicationMemberDTO(cua.id, u.email)"
+			+ " from ChallengeUserApplication cua , User u where cua.applicationId = :#{[0]} and u.id = cua.userId")
 	List<ApplicationMemberDTO> getApplicationMemberDeatil(Long applicationId);
 }

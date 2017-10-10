@@ -18,6 +18,7 @@ import org.thymeleaf.spring4.SpringTemplateEngine;
 
 import fi.lifesup.hackathon.config.JHipsterProperties;
 import fi.lifesup.hackathon.domain.Application;
+import fi.lifesup.hackathon.domain.ApplicationInviteEmail;
 import fi.lifesup.hackathon.domain.User;
 import fi.lifesup.hackathon.security.SecurityUtils;
 import fi.lifesup.hackathon.service.dto.ApplicationMemberDTO;
@@ -107,8 +108,8 @@ public class MailService {
 	}
 
 	@Async
-	public void sendInvitationMail(ApplicationMemberDTO member, String baseUrl, String accpetKey) {
-		log.debug("Sending invitation member e-mail to '{}'", member.getInvitedMail());
+	public void sendInvitationMail(ApplicationInviteEmail member, String baseUrl, String accpetKey) {
+		log.debug("Sending invitation member e-mail to '{}'", member.getEmail());
 		Locale locale = Locale.forLanguageTag("en");
 
 		Context context = new Context(locale);
@@ -118,6 +119,6 @@ public class MailService {
 
 		String content = templateEngine.process("invitationMail", context);
 		String subject = messageSource.getMessage("email.invitation.title", null, locale);
-		sendEmail(member.getInvitedMail(), subject, content, false, true);
+		sendEmail(member.getEmail(), subject, content, false, true);
 	}
 }

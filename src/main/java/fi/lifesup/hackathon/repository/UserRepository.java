@@ -46,6 +46,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select u from User u left join fetch u.authorities au where u.login = ?1 and au.name = ?2")
     User getUserByAuthority(String login, String auth);
     
-    @Query("select u.id from User u, ChallengeUserApplication cua where u.email = cua.invitedMail and cua.acceptKey = ?1")
-    Long getUserByAcceptKey(String acceptKey);
+//    @Query("select u.id from User u, ChallengeUserApplication cua where u.email = cua.invitedMail and cua.acceptKey = ?1")
+//    Long getUserByAcceptKey(String acceptKey);
 }

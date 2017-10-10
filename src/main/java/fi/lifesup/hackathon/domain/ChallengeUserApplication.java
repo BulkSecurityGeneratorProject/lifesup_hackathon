@@ -29,40 +29,6 @@ public class ChallengeUserApplication implements Serializable {
 	@Column(name = "application_id")
 	private Long applicationId;
 
-	@Column(name = "accept_key")
-	private String acceptKey;
-	
-	@Column(name = "invited_email")
-	private String invitedMail;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(name = "status")
-	private ChallengeUserApplicationStatus status;
-	
-	public String getInvitedMail() {
-		return invitedMail;
-	}
-
-	public void setInvitedMail(String invitedMail) {
-		this.invitedMail = invitedMail;
-	}
-
-	public String getAcceptKey() {
-		return acceptKey;
-	}
-
-	public void setAcceptKey(String acceptKey) {
-		this.acceptKey = acceptKey;
-	}
-
-	public ChallengeUserApplicationStatus getStatus() {
-		return status;
-	}
-
-	public void setStatus(ChallengeUserApplicationStatus status) {
-		this.status = status;
-	}
-
 	public Long getId() {
 		return id;
 	}
