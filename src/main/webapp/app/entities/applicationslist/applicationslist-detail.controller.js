@@ -29,7 +29,6 @@
     getChallengeInfo();
     getUserInfo();
     getApplicationByChallenge();
-    // getMemberStatus();
     validateApplication();
 
 

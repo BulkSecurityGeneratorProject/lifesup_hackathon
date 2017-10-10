@@ -1,3 +1,19 @@
+<div class="searchBox">
+    <md-content class="md-padding">
+        <form ng-submit="$event.preventDefault()">
+            <md-autocomplete md-selected-item="vm.selectedItem" md-search-text-change="vm.searchTextChange(vm.searchText)" md-search-text="vm.searchText"
+                md-selected-item-change="vm.selectedItemChange(item)" md-items="item in vm.applications | filter: vm.searchText"
+                md-item-text="item.name || item.company" placeholder="Enter team name">
+                <md-item-template>
+                    <span md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.teamName}}</span>
+                </md-item-template>
+                <md-not-found>
+                    <span data-translate="hackathonApp.search.noResult">No result were found.</span>
+                </md-not-found>
+            </md-autocomplete>
+        </form>
+    </md-content>
+</div>
 <div class="row">
   <div class="col-sm-12 col-md-3" ng-repeat="application in vm.applications">
     <md-card class="application-card">
@@ -8,8 +24,12 @@
           <a ui-sref="applicationslist-detail({id:application.id})" class="go-detail">Details</a>
         </md-card-content>
         <md-card-actions class="action-btn-group">
-          <button class="action-btn approve-btn" ng-click="vm.approve(application)">APPROVE</button>
-          <button class="action-btn reject-btn" ng-click="vm.reject(application)">REJECT</button>
+          <button class="action-btn approve-btn btn-small" ng-click="vm.approve(application)">
+            <i class="material-icons">check</i>
+          </button>
+          <button class="action-btn reject-btn btn-small" ng-click="vm.reject(application)">
+            <i class="material-icons">close</i>
+          </button>
         </md-card-actions>
     </md-card>
   </div>

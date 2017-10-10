@@ -12,8 +12,8 @@
           md-min-length="0"
           placeholder="What is your favorite challenge/company?">
           <md-item-template>
-            <span md-highlight-flags = "^i">{{item.name}} - </span>
-            <span md-highlight-flags = "^i">{{item.company.name}}</span>
+            <span md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.name}} - </span>
+            <span md-highlight-text="vm.searchText" md-highlight-flags = "^i">{{item.company.name}}</span>
           </md-item-template>
       </md-autocomplete>
     </form>
@@ -43,14 +43,14 @@
         <md-card-content class='challenge-content'>
           <md-list>
             <md-list-item>
-              <span class="list-item"><i class="material-icons">place</i><span>{{challenge.info.location}}</span></span>
+              <span class="list-item"><i class="material-icons challenge-icon">place</i><span>{{challenge.info.location}}</span></span>
             </md-list-item>
             <md-list-item>
-              <span class="list-item"><i class="material-icons">stars</i><span>{{challenge.info.prize}}</span></span>
+              <span class="list-item"><i class="material-icons challenge-icon">stars</i><span>{{challenge.info.prize}}</span></span>
             </md-list-item>
             <md-list-item>
-              <span ng-show="challenge.timeLeft > 0" class="list-item"><i class="material-icons">alarm</i><span>Apply in {{challenge.timeLeft}} day(s)</span></span>
-              <span ng-if="challenge.timeLeft === 0" class="list-item"><i class="material-icons">alarm</i><span>Deadline Today!</span></span>
+              <span ng-show="challenge.timeLeft > 0" class="list-item"><i class="material-icons challenge-icon">alarm</i><span>Apply in {{challenge.timeLeft}} day(s)</span></span>
+              <span ng-if="challenge.timeLeft === 0" class="list-item"><i class="material-icons challenge-icon">alarm</i><span>Deadline Today!</span></span>
             </md-list-item>
           </md-list>
         </md-card-content>
