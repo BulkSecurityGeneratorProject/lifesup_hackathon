@@ -6,6 +6,7 @@
             }
         },
         "challengesDetails": {
+						"title": "Challenge Details",
 						"challengeIntro": "About the challenge",
 						"companyIntro": "About the company",
 						"resourceText": "Available Resources",
@@ -16,7 +17,7 @@
 						"additionalText": "Additional information",
 						"maxTeamMember": "Max Team Member",
 						"minTeamMember": "Min Team Member",
-						"title": "Apply to challenge",
+						"subtitle": "Apply to challenge",
             "eventStartTime": "Event Start",
             "eventEndTime": "Event End",
             "applicationCloseDate": "Application Close",

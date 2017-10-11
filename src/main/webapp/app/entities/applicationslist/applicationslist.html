@@ -1,18 +1,18 @@
 <div class="custom-jumbotron jumbotron">
   <div>
-    <h1>Applications List</h1>
+    <h1 data-translate="hackathonApp.applicationslist.home.title">Applications List</h1>
   </div>
 <div class="search-panel">
     <md-content class="searchBox">
         <form ng-submit="$event.preventDefault()">
             <md-autocomplete md-selected-item="vm.selectedItem" md-search-text-change="vm.searchTextChange(vm.searchText)" md-search-text="vm.searchText"
                 md-selected-item-change="vm.selectedItemChange(item)" md-items="item in vm.applications | filter: vm.searchText"
-                md-item-text="item.name || item.company" placeholder="Enter team name to search" class="searchBox">
+                md-item-text="item.name || item.company" placeholder="{{'hackathonApp.applicationslist.home.search.placeHolder' | translate}}" class="searchBox">
                 <md-item-template>
                     <span md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.teamName}}</span>
                 </md-item-template>
                 <md-not-found>
-                    <span>No result were found.</span>
+                    <span data-translate="hackathonApp.applicationslist.home.search.noResult">No result were found.</span>
                 </md-not-found>
             </md-autocomplete>
         </form>
@@ -32,7 +32,7 @@
         <md-card-subtitle class="company-name"><h5>{{application.companyName}}</h5></md-card-subtitle>
         <md-card-content class='application-description'>
           <p>{{application.description}}</p>
-          <a ui-sref="applicationslist-detail({id:application.id})" class="go-detail">Details</a>
+          <a ui-sref="applicationslist-detail({id:application.id})" class="go-detail" data-translate="hackathonApp.applicationslist.home.detail">More Details</a>
         </md-card-content>
         <md-card-actions class="action-btn-group">
           <button class="action-btn approve-btn btn-small" ng-click="vm.approve(application)">

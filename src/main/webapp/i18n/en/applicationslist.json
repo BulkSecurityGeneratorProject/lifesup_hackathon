@@ -1,0 +1,41 @@
+{
+    "hackathonApp": {
+        "applicationslist" : {
+            "home": {
+                "title": "Applications List",
+                "search": {
+                    "placeHolder": "Enter team name to search",
+                    "noResult" : "No result were found!"
+                },
+                "detail": "More Details"
+            },
+            "detail": {
+                "title": "Application Details",
+                "teamName": "Team Name",
+                "companyName": "Company Name",
+                "description": "Team Description",
+                "motivation": "Team Motivation",
+                "ideasDescription": "Ideas Description",
+                "editApplication": "Edit your application",
+                "status": "Status",
+                "challenge": "Challenge",
+                "users": "Users",
+                "noApplication": "Sorry, there's no application of this challenge yet!"
+            },
+            "challengeInfo": {
+                "challenge": "You are applying to _",
+                "deadline": "Application deadline _",
+                "progress": "Application readiness _",
+                "status": {
+                    "heading": "This application is",
+                    "valid": "Valid",
+                    "invalid": "Invalid"
+                },
+                "challengePage": "View the challenge page",
+                "approve": "Approve",
+                "reject": "Reject",
+                "additionalText": "After the deadline the application will be screened"
+            }
+        }
+    }
+}

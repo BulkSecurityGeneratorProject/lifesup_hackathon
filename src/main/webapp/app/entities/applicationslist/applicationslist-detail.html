@@ -26,18 +26,18 @@
 			      <!--======== other info ============-->
 			      <div class="horizontal-card">
 			        <div class="team-description">
-			          <h3>Team Description</h3>
+			          <h3 data-translate="hackathonApp.applicationslist.detail.description">Team Description</h3>
 			          <p>{{vm.application.description}}</p>
 			        </div>
 			        <div class="team-motivation">
-			          <h3>Team Motivation</h3>
+			          <h3 data-translate="hackathonApp.applicationslist.detail.motivation">Team Motivation</h3>
 			          <p>{{vm.application.motivation}}</p>
 			        </div>
 			        <div class="team-conclusion">
-			          <h3>Ideas Description</h3>
+			          <h3 data-translate="hackathonApp.applicationslist.detail.ideasDescription">Ideas Description</h3>
 			          <p>{{vm.application.ideasDescription}}</p>
 			        </div>
-			        <button class="btn custom-btn" ui-sref="team({id:vm.application.challengeId})">Edit your application</button>
+			        <button class="btn custom-btn" ui-sref="team({id:vm.application.challengeId})" data-translate="hackathonApp.applicationslist.detail.editApplication">Edit your application</button>
 			      </div>
 			  	</div>
 			  </div>
@@ -46,15 +46,15 @@
 			  <div class="application-progress col-md-3 col-xs-12 horizontal-card">
 			  	<div style="background-image:url({{vm.challenge.bannerUrl}})" class="challenge-banner"></div>
 			  	<div>
-			  		<p class="application-sub-title">You are applying to _</p>
+			  		<p class="application-sub-title" data-translate="hackathonApp.applicationslist.challengeInfo.challenge">You are applying to _</p>
 			  		<h3 class="challenge-name">{{vm.challenge.name}}</h3>
 			  	</div>
 			  	<div>
-						<p class="application-sub-title">Application deadline _</p>
+						<p class="application-sub-title" data-translate="hackathonApp.applicationslist.challengeInfo.deadline">Application deadline _</p>
 						<span>{{vm.challenge.info.eventEndTime | date}}</span>
 					</div>
 					<div>
-			  		<p class="application-sub-title">Application Readiness _</p>
+			  		<p class="application-sub-title" data-translate="hackathonApp.applicationslist.challengeInfo.progress">Application Readiness _</p>
 						<md-progress-linear md-mode="determinate" value="{{vm.determinateValue}}"></md-progress-linear>
 					</div>
 						<!-- team validation -->
@@ -67,27 +67,27 @@
 					</div>
 
 					<div>
-						<h3>This application is</h3>
+						<h3 data-translate="hackathonApp.applicationslist.challengeInfo.status.heading">This application is</h3>
 						<div ng-switch="vm.determinateValue === 100">
 							<div ng-switch-when="true" class="application-status application-valid">
 								<i class="material-icons">thumb_up</i>
-								<span>Valid</span>
+								<span data-translate="hackathonApp.applicationslist.challengeInfo.status.valid">Valid</span>
 							</div>
 							<div ng-switch-when="false" class="application-status application-invalid">
 								<i class="material-icons">thumb_down</i>
-								<span>Invalid</span>
+								<span data-translate="hackathonApp.applicationslist.challengeInfo.status.invalid">Invalid</span>
 							</div>
-							<div class="text-center">After the deadline the application will be screened</div>
+							<div class="text-center" data-translate="hackathonApp.applicationslist.challengeInfo.additionalText">After the deadline the application will be screened</div>
 						</div>
 					</div>
 			  	<div>
-			  		<button class="btn custom-btn challenge-link" ui-sref="challengeslist">VIEW THE CHALLENGE PAGE</button>
+			  		<button class="btn custom-btn challenge-link" ui-sref="challengeslist" data-translate="hackathonApp.applicationslist.challengeInfo.challengePage">VIEW THE CHALLENGE PAGE</button>
 			  	</div>
 					<!--======== approve/reject buttons ============-->
 					<div ng-show="vm.isAuthenticated()" has-authority="ROLE_ADMIN">
 						<div class="action-btn-group">
-								<button class="action-btn approve-btn" ng-click="vm.approve(vm.application)">APPROVE</button>
-								<button class="action-btn reject-btn" ng-click="vm.reject(vm.application)">REJECT</button>
+								<button class="action-btn approve-btn" ng-click="vm.approve(vm.application)" data-translate="hackathonApp.applicationslist.challengeInfo.approve">APPROVE</button>
+								<button class="action-btn reject-btn" ng-click="vm.reject(vm.application)" data-translate="hackathonApp.applicationslist.challengeInfo.reject">REJECT</button>
 						</div>
 					</div>
 			  </div>
