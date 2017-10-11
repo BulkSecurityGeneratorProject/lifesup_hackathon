@@ -1,23 +1,33 @@
 package fi.lifesup.hackathon.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import fi.lifesup.hackathon.domain.Company;
-
-import fi.lifesup.hackathon.repository.CompanyRepository;
-import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.inject.Inject;
-import javax.validation.Valid;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+
+import javax.inject.Inject;
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.codahale.metrics.annotation.Timed;
+
+import fi.lifesup.hackathon.domain.Company;
+import fi.lifesup.hackathon.domain.User;
+import fi.lifesup.hackathon.repository.CompanyRepository;
+import fi.lifesup.hackathon.service.UserService;
+import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 
 /**
  * REST controller for managing Company.
@@ -31,6 +41,8 @@ public class CompanyResource {
     @Inject
     private CompanyRepository companyRepository;
 
+    @Inject
+    private UserService userService;
     /**
      * POST  /companies : Create a new company.
      *
@@ -116,6 +128,14 @@ public class CompanyResource {
         log.debug("REST request to delete Company : {}", id);
         companyRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("company", id.toString())).build();
+    }
+    
+    @GetMapping("/companies/user")
+    @Timed
+    public Company getCompanyByUser() {
+        log.debug("REST request to get Company  by User ");
+        User u = userService.getUserWithAuthorities();
+        return u.getCompany();
     }
 
 }
