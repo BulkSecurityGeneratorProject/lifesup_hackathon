@@ -1,0 +1,33 @@
+
+<div>
+    <h2><span data-translate="hackathonApp.company.detail.title">Company</span> {{vm.companyInfo.id}}</h2>
+    <hr>
+    <jhi-alert-error></jhi-alert-error>
+    <dl class="dl-horizontal jh-entity-details">
+        <dt><span data-translate="hackathonApp.company.name">Name</span></dt>
+        <dd>
+            <span>{{vm.companyInfo.name}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.company.fullAddress">Full Address</span></dt>
+        <dd>
+            <span>{{vm.companyInfo.fullAddress}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.company.phone">Phone</span></dt>
+        <dd>
+            <span>{{vm.companyInfo.phone}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.company.email">Email</span></dt>
+        <dd>
+            <span>{{vm.companyInfo.email}}</span>
+        </dd>
+        <dt><span data-translate="hackathonApp.company.website">Website</span></dt>
+        <dd>
+            <span>{{vm.companyInfo.website}}</span>
+        </dd>
+    </dl>
+
+    <button type="button" ui-sref="company-detail.edit({id:vm.companyInfo.id})" class="btn btn-primary">
+        <span class="glyphicon glyphicon-pencil"></span>
+        <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"> Update</span>
+    </button>
+</div>
