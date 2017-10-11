@@ -20,6 +20,12 @@
 </div>
 </div>
 <div class="row">
+  <div ng-if="vm.applications.length === 0">
+    <div class="text-center">
+      <img src="content/images/default/no-challenge.png">
+    </div>
+    <h5 class="alert alert-danger">Sorry, there's no application of this challenge yet!</h5>
+  </div>
   <div class="col-sm-12 col-md-3" ng-repeat="application in vm.applications">
     <md-card class="application-card">
         <md-card-title class="team-name"><h3>{{application.teamName}}</h3></md-card-title>
