@@ -22,8 +22,8 @@
                         <span class="hidden-sm">Challenges</span>
                     </a>
                 </li>
-                 <!-- Manage Challenge (need to change ui-sref to link to challenges list view for admin/manager)-->
-                <li ng-class="{active: vm.$state.includes('admin')}"  ng-switch-when="true" has-authority="ROLE_ADMIN" uib-dropdown class="dropdown pointer nav-item">
+                <!-- Manage Challenge (need to change ui-sref to link to challenges list view for admin/manager)-->
+                <li ng-class="{active: vm.$state.includes('admin')}" ng-switch-when="true" has-authority="ROLE_HOST" uib-dropdown class="dropdown pointer nav-item">
                     <a ui-sref="challenge-manager" ng-click="vm.collapseNavbar()" id="admin-menu">
                         <span class="glyphicon glyphicon-cog"></span>&nbsp;
                         <span class="hidden-sm">Manage challenges</span>
@@ -43,19 +43,32 @@
                         <span data-translate="global.menu.account.logout">Logout</span>
                     </a>
                 </li>
-               
-               <!-- Small avatar should have linked to account details-->
+
+                <!-- Small avatar should have linked to account details-->
                 <li class="dropdown" uib-dropdown ng-switch-when="true" class="nav-item">
                     <a href="" uib-dropdown-toggle ng-disabled="disabled" class="nav-menu" id="avatar"><img class="img-circle" width="22" height="22" ng-src="{{'content/images/logo-jhipster.png'}}" /></a>
+
                     <div class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="ls">
-                        <a><span ui-sref-active="active"><a ui-sref="settings" ui-sref-opts="{reload: true}" class="dropdown-item">Account Setting</a></span></a>
-                        <a><span ui-sref-active="active"><a ui-sref="user-management-detail({login: vm.account.login})" ui-sref-opts="{reload: true}" class="dropdown-item">Account Detail</a></span></a>
-                        <a has-authority="ROLE_ADMIN"><span ui-sref-active="active"><a ui-sref="user-management" ui-sref-opts="{reload: true}" class="dropdown-item">Manage User</a></span></a>
-                        <a><span ui-sref-active="active"><a ui-sref="application" ui-sref-opts="{reload: true}" class="dropdown-item">My Applications</a></span></a>
-                        <a has-authority="ROLE_ADMIN"><span ui-sref-active="active"><a ui-sref="docs" ui-sref-opts="{reload: true}" class="dropdown-item">API</a></span></a>
+                        <a><span ui-sref-active="active"><a ui-sref="settings" ui-sref-opts="{reload: true}" class="dropdown-item">Account Setting</a></span>
+                        </a>
+
+                        <a><span ui-sref-active="active"><a ui-sref="user-management-detail({login: vm.account.login})" ui-sref-opts="{reload: true}" class="dropdown-item">Account Detail</a></span>
+                        </a>
+
+                        <a><span ui-sref-active="active"><a has-authority="ROLE_ADMIN" ui-sref="user-management" ui-sref-opts="{reload: true}" class="dropdown-item">Manage User</a></span>
+                        </a>
+
+                        <a><span ui-sref-active="active"><a has-authority="ROLE_USER" ui-sref="user-management" ui-sref-opts="{reload: true}" class="dropdown-item">Company</a></span>
+                        </a>
+
+                        <!-- <a><span ui-sref-active="active"><a ui-sref="application" ui-sref-opts="{reload: true}" class="dropdown-item">My Applications</a></span>
+                        </a> -->
+
+                        <a><span ui-sref-active="active"><a has-authority="ROLE_ADMIN" ui-sref="docs" ui-sref-opts="{reload: true}" class="dropdown-item">API</a></span>
+                        </a>
                     </div>
                 </li>
-               
+
                 <li ui-sref-active="active" uib-dropdown class="dropdown pointer nav-item" ng-controller="JhiLanguageController as languageVm">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" ng-if="languageVm.languages.length > 1">
                         <span>
