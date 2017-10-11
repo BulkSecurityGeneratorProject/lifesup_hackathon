@@ -10,11 +10,14 @@
           md-items="item in vm.challenges | filter: vm.searchText"
           md-item-text="item.name"
           md-min-length="0"
-          placeholder="What is your favorite challenge/company?">
+          placeholder="{{'hackathonApp.search.placeHolder' | translate}}">
           <md-item-template>
             <span md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.name}} - </span>
             <span md-highlight-text="vm.searchText" md-highlight-flags = "^i">{{item.company.name}}</span>
           </md-item-template>
+          <md-not-found>
+              <span data-translate="hackathonApp.search.noResult">No result were found!</span>
+          </md-not-found>
       </md-autocomplete>
     </form>
   </md-content>
@@ -26,8 +29,8 @@
   </div>
 <!-- challenge filter by date-->
   <div class="md-padding date-filter col-sm-12 col-md-3 col-lg-3">
-    <md-datepicker ng-model="vm.startDate" md-open-on-focus md-placeholder="Start before" md-hide-icons="all" class="date-picker-filter" required></md-datepicker>
-    <md-datepicker ng-model="vm.endDate" md-open-on-focus md-placeholder="End after" md-hide-icons="all" class="date-picker-filter" required></md-datepicker>
+    <md-datepicker ng-model="vm.startDate" md-open-on-focus md-placeholder="{{'hackathonApp.search.startBefore' | translate}}" md-hide-icons="all" class="date-picker-filter" required></md-datepicker>
+    <md-datepicker ng-model="vm.endDate" md-open-on-focus md-placeholder="{{'hackathonApp.search.endAfter' | translate}}" md-hide-icons="all" class="date-picker-filter" required></md-datepicker>
   </div>
 </div>
 <hr />
@@ -56,11 +59,15 @@
         </md-card-content>
         <md-card-actions ng-switch="vm.getApplicationStatus(challenge)">
           <button class="btn btn-block challenge-cta btn-active" ng-switch-when="ACTIVE" ng-switch="vm.isAuthenticated()">
-            <a href="#" ui-sref="login-signup" ng-switch-when="false">Apply now!</a>
-            <a href="#" ui-sref="complete-profile({id: challenge.id})" ng-switch-when="true">Apply now!</a>
+            <a href="#" ui-sref="login-signup" ng-switch-when="false" data-translate="hackathonApp.applicationStatus.apply">Apply now!</a>
+            <a href="#" ui-sref="complete-profile({id: challenge.id})" ng-switch-when="true" data-translate="hackathonApp.applicationStatus.apply">Apply now!</a>
           </button>
-          <button class="btn btn-block challenge-cta btn-applied" ng-click="vm.getApplicationId(challenge.id)" ui-sref="applicationslist-detail({id:vm.applicationId})" ng-switch-when="APPLIED"><a href="#">View your application</a></button>
-          <button class="btn btn-block challenge-cta btn-inactive" ng-switch-when="CLOSED" disabled><a href="#">Applications have closed!</a></button>
+          <button class="btn btn-block challenge-cta btn-applied" ng-click="vm.getApplicationId(challenge.id)" ui-sref="applicationslist-detail({id:vm.applicationId})" ng-switch-when="APPLIED">
+            <a href="#" data-translate="hackathonApp.applicationStatus.applied">View your application</a>
+          </button>
+          <button class="btn btn-block challenge-cta btn-inactive" ng-switch-when="CLOSED" disabled>
+            <a href="#" data-translate="hackathonApp.applicationStatus.close">Applications have closed!</a>
+          </button>
         </md-card-actions>
     </md-card>
   </div>
