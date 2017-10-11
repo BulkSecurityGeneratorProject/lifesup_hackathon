@@ -25,15 +25,12 @@
                 <div layout-gt-sm="row"flex>
                     <div class="col-md-8">
                             <label>Team members</label>
-                            <p>Invite team members to the challenge. Team needs to have at least two members and all the team members are required to fill their profile information</p>
+                            <p>Invite team members to the challenge. You can invite members by emails separate by ;</p>
                             <hr>
                     </div>
                     
                 </div>
                 <div layout-gt-sm="row" ng-repeat="member in vm.members" flex>
-                    <!-- <div class="col-md-4">
-                        <p>{{member.name}}</p>
-                    </div> -->
                     <div class="col-md-4">
                             <p>{{member.invitedMail}}</p>
                     </div>
@@ -43,17 +40,11 @@
                     </div>
                 </div>
 
-                <div layout-gt-sm="row" ng-repeat="i in vm.emptySlot()" flex>
-                    <!-- <div class="col-md-4">
-                        <md-input-container class="md-block" flex-gt-sm>
-                            <label>Name</label>
-                            <input name="member" ng-model="vm.invite.firstName">
-                        </md-input-container>
-                    </div> -->
+                <div layout-gt-sm="row" flex>
                     <div class="col-md-4">
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Member's Email</label>
-                            <input name="email" ng-model="vm.invite.invitedMail">
+                            <input name="email" ng-model="vm.inviteMails">
                         </md-input-container>
                     </div>
                 </div>

@@ -32,10 +32,10 @@
             </div>
             <!-- Full name -->
             <md-input-container class="md-block" flex-gt-sm>
-                <label data-translate="loginsignup.form.username">Name</label>
-                <input name="username" id="username" ng-model="vm.registerAccount.login" ng-maxlength=50 required>
-                <div ng-messages="signupForm.username.$error" role="alert">
-                    <div ng-message="required" data-translate="loginsignup.messages.validate.username.required"></div>
+                <label data-translate="loginsignup.form.fullName">Name</label>
+                <input name="fullName" id="fullName" ng-model="vm.registerAccount.login" ng-maxlength=50 required>
+                <div ng-messages="signupForm.fullName.$error" role="alert">
+                    <div ng-message="required" data-translate="loginsignup.messages.validate.fullName.required"></div>
                 </div>
             </md-input-container>
             <!-- Email -->
@@ -90,7 +90,7 @@
         <!-- Email -->
         <md-input-container class="md-block" flex-gt-sm>
             <label data-translate="loginsignup.form.email">Email</label>
-            <input name="email" type="email" ng-model="vm.email" ng-maxlength=50 required>
+            <input name="email" ng-model="vm.username" ng-maxlength=50 required>
             <div ng-messages="signupForm.email.$error" role="alert">
                 <div ng-message="required" data-translate="loginsignup.messages.validate.email.required"></div>
             </div>

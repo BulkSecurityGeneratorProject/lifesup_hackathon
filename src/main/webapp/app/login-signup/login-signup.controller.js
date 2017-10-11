@@ -6,9 +6,9 @@
         .controller('LoginSignupController', LoginSignupController);
 
 
-    LoginSignupController.$inject = ['$translate', '$timeout', 'Auth', 'LoginService', '$state'];
+    LoginSignupController.$inject = ['$translate', '$timeout', 'Auth', 'LoginService', '$state', '$rootScope'];
 
-    function LoginSignupController ($translate, $timeout, Auth, LoginService, $state) {
+    function LoginSignupController ($translate, $timeout, Auth, LoginService, $state, $rootScope) {
         var vm = this;
 
         vm.doNotMatch = null;
@@ -60,7 +60,7 @@
         function login (event) {
             event.preventDefault();
             Auth.login({
-                email: vm.email,
+                username: vm.username,
                 password: vm.password,
             }).then(function () {
                 vm.authenticationError = false;

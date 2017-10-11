@@ -5,43 +5,26 @@
         .module('hackathonApp')
         .controller('TeamController', TeamController);
 
-    TeamController.$inject = ['$scope', '$stateParams', '$state', 'Application', 'UserApplicationByChallengeID', 'InviteMember', 'MemberStatusByApplication'];
+    TeamController.$inject = ['$scope', '$stateParams', '$state', 'Application', 'UserApplicationByChallengeID', 'InviteMember', 'ApplicationMembers'];
 
-    function TeamController($scope, $stateParams, $state, Application, UserApplicationByChallengeID, InviteMember, MemberStatusByApplication) {
+    function TeamController($scope, $stateParams, $state, Application, UserApplicationByChallengeID, InviteMember, ApplicationMembers) {
         var vm = this;
         vm.save = save;
         vm.challengeId = $stateParams.id;
         vm.applicationId = null;
         vm.team = {};
-        vm.invite = {};
-        vm.members = [
-            {
-                name: 'Duc Tran',
-                email: 'ductranplay@gmail.com',
-                profileComplete: true
-            },
-            {
-                name: 'New Commer',
-                email: 'conkienconcon@gmail.com',
-                profileComplete: false
-            }
-        ]
-
-        vm.emptySlot = emptySlot;
-
-        function emptySlot() {
-            return Array(1);
-        }
+        vm.inviteMails = null;
 
         load();
 
         function load() {
             vm.entity = UserApplicationByChallengeID.get({ challengeId: $stateParams.id }, function (result) {
+                console.log(result);
                 if (result.applicationId) {
                     Application.get({ id: result.applicationId }, function (result) {
                         vm.team = result;
                     });
-                    MemberStatusByApplication.query({ applicationId: result.applicationId }, function (data) {
+                    ApplicationMembers.query({ applicationId: result.applicationId }, function (data) {
                         vm.members = data;
                         console.log(vm.members);
                     })
@@ -51,36 +34,21 @@
 
         function save() {
             vm.team.challengeId = $stateParams.id;
+            vm.team.members = vm.inviteMails.split(";");
             if (vm.entity.applicationId) {
                 Application.update(vm.team, onSaveSuccess, onSaveError);
             }
             else {
+                console.log(vm.team);
                 Application.save(vm.team, onSaveSuccess, onSaveError);
             }
 
         }
 
         function onSaveSuccess(result) {
-            if (vm.invite.invitedMail) {
-                vm.invite.applicationId = result.id;
-                vm.invite.challengeId = result.challenge.id;
-                console.log(vm.invite);
-                InviteMember.save(vm.invite, onInviteSuccess, onInviteError);
-            }
-            else {
-                console.log("else");
-                $state.go('applicationslist-detail', { id: result.id });
-            }
-            vm.applicationId = result.id;
+            $state.go('applicationslist-detail', { id: result.id });
         }
 
-        function onInviteSuccess() {
-            $state.go('applicationslist-detail', { id: vm.applicationId });
-        }
-
-        function onInviteError() {
-            alert('Invite Member Failed');
-        }
 
         function onSaveError() {
 
