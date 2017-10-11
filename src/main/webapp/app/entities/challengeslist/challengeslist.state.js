@@ -14,7 +14,7 @@
                 url: '/challengeslist',
                 data: {
                     authorities: [],
-                    pageTitle: 'hackathonApp.challenge.home.title'
+                    pageTitle: 'hackathonApp.challengeslist.home.title'
                 },
                 views: {
                     'content@': {
@@ -25,8 +25,6 @@
                 },
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('challenge');
-                        $translatePartialLoader.addPart('global');
                         $translatePartialLoader.addPart('challengeslist');
                         return $translate.refresh();
                     }]
@@ -37,7 +35,7 @@
                 url: '/challengeslist/{id}',
                 data: {
                     authorities: [],
-                    pageTitle: 'hackathonApp.challenge.detail.title'
+                    pageTitle: 'hackathonApp.challengesDetails.title'
                 },
                 views: {
                     'content@': {
@@ -49,8 +47,6 @@
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('challengeslist');
-                        $translatePartialLoader.addPart('challenge');
-                        $translatePartialLoader.addPart('global');
                         return $translate.refresh();
                     }],
                     entity: ['$stateParams', 'Challenge', function ($stateParams, Challenge) {

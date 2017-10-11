@@ -25,7 +25,7 @@
                 },
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('application');
+                        $translatePartialLoader.addPart('applicationslist');
                         return $translate.refresh();
                     }],
                     entity: ['$stateParams' ,'ApplicationsList', function($stateParams ,ApplicationsList){
@@ -49,7 +49,7 @@
                 },
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                        $translatePartialLoader.addPart('application');
+                        $translatePartialLoader.addPart('applicationslist');
                         return $translate.refresh();
                     }],
                     entity: ['$stateParams', 'ApplicationsListDetails', function ($stateParams, ApplicationsListDetails) {
