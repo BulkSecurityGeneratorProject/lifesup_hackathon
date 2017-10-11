@@ -9,7 +9,7 @@
             </button>
             <a class="navbar-brand logo" href="#/" ng-click="vm.collapseNavbar()">
                 <img class="logo-img" src="content/images/logo-jhipster.png"/>
-                <span data-translate="global.title">Hackathon</span> 
+                <span data-translate="global.title">Hackathon</span>
                 <span class="navbar-version">v{{VERSION}}</span>
             </a>
         </div>
@@ -43,7 +43,7 @@
                         <span data-translate="global.menu.account.logout">Logout</span>
                     </a>
                 </li>
-               
+
                <!-- Small avatar should have linked to account details-->
                 <li class="dropdown" uib-dropdown ng-switch-when="true" class="nav-item">
                     <a href="" uib-dropdown-toggle ng-disabled="disabled" class="nav-menu" id="avatar"><img class="img-circle" width="22" height="22" ng-src="{{'content/images/logo-jhipster.png'}}" /></a>
@@ -55,7 +55,7 @@
                         <a has-authority="ROLE_ADMIN"><span ui-sref-active="active"><a ui-sref="docs" ui-sref-opts="{reload: true}" class="dropdown-item">API</a></span></a>
                     </div>
                 </li>
-               
+
                 <li ui-sref-active="active" uib-dropdown class="dropdown pointer nav-item" ng-controller="JhiLanguageController as languageVm">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" ng-if="languageVm.languages.length > 1">
                         <span>
