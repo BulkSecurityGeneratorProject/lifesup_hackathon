@@ -17,6 +17,9 @@ public interface ChallengeUserApplicationRepository extends JpaRepository<Challe
 	void deleteByApplicationId(Long id);
 
 	void deleteByChallengeId(Long id);
+	
+//	@Query("delete cua from ChallengeUserApplication cua, User u where u.id = cua.userId and u.email = ?2 and cua.applicationId = ?1")
+//	void deleteMember(Long id, String email);
 
 	List<ChallengeUserApplication> findByApplicationId(Long applicationId);
 

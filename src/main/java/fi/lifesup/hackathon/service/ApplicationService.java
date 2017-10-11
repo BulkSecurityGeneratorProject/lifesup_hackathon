@@ -214,18 +214,6 @@ public class ApplicationService {
 		return dto;
 	}
 
-	public ApplicationInviteEmail addApplicationMember(ApplicationMemberDTO memberDTO, String baseUrl) {
-
-		ApplicationInviteEmail inviteEmail = new ApplicationInviteEmail();
-		//inviteEmail.setEmail(memberDTO.getEmail());
-		inviteEmail.setSend(true);
-		inviteEmail.setSendTime(ZonedDateTime.now());
-		inviteEmail.setAcceptKey(RandomUtil.generateAcceptKey());
-		//mailService.sendInvitationMail(memberDTO, baseUrl, inviteEmail.getAcceptKey());
-		return applicationInviteEmailReponsitory.save(inviteEmail);
-
-	}
-
 	public String finishAcceptInvitation(String key, Boolean accept) {
 		if (accept.booleanValue() == true) {
 			ApplicationInviteEmail inviteEmail = applicationInviteEmailReponsitory.findByAcceptKey(key);
@@ -250,60 +238,6 @@ public class ApplicationService {
 		applicationRepository.delete(id);
 	}
 
-
-//	public String[] checkApplication(Long id) {
-//		Boolean[] list = new Boolean[10];
-//		for (int i = 0; i < list.length; i++) {
-//			list[i] = false;
-//		}
-//
-//		ApplicationDTO dto = this.getApplicationDetail(id);
-//
-//		
-//		
-//		List<ApplicationInviteEmail> inviteEmails = applicationInviteEmailReponsitory.findByApplicationId(id);
-//		User user = userService.getUserWithAuthorities();
-//		if (user != null) {
-//			list[0] = true;
-//		}
-//
-//		list[1] = user.getActivated();
-//		if (user.getStatus() == UserStatus.PROFILE_COMPLETE) {
-//			list[2] = true;
-//		}
-//
-//		if (dto.getTeamName() != null) {
-//			list[3] = true;
-//		}
-//
-//		if (dto.getDescription() != null) {
-//			list[4] = true;
-//		}
-//
-//		if (dto.getMotivation() != null) {
-//			list[5] = true;
-//		}
-//
-//		if (dto.getIdeasDescription() != null) {
-//			list[6] = true;
-//		}
-//
-//		if (!inviteEmails.isEmpty() || status.size() > 1 ) {
-//			list[7] = true;
-//		}
-//		
-//		
-//		if(inviteEmails.isEmpty()){
-//			list[8] = true;
-//		}
-//		list[9] = true;
-//		for (ApplicationMemberDTO a : status) {
-//			if(a.getUserStatus()!=null || a.getUserStatus() != UserStatus.PROFILE_COMPLETE ){
-//				list[9] = false;
-//			}
-//		}	
-//		return list;
-//	}
 	
 	public List<String> checkApplication(Long id) {
 		List<String> list = new ArrayList<>();
@@ -374,5 +308,9 @@ public class ApplicationService {
 			list.add("Other member have completed their profile," + false);
 		}
 		return list;
+	}
+	
+	public void deleteMember(Long applicationId, String email){
+		
 	}
 }

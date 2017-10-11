@@ -152,30 +152,6 @@ public class ChallengeUserApplicationResource {
 				.headers(HeaderUtil.createEntityDeletionAlert("challengeUserApplication", id.toString())).build();
 	}
 
-	@PostMapping("/challenge-user-applications/members")
-	@Timed
-	public ResponseEntity<ApplicationInviteEmail> addApplicationMember(@RequestBody ApplicationMemberDTO memberDTO,
-			HttpServletRequest request) throws URISyntaxException {
-		log.debug("REST request to save ChallengeUserApplication : {}", memberDTO);
-		if (memberDTO.getId() != null) {
-			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeUserApplication",
-					"idexists", "A new challengeUserApplication cannot already have an ID")).body(null);
-		}
-		String baseUrl = request.getScheme() + // "http"
-				"://" + // "://"
-				request.getServerName() + // "myhost"
-				":" + // ":"
-				request.getServerPort() + // "80"
-				request.getContextPath(); // "/myContextPath" or "" if deployed
-											// in root context
-
-		
-			ApplicationInviteEmail result = applicationService.addApplicationMember(memberDTO, baseUrl);
-			
-		return ResponseEntity.created(new URI("/api/challenge-user-applications/"))
-				.body(null);
-	}
-
 	@GetMapping("/challenge-user-applications/challenge/{challengeId}")
 	@Timed
 	public ChallengeUserApplication getApplication(@PathVariable Long challengeId) {
@@ -200,13 +176,5 @@ public class ChallengeUserApplicationResource {
 			String result = applicationService.finishAcceptInvitation(key, accept);
 			return new ResponseEntity<>(result, HttpStatus.OK);	
 	}
-	
-//	@GetMapping("/challenge-user-applications/member-status/{applicationId}")
-//	@Timed
-//	public List<ApplicationMemberDTO> getMemberStatus(@PathVariable Long applicationId) {
-//		log.debug("REST request to get all ChallengeUserApplications");
-//		List<ApplicationMemberDTO> challengeUserApplications = applicationService.getStatus(applicationId);
-//		return challengeUserApplications;
-//	}
 	
 }
