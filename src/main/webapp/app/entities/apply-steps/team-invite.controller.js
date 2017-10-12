@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('TeamInviteController', TeamInviteController);
 
-    TeamInviteController.$inject = ['$rootScope', '$stateParams', 'Auth', 'Principal', 'ApplicationsListDetails', 'Challenge', 'LoginService', '$state', '$translate', '$timeout', 'AcceptInvitation', 'ApplicationByAcceptKey', 'UserDetail', 'ApplicationBasicInfo', 'ApplicationValidation'];
+    TeamInviteController.$inject = ['$rootScope', '$stateParams', 'Auth', 'Principal', 'ApplicationsListDetails', 'Challenge', 'LoginService', '$state', '$translate', '$timeout', 'AcceptInvitation', 'ApplicationByAcceptKey', 'UserDetail', 'ApplicationBasicInfo', 'ApplicationValidation', 'DeclineInvitation'];
 
-    function TeamInviteController($rootScope, $stateParams, Auth, Principal, ApplicationsListDetails, Challenge, LoginService, $state, $translate, $timeout, AcceptInvitation, ApplicationByAcceptKey, UserDetail, ApplicationBasicInfo, ApplicationValidation) {
+    function TeamInviteController($rootScope, $stateParams, Auth, Principal, ApplicationsListDetails, Challenge, LoginService, $state, $translate, $timeout, AcceptInvitation, ApplicationByAcceptKey, UserDetail, ApplicationBasicInfo, ApplicationValidation, DeclineInvitation) {
         var vm = this;
         vm.login = login;
         vm.isAuthenticated = Principal.isAuthenticated;
@@ -27,7 +27,6 @@
         vm.register = register;
         vm.requestResetPassword = requestResetPassword;
         vm.registerAccount = {};
-        // vm.loginAccount = loginAccount;
 
         vm.acceptInvite = acceptInvite;
         vm.declineInvite = declineInvite;
@@ -38,6 +37,7 @@
             });
             vm.application = ApplicationsListDetails.get({ id: result.application.id }, function (result) {
                 vm.members = result.members;
+                console.log(vm.members);
                 vm.members.forEach(function(element) {
                     if (element.skills)
                     element.skills = element.skills.split(',');
@@ -107,24 +107,25 @@
             });
         }
 
+        
+
         function requestResetPassword() {
             $state.go('requestReset');
         }
 
         function acceptInvite() {
-            var temp = $stateParams.id + ",true";
-            AcceptInvitation.update(temp, onSuccess, onError);
+            var temp = $stateParams.id;
+            AcceptInvitation.get(temp, onSuccess, onError);
         }
 
         function declineInvite() {
-            var temp = $stateParams.id + ",false";
-            console.log(temp);
-            AcceptInvitation.update({acceptKey: temp}, onSuccess, onError);
+            DeclineInvitation.get({acceptKey: $stateParams.id});
         }
 
         function onSuccess() {
             console.log("Accept or Decline Successful");
         }
+
         function onError() {
             console.log("Accept or Decline Failed");
         }
