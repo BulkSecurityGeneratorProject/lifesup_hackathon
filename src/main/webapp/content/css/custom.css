@@ -101,6 +101,17 @@ button { /*quick fix close button inside md-autocomplete input*/
   background: #e7e7e7;
 }
 
+a.align-center {
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+}
+
+.align-center span:first-child {
+  padding: 0 2px;
+  position: relative;
+  top: 6px;
+}
 
 /*============= navbar ==============*/
 .footer {
