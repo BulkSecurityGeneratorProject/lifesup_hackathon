@@ -32,6 +32,9 @@
                                 </div>
                             </md-input-container>
                         </div>
+                        <div ng-show="vm.isDateRangeValid(vm.challengeInfo.eventStartTime,vm.challengeInfo.eventEndTime)" class="alert-msg">
+                            {{vm.isDateRangeValid(vm.challengeInfo.eventStartTime,vm.challengeInfo.eventEndTime)}}
+                        </div>
 
                         <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
@@ -90,6 +93,9 @@
                                     <div ng-message="required" data-translate="hackathonApp.messages.validate.pilotPhaseEndDate.required"></div>
                                 </div>
                             </md-input-container>
+                        </div>
+                        <div ng-show="vm.isDateRangeValid(vm.challengeInfo.pilotPhaseStartDate,vm.challengeInfo.pilotPhaseEndDate)" class="alert-msg">
+                            {{vm.isDateRangeValid(vm.challengeInfo.pilotPhaseStartDate,vm.challengeInfo.pilotPhaseEndDate)}}
                         </div>
 
 
@@ -169,6 +175,13 @@
                                 </div>
                             </md-input-container>
                         </div>
+                        <div ng-show="vm.isMinMaxValid(vm.challenge.minTeamNumber,vm.challenge.maxTeamNumber)" class="alert-msg">
+                          {{vm.isMinMaxValid(vm.challenge.minTeamNumber,vm.challenge.maxTeamNumber)}} {{vm.isLowerThan100(vm.challenge.maxTeamNumber)}}
+                        </div>
+                        <div ng-show="vm.isLowerThan100(vm.challenge.maxTeamNumber)" class="alert-msg">
+                           {{vm.isLowerThan100(vm.challenge.maxTeamNumber)}}
+                        </div>
+
 
                         <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
@@ -243,7 +256,8 @@
         <md-button type="button" ng-click="vm.clear()">
             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
         </md-button>
-        <md-button class="md-raised md-primary" ng-click="vm.save()" ng-disabled="challengeForm.$invalid || challengeInfoForm.$invalid || vm.isSaving">
+        <md-button class="md-raised md-primary" ng-click="vm.save()" ng-disabled="challengeForm.$invalid || challengeInfoForm.$invalid || vm.isSaving ||
+        vm.isMinMaxValid(vm.challenge.minTeamNumber,vm.challenge.maxTeamNumber) === false || vm.isDateRangeValid(vm.challengeInfo.eventStartTime,vm.challengeInfo.eventEndTime) === false ">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
         </md-button>
     </md-dialog-actions>

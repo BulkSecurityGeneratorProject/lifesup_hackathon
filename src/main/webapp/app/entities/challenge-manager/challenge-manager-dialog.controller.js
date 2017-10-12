@@ -5,16 +5,19 @@
         .module('hackathonApp')
         .controller('ChallengeManagerDialogController', ChallengeManagerDialogController);
 
-    ChallengeManagerDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$mdDialog', '$q', 'entity', 'ChallengeManager', 'ChallengeInfo', 'Application', 'Company', 'ChallengeBanner'];
+    ChallengeManagerDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$mdDialog', '$q', 'entity', 'ChallengeManager', 'ChallengeInfo', 'Application', 'Company', 'ChallengeBanner', 'validation'];
 
-    function ChallengeManagerDialogController($timeout, $scope, $stateParams, $mdDialog, $q, entity, ChallengeManager, ChallengeInfo, Application, Company, ChallengeBanner) {
+    function ChallengeManagerDialogController($timeout, $scope, $stateParams, $mdDialog, $q, entity, ChallengeManager, ChallengeInfo, Application, Company, ChallengeBanner, validation) {
         var vm = this;
 
         vm.challenge = entity;
         vm.challengeInfo = {};
         vm.clear = clear;
         vm.save = save;
-
+        vm.isMinMaxValid = validation.isMinMaxValid;
+        vm.isDateRangeValid = validation.isDateRangeValid;
+        vm.isLowerThan100 = validation.isLowerThan100;
+        
         getChallengesInfo();
 
         function getChallengesInfo() {
@@ -75,7 +78,7 @@
                 ChallengeBanner.update(vm.attach, onUploadSuccess, onUploadError);
             }
             else{
-                $mdDialog.hide(result); 
+                $mdDialog.hide(result);
             }
         }
 
