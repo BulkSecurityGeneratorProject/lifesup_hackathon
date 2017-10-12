@@ -36,7 +36,7 @@ public class MailService {
 
 	private static final String USER = "user";
 	private static final String BASE_URL = "baseUrl";
-	private static final String ACCEPPT_KEY = "accpetKey";
+	private static final String CHALLENGE = "challenge";
 
 	@Inject
 	private JHipsterProperties jHipsterProperties;
@@ -108,14 +108,14 @@ public class MailService {
 	}
 
 	@Async
-	public void sendInvitationMail(ApplicationInviteEmail member, String baseUrl, String accpetKey) {
+	public void sendInvitationMail(ApplicationInviteEmail member, String baseUrl) {
 		log.debug("Sending invitation member e-mail to '{}'", member.getEmail());
 		Locale locale = Locale.forLanguageTag("en");
-
+		
 		Context context = new Context(locale);
 		context.setVariable(USER, member);
 		context.setVariable(BASE_URL, baseUrl);
-		context.setVariable(ACCEPPT_KEY, accpetKey);
+		context.setVariable(CHALLENGE, member.getApplication().getChallenge().getName());
 
 		String content = templateEngine.process("invitationMail", context);
 		String subject = messageSource.getMessage("email.invitation.title", null, locale);
