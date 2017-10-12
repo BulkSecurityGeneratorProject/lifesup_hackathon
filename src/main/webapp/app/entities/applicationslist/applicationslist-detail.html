@@ -18,7 +18,7 @@
 			        </div>
 			        <div class="member-detail col-md-8 col-xs-12">
 			          <div class="member-description">{{member.introduction}}</div>
-			          <div class="member-skill" ng-repeat="skill in vm.skills">
+			          <div class="member-skill" ng-repeat="skill in member.skills track by $index">
 			            <span class="skill-badge">{{skill}}</span>
 			          </div>
 			        </div>
