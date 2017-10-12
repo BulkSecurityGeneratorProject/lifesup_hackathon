@@ -17,7 +17,11 @@
         vm.isMinMaxValid = validation.isMinMaxValid;
         vm.isDateRangeValid = validation.isDateRangeValid;
         vm.isLowerThan100 = validation.isLowerThan100;
-        
+        vm.isAllDateValid = validation.isAllDateValid;
+        vm.checkDate = checkDate;
+        vm.checkDateArr = checkDateArr;
+
+
         getChallengesInfo();
 
         function getChallengesInfo() {
@@ -37,6 +41,29 @@
                 vm.challengeInfo.applicationCloseDate = new Date(vm.challenge.info.applicationCloseDate);
                 vm.challengeInfo.pilotSubmissionCloseDate = new Date(vm.challenge.info.pilotSubmissionCloseDate);
             }
+        }
+
+        function checkDateArr(date) {
+            return date !== undefined;
+        }
+
+        function checkDate() {
+            vm.dateArray = [
+                vm.challengeInfo.applicationCloseDate,
+                vm.challengeInfo.selectionInformDate,
+                vm.challengeInfo.kickoffWebinarDate,
+                vm.challengeInfo.eventStartTime,
+                vm.challengeInfo.pilotSubmissionCloseDate,
+                vm.challengeInfo.pilotPhaseStartDate,
+                vm.challengeInfo.pilotPhaseEndDate,
+                vm.challengeInfo.eventEndTime
+            ];
+            if (vm.dateArray.every(checkDateArr)) {
+                vm.dateArray.map(function(date) {
+                    return date.getTime();
+                });
+                return vm.isAllDateValid(vm.dateArray);
+          } //else return "Please fill in all date section";
         }
 
         function clear() {
