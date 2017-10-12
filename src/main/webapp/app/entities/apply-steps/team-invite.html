@@ -143,7 +143,7 @@
                         </div>
 
                         <!-- Login Form -->
-                        <div class="login-form-wrapper ml-auto col-md-6 col-lg-6" ng-switch="vm.isAuthenticated()">
+                        <div class="login-form-wrapper ml-auto col-md-6 col-lg-6" ng-switch="vm.isAuthenticated() && vm.isInvitedMail">
                             <form ng-switch-when="false" class="form" role="form" ng-submit="vm.login($event)" id='login-form'>
                                 <div class="form-group">
                                     <label for="username" data-translate="global.form.username">Login</label>

@@ -31,8 +31,19 @@
         vm.acceptInvite = acceptInvite;
         vm.declineInvite = declineInvite;
 
+        vm.isInvitedMail = false;
+
+        vm.account = null;
+        Principal.identity().then(function (account) {
+            vm.account = account;
+        });
+
 
         ApplicationByAcceptKey.get({ acceptkey: $stateParams.id }, function (result) {
+            if (vm.account){
+                if (result.email === vm.account.email) vm.isInvitedMail = true;
+            }
+            
             vm.challenge = Challenge.get({ id: result.application.challenge.id }, function (result) {
             });
             vm.application = ApplicationsListDetails.get({ id: result.application.id }, function (result) {
@@ -52,7 +63,7 @@
             })
         });
 
-
+        
 
         UserDetail.query(function (data) {
             return vm.userInfo = data;
