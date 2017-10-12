@@ -90,26 +90,31 @@ public class ApplicationService {
 		}
 		application.setChallenge(challengeRepository.findOne(applicationDTO.getChallengeId()));
 		Application result = applicationRepository.save(application);
-		for (String a : applicationDTO.getMembers()) {
-			String[] s = a.split(",");
-			String check = challengeUserApplicationRepository.checkChallengeUserApplication(s[0], applicationDTO.getId());
-			if(check == null){
-				ApplicationInviteEmail invited = new ApplicationInviteEmail();
-				invited.setEmail(s[0]);
-				invited.setApplication(result);
-				invited.setSend(true);
-				invited.setSendTime(ZonedDateTime.now());
-				invited.setAcceptKey(RandomUtil.generateAcceptKey());
-				applicationInviteEmailReponsitory.save(invited);
-				mailService.sendInvitationMail(invited, baseUrl, invited.getAcceptKey());
-			}
-		}
+		
 		User user = userService.getUserWithAuthorities();
 		ChallengeUserApplication userApplication = new ChallengeUserApplication();
 		userApplication.setApplicationId(result.getId());
 		userApplication.setChallengeId(applicationDTO.getChallengeId());
 		userApplication.setUserId(user.getId());		
 		challengeUserApplicationRepository.save(userApplication);
+		
+		if(applicationDTO.getMembers() != null){
+			for (String a : applicationDTO.getMembers()) {
+				String[] s = a.split(",");
+				String check = challengeUserApplicationRepository.checkChallengeUserApplication(s[0], applicationDTO.getId());
+				if(check == null){
+					ApplicationInviteEmail invited = new ApplicationInviteEmail();
+					invited.setEmail(s[0]);
+					invited.setApplication(result);
+					invited.setSend(true);
+					invited.setSendTime(ZonedDateTime.now());
+					invited.setAcceptKey(RandomUtil.generateAcceptKey());
+					applicationInviteEmailReponsitory.save(invited);
+					mailService.sendInvitationMail(invited, baseUrl);
+				}
+			}
+		}
+			
 		return applicationRepository.save(result);
 	}
 
@@ -139,7 +144,7 @@ public class ApplicationService {
 				invited.setSendTime(ZonedDateTime.now());
 				invited.setAcceptKey(RandomUtil.generateAcceptKey());
 				applicationInviteEmailReponsitory.save(invited);
-				mailService.sendInvitationMail(invited, baseUrl, invited.getAcceptKey());
+				mailService.sendInvitationMail(invited, baseUrl);
 			}
 		}
 		return result;
@@ -223,8 +228,10 @@ public class ApplicationService {
 			userApplication.setApplicationId(inviteEmail.getApplication().getId());
 			userApplication.setChallengeId(inviteEmail.getApplication().getChallenge().getId());
 			challengeUserApplicationRepository.save(userApplication);
+			applicationInviteEmailReponsitory.deleteByAcceptKey(key);
 			return "User accepted!";
-		} else {
+		} 
+		else {
 			applicationInviteEmailReponsitory.deleteByAcceptKey(key);
 			return "User declined?";
 		}

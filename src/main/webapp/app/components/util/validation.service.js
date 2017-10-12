@@ -10,7 +10,8 @@
       			isMinMaxValid: isMinMaxValid,
       			isLowerThan100: isLowerThan100,
       			isDateRangeValid: isDateRangeValid,
-      			isDiscountValid: isDiscountValid
+      			isDiscountValid: isDiscountValid,
+            isAllDateValid: isAllDateValid
     		};
 
 		function isMinMaxValid(min, max) {
@@ -39,8 +40,17 @@
                 return;
             }
         } else return false;
-
 		}
+
+    function isAllDateValid(arr) {
+        if (arr.every(function(num, i) {
+            return i === arr.length - 1 || num < arr[i + 1];
+          })) {
+            return "date range is valid, please continue to the next section";
+          } else return "date range is invalid, please refer to this order: Application Close, " +
+                        "Inform Date, Kick Off Webinar, Event Start, Submission Close, " +
+                        "Pilot Phase Start, Pilot Phase End, Event End";
+    }
 
 		function isDiscountValid(discountPercentage) {
   			if (discountPercentage > 100 || discountPercentage <= 0) {
