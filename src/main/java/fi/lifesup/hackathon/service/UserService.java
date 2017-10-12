@@ -224,23 +224,13 @@ public class UserService {
 		}
 	}
 
-	public Boolean checkAuthories(String authories) {
-		User user = getUserWithAuthorities();
-		Iterator<Authority> au = user.getAuthorities().iterator();
-		for (int i = 0; i < user.getAuthorities().size(); i++) {
-			if (au.next().getName().equals(authories))
-				return true;
-		}
-		return false;
-	}
-
 	public User getCurrentUser() {
 		User user = getUserWithAuthorities();
 		return user;
 	}
 	
 	@Transactional(readOnly = true)
-	public User getUserWithAuthoritiesByEmail( String email) {
+	public User getUserWithAuthoritiesByEmail(String email) {
 		Optional<User> optionalUser = userRepository.findOneByEmail(email);
 		User user = null;
 		if (optionalUser.isPresent()) {

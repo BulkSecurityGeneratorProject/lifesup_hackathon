@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,12 +22,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 
-import fi.lifesup.hackathon.domain.ApplicationInviteEmail;
 import fi.lifesup.hackathon.domain.ChallengeUserApplication;
 import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
 import fi.lifesup.hackathon.service.ApplicationService;
 import fi.lifesup.hackathon.service.UserService;
-import fi.lifesup.hackathon.service.dto.ApplicationMemberDTO;
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 
 /**
@@ -172,9 +169,8 @@ public class ChallengeUserApplicationResource {
 
 	@PutMapping(path = "/challenge-user-applications/{key}/{accept}/invitation")
 	@Timed
-	public ResponseEntity<String> finishAcceptInvitation(@PathVariable String key,@PathVariable Boolean accept) {		
-			String result = applicationService.finishAcceptInvitation(key, accept);
-			return new ResponseEntity<>(result, HttpStatus.OK);	
+	public ResponseEntity<String> finishAcceptInvitation(@PathVariable String key, @PathVariable Boolean accept) {
+		String result = applicationService.finishAcceptInvitation(key, accept);
+		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
-	
 }

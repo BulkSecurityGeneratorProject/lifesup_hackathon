@@ -311,6 +311,13 @@ public class ApplicationService {
 	}
 	
 	public void deleteMember(Long applicationId, String email){
-		
+		ChallengeUserApplication userApplication = challengeUserApplicationRepository.getMember(applicationId, email);
+		if(userApplication == null){	
+			ApplicationInviteEmail a = applicationInviteEmailReponsitory.findByApplicationIdAndEmail(applicationId, email);
+			applicationInviteEmailReponsitory.deleteByApplicationIdAndEmailLike(applicationId, email + "%");
+		}
+		else{
+			challengeUserApplicationRepository.delete(userApplication);
+		}
 	}
 }

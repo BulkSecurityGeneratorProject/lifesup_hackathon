@@ -219,13 +219,6 @@ public class UserResource {
 		userService.deleteUser(login);
 		return ResponseEntity.ok().headers(HeaderUtil.createAlert("userManagement.deleted", login)).build();
 	}
-//
-//	@GetMapping("/users/{id}")
-//	@Timed
-//	public User getUser(@PathVariable Long id) {
-//		User user = userRepository.findOne(id);
-//		return user;
-//	}
 
 	@GetMapping("/list-user")
 	@Timed

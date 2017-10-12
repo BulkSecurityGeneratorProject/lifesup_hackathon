@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 
 import fi.lifesup.hackathon.domain.Application;
+import fi.lifesup.hackathon.domain.ApplicationInviteEmail;
+import fi.lifesup.hackathon.domain.ChallengeUserApplication;
 import fi.lifesup.hackathon.domain.enumeration.ApplicationStatus;
 import fi.lifesup.hackathon.repository.ApplicationRepository;
 import fi.lifesup.hackathon.service.ApplicationService;
@@ -193,4 +195,15 @@ public class ApplicationResource {
         
         return applicationService.checkApplication(id);
     }
+    
+	
+	@DeleteMapping("/applications/email/{email}/{applicationId}")
+	@Timed
+	public ResponseEntity<Void> deleteByEmail(@PathVariable Long applicationId, @PathVariable String email) {
+		log.debug("REST request to delete application member");
+		applicationService.deleteMember(applicationId, email);
+		return ResponseEntity.ok()
+				.headers(HeaderUtil.createEntityDeletionAlert("Application Member", applicationId.toString())).build();
+	}
+	
 }
