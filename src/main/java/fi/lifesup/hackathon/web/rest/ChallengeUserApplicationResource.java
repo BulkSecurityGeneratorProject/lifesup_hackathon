@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.inject.Inject;
+import javax.websocket.server.PathParam;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
@@ -167,10 +169,16 @@ public class ChallengeUserApplicationResource {
 		return challengeUserApplications;
 	}
 
-	@PutMapping(path = "/challenge-user-applications/{key}/{accept}/invitation")
+	@PutMapping("/challenge-user-applications/accept-invitation")
 	@Timed
-	public ResponseEntity<String> finishAcceptInvitation(@PathVariable String key, @PathVariable Boolean accept) {
-		String result = applicationService.finishAcceptInvitation(key, accept);
+	public ResponseEntity<String> finishAcceptedInvitation(@RequestParam(value = "acceptKey") String acceptKey) {		
+		String result = applicationService.finishAcceptInvitation(acceptKey, true);
+		return new ResponseEntity<>(result, HttpStatus.OK);
+	}
+	@PutMapping("/challenge-user-applications/decline-invitation")
+	@Timed
+	public ResponseEntity<String> finishDeclinedInvitation(@RequestParam(value = "acceptKey") String acceptKey) {		
+		String result = applicationService.finishAcceptInvitation(acceptKey, false);
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 }

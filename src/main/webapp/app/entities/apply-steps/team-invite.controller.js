@@ -5,40 +5,58 @@
         .module('hackathonApp')
         .controller('TeamInviteController', TeamInviteController);
 
-    TeamInviteController.$inject = ['$rootScope', '$stateParams', 'ApplicationsList', 'Auth', 'Principal', 'ApplicationsListDetails', 'Challenge', 'LoginService', '$state', '$translate', '$timeout', 'AcceptInvitation', 'ApplicationByAcceptKey', 'UserDetail'];
+    TeamInviteController.$inject = ['$rootScope', '$stateParams', 'Auth', 'Principal', 'ApplicationsListDetails', 'Challenge', 'LoginService', '$state', '$translate', '$timeout', 'AcceptInvitation', 'ApplicationByAcceptKey', 'UserDetail', 'ApplicationBasicInfo', 'ApplicationValidation'];
 
-    function TeamInviteController($rootScope, $stateParams, ApplicationsList, Auth, Principal, ApplicationsListDetails, Challenge, LoginService, $state, $translate, $timeout, AcceptInvitation, ApplicationByAcceptKey, UserDetail) {
+    function TeamInviteController($rootScope, $stateParams, Auth, Principal, ApplicationsListDetails, Challenge, LoginService, $state, $translate, $timeout, AcceptInvitation, ApplicationByAcceptKey, UserDetail, ApplicationBasicInfo, ApplicationValidation) {
         var vm = this;
-
-        vm.application = ApplicationByAcceptKey.get({ acceptKey: $stateParams.id }, function (result) {
-            vm.members = result.members;
-            vm.members.map(function (member) {
-                return vm.skills = member.skills.split(',');
-            });
-            vm.challenge = Challenge.get({ id: result.challengeId });
-        });
         vm.login = login;
         vm.isAuthenticated = Principal.isAuthenticated;
+
         vm.determinateValue = 0;
         vm.progressCount = progressCount;
+
+        // Reg acc notif
         vm.doNotMatch = null;
         vm.error = null;
         vm.email = null;
         vm.password = null;
         vm.errorUserExists = null;
         vm.authenticationError = false;
+        vm.success = null;
+
         vm.register = register;
         vm.requestResetPassword = requestResetPassword;
-        vm.credentials = {};
         vm.registerAccount = {};
-        vm.success = null;
-        vm.loginAccount = loginAccount;
+        // vm.loginAccount = loginAccount;
+
         vm.acceptInvite = acceptInvite;
         vm.declineInvite = declineInvite;
 
-        UserDetail.query(function(data) {
+
+        ApplicationByAcceptKey.get({ acceptkey: $stateParams.id }, function (result) {
+            vm.challenge = Challenge.get({ id: result.application.challenge.id }, function (result) {
+            });
+            vm.application = ApplicationsListDetails.get({ id: result.application.id }, function (result) {
+                vm.members = result.members;
+                vm.members.forEach(function(element) {
+                    if (element.skills)
+                    element.skills = element.skills.split(',');
+                }, this);
+            });
+
+            ApplicationValidation.query({ applicationId: result.application.id }, function (data) {
+                vm.validations = data;
+                vm.validations = vm.validations.map(function (item) {
+                    return item.split(',');
+                })
+            })
+        });
+
+
+
+        UserDetail.query(function (data) {
             return vm.userInfo = data;
-          });
+        });
 
         function progressCount() {
             return vm.determinateValue += 10;
@@ -71,7 +89,7 @@
             }
         }
 
-        function login (event) {
+        function login(event) {
             event.preventDefault();
             Auth.login({
                 username: vm.username,
@@ -82,11 +100,7 @@
                     $state.current.name === 'finishReset' || $state.current.name === 'requestReset') {
                     $state.go('home');
                 }
-
                 $rootScope.$broadcast('authenticationSuccess');
-
-                // previousState was set in the authExpiredInterceptor before being redirected to login modal.
-                // since login is succesful, go to stored previousState and clear previousState
                 $state.reload();
             }).catch(function () {
                 vm.authenticationError = true;
@@ -96,24 +110,23 @@
         function requestResetPassword() {
             $state.go('requestReset');
         }
-        function loginAccount() {
-            $state.go('register');
+
+        function acceptInvite() {
+            var temp = $stateParams.id + ",true";
+            AcceptInvitation.update(temp, onSuccess, onError);
         }
 
-        function acceptInvite(){
-            var id = $stateParams.id;
-            AcceptInvitation.save(id, onSuccess, onError);
+        function declineInvite() {
+            var temp = $stateParams.id + ",false";
+            console.log(temp);
+            AcceptInvitation.update({acceptKey: temp}, onSuccess, onError);
         }
 
-        function onSuccess(){
-            console.log("Accept Successful");
+        function onSuccess() {
+            console.log("Accept or Decline Successful");
         }
-        function onError(){
-            console.log("Accept Failed");
-        }
-
-        function declineInvite(){
-            alert("Declined Invitation");
+        function onError() {
+            console.log("Accept or Decline Failed");
         }
 
     }

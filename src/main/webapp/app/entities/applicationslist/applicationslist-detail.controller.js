@@ -36,7 +36,7 @@
       if (vm.members) {
         vm.members.map(function (member) {
           if (member.skills) {
-            return vm.skills = member.skills.split(',');
+            return member.skills = member.skills.split(',');
           }
         });
       }

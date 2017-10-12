@@ -89,6 +89,7 @@
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('loginsignup');
                         $translatePartialLoader.addPart('login');
+                        $translatePartialLoader.addPart('applicationslist');
                         return $translate.refresh();
                     }]
                 }

@@ -30,7 +30,7 @@
         });
     }
     function AcceptInvitation($resource) {
-        var resourceUrl = 'api/challenge-user-applications/:key/invitation';
+        var resourceUrl = '/api/challenge-user-applications/accept-invitation/:acceptKey';
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: true },
