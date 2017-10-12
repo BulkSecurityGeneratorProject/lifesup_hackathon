@@ -167,10 +167,11 @@ public class ChallengeUserApplicationResource {
 		return challengeUserApplications;
 	}
 
-	@PutMapping(path = "/challenge-user-applications/{key}/{accept}/invitation")
+	@PutMapping(path = "/challenge-user-applications/accept-invitation/{acceptKey}")
 	@Timed
-	public ResponseEntity<String> finishAcceptInvitation(@PathVariable String key, @PathVariable Boolean accept) {
-		String result = applicationService.finishAcceptInvitation(key, accept);
+	public ResponseEntity<String> finishAcceptInvitation(@PathVariable String acceptKey) {		
+		String[] s = acceptKey.split(",");
+		String result = applicationService.finishAcceptInvitation(s[0], Boolean.parseBoolean(s[1]));
 		return new ResponseEntity<>(result, HttpStatus.OK);
 	}
 }
