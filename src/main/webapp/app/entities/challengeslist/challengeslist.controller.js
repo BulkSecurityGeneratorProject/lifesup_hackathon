@@ -32,6 +32,7 @@
         function loadAll() {
             Challenge.query(function (result) {
                 vm.challenges = result;
+                console.log(result);
                 vm.challenges.map(function(challenge){
                     var today = (new Date()).getTime();
                     var endDate = new Date(challenge.info.applicationCloseDate).getTime();

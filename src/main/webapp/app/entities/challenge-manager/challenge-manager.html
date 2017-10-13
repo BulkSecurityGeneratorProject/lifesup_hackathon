@@ -71,12 +71,12 @@
             <div class="w3-border-top w3-border-light-grey"></div>
             <md-card-content class="challenge-content" ui-sref="challenge-manager-detail({id:challenge.id})">
                 <md-list>
-                    <md-list-item><i class="material-icons w3-text-red">pin_drop</i>{{challenge.info.location}}</md-list-item>
-                    <md-list-item><i class="material-icons w3-text-indigo">date_range</i> {{challenge.info.eventStartTime | date:'MMM dd,
+                    <md-list-item><i class="challenge-icon material-icons w3-text-red">pin_drop</i>{{challenge.info.location}}</md-list-item>
+                    <md-list-item><i class="challenge-icon material-icons w3-text-indigo">date_range</i> {{challenge.info.eventStartTime | date:'MMM dd,
                         yyyy'}} - {{challenge.info.eventEndTime | date:'MMM dd, yyyy'}}</md-list-item>
-                    <md-list-item ng-if="challenge.info.status == 'ACTIVE'"><i class="material-icons w3-text-orange">alarm</i>Apply in {{challenge.timeLeft}} day(s)</md-list-item>
-                    <md-list-item ng-if="challenge.info.status == 'DRAFT'"><i class="material-icons w3-text-khaki">vpn_key</i>Activation required</md-list-item>
-                    <md-list-item ng-if="challenge.info.status == 'CLOSED'"><i class="material-icons w3-text-red">close</i>Application has closed</md-list-item>
+                    <md-list-item ng-if="challenge.info.status == 'ACTIVE'"><i class="challenge-icon material-icons w3-text-orange">alarm</i>Apply in {{challenge.timeLeft}} day(s)</md-list-item>
+                    <md-list-item ng-if="challenge.info.status == 'DRAFT'"><i class="challenge-icon material-icons w3-text-khaki">vpn_key</i>Activation required</md-list-item>
+                    <md-list-item ng-if="challenge.info.status == 'CLOSED'"><i class="challenge-icon material-icons w3-text-red">close</i>Application has closed</md-list-item>
 
                 </md-list>
             </md-card-content>

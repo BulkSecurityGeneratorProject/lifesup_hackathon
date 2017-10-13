@@ -36,6 +36,8 @@
         vm.accept = false;
         vm.decline = false;
 
+        vm.reload = reload;
+
         vm.account = null;
         Principal.identity().then(function (account) {
             vm.account = account;
@@ -148,6 +150,10 @@
 
         function onError() {
             console.log("Accept or Decline Failed");
+        }
+
+        function reload(){
+            $state.reload();
         }
 
     }

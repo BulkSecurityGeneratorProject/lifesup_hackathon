@@ -63,8 +63,9 @@
                 <section class="login-signup-wrapper" style="padding: 1em 0em 1em 1em; background: none" ng-cloak>
                     <div class="login-header">
 
-                        <div class="text-center alert alert-success" ng-show="vm.success" data-translate="loginsignup.messages.success">
+                        <div class="text-center alert alert-success" ng-show="vm.success">
                             <strong>Registration saved!</strong> Please check your email for confirmation.
+                            <p><a ng-click="vm.reload()">Reload</a> page to sign in if your email has been verified</p>
                         </div>
                         <div class="text-center alert alert-success" ng-show="vm.accept">
                             <strong>You've accepted to join {{vm.application.teamName}} team</strong>

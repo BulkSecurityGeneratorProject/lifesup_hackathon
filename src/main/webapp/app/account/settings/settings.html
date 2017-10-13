@@ -183,7 +183,7 @@
 
                         <div layout-gt-xs="column" flex>
                             <label data-translate="settings.form.feedBackFrom">Reference from:</label>
-                            <md-radio-group ng-model="vm.user.feedbackFrom" ng-disabled="!editable">
+                            <md-radio-group ng-model="vm.user.feedbackFrom" ng-disabled="!editable" required>
                                 <md-radio-button value="friends">Friends</md-radio-button>
                                 <md-radio-button value="social">Social Media</md-radio-button>
                                 <md-radio-button value="company">A Company</md-radio-button>
@@ -205,7 +205,7 @@
     <div class="col-md-4"></div>
     <div class="col-md-4 text-center">
         <uib-alert class='repeat-item' type="{{alert.type}}" ng-repeat="alert in vm.alerts" dismiss-on-timeout="4000" close="vm.closeAlert($index)">{{alert.msg}}</uib-alert>
-        <md-button class="md-raised md-primary" ng-click="vm.save()" ng-disabled="userForm.$invalid || !editable">Save</md-button>
+        <md-button class="md-raised md-primary" ng-click="vm.save()" ng-disabled="userForm.$invalid || !editable || !vm.selectedSkills.length || !vm.selectedWorkAreas">Save</md-button>
     </div>
     <div class="col-md-4"></div>
 </div>
