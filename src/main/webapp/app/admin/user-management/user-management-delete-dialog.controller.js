@@ -11,7 +11,6 @@
         var vm = this;
 
         vm.user = entity;
-        console.log(entity);
         vm.clear = clear;
         vm.confirmDelete = confirmDelete;
 

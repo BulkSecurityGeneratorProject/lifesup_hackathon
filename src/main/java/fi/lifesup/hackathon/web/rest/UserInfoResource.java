@@ -149,29 +149,17 @@ public class UserInfoResource {
 	@Timed
 	public void updateAccount(@Valid @RequestBody UserInfo userInfo) {
 		User user = userService.getCurrentUser();
+		
 		if (user.getUserInfo() != null) {
-
-			if (userInfo.getCity() != null && userInfo.getPhone() != null && userInfo.getCompanyName() != null
-					&& userInfo.getCountry() != null && userInfo.getFeedbackFrom() != null
-					&& userInfo.getIntroduction() != null && userInfo.getJobTitle() != null
-					&& userInfo.getLinkedInUrl() != null && userInfo.getLogoUrl() != null
-					&& userInfo.getNationality() != null && userInfo.getBirthday() != null && userInfo.getSex() != null
-					&& userInfo.getSkills() != null && userInfo.getTwitterUrl() != null
-					&& userInfo.getWebsiteUrl() != null && userInfo.getWorkArea() != null) {
-				
-				userInfoRepository.save(userInfo);
-				user.setId(user.getId());
-				user.setStatus(UserStatus.PROFILE_COMPLETE);
-				userRepository.save(user);
-			} else {
-				userInfo.setId(user.getUserInfo().getId());
-				userInfoRepository.save(userInfo);
-			}
-
+			
+			userInfo.setId(user.getUserInfo().getId());
+			userInfoRepository.save(userInfo);
 		} 
 		
 		else {
 			//userInfo.setId(user.getUserInfo().getId());
+			user.setId(user.getId());
+			user.setStatus(UserStatus.PROFILE_COMPLETE);
 			user.setUserInfo(userInfoRepository.save(userInfo));
 			userRepository.save(user);
 		}

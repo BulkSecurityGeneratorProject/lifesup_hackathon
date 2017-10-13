@@ -56,8 +56,8 @@ public class ApplicationService {
 
 	@Inject
 	private UserInfoRepository userInfoRepository;
-	
-	@Inject 
+
+	@Inject
 	private ApplicationInviteEmailReponsitory applicationInviteEmailReponsitory;
 
 	public boolean checkApplication(ApplicationBasicDTO applicationDTO) {
@@ -68,10 +68,11 @@ public class ApplicationService {
 		}
 		return true;
 	}
-	public String checkApplication(String s, Long id ) {
-		
-		String s1 = challengeUserApplicationRepository.checkChallengeUserApplication(s,id);
-		
+
+	public String checkApplication(String s, Long id) {
+
+		String s1 = challengeUserApplicationRepository.checkChallengeUserApplication(s, id);
+
 		return s1;
 	}
 
@@ -90,32 +91,29 @@ public class ApplicationService {
 		}
 		application.setChallenge(challengeRepository.findOne(applicationDTO.getChallengeId()));
 		Application result = applicationRepository.save(application);
-		
+
 		User user = userService.getUserWithAuthorities();
 		ChallengeUserApplication userApplication = new ChallengeUserApplication();
 		userApplication.setApplicationId(result.getId());
 		userApplication.setChallengeId(applicationDTO.getChallengeId());
-		userApplication.setUserId(user.getId());		
+		userApplication.setUserId(user.getId());
 		challengeUserApplicationRepository.save(userApplication);
-		
-		if(applicationDTO.getMembers() != null){
+
+		if (applicationDTO.getMembers() != null) {
 			for (String a : applicationDTO.getMembers()) {
-				String[] s = a.split(",");
-				//String check = challengeUserApplicationRepository.checkChallengeUserApplication(s[0], applicationDTO.getId());
-				//System.err.println(check);
-				if(!user.getEmail().equals(s[0])){
+				
 					ApplicationInviteEmail invited = new ApplicationInviteEmail();
-					invited.setEmail(s[0]);
+					invited.setEmail(a);
 					invited.setApplication(result);
 					invited.setSend(true);
 					invited.setSendTime(ZonedDateTime.now());
 					invited.setAcceptKey(RandomUtil.generateAcceptKey());
 					applicationInviteEmailReponsitory.save(invited);
 					mailService.sendInvitationMail(invited, baseUrl);
-				}
+				
 			}
 		}
-			
+
 		return applicationRepository.save(result);
 	}
 
@@ -132,23 +130,22 @@ public class ApplicationService {
 		if (!checkApplication(applicationDTO)) {
 			application.setStatus(ApplicationStatus.DRAFT);
 		}
-		
+
 		Application result = applicationRepository.save(application);
-		for (String a : applicationDTO.getMembers()) {
-			String[] s = a.split(",");
-			System.err.println(s[0]);
-			String check = challengeUserApplicationRepository.checkChallengeUserApplication(s[0], applicationDTO.getId());
-			if(check == null){
-				ApplicationInviteEmail invited = new ApplicationInviteEmail();
-				invited.setEmail(s[0]);
-				invited.setApplication(result);
-				invited.setSend(true);
-				invited.setSendTime(ZonedDateTime.now());
-				invited.setAcceptKey(RandomUtil.generateAcceptKey());
-				applicationInviteEmailReponsitory.save(invited);
-				mailService.sendInvitationMail(invited, baseUrl);
+		if (!applicationDTO.getMembers().isEmpty()) {
+			for (String a : applicationDTO.getMembers()) {
+					ApplicationInviteEmail invited = new ApplicationInviteEmail();
+					invited.setEmail(a);
+					invited.setApplication(result);
+					invited.setSend(true);
+					invited.setSendTime(ZonedDateTime.now());
+					invited.setAcceptKey(RandomUtil.generateAcceptKey());
+					applicationInviteEmailReponsitory.save(invited);
+					mailService.sendInvitationMail(invited, baseUrl);
+				
 			}
 		}
+
 		return result;
 	}
 
@@ -156,7 +153,7 @@ public class ApplicationService {
 		ApplicationDTO dto = applicationRepository.getapplicationById(applicationId);
 		List<ChallengeUserApplication> members = challengeUserApplicationRepository.findByApplicationId(applicationId);
 		List<ApplicationInviteEmail> invites = applicationInviteEmailReponsitory.findByApplicationId(applicationId);
-		List<ApplicationMemberDTO>  memberDtos = new ArrayList<>();
+		List<ApplicationMemberDTO> memberDtos = new ArrayList<>();
 		for (ChallengeUserApplication m : members) {
 			User u = userService.getUserWithAuthorities(m.getUserId());
 			ApplicationMemberDTO d = new ApplicationMemberDTO();
@@ -165,7 +162,7 @@ public class ApplicationService {
 			d.setInvitedMail(u.getEmail());
 			d.setFirstName(u.getFirstName());
 			d.setLastName(u.getLastName());
-			if(u.getUserInfo() != null){
+			if (u.getUserInfo() != null) {
 				d.setPhone(u.getUserInfo().getPhone());
 				d.setSex(u.getUserInfo().getSex());
 				d.setCompanyName(u.getUserInfo().getCompanyName());
@@ -193,8 +190,8 @@ public class ApplicationService {
 		dto.setMembers(memberDtos);
 		return dto;
 	}
-	
-	public ApplicationBasicDTO getApplicationBasic(Long id){
+
+	public ApplicationBasicDTO getApplicationBasic(Long id) {
 		Application application = applicationRepository.findOne(id);
 		List<String> emails = new ArrayList<>();
 		ApplicationBasicDTO dto = new ApplicationBasicDTO();
@@ -232,105 +229,91 @@ public class ApplicationService {
 			challengeUserApplicationRepository.save(userApplication);
 			applicationInviteEmailReponsitory.deleteByAcceptKey(key);
 			return "User accepted!";
-		} 
-		else {
+		} else {
 			applicationInviteEmailReponsitory.deleteByAcceptKey(key);
 			return "User declined?";
 		}
 
 	}
 
-	
-
 	public void deleteApplication(Long id) {
 		challengeUserApplicationRepository.deleteByApplicationId(id);
 		applicationRepository.delete(id);
 	}
 
-	
 	public List<String> checkApplication(Long id) {
 		List<String> list = new ArrayList<>();
 		Application a = applicationRepository.findOne(id);
 		User user = userService.getUserWithAuthorities();
 		if (user != null) {
 			list.add("Create account or login," + true);
-		}
-		else{
+		} else {
 			list.add("Create account or login," + false);
 		}
 
 		list.add("Verify your account," + user.getActivated());
 		if (user.getStatus() == UserStatus.PROFILE_COMPLETE) {
 			list.add("Complete your profile," + true);
-		}
-		else{
+		} else {
 			list.add("Complete your profile," + false);
 		}
 
 		if (a.getTeamName() != null) {
 			list.add("Name your team," + true);
-		}
-		else{
+		} else {
 			list.add("Name your team," + false);
 		}
 		if (a.getDescription() != null) {
 			list.add("Describe your team," + true);
-		}
-		else{
+		} else {
 			list.add("Describe your team," + false);
 		}
 		if (a.getMotivation() != null) {
 			list.add("Fill in your motivation," + true);
-		}
-		else{
+		} else {
 			list.add("Fill in your motivation," + false);
 		}
 		if (a.getIdeasDescription() != null) {
 			list.add("Fill in your idea," + true);
-		}
-		else{
+		} else {
 			list.add("Fill in your idea," + false);
 		}
-		
+
 		List<ChallengeUserApplication> members = challengeUserApplicationRepository.findByApplicationId(id);
 		List<ApplicationInviteEmail> invites = applicationInviteEmailReponsitory.findByApplicationId(id);
 
-		if (!invites.isEmpty() || members.size() > 1 ) {
+		if (!invites.isEmpty() || members.size() > 1) {
 			list.add("Invite other team members," + true);
-		}
-		else{
+		} else {
 			list.add("Invite other team members," + false);
 		}
-		
-		
-		if(invites.isEmpty()){
+
+		if (invites.isEmpty()) {
 			list.add("Other members have accepted their invitation," + true);
-		}
-		else{
+		} else {
 			list.add("Other members have accepted their invitation," + false);
 		}
 		String s = challengeUserApplicationRepository.checkUserStatus(id);
-		if(s != null && invites.isEmpty()){
+		if (s != null && invites.isEmpty()) {
 			list.add("Other member have completed their profile," + true);
-		}
-		else{
+		} else {
 			list.add("Other member have completed their profile," + false);
 		}
 		return list;
 	}
-	
-	public void deleteMember(Long applicationId, String email){
+
+	public void deleteMember(Long applicationId, String email) {
 		ChallengeUserApplication userApplication = challengeUserApplicationRepository.getMember(applicationId, email);
-		if(userApplication == null){	
-			ApplicationInviteEmail a = applicationInviteEmailReponsitory.findByApplicationIdAndEmail(applicationId, email);
+		if (userApplication == null) {
+			ApplicationInviteEmail a = applicationInviteEmailReponsitory.findByApplicationIdAndEmail(applicationId,
+					email);
 			applicationInviteEmailReponsitory.deleteByApplicationIdAndEmailLike(applicationId, email + "%");
-		}
-		else{
+		} else {
 			challengeUserApplicationRepository.delete(userApplication);
 		}
 	}
-	
-	public String check(Long id, String email){
+
+	public String check(Long id, String email) {
 		return challengeUserApplicationRepository.checkChallengeUserApplication(email, id);
 	}
 }

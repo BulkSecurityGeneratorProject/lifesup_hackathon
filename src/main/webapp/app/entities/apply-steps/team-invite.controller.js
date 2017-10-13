@@ -11,6 +11,7 @@
         var vm = this;
         vm.login = login;
         vm.isAuthenticated = Principal.isAuthenticated;
+        vm.applicationId = null;
 
         vm.determinateValue = 0;
         vm.progressCount = progressCount;
@@ -32,6 +33,8 @@
         vm.declineInvite = declineInvite;
 
         vm.isInvitedMail = false;
+        vm.accept = false;
+        vm.decline = false;
 
         vm.account = null;
         Principal.identity().then(function (account) {
@@ -40,18 +43,17 @@
 
 
         ApplicationByAcceptKey.get({ acceptkey: $stateParams.id }, function (result) {
-            if (vm.account){
+            vm.registerAccount.email = result.email;
+            vm.applicationId = result.application.id;
+            if (vm.account) {
                 if (result.email === vm.account.email) vm.isInvitedMail = true;
             }
-            
-            vm.challenge = Challenge.get({ id: result.application.challenge.id }, function (result) {
-            });
+            vm.challenge = Challenge.get({ id: result.application.challenge.id });
             vm.application = ApplicationsListDetails.get({ id: result.application.id }, function (result) {
                 vm.members = result.members;
-                console.log(vm.members);
-                vm.members.forEach(function(element) {
+                vm.members.forEach(function (element) {
                     if (element.skills)
-                    element.skills = element.skills.split(',');
+                        element.skills = element.skills.split(',');
                 }, this);
             });
 
@@ -62,8 +64,6 @@
                 })
             })
         });
-
-        
 
         UserDetail.query(function (data) {
             return vm.userInfo = data;
@@ -118,23 +118,32 @@
             });
         }
 
-        
-
         function requestResetPassword() {
             $state.go('requestReset');
         }
 
         function acceptInvite() {
-            var temp = $stateParams.id;
-            AcceptInvitation.get(temp, onSuccess, onError);
+            AcceptInvitation.update($stateParams.id, onAcceptSuccess, onError);
         }
 
         function declineInvite() {
-            DeclineInvitation.get({acceptKey: $stateParams.id});
+            DeclineInvitation.update($stateParams.id, onDeclineSuccess, onError);
         }
 
-        function onSuccess() {
-            console.log("Accept or Decline Successful");
+        function onAcceptSuccess() {
+            vm.accept = true;
+            $timeout(function() {
+                $state.go('applicationslist-detail', { id: vm.applicationId });
+            }, 3000);
+            console.log("Accept Successful");
+        }
+
+        function onDeclineSuccess() {
+            vm.decline = true;
+            $timeout(function() {
+                $state.go('challengeslist');
+            }, 3000);
+            console.log("Decline Successful");
         }
 
         function onError() {

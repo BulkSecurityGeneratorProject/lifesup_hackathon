@@ -19,7 +19,6 @@
 
         function loadAll() {
             Challenge.query(function (result) {
-                console.log(result);
                 vm.draftChallenges = [];
                 vm.activeChallenges = [];
                 vm.closedChallenges = [];

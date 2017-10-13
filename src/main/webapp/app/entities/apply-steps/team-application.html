@@ -34,9 +34,12 @@
                     <div class="col-md-4">
                             <p>{{member[0]}}</p>
                     </div>
-                    <div class="col-md-4">
-                        <span ng-if="member[1] === 'PROFILE_COMPLETE' "><i class="material-icons w3-text-green">done</i>Profile Complete</span>
-                        <span ng-if="member[1] !== 'PROFILE_COMPLETE'"><i class="material-icons w3-text-red">clear</i>Profile not Complete</span>
+                    <div class="col-md-3" >
+                        <span style="display: flex" ng-if="member[1] === 'PROFILE_COMPLETE' "><i class="material-icons w3-text-green">done</i>Profile Complete</span>
+                        <span style="display: flex" ng-if="member[1] !== 'PROFILE_COMPLETE'"><i class="material-icons w3-text-red">clear</i>Profile not Complete</span>
+                    </div>
+                    <div class="col-md-1">
+                        <span class="btn btn-danger btn-xs" ng-click="vm.removeMail(member[0])">X</span>
                     </div>
                 </div>
 

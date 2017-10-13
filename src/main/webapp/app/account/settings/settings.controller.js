@@ -11,6 +11,8 @@
         var vm = this;
 
         vm.save = save;
+        vm.infoUpdated = true;
+
         vm.user = {
             logoUrl: "content/images/default/avatar.jpg"
         };
@@ -35,7 +37,6 @@
         load();
         function load() {
             if (entity.userInfo) {
-                console.log(entity.userInfo);
                 vm.user = entity.userInfo;
                 vm.user.birthday = new Date(entity.userInfo.birthday);
                 vm.selectedSkills = entity.userInfo.skills.split(",");
@@ -47,7 +48,6 @@
                     vm.applications.push(temp);
                 }, this);
                 // vm.applications = result;
-                console.log(vm.applications);
             });
         }
 
@@ -55,6 +55,8 @@
             if (entity.userInfo){
                 vm.logo.userInfoId = entity.userInfo.id;
                 UserLogo.update(vm.logo, onUploadSuccess, onUploadError);
+            } else{
+                vm.infoUpdated = false;
             }
             
         }

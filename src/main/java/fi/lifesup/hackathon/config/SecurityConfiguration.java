@@ -88,6 +88,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/profile-info").permitAll()
             .antMatchers("/api/challenges").permitAll()
             .antMatchers("/api/challenges/{id}").permitAll()
+            .antMatchers("/api/challenge-user-applications/decline-invitation").permitAll()
             .antMatchers("/api/application-invite-emails/acceptkey/{acceptkey}").permitAll()
             .antMatchers("/api/applications/details/{applicationId}").permitAll()
             .antMatchers("/api/applications/check/{id}").permitAll()

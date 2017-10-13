@@ -5,79 +5,80 @@
         .module('hackathonApp')
         .controller('TeamController', TeamController);
 
-    TeamController.$inject = ['$scope', '$stateParams', '$state', 'Application', 'UserApplicationByChallengeID', 'InviteMember', 'ApplicationBasicInfo', 'ApplicationsListDetails', 'Principal'];
+    TeamController.$inject = ['$scope', '$timeout', '$stateParams', '$state', 'Application', 'UserApplicationByChallengeID', 'InviteMember', 'ApplicationBasicInfo', 'ApplicationsListDetails', 'Principal', 'UserDetail', 'DeleteInvitedMail'];
 
-    function TeamController($scope, $stateParams, $state, Application, UserApplicationByChallengeID, InviteMember, ApplicationBasicInfo, ApplicationsListDetails, Principal) {
+    function TeamController($scope, $timeout, $stateParams, $state, Application, UserApplicationByChallengeID, InviteMember, ApplicationBasicInfo, ApplicationsListDetails, Principal, UserDetail, DeleteInvitedMail) {
         var vm = this;
         vm.save = save;
         vm.challengeId = $stateParams.id;
         vm.applicationId = null;
         vm.team = {};
+        vm.account = null;
         vm.appDetail = [];
         vm.inviteMails = null;
         vm.members = [];
+        vm.deleteMail = [];
+        vm.removeMail = removeMail;
+
+        function removeMail(mail) {
+            vm.deleteMail.push(mail);
+            vm.members.splice(vm.members.indexOf(mail));
+        }
 
         load();
 
         function load() {
             vm.entity = UserApplicationByChallengeID.get({ challengeId: $stateParams.id }, function (result) {
-                console.log(result);
                 if (result.applicationId) {
+                    vm.applicationId = result.applicationId;
                     Application.get({ id: result.applicationId }, function (result) {
                         vm.team = result;
-                        console.log(result);
-                    });
-                    ApplicationsListDetails.get({ id: result.applicationId }, function (result) {
-                        vm.appDetail = result;
-                        console.log(result);
                     });
                     ApplicationBasicInfo.get({ applicationId: result.applicationId }, function (data) {
-                        data.members.forEach(function(element){
-                            console.log(element);
+                        data.members.forEach(function (element) {
                             var temp = element.split(',');
                             vm.members.push(temp);
                         })
                     })
+                } else {
+                    UserDetail.get(function (result) {
+                        var temp = [result.email, result.status];
+                        vm.members.push(temp);
+                    });
                 }
             });
         }
 
-        vm.account = null;
         Principal.identity().then(function (account) {
             vm.account = account;
         });
 
         function save() {
-
             vm.team.challengeId = $stateParams.id;
-            vm.team.members = [vm.account.email];
-            vm.mails = [];
-            vm.canSave = true;
-
-            if (vm.entity.applicationId) {
-                vm.appDetail.members.forEach(function (element) {
-                    vm.mails.push(element.invitedMail);
-                }, this);
-                if (vm.inviteMails) {
-                    vm.team.members = vm.inviteMails.split(";");
-                    vm.team.members.forEach(function (element) {
-                        if (vm.mails.indexOf(element) != -1) {
-                            alert(element + " has been invited!")
-                            vm.canSave = false;
-                        }
-                    })
-                }
+            vm.team.members = [];
+            if (vm.deleteMail) {
+                vm.deleteMail.forEach(function (element) {
+                    DeleteInvitedMail.delete({ email: element, applicationId: vm.applicationId }, onDeleteSuccess, onDeleteError);
+                })
             }
             
-            if (vm.canSave) {
-                console.log("pass");
-                if (vm.entity.applicationId) {
-                    Application.update(vm.team, onSaveSuccess, onSaveError);
-                }
-                else {
-                    Application.save(vm.team, onSaveSuccess, onSaveError);
-                }
+            if (vm.inviteMails) {
+                vm.team.members = vm.inviteMails.split(";");
             }
+            
+            if (vm.entity.applicationId) {
+                Application.update(vm.team, onSaveSuccess, onSaveError);
+            } else {
+                Application.save(vm.team, onSaveSuccess, onSaveError);
+            }
+        }
+
+        function onDeleteSuccess() {
+            console.log("delete successful");
+        }
+
+        function onDeleteError() {
+            console.log("delete failed");
         }
 
         function onSaveSuccess(result) {

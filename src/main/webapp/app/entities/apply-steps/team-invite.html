@@ -9,7 +9,7 @@
             <div class="team-info col-md-8 col-xs-12">
                 <div class="card-wrapper">
                     <!--======== member card ============-->
-                    <div class="member-wrapper horizontal-card row" ng-repeat="member in vm.members" >
+                    <div class="member-wrapper horizontal-card row" ng-repeat="member in vm.members">
                         <div ng-if="member.id">
                             <div class="member-avatar col-md-2 col-xs-12">
                                 <img ng-if="member.logoUrl" ng-src="{{member.logoUrl}}" width="100" height="100">
@@ -35,12 +35,12 @@
                             </div>
                             <div class="member-info col-md-10 col-xs-12">
                                 <!-- <p> -->
-                                    <strong>Pending invitation to</strong>
+                                <strong>Pending invitation to</strong>
                                 <!-- </p> -->
                                 <p>{{member.jobTitle}}</p>
                                 <p>{{member.invitedMail}}</p>
                             </div>
-                            
+
                         </div>
                     </div>
                     <!--======== other info ============-->
@@ -62,31 +62,36 @@
                 <!--======== login or signup ============-->
                 <section class="login-signup-wrapper" style="padding: 1em 0em 1em 1em; background: none" ng-cloak>
                     <div class="login-header">
-                        <h3 class="text-center">Login or sign up to accept invitation</h3>
-                        <div class="alert alert-success" ng-show="vm.success" data-translate="loginsignup.messages.success">
+
+                        <div class="text-center alert alert-success" ng-show="vm.success" data-translate="loginsignup.messages.success">
                             <strong>Registration saved!</strong> Please check your email for confirmation.
                         </div>
-                        <div class="alert alert-danger" ng-show="vm.error" data-translate="loginsignup.messages.error.fail">
+                        <div class="text-center alert alert-success" ng-show="vm.accept">
+                            <strong>You've accepted to join {{vm.application.teamName}} team</strong>
+                        </div>
+                        <div class="text-center alert alert-warning" ng-show="vm.decline">
+                            <strong>You've declined to join {{vm.application.teamName}} team</strong>
+                        </div>
+                        <div class="text-center alert alert-danger" ng-show="vm.error" data-translate="loginsignup.messages.error.fail">
                             <strong>Registration failed!</strong> Please try again later.
                         </div>
-                        <div class="alert alert-danger" ng-show="vm.errorUserExists" data-translate="loginsignup.messages.error.userexists">
+                        <div class="text-center alert alert-danger" ng-show="vm.errorUserExists" data-translate="loginsignup.messages.error.userexists">
                             <strong>Login name already registered!</strong> Please choose another one.
                         </div>
-                        <div class="alert alert-danger" ng-show="vm.errorEmailExists" data-translate="loginsignup.messages.error.emailexists">
+                        <div class="text-center alert alert-danger" ng-show="vm.errorEmailExists" data-translate="loginsignup.messages.error.emailexists">
                             <strong>E-mail is already in use!</strong> Please choose another one.
                         </div>
-                        <div class="alert alert-danger" ng-show="vm.doNotMatch" data-translate="global.messages.error.dontmatch">
+                        <div class="text-center alert alert-danger" ng-show="vm.doNotMatch" data-translate="global.messages.error.dontmatch">
                             The password and its confirmation do not match!
                         </div>
                     </div>
 
-                    <div ng-show="!vm.success" id="form-wrapper" class="row">
-
+                    <div ng-hide="vm.success || vm.accept || vm.decline" id="form-wrapper" class="row">
+                        <h3 class="text-center">Login or sign up to accept invitation</h3>
                         <!-- Signup form -->
                         <div class="signup-form-wrapper col-md-6 col-lg-6">
                             <div class="row">
-                                <form name="signupForm" class="col s12" role="form" id='signup-form' ng-show="!vm.success" name="form" role="form" novalidate
-                                    ng-submit="vm.register()">
+                                <form name="signupForm" class="col s12" role="form" id='signup-form' name="form" role="form" novalidate ng-submit="vm.register()">
 
                                     <div class="form-heading">
                                         <h4 data-translate="loginsignup.form.headers.signup">Start by creating your account</h4>
@@ -157,18 +162,15 @@
                                 <button type="submit" class="btn btn-primary btn-block" data-translate="login.form.button">Sign in</button>
                             </form>
 
-                            <form ng-switch-when="true" name="logged-in" role="form" id='login-form' ng-show="!vm.success" name="form" role="form" novalidate
-                                ng-submit="vm.acceptInvite()" show-validation>
+                            <form ng-switch-when="true" name="logged-in" role="form" id='login-form' name="form" role="form" novalidate ng-submit="vm.acceptInvite()"
+                                show-validation>
                                 <div class="form-heading">
                                     <h4>Login with existing account</h4>
                                     <p>You are already logged in so you just need to click the button to accept this team invite!</p>
                                 </div>
                                 <button type="submit" class="btn btn-warning btn-block">Accept team invite</button>
                             </form>
-                            <!-- <p></p>
-                    <p class="text-center">OR</p> -->
-                            <form name="decline" role="form" id='login-form' ng-show="!vm.success" name="form" role="form" novalidate ng-submit="vm.declineInvite()"
-                                show-validation>
+                            <form name="decline" role="form" id='login-form' name="form" role="form" novalidate ng-submit="vm.declineInvite()" show-validation>
                                 <div class="form-heading">
                                     <h4>Decline request</h4>
                                     <p>You can also decline this request, if you do not want to join this team. Once invitation

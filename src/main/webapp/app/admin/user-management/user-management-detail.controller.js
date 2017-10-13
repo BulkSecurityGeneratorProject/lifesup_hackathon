@@ -21,7 +21,6 @@
 
         User.get({ login: $stateParams.login }, function (result) {
             vm.user = result;
-            console.log(result);
             if (result.userInfo) {
                 vm.userInfo = result.userInfo;
                 vm.skills = result.userInfo.skills.split(",");

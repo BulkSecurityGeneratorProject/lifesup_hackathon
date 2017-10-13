@@ -9,17 +9,24 @@
                 <div class="overlay">
                     <div id="avatar-overlay" class="text">
                         <label>
-                                <i class="material-icons pointer">camera_alt</i>
-                                <input type="file" base-sixty-four-input maxsize="5000" accept="image/*" ng-model="vm.logo" data-ng-change="vm.uploadLogo()" style="display:none">
+                            <i class="material-icons pointer">camera_alt</i>
+                            <input type="file" base-sixty-four-input maxsize="5000" accept="image/*" ng-model="vm.logo" data-ng-change="vm.uploadLogo()"
+                                style="display:none">
                         </label>
-                        
+
                     </div>
                 </div>
+            </div>
+            <br>
+            <div class="text-center alert alert-warning" ng-show="!vm.infoUpdated">
+                Update your info first!
             </div>
             <div class="white-card">
                 <label>Your Applications:</label>
                 <ul class="list-unstyled">
-                    <li ng-repeat="application in vm.applications"><a ui-sref="team({id:application.challenge.id})">{{application.challenge.name}}</a></li>
+                    <li ng-repeat="application in vm.applications">
+                        <a ui-sref="applicationslist-detail({id:application.id})">{{application.challenge.name}}</a>
+                    </li>
                 </ul>
             </div>
             <div class="white-card">
@@ -57,7 +64,10 @@
                         </md-input-container>
 
                         <md-input-container class="md-block" flex-gt-sm>
-                            <label><span class="glyphicon glyphicon-calendar"></span>&nbsp;<span  data-translate="settings.form.birthday"></span></label>
+                            <label>
+                                <span class="glyphicon glyphicon-calendar"></span>&nbsp;
+                                <span data-translate="settings.form.birthday"></span>
+                            </label>
                             <md-datepicker id="birthday" name="birthday" ng-model="vm.user.birthday" md-hide-icons="all" ng-disabled="!editable" md-open-on-focus></md-datepicker>
                         </md-input-container>
                     </div>

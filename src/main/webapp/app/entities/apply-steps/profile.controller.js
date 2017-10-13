@@ -30,11 +30,11 @@
         vm.selectedWorkAreas = [];
         vm.toggle = toggle;
         vm.exists = exists;
+        vm.infoUpdated = true;
 
         load();
         function load() {
             if (entity.userInfo) {
-                console.log(entity.userInfo);
                 vm.user = entity.userInfo;
                 vm.user.birthday = new Date(entity.userInfo.birthday);
                 vm.selectedSkills = entity.userInfo.skills.split(",");
@@ -46,6 +46,8 @@
             if (entity.userInfo){
                 vm.logo.userInfoId = entity.userInfo.id;
                 UserLogo.update(vm.logo, onUploadSuccess, onUploadError);
+            } else {
+                vm.infoUpdated = false;
             }
             
         }

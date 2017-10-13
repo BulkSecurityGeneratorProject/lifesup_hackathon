@@ -25,6 +25,11 @@
     vm.validateApplication = validateApplication;
     vm.validations = [];
 
+    vm.account = null;
+    Principal.identity().then(function (account) {
+        vm.account = account;
+    });
+
     getSkills();
     getChallengeInfo();
     getUserInfo();
@@ -64,11 +69,13 @@
 
     function approve(application) {
       application.status = 'APPROVED';
+      application.members = null;
       ApplicationStatus.update(application);
     }
 
     function reject(application) {
       application.status = 'REJECTED';
+      application.members = null;
       ApplicationStatus.update(application);
     }
 
@@ -85,7 +92,6 @@
         vm.validations = vm.validations.map(function(item) {
           return item.split(',');
         })
-        console.log(vm.validations);
       })
     }
   }

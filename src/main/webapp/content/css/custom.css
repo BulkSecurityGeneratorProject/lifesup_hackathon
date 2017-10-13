@@ -423,10 +423,11 @@ a.align-center {
 .action-btn-group {
   display: flex;
   justify-content: space-between;
-  padding: 1em;
+  /* padding: 1em; */
   margin: 0;
   color: #fefefe;
 }
+
 
 .action-btn {
   padding: 0.5em 1.5em;

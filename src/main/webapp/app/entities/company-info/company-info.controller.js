@@ -17,7 +17,6 @@
         function getCompanyInfo() {
             CompanyInfo.query(function(result) {
                 vm.companyInfo = result;
-                console.log(vm.companyInfo);
             });
         }
     }

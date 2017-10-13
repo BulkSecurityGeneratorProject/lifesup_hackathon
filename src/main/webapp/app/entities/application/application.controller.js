@@ -21,7 +21,6 @@
                     vm.applications.push(temp);
                 }, this);
                 // vm.applications = result;
-                console.log(vm.applications);
             });
         }
     }
