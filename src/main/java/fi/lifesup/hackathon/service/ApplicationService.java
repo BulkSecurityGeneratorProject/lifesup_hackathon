@@ -293,13 +293,16 @@ public class ApplicationService {
 		} else {
 			list.add("Other members have accepted their invitation," + false);
 		}
-		String s = challengeUserApplicationRepository.checkUserStatus(id);
-		if (s != null && invites.isEmpty()) {
-			list.add("Other member have completed their profile," + true);
-		} else {
-			list.add("Other member have completed their profile," + false);
+		List<UserStatus> s = challengeUserApplicationRepository.checkUserStatus(id);
+		for (UserStatus userStatus : s) {
+			if(userStatus != UserStatus.PROFILE_COMPLETE || !invites.isEmpty() ){
+				list.add("Other member have completed their profile," + false);
+				return list;
+			}
 		}
-		return list;
+		
+		list.add("Other member have completed their profile," + true);		
+		return list;		
 	}
 
 	public void deleteMember(Long applicationId, String email) {

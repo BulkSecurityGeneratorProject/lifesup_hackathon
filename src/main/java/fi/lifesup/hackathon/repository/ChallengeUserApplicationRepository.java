@@ -2,6 +2,7 @@ package fi.lifesup.hackathon.repository;
 
 import fi.lifesup.hackathon.domain.ChallengeUserApplication;
 import fi.lifesup.hackathon.domain.User;
+import fi.lifesup.hackathon.domain.enumeration.UserStatus;
 import fi.lifesup.hackathon.service.dto.ApplicationMemberDTO;
 
 
@@ -36,9 +37,9 @@ public interface ChallengeUserApplicationRepository extends JpaRepository<Challe
 	
 	String checkChallengeUserApplication(String email, Long applicationId);
 		
-	@Query("select 'true' from User u, ChallengeUserApplication cua"
-			+ " where (u.id = cua.userId and cua.applicationId = ?1 and u.status = 'PROFILE_COMPLETE') ")
-	String checkUserStatus(Long applicationId);
+	@Query("select u.status.toString() from User u, ChallengeUserApplication cua"
+			+ " where (u.id = cua.userId and cua.applicationId = ?1")
+	List<UserStatus> checkUserStatus(Long applicationId);
 	
 	@Query("select new fi.lifesup.hackathon.service.dto.ApplicationMemberDTO(cua.id, u.email)"
 			+ " from ChallengeUserApplication cua , User u where cua.applicationId = :#{[0]} and u.id = cua.userId")
