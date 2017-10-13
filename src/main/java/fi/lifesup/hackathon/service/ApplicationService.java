@@ -101,8 +101,9 @@ public class ApplicationService {
 		if(applicationDTO.getMembers() != null){
 			for (String a : applicationDTO.getMembers()) {
 				String[] s = a.split(",");
-				String check = challengeUserApplicationRepository.checkChallengeUserApplication(s[0], applicationDTO.getId());
-				if(check == null){
+				//String check = challengeUserApplicationRepository.checkChallengeUserApplication(s[0], applicationDTO.getId());
+				//System.err.println(check);
+				if(!user.getEmail().equals(s[0])){
 					ApplicationInviteEmail invited = new ApplicationInviteEmail();
 					invited.setEmail(s[0]);
 					invited.setApplication(result);
@@ -135,6 +136,7 @@ public class ApplicationService {
 		Application result = applicationRepository.save(application);
 		for (String a : applicationDTO.getMembers()) {
 			String[] s = a.split(",");
+			System.err.println(s[0]);
 			String check = challengeUserApplicationRepository.checkChallengeUserApplication(s[0], applicationDTO.getId());
 			if(check == null){
 				ApplicationInviteEmail invited = new ApplicationInviteEmail();
@@ -326,5 +328,9 @@ public class ApplicationService {
 		else{
 			challengeUserApplicationRepository.delete(userApplication);
 		}
+	}
+	
+	public String check(Long id, String email){
+		return challengeUserApplicationRepository.checkChallengeUserApplication(email, id);
 	}
 }

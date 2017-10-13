@@ -26,6 +26,7 @@ import com.codahale.metrics.annotation.Timed;
 
 import fi.lifesup.hackathon.domain.Application;
 import fi.lifesup.hackathon.repository.ApplicationRepository;
+import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
 import fi.lifesup.hackathon.service.ApplicationService;
 import fi.lifesup.hackathon.service.dto.ApplicationBasicDTO;
 import fi.lifesup.hackathon.service.dto.ApplicationDTO;
@@ -210,4 +211,11 @@ public class ApplicationResource {
 				.headers(HeaderUtil.createEntityDeletionAlert("Application Member", applicationId.toString())).build();
 	}
 
+	@GetMapping("/applications/{email}/check/{id}")
+	@Timed
+	public String getCheckApplication1(@PathVariable Long id, @PathVariable String email) {
+		log.debug("REST request to get Application by acceptKey : {}", id);
+
+		return applicationService.check(id, email);
+	}
 }

@@ -33,8 +33,9 @@ public interface ChallengeUserApplicationRepository extends JpaRepository<Challe
 	@Query("select 'true' from User u, ChallengeUserApplication cua, ApplicationInviteEmail aie"
 			+ " where (u.id = cua.userId and u.email = ?1 and cua.applicationId = ?2) "
 			+ " or (aie.email = ?1 and aie.application.id = ?2)")
+	
 	String checkChallengeUserApplication(String email, Long applicationId);
-
+		
 	@Query("select 'true' from User u, ChallengeUserApplication cua"
 			+ " where (u.id = cua.userId and cua.applicationId = ?1 and u.status = 'PROFILE_COMPLETE') ")
 	String checkUserStatus(Long applicationId);
