@@ -37,8 +37,8 @@ public interface ChallengeUserApplicationRepository extends JpaRepository<Challe
 	
 	String checkChallengeUserApplication(String email, Long applicationId);
 		
-	@Query("select u.status.toString() from User u, ChallengeUserApplication cua"
-			+ " where (u.id = cua.userId and cua.applicationId = ?1")
+	@Query("select u.status from User u, ChallengeUserApplication cua"
+			+ " where u.id = cua.userId and cua.applicationId = ?1")
 	List<UserStatus> checkUserStatus(Long applicationId);
 	
 	@Query("select new fi.lifesup.hackathon.service.dto.ApplicationMemberDTO(cua.id, u.email)"
