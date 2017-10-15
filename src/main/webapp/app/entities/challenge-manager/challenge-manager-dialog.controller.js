@@ -58,12 +58,17 @@
                 vm.challengeInfo.pilotPhaseStartDate,
                 vm.challengeInfo.pilotPhaseEndDate
             ];
+
+            vm.dateArrayOptional = vm.dateArray.slice(5,8);
+
             if (vm.dateArray.every(checkDateArr)) {
                 vm.dateArray.map(function(date) {
                     return date.getTime();
                 });
                 return vm.isAllDateValid(vm.dateArray);
-          } //else return "Please fill in all date section";
+            } else if (vm.dateArrayOptional.every(checkDateArr) === false) {
+                return vm.isAllDateValid(vm.dateArray.slice(0,5));
+            }
         }
 
         function clear() {
