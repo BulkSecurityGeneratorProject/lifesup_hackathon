@@ -48,8 +48,8 @@
           })) {
             return "date range is valid, please continue to the next section";
           } else return "date range is invalid, please refer to this order: Application Close, " +
-                        "Inform Date, Kick Off Webinar, Event Start, Submission Close, " +
-                        "Pilot Phase Start, Pilot Phase End, Event End";
+                        "Inform Date, Kick Off Webinar, Event Start, Event End, Submission Close, " +
+                        "Pilot Phase Start, Pilot Phase End";
     }
 
 		function isDiscountValid(discountPercentage) {

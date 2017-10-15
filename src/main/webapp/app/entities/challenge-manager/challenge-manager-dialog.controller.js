@@ -53,10 +53,10 @@
                 vm.challengeInfo.selectionInformDate,
                 vm.challengeInfo.kickoffWebinarDate,
                 vm.challengeInfo.eventStartTime,
+                vm.challengeInfo.eventEndTime,
                 vm.challengeInfo.pilotSubmissionCloseDate,
                 vm.challengeInfo.pilotPhaseStartDate,
-                vm.challengeInfo.pilotPhaseEndDate,
-                vm.challengeInfo.eventEndTime
+                vm.challengeInfo.pilotPhaseEndDate
             ];
             if (vm.dateArray.every(checkDateArr)) {
                 vm.dateArray.map(function(date) {
