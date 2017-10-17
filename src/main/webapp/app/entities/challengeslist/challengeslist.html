@@ -36,11 +36,10 @@
 </div>
 <hr />
 
-
 <div class="row">
   <div class="col-sm-12 col-md-4" ng-repeat="challenge in vm.challenges | filter: vm.searchText | filter: vm.filterByStatus | filter: vm.filterByStartDate | filter: vm.filterByEndDate" ng-if="challenge.info.status != 'DRAFT'">
-    <md-card class="challenge-container">
-      <img md-card-image ng-src="{{challenge.bannerUrl}}" class='challenge-banner' ui-sref="challengeslist-detail({id:challenge.id})" ng-class="{'img-grey': vm.getApplicationStatus(challenge) == 'CLOSED'}">
+    <md-card class="challenge-container"  ui-sref="challengeslist-detail({id:challenge.id})">
+      <img md-card-image ng-src="{{challenge.bannerUrl}}" class='challenge-banner' ng-class="{'img-grey': vm.getApplicationStatus(challenge) == 'CLOSED'}">
         <md-card-title class='challenge-title'>{{challenge.name}}</md-card-title>
         <md-card-subtitle class='challenge-owner'>{{company.name}}</md-card-subtitle>
         <div class="line"></div>
@@ -59,7 +58,7 @@
           </md-list>
         </md-card-content>
         <md-card-actions ng-switch="vm.getApplicationStatus(challenge)">
-          <button class="btn btn-block challenge-cta btn-active" ng-switch-when="ACTIVE" ng-switch="vm.isAuthenticated()">
+          <button class="btn btn-block challenge-cta btn-active" ng-switch-when="ACTIVE" ng-switch="vm.isAuthenticated()" ng-show="ROLE_USER">
             <a href="#" ui-sref="login-signup" ng-switch-when="false" data-translate="hackathonApp.applicationStatus.apply">Apply now!</a>
             <a href="#" ui-sref="complete-profile({id: challenge.id})" ng-switch-when="true" data-translate="hackathonApp.applicationStatus.apply">Apply now!</a>
           </button>

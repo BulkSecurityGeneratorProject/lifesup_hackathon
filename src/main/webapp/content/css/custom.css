@@ -6,9 +6,9 @@ h1,h2,h3,h4,h5,h6 {
   font-family: 'Righteous', cursive;
 }
 
-body {
+.main-content {
   display: flex;
-  min-height: 100vh;
+  min-height: calc(100vh - 120px);
   flex-direction: column;
   font-family: 'Roboto', 'Helvetica Neue', sans-serif;
   font-weight: 300;

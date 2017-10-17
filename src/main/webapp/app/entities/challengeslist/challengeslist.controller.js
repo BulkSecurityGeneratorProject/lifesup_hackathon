@@ -67,7 +67,7 @@
         function getApplicationStatus(challenge) {
             if (vm.challengeId.indexOf(challenge.id) > -1) {
               return "APPLIED";
-            } else if (challenge.timeLeft < 0) {
+            } else if (challenge.timeLeft < 0 || challenge.info.status === "CLOSED") {
               return "CLOSED";
             } else {
               return "ACTIVE";
