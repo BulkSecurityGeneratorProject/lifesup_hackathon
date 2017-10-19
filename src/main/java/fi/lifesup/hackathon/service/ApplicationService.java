@@ -16,7 +16,6 @@ import fi.lifesup.hackathon.domain.ApplicationInviteEmail;
 import fi.lifesup.hackathon.domain.ChallengeUserApplication;
 import fi.lifesup.hackathon.domain.User;
 import fi.lifesup.hackathon.domain.enumeration.ApplicationStatus;
-import fi.lifesup.hackathon.domain.enumeration.ChallengeUserApplicationStatus;
 import fi.lifesup.hackathon.domain.enumeration.UserStatus;
 import fi.lifesup.hackathon.repository.ApplicationInviteEmailReponsitory;
 import fi.lifesup.hackathon.repository.ApplicationRepository;
@@ -27,7 +26,6 @@ import fi.lifesup.hackathon.repository.UserRepository;
 import fi.lifesup.hackathon.service.dto.ApplicationBasicDTO;
 import fi.lifesup.hackathon.service.dto.ApplicationDTO;
 import fi.lifesup.hackathon.service.dto.ApplicationMemberDTO;
-import fi.lifesup.hackathon.service.dto.UserInfoDTO;
 import fi.lifesup.hackathon.service.util.RandomUtil;
 
 @Service
@@ -101,16 +99,16 @@ public class ApplicationService {
 
 		if (applicationDTO.getMembers() != null) {
 			for (String a : applicationDTO.getMembers()) {
-				
-					ApplicationInviteEmail invited = new ApplicationInviteEmail();
-					invited.setEmail(a);
-					invited.setApplication(result);
-					invited.setSend(true);
-					invited.setSendTime(ZonedDateTime.now());
-					invited.setAcceptKey(RandomUtil.generateAcceptKey());
-					applicationInviteEmailReponsitory.save(invited);
-					mailService.sendInvitationMail(invited, baseUrl);
-				
+
+				ApplicationInviteEmail invited = new ApplicationInviteEmail();
+				invited.setEmail(a);
+				invited.setApplication(result);
+				invited.setSend(true);
+				invited.setSendTime(ZonedDateTime.now());
+				invited.setAcceptKey(RandomUtil.generateAcceptKey());
+				applicationInviteEmailReponsitory.save(invited);
+				mailService.sendInvitationMail(invited, baseUrl);
+
 			}
 		}
 
@@ -134,15 +132,15 @@ public class ApplicationService {
 		Application result = applicationRepository.save(application);
 		if (!applicationDTO.getMembers().isEmpty()) {
 			for (String a : applicationDTO.getMembers()) {
-					ApplicationInviteEmail invited = new ApplicationInviteEmail();
-					invited.setEmail(a);
-					invited.setApplication(result);
-					invited.setSend(true);
-					invited.setSendTime(ZonedDateTime.now());
-					invited.setAcceptKey(RandomUtil.generateAcceptKey());
-					applicationInviteEmailReponsitory.save(invited);
-					mailService.sendInvitationMail(invited, baseUrl);
-				
+				ApplicationInviteEmail invited = new ApplicationInviteEmail();
+				invited.setEmail(a);
+				invited.setApplication(result);
+				invited.setSend(true);
+				invited.setSendTime(ZonedDateTime.now());
+				invited.setAcceptKey(RandomUtil.generateAcceptKey());
+				applicationInviteEmailReponsitory.save(invited);
+				mailService.sendInvitationMail(invited, baseUrl);
+
 			}
 		}
 
@@ -245,17 +243,28 @@ public class ApplicationService {
 		List<String> list = new ArrayList<>();
 		Application a = applicationRepository.findOne(id);
 		User user = userService.getUserWithAuthorities();
-		if (user != null) {
-			list.add("Create account or login," + true);
-		} else {
-			list.add("Create account or login," + false);
+		List<ChallengeUserApplication> members = challengeUserApplicationRepository.findByApplicationId(id);
+		List<ApplicationInviteEmail> invites = applicationInviteEmailReponsitory.findByApplicationId(id);
+		int check = 0;
+		for (ChallengeUserApplication challengeUserApplication : members) {
+			if (challengeUserApplication.getUserId().longValue() == user.getId().longValue()) {
+				check = 1;
+				break;
+			}
 		}
+		if (check == 1) {
+			if (user != null) {
+				list.add("Create account or login," + true);
+			} else {
+				list.add("Create account or login," + false);
+			}
 
-		list.add("Verify your account," + user.getActivated());
-		if (user.getStatus() == UserStatus.PROFILE_COMPLETE) {
-			list.add("Complete your profile," + true);
-		} else {
-			list.add("Complete your profile," + false);
+			list.add("Verify your account," + user.getActivated());
+			if (user.getStatus() == UserStatus.PROFILE_COMPLETE) {
+				list.add("Complete your profile," + true);
+			} else {
+				list.add("Complete your profile," + false);
+			}
 		}
 
 		if (a.getTeamName() != null) {
@@ -279,9 +288,6 @@ public class ApplicationService {
 			list.add("Fill in your idea," + false);
 		}
 
-		List<ChallengeUserApplication> members = challengeUserApplicationRepository.findByApplicationId(id);
-		List<ApplicationInviteEmail> invites = applicationInviteEmailReponsitory.findByApplicationId(id);
-
 		if (!invites.isEmpty() || members.size() > 1) {
 			list.add("Invite other team members," + true);
 		} else {
@@ -295,14 +301,14 @@ public class ApplicationService {
 		}
 		List<UserStatus> s = challengeUserApplicationRepository.checkUserStatus(id);
 		for (UserStatus userStatus : s) {
-			if(userStatus != UserStatus.PROFILE_COMPLETE || !invites.isEmpty() ){
+			if (userStatus != UserStatus.PROFILE_COMPLETE || !invites.isEmpty()) {
 				list.add("Other member have completed their profile," + false);
 				return list;
 			}
 		}
-		
-		list.add("Other member have completed their profile," + true);		
-		return list;		
+
+		list.add("Other member have completed their profile," + true);
+		return list;
 	}
 
 	public void deleteMember(Long applicationId, String email) {

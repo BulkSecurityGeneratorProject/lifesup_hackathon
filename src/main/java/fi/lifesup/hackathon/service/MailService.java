@@ -8,6 +8,7 @@ import javax.mail.internet.MimeMessage;
 import org.apache.commons.lang3.CharEncoding;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -22,6 +23,7 @@ import fi.lifesup.hackathon.domain.ApplicationInviteEmail;
 import fi.lifesup.hackathon.domain.User;
 import fi.lifesup.hackathon.security.SecurityUtils;
 import fi.lifesup.hackathon.service.dto.ApplicationMemberDTO;
+import fi.lifesup.hackathon.service.dto.CompanyDTO;
 
 /**
  * Service for sending e-mails.
@@ -34,9 +36,13 @@ public class MailService {
 
 	private final Logger log = LoggerFactory.getLogger(MailService.class);
 
+	@Value("${spring.mail.username}")
+	private String adminMail;
+	
 	private static final String USER = "user";
 	private static final String BASE_URL = "baseUrl";
 	private static final String CHALLENGE = "challenge";
+	private static final String COMPANY = "company";
 
 	@Inject
 	private JHipsterProperties jHipsterProperties;
@@ -121,4 +127,17 @@ public class MailService {
 		String subject = messageSource.getMessage("email.invitation.title", null, locale);
 		sendEmail(member.getEmail(), subject, content, false, true);
 	}
+	
+	@Async
+	public void sendCompanyMail(CompanyDTO company, String baseUrl){
+		log.debug("Sending  e-mail to admin '{}'", adminMail);
+		Locale locate = Locale.forLanguageTag("en");
+		Context context = new Context(locate);
+		context.setVariable(COMPANY, company);
+		context.setVariable(CHALLENGE, company.getName());
+		String content = templateEngine.process("companyMail", context);
+		String subject = messageSource.getMessage("email.company.title", null, locate);
+		sendEmail(adminMail, subject, content, false, true);
+	}
+	
 }

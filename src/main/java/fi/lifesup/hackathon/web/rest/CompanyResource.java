@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -23,10 +24,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 
+import fi.lifesup.hackathon.domain.Application;
 import fi.lifesup.hackathon.domain.Company;
 import fi.lifesup.hackathon.domain.User;
 import fi.lifesup.hackathon.repository.CompanyRepository;
+import fi.lifesup.hackathon.service.MailService;
 import fi.lifesup.hackathon.service.UserService;
+import fi.lifesup.hackathon.service.dto.ApplicationBasicDTO;
+import fi.lifesup.hackathon.service.dto.CompanyDTO;
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 
 /**
@@ -43,6 +48,9 @@ public class CompanyResource {
 
     @Inject
     private UserService userService;
+    
+    @Inject
+    private MailService mailService;
     /**
      * POST  /companies : Create a new company.
      *
@@ -137,5 +145,23 @@ public class CompanyResource {
         User u = userService.getUserWithAuthorities();
         return u.getCompany();
     }
+    
+    @PostMapping("/companies/send-mail")
+	@Timed
+	public ResponseEntity<?> sendMail(@Valid @RequestBody CompanyDTO company,
+			HttpServletRequest request) throws URISyntaxException {
+		log.debug("REST request to save Application : {}", company);
+		
+		String baseUrl = request.getScheme() + // "http"
+				"://" + // "://"
+				request.getServerName() + // "myhost"
+				":" + // ":"
+				request.getServerPort() + // "80"
+				request.getContextPath(); // "/myContextPath" or "" if deployed
+											// in root context
+		mailService.sendCompanyMail(company, baseUrl);
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
 
 }
