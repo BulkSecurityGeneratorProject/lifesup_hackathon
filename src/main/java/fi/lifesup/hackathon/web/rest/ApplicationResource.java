@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,6 +28,7 @@ import com.codahale.metrics.annotation.Timed;
 import fi.lifesup.hackathon.domain.Application;
 import fi.lifesup.hackathon.repository.ApplicationRepository;
 import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
+import fi.lifesup.hackathon.security.AuthoritiesConstants;
 import fi.lifesup.hackathon.service.ApplicationService;
 import fi.lifesup.hackathon.service.dto.ApplicationBasicDTO;
 import fi.lifesup.hackathon.service.dto.ApplicationDTO;
@@ -60,6 +62,7 @@ public class ApplicationResource {
 	 */
 	@PostMapping("/applications")
 	@Timed
+	@Secured(AuthoritiesConstants.USER)
 	public ResponseEntity<Application> createApplication(@Valid @RequestBody ApplicationBasicDTO application,
 			HttpServletRequest request) throws URISyntaxException {
 		log.debug("REST request to save Application : {}", application);
