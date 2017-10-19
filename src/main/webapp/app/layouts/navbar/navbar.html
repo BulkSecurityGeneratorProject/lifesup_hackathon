@@ -22,6 +22,13 @@
                         <span class="hidden-sm">Challenges</span>
                     </a>
                 </li>
+                <!-- become a host -->
+                <li ui-sref-active="active" class="nav-item">
+                    <a ui-sref="host-application" ng-click="vm.collapseNavbar()" class="align-center">
+                        <span class="glyphicon glyphicon-flag"></span>
+                        <span class="hidden-sm">Beome a Host</span>
+                    </a>
+                </li>
                 <!-- Manage Challenge (need to change ui-sref to link to challenges list view for admin/manager)-->
                 <li ui-sref-active="active" ng-class="{active: vm.$state.includes('admin')}" ng-switch-when="true" has-authority="ROLE_HOST" class="nav-item">
                     <a ui-sref="challenge-manager" ng-click="vm.collapseNavbar()" id="admin-menu" class="align-center">

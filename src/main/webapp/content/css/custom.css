@@ -644,3 +644,16 @@ md-progress-linear .md-bar {
   opacity: .75;
   z-index: 333;
 }
+
+/*============ Become a Host =================*/
+
+.form-wrapper {
+  max-width: 700px;
+  margin: 3em auto;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.form-wrapper form {
+  padding: 3em;
+}

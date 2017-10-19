@@ -1,0 +1,44 @@
+<div class="custom-jumbotron jumbotron">
+  <h1 data-translate="hackathonApp.host.title">Become a Host</h1>
+</div>
+<md-content layout-padding>
+  <div class="form-wrapper">
+    <form name="hostApplicationForm">
+      <div class="col s12">
+        <md-input-container class="md-block">
+          <label data-translate="hackathonApp.host.name">What is your name?</label>
+          <input name="name" ng-model="vm.host.name" required>
+          <div ng-messages="hostApplicationForm.name.$error" role="alert">
+              <div ng-message="required" data-translate="hackathonApp.host.messages.name"></div>
+          </div>
+        </md-input-container>
+        <md-input-container class="md-block">
+          <label data-translate="hackathonApp.host.company">What is your company name?</label>
+          <input name="company" ng-model="vm.host.company" required>
+          <div ng-messages="hostApplicationForm.company.$error" role="alert">
+              <div ng-message="required" data-translate="hackathonApp.host.messages.company"></div>
+          </div>
+        </md-input-container>
+        <md-input-container class="md-block">
+          <label data-translate="hackathonApp.host.phone">What is your phone number?</label>
+          <input name="phone" type="number" ng-model="vm.host.phone" required>
+          <div ng-messages="hostApplicationForm.phone.$error" role="alert">
+              <div ng-message="required" data-translate="hackathonApp.host.messages.phone"></div>
+          </div>
+        </md-input-container>
+        <md-input-container class="md-block">
+          <label data-translate="hackathonApp.host.email">What is your email address?</label>
+          <input name="email" type="email" ng-model="vm.host.email" required>
+          <div ng-messages="hostApplicationForm.email.$error" role="alert">
+              <div ng-message="required" data-translate="hackathonApp.host.messages.email"></div>
+          </div>
+        </md-input-container>
+        <md-input-container class="md-block">
+          <label data-translate="hackathonApp.host.note">Add additional note here</label>
+          <textarea ng-model="vm.host.note" md-maxlength="150" rows="5" md-select-on-focus></textarea>
+        </md-input-container>
+        <md-button class="md-raised md-primary" type="submit">Submit</md-button>
+      </div>
+    </form>
+  </div>
+</md-content>

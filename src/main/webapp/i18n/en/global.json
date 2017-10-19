@@ -23,7 +23,8 @@
                 "sessions": "Sessions",
                 "login": "Login",
                 "logout": "Logout",
-                "register": "Register"
+                "register": "Register",
+                "host": "Become a Host"
             },
             "admin": {
                 "main": "Administration",
