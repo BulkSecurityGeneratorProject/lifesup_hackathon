@@ -5,12 +5,16 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,16 +24,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 
 import fi.lifesup.hackathon.domain.Challenge;
+import fi.lifesup.hackathon.domain.User;
 import fi.lifesup.hackathon.repository.ChallengeRepository;
 import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
+import fi.lifesup.hackathon.searchCriteria.ChallengeSearch;
 import fi.lifesup.hackathon.service.ChallengeService;
 import fi.lifesup.hackathon.service.dto.ChallengeImageDTO;
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
+import fi.lifesup.hackathon.web.rest.util.PaginationUtil;
+import fi.lifesup.hackathon.web.rest.vm.ManagedUserVM;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiParam;
 
 /**
  * REST controller for managing Challenge.
@@ -113,13 +124,18 @@ public class ChallengeResource {
 	 *
 	 * @return the ResponseEntity with status 200 (OK) and the list of
 	 *         challenges in body
+	 * @throws URISyntaxException 
 	 */
 	@GetMapping("/challenges")
 	@Timed
-	public List<Challenge> getAllChallenges() {
-		log.debug("REST request to get all Challenges");
-		List<Challenge> challenges = challengeRepository.findAll();
-		return challenges;
+	public ResponseEntity<List<Challenge>> getAllChallenges(ChallengeSearch challengeSearch,Pageable pageable
+			) throws URISyntaxException {
+		System.out.println(challengeSearch);
+		Page<Challenge> page = challengeService.getChallengeSearch(challengeSearch, pageable);
+		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/challenges");
+		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+		
+		
 	}
 
 	/**
@@ -179,4 +195,5 @@ public class ChallengeResource {
 		return ResponseEntity.ok()
 				.headers(HeaderUtil.createEntityUpdateAlert("challenge", imageDTO.getChallengeId().toString())).body(result);
 	}
+	
 }
