@@ -58,10 +58,31 @@ public class ApplicationService {
 	@Inject
 	private ApplicationInviteEmailReponsitory applicationInviteEmailReponsitory;
 
-	public boolean checkApplication(ApplicationBasicDTO applicationDTO) {
-
-		if (applicationDTO.getTeamName() == null || applicationDTO.getDescription() == null
-				|| applicationDTO.getIdeasDescription() == null || applicationDTO.getMotivation() == null) {
+	public boolean checkApplication(Application application) {
+		int check =1;
+		if (application.getTeamName() == null || application.getDescription() == null
+				|| application.getIdeasDescription() == null || application.getMotivation() == null) {
+			check = 0;
+		}
+		
+		ApplicationBasicDTO basic = getApplicationBasic(application.getId());
+		
+		if(basic.getMembers().size() == 1 && application.getChallenge().getMinTeamNumber() == 1){
+			String[] s = basic.getMembers().get(0).split(",");
+			if(!s[1].equals(UserStatus.PROFILE_COMPLETE.toString())){
+				check = 0;
+			}
+		}
+		else{
+			for (String m : basic.getMembers()) {
+				String[] s = m.split(",");
+				if(!s[1].equals(UserStatus.PROFILE_COMPLETE.toString())){
+					check  = 0;
+					break;
+				}
+			}
+		}
+		if(check == 0){
 			return false;
 		}
 		return true;
@@ -84,9 +105,7 @@ public class ApplicationService {
 		application.setMotivation(applicationDTO.getMotivation());
 		application.setStatus(ApplicationStatus.WAITING_FOR_APPROVE);
 
-		if (!checkApplication(applicationDTO)) {
-			application.setStatus(ApplicationStatus.DRAFT);
-		}
+		
 		application.setChallenge(challengeRepository.findOne(applicationDTO.getChallengeId()));
 		Application result = applicationRepository.save(application);
 
@@ -111,7 +130,14 @@ public class ApplicationService {
 
 			}
 		}
-
+		
+		if(checkApplication(result)){
+			result.setStatus(ApplicationStatus.WAITING_FOR_APPROVE);
+		}
+		else{
+			result.setStatus(ApplicationStatus.DRAFT);
+		}
+		
 		return applicationRepository.save(result);
 	}
 
@@ -123,18 +149,12 @@ public class ApplicationService {
 		application.setDescription(applicationDTO.getDescription());
 		application.setIdeasDescription(applicationDTO.getIdeasDescription());
 		application.setMotivation(applicationDTO.getMotivation());
-		application.setStatus(ApplicationStatus.WAITING_FOR_APPROVE);
 
-		if (!checkApplication(applicationDTO)) {
-			application.setStatus(ApplicationStatus.DRAFT);
-		}
-
-		Application result = applicationRepository.save(application);
 		if (!applicationDTO.getMembers().isEmpty()) {
 			for (String a : applicationDTO.getMembers()) {
 				ApplicationInviteEmail invited = new ApplicationInviteEmail();
 				invited.setEmail(a);
-				invited.setApplication(result);
+				invited.setApplication(application);
 				invited.setSend(true);
 				invited.setSendTime(ZonedDateTime.now());
 				invited.setAcceptKey(RandomUtil.generateAcceptKey());
@@ -144,7 +164,13 @@ public class ApplicationService {
 			}
 		}
 
-		return result;
+		if(checkApplication(application)){
+			application.setStatus(ApplicationStatus.WAITING_FOR_APPROVE);
+		}
+		else{
+			application.setStatus(ApplicationStatus.DRAFT);
+		}
+		return applicationRepository.save(application);
 	}
 
 	public ApplicationDTO getApplicationDetail(Long applicationId) {
@@ -334,4 +360,5 @@ public class ApplicationService {
 	public String check(Long id, String email) {
 		return challengeUserApplicationRepository.checkChallengeUserApplication(email, id);
 	}
+	
 }
