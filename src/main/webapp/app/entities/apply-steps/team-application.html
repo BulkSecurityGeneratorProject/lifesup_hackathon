@@ -28,7 +28,7 @@
                             <p>Invite team members to the challenge. You can invite members by emails separate by <strong>;</strong></p>
                             <hr>
                     </div>
-                    
+
                 </div>
                 <div layout-gt-sm="row" ng-repeat="member in vm.members" flex>
                     <div class="col-md-4">
@@ -45,7 +45,7 @@
 
                 <div layout-gt-sm="row" flex>
                     <div class="col-md-4">
-                        <md-input-container class="md-block" flex-gt-sm>
+                        <md-input-container class="md-block" flex-gt-sm ng-repeat="i in vm.getMaxTeamMember(vm.maxTeamMember) track by $index">
                             <label>Member's Email</label>
                             <input name="email" ng-model="vm.inviteMails">
                         </md-input-container>

@@ -626,17 +626,17 @@ md-progress-linear .md-bar {
   border-radius: .2em;
   color: #d00;
   content: 'REJECTED';
-  font-size: 150px;
+  font-size: 100px;
   font-weight: bold;
   line-height: 1;
   position: absolute;
-  top: 50vh;
+  top: 30vh;
   padding: .1em .5em;
   margin: 0 auto;
   text-transform: uppercase;
   opacity: 0;
   transform-origin: 50% 50%;
-  transform: rotate(-25deg);
+  transform: rotate(-15deg);
   transition: all 0.5s cubic-bezier(0.6, 0.04, 0.98, 0.335);
 }
 
