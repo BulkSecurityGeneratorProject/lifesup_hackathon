@@ -14,13 +14,23 @@
         vm.challengeInfo = {};
         vm.clear = clear;
         vm.save = save;
-        vm.isMinMaxValid = validation.isMinMaxValid;
-        vm.isDateRangeValid = validation.isDateRangeValid;
+        vm.isMinMaxInvalid = validation.isMinMaxInvalid;
         vm.isLowerThan100 = validation.isLowerThan100;
-        vm.isAllDateValid = validation.isAllDateValid;
-        vm.checkDate = checkDate;
-        vm.checkDateArr = checkDateArr;
+        vm.min = {};
+        vm.min.applicationCloseDate = new Date();
+        vm.setMinDate = setMinDate;
 
+
+        function setMinDate() {
+            vm.min.kickoffWebinarDate = getMinDate(vm.challengeInfo.selectionInformDate);
+            vm.min.pilotPhaseStartDate = getMinDate(vm.challengeInfo.pilotSubmissionCloseDate);
+            vm.min.pilotPhaseEndDate = getMinDate(vm.challengeInfo.pilotPhaseStartDate);
+        }
+
+        function getMinDate(data) {
+            var date = new Date(data);
+            return (new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1));
+        }
 
         getChallengesInfo();
 
@@ -32,53 +42,23 @@
             }
             else {
                 vm.challengeInfo = vm.challenge.info;
+                vm.challengeInfo.applicationCloseDate = new Date(vm.challenge.info.applicationCloseDate);
+                vm.challengeInfo.selectionInformDate = new Date(vm.challenge.info.selectionInformDate);
+                vm.challengeInfo.kickoffWebinarDate = new Date(vm.challenge.info.kickoffWebinarDate);
                 vm.challengeInfo.eventStartTime = new Date(vm.challenge.info.eventStartTime);
                 vm.challengeInfo.eventEndTime = new Date(vm.challenge.info.eventEndTime);
+                vm.challengeInfo.pilotSubmissionCloseDate = new Date(vm.challenge.info.pilotSubmissionCloseDate);
                 vm.challengeInfo.pilotPhaseStartDate = new Date(vm.challenge.info.pilotPhaseStartDate);
                 vm.challengeInfo.pilotPhaseEndDate = new Date(vm.challenge.info.pilotPhaseEndDate);
-                vm.challengeInfo.kickoffWebinarDate = new Date(vm.challenge.info.kickoffWebinarDate);
-                vm.challengeInfo.selectionInformDate = new Date(vm.challenge.info.selectionInformDate);
-                vm.challengeInfo.applicationCloseDate = new Date(vm.challenge.info.applicationCloseDate);
-                vm.challengeInfo.pilotSubmissionCloseDate = new Date(vm.challenge.info.pilotSubmissionCloseDate);
             }
+            setMinDate();
         }
-
-        function checkDateArr(date) {
-            return date !== undefined;
-        }
-
-        function checkDate() {
-            vm.dateArray = [
-                vm.challengeInfo.applicationCloseDate,
-                vm.challengeInfo.selectionInformDate,
-                vm.challengeInfo.kickoffWebinarDate,
-                vm.challengeInfo.eventStartTime,
-                vm.challengeInfo.eventEndTime,
-                vm.challengeInfo.pilotSubmissionCloseDate,
-                vm.challengeInfo.pilotPhaseStartDate,
-                vm.challengeInfo.pilotPhaseEndDate
-            ];
-
-            vm.dateArrayOptional = vm.dateArray.slice(5,8);
-
-            if (vm.dateArray.every(checkDateArr)) {
-                vm.dateArray.map(function(date) {
-                    return date.getTime();
-                });
-                return vm.isAllDateValid(vm.dateArray);
-            } else if (vm.dateArrayOptional.every(checkDateArr) === false) {
-                return vm.isAllDateValid(vm.dateArray.slice(0,5));
-            }
-        }
-
-        function clear() {
-            $mdDialog.cancel('cancel');
-        }
-
+        
         function save() {
             vm.isSaving = true;
             var now = new Date().getTime();
-            var end = new Date(vm.challengeInfo.applicationCloseDate).getTime();
+            var date = new Date(vm.challengeInfo.applicationCloseDate);
+            var end = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1).getTime();
             var time = end - now;
             if (time < 0) {
                 vm.challengeInfo.status = 'CLOSED';
@@ -109,7 +89,7 @@
                 vm.attach.challengeId = result.id;
                 ChallengeBanner.update(vm.attach, onUploadSuccess, onUploadError);
             }
-            else{
+            else {
                 $mdDialog.hide(result);
             }
         }
@@ -134,6 +114,10 @@
         function onUploadError() {
             alert('Upload Banner Error');
             vm.isSaving = false;
+        }
+
+        function clear() {
+            $mdDialog.cancel('cancel');
         }
 
 

@@ -1,6 +1,6 @@
 /* Overide angular material */
 
-#birthday .md-datepicker-input-container{
+#datepicker .md-datepicker-input-container{
     width: 100% !important;
     overflow: hidden;
 }

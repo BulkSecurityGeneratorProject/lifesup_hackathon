@@ -29,22 +29,34 @@
                     return;
                 }
                 vm.challenges.forEach(function (element) {
-                    if (element.info.status == 'CLOSED') {
-                        vm.closedChallenges.push(element);
-                    }
-                    if (element.info.status == 'DRAFT') {
-                        vm.draftChallenges.push(element);
-                    }
                     if (element.info.status == 'ACTIVE') {
-                        vm.activeChallenges.push(element);
+                        // Auto update challenge status on loading
                         var now = new Date().getTime();
-                        var end = new Date(element.info.applicationCloseDate).getTime();
-                        var time = end - now;
-                        if (time < 0) {
+                        var date = new Date(element.info.applicationCloseDate);
+                        var end = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1).getTime();
+                        var diff = end - now;
+                        var time = diff / (1000 * 60 * 60 * 24);
+                        if (diff < 0) {
                             element.info.status = 'CLOSED';
                             ChallengeInfo.update(element.info);
+                            vm.closedChallenges.push(element);
+                        } else {
+                            vm.activeChallenges.push(element);
                         }
-                        element.timeLeft = parseInt(Math.ceil(time / (1000 * 60 * 60 * 24)));
+
+                        if (time <= 1) {
+                            element.timeLeft = 'Apply in less than 1 day';
+                        } else {
+                            element.timeLeft = 'Apply in ' + parseInt(Math.ceil(time)) + 'day(s)';
+                        }
+
+                    } else {
+                        if (element.info.status == 'CLOSED') {
+                            vm.closedChallenges.push(element);
+                        }
+                        else {
+                            vm.draftChallenges.push(element);
+                        }
                     }
                 }, this);
             });

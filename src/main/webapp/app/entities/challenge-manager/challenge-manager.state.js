@@ -13,7 +13,7 @@
                 parent: 'entity',
                 url: '/challenge-manager',
                 data: {
-                    authorities: ['ROLE_USER'],
+                    authorities: ['ROLE_ADMIN', 'ROLE_HOST'],
                     pageTitle: 'hackathonApp.challenge.home.title'
                 },
                 views: {
@@ -35,7 +35,7 @@
                 parent: 'entity',
                 url: '/challenge-manager/{id}',
                 data: {
-                    authorities: ['ROLE_USER'],
+                    authorities: ['ROLE_ADMIN', 'ROLE_HOST'],
                     pageTitle: 'hackathonApp.challenge.detail.title'
                 },
                 views: {
@@ -67,7 +67,7 @@
                 parent: 'challenge-manager-detail',
                 url: '/detail/edit',
                 data: {
-                    authorities: ['ROLE_USER']
+                    authorities: ['ROLE_ADMIN', 'ROLE_HOST']
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', '$mdDialog', function ($stateParams, $state, $uibModal, $mdDialog) {
                     $mdDialog.show({
@@ -92,7 +92,7 @@
                 parent: 'challenge-manager-detail',
                 url: '/detail/delete',
                 data: {
-                    authorities: ['ROLE_USER']
+                    authorities: ['ROLE_ADMIN', 'ROLE_HOST']
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', '$mdDialog', function ($stateParams, $state, $uibModal, $mdDialog, ev) {
                     $mdDialog.show({
@@ -117,7 +117,7 @@
                 parent: 'challenge-manager',
                 url: '/new',
                 data: {
-                    authorities: ['ROLE_USER']
+                    authorities: ['ROLE_ADMIN', 'ROLE_HOST']
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', '$mdDialog', function ($stateParams, $state, $uibModal, $mdDialog) {
                     $mdDialog.show({
@@ -154,7 +154,7 @@
                 parent: 'challenge-manager',
                 url: '/{id}/edit',
                 data: {
-                    authorities: ['ROLE_USER']
+                    authorities: ['ROLE_ADMIN', 'ROLE_HOST']
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', '$mdDialog', function ($stateParams, $state, $uibModal, $mdDialog) {
                     $mdDialog.show({
@@ -180,7 +180,7 @@
                 parent: 'challenge-manager',
                 url: '/{id}/delete',
                 data: {
-                    authorities: ['ROLE_USER']
+                    authorities: ['ROLE_ADMIN', 'ROLE_HOST']
                 },
                 onEnter: ['$stateParams', '$state', '$uibModal', '$mdDialog', function ($stateParams, $state, $uibModal, $mdDialog, ev) {
                     $mdDialog.show({
