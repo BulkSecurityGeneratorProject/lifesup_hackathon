@@ -13,6 +13,7 @@ import java.util.Objects;
 /**
  * A UserInfo.
  */
+
 @Entity
 @Table(name = "user_info")
 public class UserInfo implements Serializable {
@@ -35,6 +36,7 @@ public class UserInfo implements Serializable {
     @Column(name = "company_name")
     private String companyName;
 
+    
     @Column(name = "job_title")
     private String jobTitle;
 
@@ -60,12 +62,15 @@ public class UserInfo implements Serializable {
     @Column(name = "introduction", nullable = false)
     private String introduction;
 
+    @Pattern(regexp = "^(https?://)?([a-z-]+).([a-z.]{2,6})([w .-]*)*/?$")
     @Column(name = "twitter_url")
     private String twitterUrl;
 
+    @Pattern(regexp = "^(https?://)?([a-z-]+).([a-z.]{2,6})([w .-]*)*/?$")
     @Column(name = "linked_in_url")
     private String linkedInUrl;
 
+    @Pattern(regexp = "^(https?://)?([a-z-]+).([a-z.]{2,6})([w .-]*)*/?$")
     @Column(name = "website_url")
     private String websiteUrl;
 
