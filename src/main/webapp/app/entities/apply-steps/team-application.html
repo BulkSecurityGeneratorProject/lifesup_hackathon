@@ -25,7 +25,7 @@
                 <div layout-gt-sm="row"flex>
                     <div class="col-md-8">
                             <label>Team members</label>
-                            <p>Invite team members to the challenge. You can invite members by emails separate by <strong>;</strong></p>
+                            <!-- <p>Invite team members to the challenge. You can invite members by emails separate by <strong>;</strong></p> -->
                             <hr>
                     </div>
 
@@ -45,14 +45,15 @@
 
                 <div layout-gt-sm="row" flex>
                     <div class="col-md-4">
-                        <md-input-container class="md-block" flex-gt-sm ng-repeat="i in vm.getMaxTeamMember(vm.maxTeamMember) track by $index">
+                        <md-input-container class="md-block" flex-gt-sm ng-repeat="i in vm.getMaxTeamMember(vm.displayFields) track by $index">
                             <label>Member's Email</label>
                             <input name="email" ng-model="vm.inviteMails">
                         </md-input-container>
+                        <md-button ng-click="vm.addMoreMember()" class="md-raised layout-padding layout-margin">Add More Team Member</md-button>
                     </div>
                 </div>
 
-                <div layout-gt-sm="row" flex>
+                <div layout-gt-sm="row" class="marginTop">
                     <div class="col-md-8">
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Team Description</label>

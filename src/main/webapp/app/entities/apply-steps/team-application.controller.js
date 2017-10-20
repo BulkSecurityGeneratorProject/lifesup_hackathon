@@ -20,7 +20,9 @@
         vm.deleteMail = [];
         vm.removeMail = removeMail;
         vm.getMaxTeamMember = getMaxTeamMember;
+        vm.addMoreMember = addMoreMember;
         vm.maxTeamMember = null;
+        vm.displayFields = null;
 
         function removeMail(mail) {
             vm.deleteMail.push(mail);
@@ -36,6 +38,7 @@
                     Application.get({ id: result.applicationId }, function (result) {
                         vm.team = result;
                         vm.maxTeamMember = result.challenge.maxTeamNumber;
+                        vm.displayFields = vm.maxTeamMember/2;
                     });
                     ApplicationBasicInfo.get({ applicationId: result.applicationId }, function (data) {
                         data.members.forEach(function (element) {
@@ -95,6 +98,12 @@
 
         function getMaxTeamMember(num) {
           return new Array(num);
+        }
+
+        function addMoreMember() {
+          if (vm.displayFields < vm.maxTeamMember) {
+            vm.displayFields++;
+          }
         }
     }
 })();
