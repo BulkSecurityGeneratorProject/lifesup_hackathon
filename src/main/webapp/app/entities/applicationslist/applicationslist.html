@@ -28,37 +28,37 @@
     <h5 class="alert alert-danger">Sorry, there's no application of this challenge yet!</h5>
   </div>
   <div class="col-sm-12 col-md-3" ng-repeat="application in vm.applications">
-    <md-card class="application-card">
-      <md-card-title class="team-name">
-        <h3>{{application.teamName}}</h3>
-      </md-card-title>
-      <md-card-subtitle class="company-name">
-        <h5>{{application.companyName}}</h5>
-      </md-card-subtitle>
-      <md-card-content class='application-description'>
-        <p>{{application.description}}</p>
-        <a ui-sref="applicationslist-detail({id:application.id})" class="go-detail" data-translate="hackathonApp.applicationslist.home.detail">More Details</a>
-      </md-card-content>
-
-      <md-card-actions ng-switch="application.status">
-        <span class="action-btn-group">
-          <button class="btn btn-block challenge-cta btn-applied" ng-switch-when="APPROVED">
-            <a>Approved</a>
-          </button>
-          <button class="btn btn-block challenge-cta btn-inactive" ng-switch-when="REJECTED">
-            <a>Rejected</a>
-          </button>
-        </span>
-        <span class="action-btn-group" ng-switch-when="WAITING_FOR_APPROVE">
-          <button class="action-btn approve-btn btn-small" ng-click="vm.approve(application)">
-            <i class="material-icons">check</i>
-          </button>
-          <button class="action-btn reject-btn btn-small" ng-click="vm.reject(application)">
-            <i class="material-icons">close</i>
-          </button>
-        </span>
-      </md-card-actions>
-
-    </md-card>
+    <div ng-show="vm.isReadyToApprove()">
+      <md-card class="application-card">
+        <md-card-title class="team-name">
+          <h3>{{application.teamName}}</h3>
+        </md-card-title>
+        <md-card-subtitle class="company-name">
+          <h5>{{application.companyName}}</h5>
+        </md-card-subtitle>
+        <md-card-content class='application-description'>
+          <p>{{application.description}}</p>
+          <a ui-sref="applicationslist-detail({id:application.id})" class="go-detail" data-translate="hackathonApp.applicationslist.home.detail">More Details</a>
+        </md-card-content>
+        <md-card-actions ng-switch="application.status">
+          <span class="action-btn-group">
+            <button class="btn btn-block challenge-cta btn-applied" ng-switch-when="APPROVED">
+              <a>Approved</a>
+            </button>
+            <button class="btn btn-block challenge-cta btn-inactive" ng-switch-when="REJECTED">
+              <a>Rejected</a>
+            </button>
+          </span>
+          <span class="action-btn-group" ng-switch-when="WAITING_FOR_APPROVE">
+            <button class="action-btn approve-btn btn-small" ng-click="vm.approve(application)">
+              <i class="material-icons">check</i>
+            </button>
+            <button class="action-btn reject-btn btn-small" ng-click="vm.reject(application)">
+              <i class="material-icons">close</i>
+            </button>
+          </span>
+        </md-card-actions>
+      </md-card>
+    </div>
   </div>
 </div>
