@@ -45,11 +45,11 @@
 
                 <div layout-gt-sm="row" flex>
                     <div class="col-md-4">
-                        <md-input-container class="md-block" flex-gt-sm ng-repeat="i in vm.getMaxTeamMember(vm.displayFields) track by $index">
+                        <md-input-container class="md-block" flex-gt-sm ng-repeat="member in vm.getMaxTeamMember(vm.displayFields - vm.members.length) track by $index">
                             <label>Member's Email</label>
-                            <input name="email" ng-model="vm.inviteMails">
+                            <input name="email" ng-model="vm.inviteMails[$index].email" ng-model-options="{'allowInvalid': true}">
                         </md-input-container>
-                        <md-button ng-click="vm.addMoreMember()" class="md-raised layout-padding layout-margin">Add More Team Member</md-button>
+                        <md-button ng-click="vm.addMoreMember()" class="md-raised layout-padding layout-margin" ng-hide="vm.displayFields === vm.maxTeamMember">Add More Team Member</md-button>
                     </div>
                 </div>
 

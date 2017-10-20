@@ -15,7 +15,7 @@
         vm.team = {};
         vm.account = null;
         vm.appDetail = [];
-        vm.inviteMails = null;
+        vm.inviteMails = [];
         vm.members = [];
         vm.deleteMail = [];
         vm.removeMail = removeMail;
@@ -38,7 +38,7 @@
                     Application.get({ id: result.applicationId }, function (result) {
                         vm.team = result;
                         vm.maxTeamMember = result.challenge.maxTeamNumber;
-                        vm.displayFields = vm.maxTeamMember/2;
+                        vm.displayFields = 5;
                     });
                     ApplicationBasicInfo.get({ applicationId: result.applicationId }, function (data) {
                         data.members.forEach(function (element) {
@@ -69,7 +69,8 @@
             }
 
             if (vm.inviteMails) {
-                vm.team.members = vm.inviteMails.split(";");
+                vm.team.members = vm.inviteMails.map(function(item) {return item.email});
+                console.log(vm.team.members);
             }
 
             if (vm.entity.applicationId) {
