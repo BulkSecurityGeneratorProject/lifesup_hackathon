@@ -12,13 +12,13 @@ public class ChallengeSearch {
 	private String eventEndTime;
 	private String applicationCloseDate;
 	private ChallengeStatus status;
-	
+
 	public ChallengeSearch() {
 		super();
 	}
 
 	public String getName() {
-		if(name == null)
+		if (name == null)
 			name = "";
 		return name;
 	}
@@ -27,9 +27,11 @@ public class ChallengeSearch {
 		this.name = name;
 	}
 
-
 	public ZonedDateTime getEventStartTime() {
-		return ZonedDateTime.parse(eventStartTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault()));
+		if (eventStartTime != null)
+			return ZonedDateTime.parse(eventStartTime,
+					DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault()));
+		return null;
 	}
 
 	public void setEventStartTime(String eventStartTime) {
@@ -37,8 +39,10 @@ public class ChallengeSearch {
 	}
 
 	public ZonedDateTime getApplicationCloseDate() {
-		return ZonedDateTime.parse(applicationCloseDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault()));
-				
+		if (applicationCloseDate != null)
+			return ZonedDateTime.parse(applicationCloseDate,
+					DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault()));
+		return null;
 	}
 
 	public void setApplicationCloseDate(String applicationCloseDate) {
@@ -46,7 +50,10 @@ public class ChallengeSearch {
 	}
 
 	public ZonedDateTime getEventEndTime() {
-		return ZonedDateTime.parse(eventEndTime, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault()));
+		if (eventEndTime != null)
+			return ZonedDateTime.parse(eventEndTime,
+					DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault()));
+		return null;
 	}
 
 	public void setEventEndTime(String eventEndTime) {
@@ -60,6 +67,5 @@ public class ChallengeSearch {
 	public void setStatus(ChallengeStatus status) {
 		this.status = status;
 	}
-	
-	
+
 }
