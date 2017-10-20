@@ -141,10 +141,11 @@ public class ChallengeService {
 
 		StringBuilder where = new StringBuilder();
 		where.append(" where c.info.id = p.id and c.name like '%").append(search.getName()).append("%'");
-		if (search.getStatus() != null) {
-			where.append(" and p.status = :status");
-
-		}
+//		if (search.getStatus() != null) {
+//			where.append(" and p.status = :status");
+//
+//		}
+		where.append(" and p.status in ('ACTIVE','INACTIVE') ");
 		if (search.getEventStartTime() != null && search.getEventEndTime() == null) {
 			where.append(" and p.eventStartTime >= :startTime ");
 		} else if (search.getEventStartTime() == null && search.getEventEndTime() != null) {
@@ -163,14 +164,12 @@ public class ChallengeService {
 		StringBuilder sbQuery = new StringBuilder();
 		sbQuery.append("select c from Challenge c, ChallengeInfo p ");
 		StringBuilder sbCount = new StringBuilder();
-		sbCount.append("select count(c) from Challenge c, ChallengeInfo p ");
+		sbCount.append("select count(c.id) from Challenge c, ChallengeInfo p ");
 
 		String where = buildQueryChallenge(search);
-		Query query = em.createQuery(sbQuery.toString() + where, Challenge.class);
+		Query query = em.createQuery(sbQuery.toString() + where + " order by p.status, p.applicationCloseDate asc", Challenge.class);
 		query.setFirstResult(pageable.getOffset()).setMaxResults(pageable.getPageSize());
-		if (search.getStatus() != null) {
-			query.setParameter("status", search.getStatus());
-		}
+		
 		if (search.getEventStartTime() != null) {
 			query.setParameter("startTime", search.getEventStartTime());
 		} 
@@ -181,9 +180,7 @@ public class ChallengeService {
 		List<Challenge> lst = query.getResultList();
 		
 		Query count =  em.createQuery(sbCount.toString() + where);
-		if (search.getStatus() != null) {
-			count.setParameter("status", search.getStatus());
-		}
+		
 		if (search.getEventStartTime() != null) {
 			count.setParameter("startTime", search.getEventStartTime());
 		} 
