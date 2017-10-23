@@ -35,7 +35,7 @@ import fi.lifesup.hackathon.service.dto.UserInfoImageDTO;
 public class UserInfoService {
 	@Inject
 	private UserInfoRepository userInfoRepository;
-	@Value("src/main/webapp/content/images")
+	@Value("${attach.path}")
 	private String attachPath;
 	public UserInfo updateUserInfoBanner(UserInfoImageDTO dto){
 		UserInfo userInfo = userInfoRepository.findOne(dto.getUserInfoId());

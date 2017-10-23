@@ -142,7 +142,7 @@ public class UserService {
 			u.setLastName(lastName);
 			u.setEmail(email);
 			u.setLangKey(langKey);
-
+			u.setStatus(UserStatus.ACTIVATED);
 			userRepository.save(u);
 			log.debug("Changed Information for User: {}", u);
 		});
