@@ -17,14 +17,12 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
 
 	@Query("select new fi.lifesup.hackathon.service.dto.ApplicationDTO(a.id, a.teamName, a.companyName, a.description,"
 			+ " a.motivation, a.ideasDescription, a.status, a.challenge.id)"
-			+ " from Application a"
-			+ " where a.challenge.id = :#{[0]}")
+			+ " from Application a where a.challenge.id = :#{[0]}")
 	List<ApplicationDTO> getapplication(Long challengeId);
 	
 	@Query("select new fi.lifesup.hackathon.service.dto.ApplicationDTO(a.id, a.teamName, a.companyName, a.description,"
 			+ " a.motivation, a.ideasDescription, a.status, a.challenge.id)"
-			+ " from Application a"
-			+ " where a.id = :#{[0]}")
+			+ " from Application a where a.id = :#{[0]}")
 	ApplicationDTO getapplicationById(Long id);
 
 	@Query("select aie.application from ApplicationInviteEmail aie"

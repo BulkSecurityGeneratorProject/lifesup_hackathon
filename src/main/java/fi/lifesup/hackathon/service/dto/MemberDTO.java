@@ -2,7 +2,6 @@ package fi.lifesup.hackathon.service.dto;
 
 import java.time.ZonedDateTime;
 
-import fi.lifesup.hackathon.domain.enumeration.ChallengeUserApplicationStatus;
 import fi.lifesup.hackathon.domain.enumeration.UserSex;
 
 public class MemberDTO {
@@ -25,11 +24,10 @@ public class MemberDTO {
 	private String skills;
 	private String workArea;
 	private String feedbackFrom;
-	private ChallengeUserApplicationStatus status;
 	public MemberDTO(String email, String firstName, String lastName, String phone, UserSex sex, String companyName,
 			String jobTitle, String logoUrl, String country, String city, String nationality, ZonedDateTime birthday,
 			String introduction, String twitterUrl, String linkedInUrl, String websiteUrl, String skills,
-			String workArea, String feedbackFrom, ChallengeUserApplicationStatus status) {
+			String workArea, String feedbackFrom) {
 		super();
 		this.email = email;
 		this.firstName = firstName;
@@ -50,7 +48,6 @@ public class MemberDTO {
 		this.skills = skills;
 		this.workArea = workArea;
 		this.feedbackFrom = feedbackFrom;
-		this.status = status;
 	}
 	public String getEmail() {
 		return email;
@@ -166,21 +163,13 @@ public class MemberDTO {
 	public void setFeedbackFrom(String feedbackFrom) {
 		this.feedbackFrom = feedbackFrom;
 	}
-	public ChallengeUserApplicationStatus getStatus() {
-		return status;
-	}
-	public void setStatus(ChallengeUserApplicationStatus status) {
-		this.status = status;
-	}
-	public MemberDTO(String emai, String phone, UserSex sex,
-			ChallengeUserApplicationStatus status) {
+	public MemberDTO(String emai, String phone, UserSex sex) {
 		super();
 		this.email = email;
 	
 		this.phone = phone;
 		this.sex = sex;
-		
-		this.status = status;
+
 	}
 	
 	

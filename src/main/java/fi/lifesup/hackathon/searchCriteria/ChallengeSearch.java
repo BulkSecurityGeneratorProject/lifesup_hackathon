@@ -68,4 +68,11 @@ public class ChallengeSearch {
 		this.status = status;
 	}
 
+	@Override
+	public String toString() {
+		return "ChallengeSearch [name=" + name + ", eventStartTime=" + eventStartTime + ", eventEndTime=" + eventEndTime
+				+ ", applicationCloseDate=" + applicationCloseDate + ", status=" + status + "]";
+	}
+	
+
 }

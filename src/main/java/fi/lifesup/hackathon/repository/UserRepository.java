@@ -40,7 +40,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query("select c from Challenge c, ChallengeUserApplication cua where c.id = cua.challengeId and cua.userId = :#{[0]} ")
     List<Challenge> getChallengeByUser(Long id);
     
-    @Query("select a from Application a, ChallengeUserApplication cua where a.id = cua.applicationId and cua.userId = :#{[0]} ")
+    @Query("select a from Application a, ChallengeUserApplication cua where a.id = cua.applicationId and cua.userId = :#{[0]}  and a.status not like 'CLOSED' ")
     List<Application>  getApplicationByUser(Long id);
 
     @Query("select u from User u left join fetch u.authorities au where u.login = ?1 and au.name = ?2")

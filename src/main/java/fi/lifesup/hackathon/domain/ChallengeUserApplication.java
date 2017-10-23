@@ -1,11 +1,14 @@
 package fi.lifesup.hackathon.domain;
 
-import javax.persistence.*;
-
-import fi.lifesup.hackathon.domain.enumeration.ChallengeUserApplicationStatus;
-
 import java.io.Serializable;
 import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * A ChallengeUserApplication.

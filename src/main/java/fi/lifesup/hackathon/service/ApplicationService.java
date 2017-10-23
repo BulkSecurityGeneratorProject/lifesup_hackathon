@@ -313,40 +313,78 @@ public class ApplicationService {
 		} else {
 			list.add("Fill in your idea," + false);
 		}
-
-		if (a.getChallenge().getMinTeamNumber() != 1 || members.size() > 1 || !invites.isEmpty()) {
-			if (!invites.isEmpty() || members.size() > 1) {
-				list.add("Invite other team members," + true);
-			} else {
-				list.add("Invite other team members," + false);
-			}
-		}
-		if (invites.isEmpty() && members.size() == 1 && a.getChallenge().getMinTeamNumber() == 1) {
-			return list;
-		} 
-		else {
-			if (invites.isEmpty() && members.size() > 1) {
-				list.add("Other members have accepted their invitation," + true);
-			} else {
-				list.add("Other members have accepted their invitation," + false);
-			}
-			if (!invites.isEmpty() || members.size() == 1) {
-				list.add("Other member have completed their profile," + false);
-			} else {
-				List<UserStatus> s = challengeUserApplicationRepository.checkUserStatus(id);
-				for (UserStatus userStatus : s) {
-					if (userStatus != UserStatus.PROFILE_COMPLETE || !invites.isEmpty()) {
-						list.add("Other member have completed their profile," + false);
-						return list;
-					}
+		
+		if(check == 1){
+			if (a.getChallenge().getMinTeamNumber() != 1 || members.size() > 1 || !invites.isEmpty()) {
+				if (!invites.isEmpty() || members.size() > 1) {
+					list.add("Invite other team members," + true);
+				} else {
+					list.add("Invite other team members," + false);
 				}
-				list.add("Other member have completed their profile," + true);
+			}
+			if (invites.isEmpty() && members.size() == 1 && a.getChallenge().getMinTeamNumber() == 1) {
+				return list;
+			} 
+			else {
+				if (invites.isEmpty() && members.size() > 1) {
+					list.add("Other members have accepted their invitation," + true);
+				} else {
+					list.add("Other members have accepted their invitation," + false);
+				}
+				if (!invites.isEmpty() || members.size() == 1) {
+					list.add("Other member have completed their profile," + false);
+				} else {
+					List<UserStatus> s = challengeUserApplicationRepository.checkUserStatus(id);
+					for (UserStatus userStatus : s) {
+						if (userStatus != UserStatus.PROFILE_COMPLETE || !invites.isEmpty()) {
+							list.add("Other member have completed their profile," + false);
+							return list;
+						}
+					}
+					list.add("Other member have completed their profile," + true);
+				}
 			}
 		}
+		else{
+			if (a.getChallenge().getMinTeamNumber() != 1 || members.size() > 1 || !invites.isEmpty()) {
+				if (!invites.isEmpty() || members.size() > 1) {
+					list.add("Invite other team members," + true);
+				} else {
+					list.add("Invite other team members," + false);
+				}
+				
+				if (invites.isEmpty() && members.size() == 1 && a.getChallenge().getMinTeamNumber() == 1) {
+					list.add("All member have completed their profile," + true);
+					list.add("All members have accepted their invitation," + true);
+					return list;
+				}
+				if (invites.isEmpty() && members.size() > 1) {
+					list.add("All members have accepted their invitation," + true);
+				} else {
+					list.add("All members have accepted their invitation," + false);
+				}
+				if (!invites.isEmpty() || members.size() == 1) {
+					list.add("All member have completed their profile," + false);
+				} else {
+					List<UserStatus> s = challengeUserApplicationRepository.checkUserStatus(id);
+					for (UserStatus userStatus : s) {
+						if (userStatus != UserStatus.PROFILE_COMPLETE || !invites.isEmpty()) {
+							list.add("All member have completed their profile," + false);
+							return list;
+						}
+					}
+					list.add("All member have completed their profile," + true);
+				}
+			}
+			
+		}
+
+		
 		return list;
 	}
 
 	public void deleteMember(Long applicationId, String email) {
+		System.err.println(email);
 		ChallengeUserApplication userApplication = challengeUserApplicationRepository.getMember(applicationId, email);
 		if (userApplication == null) {
 			ApplicationInviteEmail a = applicationInviteEmailReponsitory.findByApplicationIdAndEmail(applicationId,

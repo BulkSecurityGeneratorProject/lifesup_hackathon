@@ -2,9 +2,7 @@ package fi.lifesup.hackathon.service.dto;
 
 import java.time.ZonedDateTime;
 
-import fi.lifesup.hackathon.domain.enumeration.ChallengeUserApplicationStatus;
 import fi.lifesup.hackathon.domain.enumeration.UserSex;
-import fi.lifesup.hackathon.domain.enumeration.UserStatus;
 
 public class ApplicationMemberDTO {
 
