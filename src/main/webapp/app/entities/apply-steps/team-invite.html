@@ -65,7 +65,8 @@
 
                         <div class="text-center alert alert-success" ng-show="vm.success">
                             <strong>Registration saved!</strong> Please check your email for confirmation.
-                            <p><a ng-click="vm.reload()">Reload</a> page to sign in if your email has been verified</p>
+                            <p>
+                                <a ng-click="vm.reload()">Reload</a> page to sign in if your email has been verified</p>
                         </div>
                         <div class="text-center alert alert-success" ng-show="vm.accept">
                             <strong>You've accepted to join {{vm.application.teamName}} team</strong>
@@ -97,12 +98,20 @@
                                     <div class="form-heading">
                                         <h4 data-translate="loginsignup.form.headers.signup">Start by creating your account</h4>
                                     </div>
-                                    <!-- Full name -->
+                                    <!-- First name -->
                                     <md-input-container class="md-block" flex-gt-sm>
-                                        <label data-translate="loginsignup.form.fullName">Name</label>
-                                        <input name="fullName" id="fullName" ng-model="vm.registerAccount.login" ng-maxlength=50 required>
-                                        <div ng-messages="signupForm.fullName.$error" role="alert">
-                                            <div ng-message="required" data-translate="loginsignup.messages.validate.fullName.required"></div>
+                                        <label data-translate="loginsignup.form.firstName">Name</label>
+                                        <input name="firstName" id="firstName" ng-model="vm.registerAccount.firstName" ng-maxlength=50 required>
+                                        <div ng-messages="signupForm.firstName.$error" role="alert">
+                                            <div ng-message="required" data-translate="loginsignup.messages.validate.firstName.required"></div>
+                                        </div>
+                                    </md-input-container>
+                                    <!-- Last name -->
+                                    <md-input-container class="md-block" flex-gt-sm>
+                                        <label data-translate="loginsignup.form.lastName">Name</label>
+                                        <input name="lastName" id="lastName" ng-model="vm.registerAccount.lastName" ng-maxlength=50 required>
+                                        <div ng-messages="signupForm.lastName.$error" role="alert">
+                                            <div ng-message="required" data-translate="loginsignup.messages.validate.lastName.required"></div>
                                         </div>
                                     </md-input-container>
                                     <!-- Email -->

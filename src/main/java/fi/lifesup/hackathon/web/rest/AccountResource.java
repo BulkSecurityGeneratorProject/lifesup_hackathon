@@ -61,13 +61,14 @@ public class AccountResource {
         HttpHeaders textPlainHeaders = new HttpHeaders();
         textPlainHeaders.setContentType(MediaType.TEXT_PLAIN);
 
-        return userRepository.findOneByLogin(managedUserVM.getLogin().toLowerCase())
+        return userRepository.findOneByLogin(managedUserVM.getEmail().toLowerCase())
+        
             .map(user -> new ResponseEntity<>("login already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
             .orElseGet(() -> userRepository.findOneByEmail(managedUserVM.getEmail())
                 .map(user -> new ResponseEntity<>("e-mail address already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
                 .orElseGet(() -> {
                     User user = userService.createUser(managedUserVM.getEmail(), managedUserVM.getPassword(),
-                    managedUserVM.getLogin(), managedUserVM.getLastName(), managedUserVM.getEmail().toLowerCase(),
+                    managedUserVM.getEmail(), managedUserVM.getLastName(), managedUserVM.getEmail().toLowerCase(),
                     managedUserVM.getLangKey());
                     String baseUrl = request.getScheme() + // "http"
                     "://" +                                // "://"

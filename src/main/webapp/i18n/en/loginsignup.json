@@ -5,6 +5,8 @@
         "form": {
             "fullName": "Full name",
             "fullName.placeholder": "Full name",
+            "firstName": "First name",
+            "lastName": "Last name",
             "email": "Email",
             "email.placeholder": "Email",
             "password": "Password",
@@ -28,6 +30,16 @@
                     "required": "Your name is required.",
                     "minlength": "Your name is required to be at least 5 character",
                     "maxlength": "Your name cannot be longer than 50 characters"
+                },
+                "firstName": {
+                    "required": "Your first name is required.",
+                    "minlength": "Your first name is required to be at least 5 character",
+                    "maxlength": "Your first name cannot be longer than 50 characters"
+                },
+                "lastName": {
+                    "required": "Your last name is required.",
+                    "minlength": "Your last name is required to be at least 5 character",
+                    "maxlength": "Your last name cannot be longer than 50 characters"
                 },
                 "email": {
                     "pattern": "Your email must be between 10 and 100 characters long and look like an e-mail address.",
