@@ -177,6 +177,10 @@ public class ChallengeService {
 			t=1;
 			user = userRepository.getUserByAuthority(SecurityUtils.getCurrentUserLogin(), "ROLE_HOST");
 		}
+		if(user == null){
+			t=2;
+			user = userRepository.getUserByAuthority(SecurityUtils.getCurrentUserLogin(), "ROLE_USER");
+		}
 		String where = buildQueryChallenge(search,t);
 		Query query = em.createQuery(sbQuery.toString() + where + " order by p.status, p.applicationCloseDate asc",
 				Challenge.class);

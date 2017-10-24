@@ -62,7 +62,8 @@ public class UserInfo implements Serializable {
     @Column(name = "introduction", nullable = false)
     private String introduction;
 
-    @Pattern(regexp = "^(https?://)?([a-z-]+).([a-z.]{2,6})([w .-]*)*/?$")
+    @Pattern(regexp = "^(http://|https://)?(www.)?([a-zA-Z0-9]+).[a-zA-Z0-9]*.[a-z]{3}.?([a-z]+)?$")
+    //@Pattern(regexp = "^(https?://)?([a-z-]+).([a-z.]{2,6})([w .-]*)*/?$")
     @Column(name = "twitter_url")
     private String twitterUrl;
 
