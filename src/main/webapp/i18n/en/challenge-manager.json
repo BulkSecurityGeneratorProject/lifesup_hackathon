@@ -85,10 +85,14 @@
                     "required": "Banner url is required."
                 },
                 "maxTeamNumber": {
-                    "required": "Max team members is required."
+                    "required": "Max team members is required.",
+                    "min": "Invalid team size",
+                    "max": "Team member cannot be over 100"
                 },
                 "minTeamNumber": {
-                    "required": "Min team members is required."
+                    "required": "Min team members is required.",
+                    "min": "Team member is required at least 1",
+                    "max": "Invalid team size"
                 },
                 "eventStartTime": {
                     "required": "Event start time is required."

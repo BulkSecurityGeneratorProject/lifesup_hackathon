@@ -16,21 +16,7 @@
         vm.save = save;
         vm.isMinMaxInvalid = validation.isMinMaxInvalid;
         vm.isLowerThan100 = validation.isLowerThan100;
-        vm.min = {};
-        vm.min.applicationCloseDate = new Date();
-        vm.setMinDate = setMinDate;
-
-
-        function setMinDate() {
-            vm.min.kickoffWebinarDate = getMinDate(vm.challengeInfo.selectionInformDate);
-            vm.min.pilotPhaseStartDate = getMinDate(vm.challengeInfo.pilotSubmissionCloseDate);
-            vm.min.pilotPhaseEndDate = getMinDate(vm.challengeInfo.pilotPhaseStartDate);
-        }
-
-        function getMinDate(data) {
-            var date = new Date(data);
-            return (new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1));
-        }
+        vm.minDate = new Date();
 
         getChallengesInfo();
 
@@ -42,6 +28,7 @@
             }
             else {
                 vm.challengeInfo = vm.challenge.info;
+                vm.minDate = new Date(vm.challenge.info.applicationCloseDate);
                 vm.challengeInfo.applicationCloseDate = new Date(vm.challenge.info.applicationCloseDate);
                 vm.challengeInfo.selectionInformDate = new Date(vm.challenge.info.selectionInformDate);
                 vm.challengeInfo.kickoffWebinarDate = new Date(vm.challenge.info.kickoffWebinarDate);
@@ -51,7 +38,6 @@
                 vm.challengeInfo.pilotPhaseStartDate = new Date(vm.challenge.info.pilotPhaseStartDate);
                 vm.challengeInfo.pilotPhaseEndDate = new Date(vm.challenge.info.pilotPhaseEndDate);
             }
-            setMinDate();
         }
         
         function save() {
