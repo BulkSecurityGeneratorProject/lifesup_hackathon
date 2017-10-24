@@ -145,7 +145,12 @@ public class ChallengeService {
 		// where.append(" and p.status = :status");
 		//
 		// }
-		where.append(" and p.status in ('ACTIVE','INACTIVE') ");
+		if(t == 0){
+			where.append(" and p.status in ('ACTIVE','INACTIVE') ");
+		}
+		else{
+			where.append(" and p.status in ('ACTIVE','INACTIVE','DRAFT') ");
+		}
 		if (search.getEventStartTime() != null && search.getEventEndTime() == null) {
 			where.append(" and p.eventStartTime >= :startTime ");
 		} else if (search.getEventStartTime() == null && search.getEventEndTime() != null) {
@@ -169,15 +174,20 @@ public class ChallengeService {
 		sbCount.append("select count(c.id) from Challenge c, ChallengeInfo p ");
 		List<Challenge> lst = null;
 		Long total = null;
-		int t=0;
+		int t=2;
 		
 		User user = userRepository.getUserByAuthority(SecurityUtils.getCurrentUserLogin(), "ROLE_ADMIN");
 		
-		if(user == null){
-			t=1;
+		if(user == null){		
 			user = userRepository.getUserByAuthority(SecurityUtils.getCurrentUserLogin(), "ROLE_HOST");
+			if(user == null){
+				t=0;
+			}
+			else{
+				t = 1; 
+			}
 		}
-		String where = buildQueryChallenge(search,t);
+		String where = buildQueryChallenge(search, t);
 		Query query = em.createQuery(sbQuery.toString() + where + " order by p.status, p.applicationCloseDate asc",
 				Challenge.class);
 		query.setFirstResult(pageable.getOffset()).setMaxResults(pageable.getPageSize());
@@ -206,8 +216,8 @@ public class ChallengeService {
 			count.setParameter(1, user.getCompany().getId());
 		}
 
+		
 		total = (Long) count.getSingleResult();
-
 		return new PageImpl<>(lst, pageable, total);
 
 	}
