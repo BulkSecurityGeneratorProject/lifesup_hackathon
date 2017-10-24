@@ -135,7 +135,7 @@
         function onAcceptSuccess() {
             vm.accept = true;
             $timeout(function() {
-                $state.go('applicationslist-detail', { id: vm.applicationId });
+                $state.go('settings');
             }, 3000);
             console.log("Accept Successful");
         }

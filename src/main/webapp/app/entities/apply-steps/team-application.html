@@ -1,20 +1,27 @@
-<div>
+<div class="row">
+    
+<div class="col-md-8">
+        <md-content layout-padding>
     <h2>Team Application</h2>
     <h5>This part is the actual application for this specific challenge.</h5>
+        </md-content>
 </div>
-<br>
+</div>
 <div class="row">
+<div class="col-md-8">
     <div layout="column">
         <md-content layout-padding>
+
             <form name="teamForm">
+
                 <div layout-gt-sm="row" flex>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Team Name</label>
                             <input name="name" ng-model="vm.team.teamName" required>
                         </md-input-container>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Company (Optional)</label>
                             <input name="company" ng-model="vm.team.companyName">
@@ -22,88 +29,72 @@
                     </div>
                 </div>
 
-                <div layout-gt-sm="row"flex>
-                    <div class="col-md-8">
-                            <label>Team members</label>
-                            <!-- <p>Invite team members to the challenge. You can invite members by emails separate by <strong>;</strong></p> -->
-                            <hr>
-                    </div>
-
-                </div>
                 <div layout-gt-sm="row" ng-repeat="member in vm.members" flex>
-                    <div class="col-md-4">
-                            <p>{{member[0]}}</p>
+                    <div class="col-md-6">
+                        <p>{{member[0]}}</p>
                     </div>
-                    <div class="col-md-3" >
-                        <span style="display: flex" ng-if="member[1] === 'PROFILE_COMPLETE' "><i class="material-icons w3-text-green">done</i>Profile Complete</span>
-                        <span style="display: flex" ng-if="member[1] !== 'PROFILE_COMPLETE'"><i class="material-icons w3-text-red">clear</i>Profile not Complete</span>
+                    <div class="col-md-5">
+                        <span style="display: flex" ng-if="member[1] === 'PROFILE_COMPLETE' ">
+                            <i class="material-icons w3-text-green">done</i>Profile completed</span>
+                        <span style="display: flex" ng-if="member[1] !== 'PROFILE_COMPLETE'">
+                            <i class="material-icons w3-text-red">clear</i>Profile incomplete</span>
                     </div>
-                    <div class="col-md-1">
-                        <span class="btn btn-danger btn-xs" ng-click="vm.removeMail(member[0])">X</span>
+                    <div ng-show="vm.removable" class="col-md-1">
+                        <span ng-if="member[0] !== vm.account.email" class="btn btn-danger btn-xs pull-right glyphicon glyphicon-remove" ng-click="vm.removeMail(member[0])"></span>
+                        <span ng-if="member[0] === vm.account.email" class="btn btn-danger btn-xs pull-right glyphicon glyphicon-remove" ng-click="vm.showConfirm($event)"></span>
+                    </div>
+                </div>
+
+                <div ng-show="vm.emptySlot" layout-gt-sm="row" flex>
+                    <div class="col-md-12">
+                        <md-chips md-max-chips="{{vm.emptySlot}}" ng-model="vm.inviteMails" name="inviteMails" md-removable="true" placeholder="Enter email, Tab for many"
+                            md-separator-keys="vm.separator">
+                        </md-chips>
+                        <div class="alert w3-text-red" ng-messages="teamForm.inviteMails.$error">
+                            <div ng-message="md-max-chips">Maximum member of team reached.</div>
+                        </div>
                     </div>
                 </div>
 
                 <div layout-gt-sm="row" flex>
-                    <div class="col-md-4">
-                        <md-input-container class="md-block" flex-gt-sm ng-repeat="member in vm.getMaxTeamMember(vm.displayFields - vm.members.length) track by $index">
-                            <label>Member's Email</label>
-                            <input name="email" ng-model="vm.inviteMails[$index].email" ng-model-options="{'allowInvalid': true}">
-                        </md-input-container>
-                        <md-button ng-click="vm.addMoreMember()" class="md-raised layout-padding layout-margin" ng-hide="vm.displayFields === vm.maxTeamMember">Add More Team Member</md-button>
-                    </div>
-                </div>
-
-                <div layout-gt-sm="row" class="marginTop">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Team Description</label>
                             <textarea name="description" md-maxlength="255" ng-model="vm.team.description" rows="7" md-select-on-focus required></textarea>
                         </md-input-container>
                     </div>
-                    <div class="col-md-4">
-                        <b>What makes your team unique?</b>
-                        <br>
-                        <small>How do you know each other? Why do you like to work together, and what have you done before?</small>
-                    </div>
                 </div>
 
                 <div layout-gt-sm="row" flex>
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Motivation</label>
                             <textarea name="motivation" md-maxlength="255" ng-model="vm.team.motivation" rows="7" md-select-on-focus required></textarea>
                         </md-input-container>
                     </div>
-                    <div class="col-md-4">
-                        <b>Why are you attending?</b>
-                        <br>
-                        <small>Tell us what is your main motivation to apply to this hack. What are your expectations?</small>
-                    </div>
-
                 </div>
 
                 <div layout-gt-sm="row" flex>
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Ideas Description</label>
                             <textarea name="ideasDescription" md-maxlength="255" ng-model="vm.team.ideasDescription" rows="7" md-select-on-focus required></textarea>
                         </md-input-container>
                     </div>
-                    <div class="col-md-4">
-                        <b>What problem will you be solving?</b>
-                        <br>
-                        <small>Share your initial idea of what challenge you are solving, how you intend to do that, and what you'd want to build during the hack.</small>
-                    </div>
-
                 </div>
+
             </form>
         </md-content>
     </div>
 </div>
+<div class="col-md-4"></div>
+
+
+</div>
 
 <div class="row" ng-cloak>
-    <div class="text-center">
-        <md-button class="md-raised" ui-sref="complete-profile({id: vm.challengeId})">Back</md-button>
-        <md-button class="md-raised md-primary" ng-click="vm.save()" ng-disabled="teamForm.$invalid">Save Application</md-button>
-    </div>
+<div class="text-center">
+    <md-button class="md-raised" ui-sref="complete-profile({id: vm.challengeId})">Back</md-button>
+    <md-button class="md-raised md-primary" ng-click="vm.save()" ng-disabled="teamForm.$invalid">Save Application</md-button>
+</div>
 </div>
