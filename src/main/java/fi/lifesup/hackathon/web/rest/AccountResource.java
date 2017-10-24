@@ -68,7 +68,7 @@ public class AccountResource {
                 .map(user -> new ResponseEntity<>("e-mail address already in use", textPlainHeaders, HttpStatus.BAD_REQUEST))
                 .orElseGet(() -> {
                     User user = userService.createUser(managedUserVM.getEmail(), managedUserVM.getPassword(),
-                    managedUserVM.getEmail(), managedUserVM.getLastName(), managedUserVM.getEmail().toLowerCase(),
+                    managedUserVM.getFirstName(), managedUserVM.getLastName(), managedUserVM.getEmail().toLowerCase(),
                     managedUserVM.getLangKey());
                     String baseUrl = request.getScheme() + // "http"
                     "://" +                                // "://"
