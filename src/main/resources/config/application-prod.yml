@@ -38,10 +38,6 @@ spring:
         password:
     thymeleaf:
         cache: true
-    http:
-        multipart:
-            max-file-size: 100Mb
-            max-request-size: 100Mb
 
 liquibase:
     contexts: prod

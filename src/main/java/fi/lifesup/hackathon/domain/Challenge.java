@@ -64,9 +64,6 @@ public class Challenge implements Serializable {
     @NotNull
     @Column(name = "min_team_number", nullable = false)
     private Integer minTeamNumber;
-    
-    @Column(name = "created_by")
-    private Long createdBy;
 
     @OneToOne(orphanRemoval = true)
     @JoinColumn(unique = true)
@@ -86,17 +83,8 @@ public class Challenge implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
 
-    public Long getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(Long createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public String getName() {
+    public String getName() {
         return name;
     }
 

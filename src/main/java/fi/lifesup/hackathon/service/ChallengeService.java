@@ -93,7 +93,6 @@ public class ChallengeService {
 	}
 
 	public Challenge updateChallengeBanner(ChallengeImageDTO dto) {
-		System.err.println("minh");
 		Challenge challenge = challengeRepository.findOne(dto.getChallengeId());
 		String filePath = null;
 		try {
@@ -138,7 +137,7 @@ public class ChallengeService {
 
 	}
 
-	private String buildQueryChallenge(ChallengeSearch search, String authority) {
+	private String buildQueryChallenge(ChallengeSearch search) {
 
 		StringBuilder where = new StringBuilder();
 		where.append(" where c.info.id = p.id and c.name like '%").append(search.getName()).append("%'");
@@ -146,17 +145,10 @@ public class ChallengeService {
 		// where.append(" and p.status = :status");
 		//
 		// }
-		if(authority.equals("ROLE_USER")){
+	
 			where.append(" and p.status in ('ACTIVE','INACTIVE') ");
-		}
-		else{
-			where.append(" and p.status in ('ACTIVE','INACTIVE','DRAFT') ");
-		}
 		
-		if(authority.equals("ROLE_HOST")){
-			where.append(" and c.createdBy = :createdBy ");
-		}
-				
+		
 		if (search.getEventStartTime() != null && search.getEventEndTime() == null) {
 			where.append(" and p.eventStartTime >= :startTime ");
 		} else if (search.getEventStartTime() == null && search.getEventEndTime() != null) {
@@ -178,23 +170,8 @@ public class ChallengeService {
 		sbCount.append("select count(c.id) from Challenge c, ChallengeInfo p ");
 		List<Challenge> lst = null;
 		Long total = null;
-		String authority = null;
 		
-		User user = userRepository.getUserByAuthority(SecurityUtils.getCurrentUserLogin(), "ROLE_ADMIN");
-		if(user != null){
-			authority = "ROLE_ADMIN";
-		}
-		else{
-			user = userRepository.getUserByAuthority(SecurityUtils.getCurrentUserLogin(), "ROLE_HOST");
-			if(user != null){
-				authority = "ROLE_HOST";
-			}
-			else{
-				authority = "ROLE_USER";
-			}
-		}
-		
-		String where = buildQueryChallenge(search,authority);
+		String where = buildQueryChallenge(search);
 
 		Query query = em.createQuery(sbQuery.toString() + where + " order by p.status, p.applicationCloseDate asc",
 				Challenge.class);
@@ -207,9 +184,6 @@ public class ChallengeService {
 		if (search.getEventEndTime() != null) {
 			query.setParameter("endTime", search.getEventEndTime());
 		}
-		if(authority.equals("ROLE_HOST")){
-			query.setParameter("createdBy", user.getId());
-		}
 		System.out.println(search);
 		lst = query.getResultList();
 
@@ -220,9 +194,6 @@ public class ChallengeService {
 		}
 		if (search.getEventEndTime() != null) {
 			count.setParameter("endTime", search.getEventEndTime());
-		}
-		if(authority.equals("ROLE_HOST")){
-			count.setParameter("createdBy", user.getId());
 		}
 		
 
