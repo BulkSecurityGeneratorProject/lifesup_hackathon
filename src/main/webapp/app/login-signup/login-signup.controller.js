@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -6,9 +6,9 @@
         .controller('LoginSignupController', LoginSignupController);
 
 
-    LoginSignupController.$inject = ['$translate', '$timeout', 'Auth', 'LoginService', '$state', '$rootScope'];
+    LoginSignupController.$inject = ['$translate', '$timeout', 'Auth', 'LoginService', '$state', '$rootScope', 'Principal'];
 
-    function LoginSignupController ($translate, $timeout, Auth, LoginService, $state, $rootScope) {
+    function LoginSignupController($translate, $timeout, Auth, LoginService, $state, $rootScope, Principal) {
         var vm = this;
 
         vm.doNotMatch = null;
@@ -25,9 +25,9 @@
         vm.success = null;
         vm.loginAccount = loginAccount;
 
-        $timeout(function (){angular.element('#username').focus();});
+        $timeout(function () { angular.element('#username').focus(); });
 
-        function register () {
+        function register() {
             if (vm.registerAccount.password !== vm.confirmPassword) {
                 vm.doNotMatch = 'ERROR';
             } else {
@@ -51,13 +51,13 @@
                 });
             }
         }
-        function requestResetPassword () {
+        function requestResetPassword() {
             $state.go('requestReset');
         }
-        function loginAccount () {
+        function loginAccount() {
             $state.go('register');
         }
-        function login (event) {
+        function login(event) {
             event.preventDefault();
             Auth.login({
                 username: vm.username,
@@ -77,13 +77,29 @@
                 if (Auth.getPreviousState()) {
                     var previousState = Auth.getPreviousState();
                     Auth.resetPreviousState();
-                    if(previousState.name === "home"){
+                    if (previousState.name === "home") {
+
+                        Principal.identity().then(function (account) {
+                            vm.account = account;
+                            console.log(vm.account);
+                        });
+
                         previousState.name = "challengeslist";
+
                     }
                     $state.go(previousState.name, previousState.params);
                 }
-                else{
-                    $state.go("challengeslist");
+                else {
+                    Principal.identity().then(function (account) {
+                        vm.account = account;
+                        console.log(vm.account);
+                        if (vm.account.authorities.indexOf('ROLE_ADMIN') !== -1 || vm.account.authorities.indexOf('ROLE_HOST') !== -1)
+                            $state.go("challenge-manager");
+                        else {
+                            $state.go("challengeslist");
+                        }
+                    });
+
                 }
             }).catch(function () {
                 vm.authenticationError = true;
