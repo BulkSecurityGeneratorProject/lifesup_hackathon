@@ -30,12 +30,20 @@
             <div class="form-heading">
               <h3 data-translate="loginsignup.form.headers.signup">Start by creating your account</h3>
             </div>
-            <!-- Full name -->
+            <!-- First name -->
             <md-input-container class="md-block" flex-gt-sm>
-                <label data-translate="loginsignup.form.fullName">Name</label>
-                <input name="fullName" id="fullName" ng-model="vm.registerAccount.login" ng-maxlength=50 required>
-                <div ng-messages="signupForm.fullName.$error" role="alert">
-                    <div ng-message="required" data-translate="loginsignup.messages.validate.fullName.required"></div>
+                <label data-translate="loginsignup.form.firstName">Name</label>
+                <input name="firstName" id="firstName" ng-model="vm.registerAccount.firstName" ng-maxlength=50 required>
+                <div ng-messages="signupForm.firstName.$error" role="alert">
+                    <div ng-message="required" data-translate="loginsignup.messages.validate.firstName.required"></div>
+                </div>
+            </md-input-container>
+            <!-- Last name -->
+            <md-input-container class="md-block" flex-gt-sm>
+                <label data-translate="loginsignup.form.lastName">Name</label>
+                <input name="lastName" id="lastName" ng-model="vm.registerAccount.lastName" ng-maxlength=50 required>
+                <div ng-messages="signupForm.lastName.$error" role="alert">
+                    <div ng-message="required" data-translate="loginsignup.messages.validate.lastName.required"></div>
                 </div>
             </md-input-container>
             <!-- Email -->
@@ -83,25 +91,19 @@
         <div class="alert alert-danger" ng-show="vm.authenticationError">
             <strong>Failed to sign in!</strong> Please check your credentials and try again.
         </div>
-      <form name="login-form" role="form" id='login-form' ng-show="!vm.success" name="form" role="form" novalidate ng-submit="vm.login($event)" show-validation >
+      <form name="loginForm" role="form" id='login-form' ng-show="!vm.success" name="form" role="form" novalidate ng-submit="vm.login($event)" show-validation >
         <div class="form-heading">
           <h3 data-translate="loginsignup.form.headers.login">Login with existing account</h3>
         </div>
-        <!-- Email -->
+        <!-- Login Email -->
         <md-input-container class="md-block" flex-gt-sm>
             <label data-translate="loginsignup.form.email">Email</label>
-            <input name="email" ng-model="vm.username" ng-maxlength=50 required>
-            <div ng-messages="signupForm.email.$error" role="alert">
-                <div ng-message="required" data-translate="loginsignup.messages.validate.email.required"></div>
-            </div>
+            <input name="login" ng-model="vm.username" ng-maxlength=50 required>
         </md-input-container>
         <!-- Password -->
         <md-input-container class="md-block" flex-gt-sm>
             <label data-translate="loginsignup.form.password">Password*</label>
             <input name="password" type="password" ng-model="vm.password" ng-minlength=4 ng-maxlength=50 required>
-            <div ng-messages="signupForm.password.$error" role="alert">
-                <div ng-message="required" data-translate="loginsignup.messages.validate.password.required"></div>
-            </div>
         </md-input-container>
         <div class="alert alert-warning forgot-password">
               <a class="alert-link" href="" ng-click="vm.requestResetPassword()" data-translate="loginsignup.messages.validate.password.forgot">Forgot password?</a>

@@ -21,8 +21,7 @@
                                     <span class="glyphicon glyphicon-calendar"></span>&nbsp;
                                     <span data-translate="hackathonApp.challengeInfo.applicationCloseDate"></span>
                                 </label>
-                                <md-datepicker id="datepicker" ng-change="vm.setMinDate()" md-hide-icons="all" md-open-on-focus name="applicationCloseDate"
-                                    ng-model="vm.challengeInfo.applicationCloseDate" required></md-datepicker>
+                                <md-datepicker id="datepicker" md-min-date="vm.minDate" md-hide-icons="all" md-open-on-focus name="applicationCloseDate" ng-model="vm.challengeInfo.applicationCloseDate" required></md-datepicker>
                                 <div ng-messages="challengeInfoForm.applicationCloseDate.$error">
                                     <div ng-message="required" data-translate="hackathonApp.messages.validate.applicationCloseDate.required"></div>
                                 </div>
@@ -33,9 +32,7 @@
                                     <span class="glyphicon glyphicon-calendar"></span>&nbsp;
                                     <span data-translate="hackathonApp.challengeInfo.selectionInformDate"></span>
                                 </label>
-                                <md-datepicker id="datepicker" ng-change="vm.setMinDate()" md-min-date="vm.challengeInfo.applicationCloseDate" ng-disabled="!vm.challengeInfo.applicationCloseDate"
-                                    md-hide-icons="all" md-open-on-focus name="selectionInformDate" ng-model="vm.challengeInfo.selectionInformDate"
-                                    required></md-datepicker>
+                                <md-datepicker id="datepicker" md-min-date="vm.challengeInfo.applicationCloseDate" ng-disabled="!vm.challengeInfo.applicationCloseDate" md-hide-icons="all" md-open-on-focus name="selectionInformDate" ng-model="vm.challengeInfo.selectionInformDate" required></md-datepicker>
                                 <div ng-messages="challengeInfoForm.selectionInformDate.$error">
                                     <div ng-message="required" data-translate="hackathonApp.messages.validate.selectionInformDate.required"></div>
                                 </div>
@@ -48,9 +45,7 @@
                                     <span class="glyphicon glyphicon-calendar"></span>&nbsp;
                                     <span data-translate="hackathonApp.challengeInfo.kickoffWebinarDate"></span>
                                 </label>
-                                <md-datepicker id="datepicker" ng-change="vm.setMinDate()" md-min-date="vm.min.kickoffWebinarDate" ng-disabled="!vm.challengeInfo.selectionInformDate"
-                                    md-hide-icons="all" md-open-on-focus name="kickoffWebinarDate" ng-model="vm.challengeInfo.kickoffWebinarDate"
-                                    required></md-datepicker>
+                                <md-datepicker id="datepicker" md-min-date="vm.challengeInfo.selectionInformDate" ng-disabled="!vm.challengeInfo.selectionInformDate" md-hide-icons="all" md-open-on-focus name="kickoffWebinarDate" ng-model="vm.challengeInfo.kickoffWebinarDate" required></md-datepicker>
 
                                 <div ng-messages="challengeInfoForm.kickoffWebinarDate.$error">
                                     <div ng-message="required" data-translate="hackathonApp.messages.validate.kickoffWebinarDate.required"></div>
@@ -62,7 +57,7 @@
                                     <span class="glyphicon glyphicon-calendar"></span>&nbsp;
                                     <span data-translate="hackathonApp.challengeInfo.eventStartTime"></span>
                                 </label>
-                                <md-datepicker id="datepicker" ng-change="vm.setMinDate()" md-min-date="vm.challengeInfo.kickoffWebinarDate" ng-disabled="!vm.challengeInfo.kickoffWebinarDate"
+                                <md-datepicker id="datepicker" md-min-date="vm.challengeInfo.kickoffWebinarDate" ng-disabled="!vm.challengeInfo.kickoffWebinarDate"
                                     md-hide-icons="all" md-open-on-focus name="eventStartTime" ng-model="vm.challengeInfo.eventStartTime"
                                     required></md-datepicker>
                                 <div ng-messages="challengeInfoForm.eventStartTime.$error">
@@ -75,23 +70,18 @@
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>
                                     <span class="glyphicon glyphicon-calendar"></span>&nbsp;
-                                    <span data-translate="hackathonApp.challengeInfo.eventEndTime"></span>
+                                    <span data-translate="hackathonApp.challengeInfo.pilotSubmissionCloseDate"></span>
                                 </label>
-                                <md-datepicker id="datepicker" ng-change="vm.setMinDate()" md-min-date="vm.challengeInfo.eventStartTime" ng-disabled="!vm.challengeInfo.eventStartTime"
-                                    md-hide-icons="all" md-open-on-focus name="eventEndTime" ng-model="vm.challengeInfo.eventEndTime"
-                                    required></md-datepicker>
-                                <div ng-messages="challengeInfoForm.eventEndTime.$error">
-                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.eventEndTime.required"></div>
-                                </div>
+                                <md-datepicker id="datepicker" md-min-date="vm.challengeInfo.eventStartTime" ng-disabled="!vm.challengeInfo.eventStartTime"
+                                    md-hide-icons="all" md-open-on-focus name="pilotSubmissionCloseDate" ng-model="vm.challengeInfo.pilotSubmissionCloseDate"></md-datepicker>
                             </md-input-container>
-
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>
                                     <span class="glyphicon glyphicon-calendar"></span>&nbsp;
-                                    <span data-translate="hackathonApp.challengeInfo.pilotSubmissionCloseDate"></span>
+                                    <span data-translate="hackathonApp.challengeInfo.pilotPhaseStartDate"></span>
                                 </label>
-                                <md-datepicker id="datepicker" ng-change="vm.setMinDate()" md-min-date="vm.challengeInfo.eventEndTime" ng-disabled="!vm.challengeInfo.eventEndTime"
-                                    md-hide-icons="all" md-open-on-focus name="pilotSubmissionCloseDate" ng-model="vm.challengeInfo.pilotSubmissionCloseDate"></md-datepicker>
+                                <md-datepicker id="datepicker" md-min-date="vm.challengeInfo.pilotSubmissionCloseDate" ng-disabled="!vm.challengeInfo.pilotSubmissionCloseDate"
+                                    md-hide-icons="all" md-open-on-focus name="pilotPhaseStartDate" ng-model="vm.challengeInfo.pilotPhaseStartDate"></md-datepicker>
                             </md-input-container>
                         </div>
 
@@ -99,19 +89,23 @@
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>
                                     <span class="glyphicon glyphicon-calendar"></span>&nbsp;
-                                    <span data-translate="hackathonApp.challengeInfo.pilotPhaseStartDate"></span>
+                                    <span data-translate="hackathonApp.challengeInfo.pilotPhaseEndDate"></span>
                                 </label>
-                                <md-datepicker id="datepicker" ng-change="vm.setMinDate()" md-min-date="vm.min.pilotPhaseStartDate" ng-disabled="!vm.challengeInfo.pilotSubmissionCloseDate"
-                                    md-hide-icons="all" md-open-on-focus name="pilotPhaseStartDate" ng-model="vm.challengeInfo.pilotPhaseStartDate"></md-datepicker>
+                                <md-datepicker id="datepicker" md-min-date="vm.challengeInfo.pilotPhaseStartDate" ng-disabled="!vm.challengeInfo.pilotPhaseStartDate"
+                                    md-hide-icons="all" md-open-on-focus name="pilotPhaseEndDate" ng-model="vm.challengeInfo.pilotPhaseEndDate"></md-datepicker>
                             </md-input-container>
 
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label>
                                     <span class="glyphicon glyphicon-calendar"></span>&nbsp;
-                                    <span data-translate="hackathonApp.challengeInfo.pilotPhaseEndDate"></span>
+                                    <span data-translate="hackathonApp.challengeInfo.eventEndTime"></span>
                                 </label>
-                                <md-datepicker id="datepicker" ng-change="vm.setMinDate()" md-min-date="vm.min.pilotPhaseEndDate" ng-disabled="!vm.challengeInfo.pilotPhaseStartDate"
-                                    md-hide-icons="all" md-open-on-focus name="pilotPhaseEndDate" ng-model="vm.challengeInfo.pilotPhaseEndDate"></md-datepicker>
+                                <md-datepicker id="datepicker" md-min-date="vm.challengeInfo.pilotPhaseEndDate" ng-disabled="!vm.challengeInfo.pilotPhaseEndDate"
+                                    md-hide-icons="all" md-open-on-focus name="eventEndTime" ng-model="vm.challengeInfo.eventEndTime"
+                                    required></md-datepicker>
+                                <div ng-messages="challengeInfoForm.eventEndTime.$error">
+                                    <div ng-message="required" data-translate="hackathonApp.messages.validate.eventEndTime.required"></div>
+                                </div>
                             </md-input-container>
                         </div>
 
@@ -185,25 +179,23 @@
                         <div layout-gt-sm="row">
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label data-translate="hackathonApp.challenge.minTeamNumber">Min Team Member</label>
-                                <input min="1" name="minTeamNumber" type="number" ng-model="vm.challenge.minTeamNumber" required/>
+                                <input min="1" max="{{vm.challenge.maxTeamNumber}}" name="minTeamNumber" type="number" ng-model="vm.challenge.minTeamNumber" required/>
                                 <div ng-messages="challengeForm.minTeamNumber.$error">
                                     <div ng-message="required" data-translate="hackathonApp.messages.validate.minTeamNumber.required"></div>
+                                    <div ng-message="min" data-translate="hackathonApp.messages.validate.minTeamNumber.min"></div>
+                                    <div ng-message="max" data-translate="hackathonApp.messages.validate.minTeamNumber.max"></div>
                                 </div>
                             </md-input-container>
                             <md-input-container class="md-block" flex-gt-sm>
                                 <label data-translate="hackathonApp.challenge.maxTeamNumber">Max Team Member</label>
-                                <input min="1" name="maxTeamNumber" type="number" ng-model="vm.challenge.maxTeamNumber" required/>
+                                <input min="{{vm.challenge.minTeamNumber}}" max="100" name="maxTeamNumber" type="number" ng-model="vm.challenge.maxTeamNumber" required/>
                                 <div ng-messages="challengeForm.maxTeamNumber.$error">
                                     <div ng-message="required" data-translate="hackathonApp.messages.validate.maxTeamNumber.required"></div>
+                                    <div ng-message="min" data-translate="hackathonApp.messages.validate.maxTeamNumber.min"></div>
+                                    <div ng-message="max" data-translate="hackathonApp.messages.validate.maxTeamNumber.max"></div>
                                 </div>
                             </md-input-container>
 
-                        </div>
-                        <div ng-show="vm.isMinMaxInvalid(vm.challenge.minTeamNumber,vm.challenge.maxTeamNumber)" class="alert-msg">
-                            {{vm.isMinMaxInvalid(vm.challenge.minTeamNumber,vm.challenge.maxTeamNumber)}}
-                        </div>
-                        <div ng-show="vm.isLowerThan100(vm.challenge.maxTeamNumber)" class="alert-msg">
-                            {{vm.isLowerThan100(vm.challenge.maxTeamNumber)}}
                         </div>
 
 
