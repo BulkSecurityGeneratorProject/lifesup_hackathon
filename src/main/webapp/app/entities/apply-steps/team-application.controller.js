@@ -32,6 +32,7 @@
         function removeMail(mail) {
             vm.deleteMail.push(mail);
             vm.members.splice(vm.members.indexOf(mail));
+            vm.emptySlot++;
         }
 
         load();
