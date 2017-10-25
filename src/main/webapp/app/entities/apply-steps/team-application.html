@@ -45,10 +45,10 @@
                         </div>
                     </div>
 
-                    <div ng-show="vm.emptySlot" layout-gt-sm="row" flex>
+                    <div ng-show="vm.emptySlot > 1" layout-gt-sm="row" flex>
 
                         <div class="col-md-12">
-                            <p class="w3-text-indigo"><i>Note: Your maximum team members is {{vm.emptySlot}}</i></p>
+                            <p class="w3-text-indigo"><i>Note: Your maximum team member is {{vm.maxMember}} including you.</i></p>
                             <md-chips md-max-chips="{{vm.emptySlot}}" ng-model="vm.inviteMails" name="inviteMails" md-removable="true" placeholder="Enter email, Tab for many"
                                 md-separator-keys="vm.separator">
                             </md-chips>

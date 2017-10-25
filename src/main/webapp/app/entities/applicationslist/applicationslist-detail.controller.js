@@ -25,6 +25,8 @@
     vm.validateApplication = validateApplication;
     vm.validations = [];
 
+    console.log(entity);
+
     vm.account = null;
     Principal.identity().then(function (account) {
         vm.account = account;

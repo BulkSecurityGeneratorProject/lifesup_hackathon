@@ -63,7 +63,7 @@
 							<h3 data-translate="hackathonApp.applicationslist.detail.ideasDescription">Ideas Description</h3>
 							<p>{{vm.application.ideasDescription}}</p>
 						</div>
-						<button ng-if="vm.application.status != 'APPROVED'" class="btn custom-btn" ui-sref="team({id:vm.application.challengeId})" data-translate="hackathonApp.applicationslist.detail.editApplication">Edit your application</button>
+						<button ng-if="vm.application.status !== 'APPROVED'" class="btn custom-btn" ui-sref="team({id:vm.application.challengeId})" data-translate="hackathonApp.applicationslist.detail.editApplication">Edit your application</button>
 					</div>
 				</div>
 			</div>
@@ -94,7 +94,7 @@
 
 				<div>
 					<h3 data-translate="hackathonApp.applicationslist.challengeInfo.status.heading">This application is</h3>
-					<div ng-switch="vm.determinateValue === 100">
+					<div ng-switch="vm.application.status==='WAITING_FOR_APPROVE' || vm.application.status==='APPROVED'">
 						<div ng-switch-when="true" class="application-status application-valid">
 							<i class="material-icons">thumb_up</i>
 							<span data-translate="hackathonApp.applicationslist.challengeInfo.status.valid">Valid</span>
@@ -110,9 +110,9 @@
 					<button class="btn custom-btn challenge-link" ui-sref="challengeslist" data-translate="hackathonApp.applicationslist.challengeInfo.challengePage">VIEW THE CHALLENGE PAGE</button>
 				</div>
 				<!--======== approve/reject buttons ============-->
-				<div ng-show="vm.isAuthenticated()" has-authority="ROLE_ADMIN">
+				<div has-any-authority='ROLE_HOST,ROLE_ADMIN'>
 					<div class="action-btn-group">
-						<button class="action-btn approve-btn" ng-click="vm.approve(vm.application)" data-translate="hackathonApp.applicationslist.challengeInfo.approve">APPROVE</button>
+						<button ng-disabled="!vm.application.status==='WAITING_FOR_APPROVE'" class="action-btn approve-btn" ng-click="vm.approve(vm.application)" data-translate="hackathonApp.applicationslist.challengeInfo.approve">APPROVE</button>
 						<button class="action-btn reject-btn" ng-click="vm.reject(vm.application)" data-translate="hackathonApp.applicationslist.challengeInfo.reject">REJECT</button>
 					</div>
 				</div>
