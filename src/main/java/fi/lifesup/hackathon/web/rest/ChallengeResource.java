@@ -35,6 +35,7 @@ import fi.lifesup.hackathon.repository.ChallengeRepository;
 import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
 import fi.lifesup.hackathon.searchCriteria.ChallengeSearch;
 import fi.lifesup.hackathon.service.ChallengeService;
+import fi.lifesup.hackathon.service.UserService;
 import fi.lifesup.hackathon.service.dto.ChallengeImageDTO;
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 import fi.lifesup.hackathon.web.rest.util.PaginationUtil;
@@ -56,6 +57,9 @@ public class ChallengeResource {
 
 	@Inject
 	private ChallengeService challengeService;
+	
+	@Inject
+	private UserService userService;
 
 	/**
 	 * POST /challenges : Create a new challenge.
@@ -84,6 +88,7 @@ public class ChallengeResource {
 					"Max team number is bigger min team number.")).body(null);
 		}
 
+		challenge.setCreatedBy(userService.getUserWithAuthorities().getId());
 		Challenge result = challengeService.saveChallenge(challenge);
 		return ResponseEntity.created(new URI("/api/challenges/" + result.getId()))
 				.headers(HeaderUtil.createEntityCreationAlert("challenge", result.getId().toString())).body(result);
