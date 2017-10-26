@@ -1,59 +1,60 @@
- <!-- challenge filter by name and owner's name -->
- <div class="row">
-  <md-content class="md-padding col-sm-12 col-md-5 col-lg-5">
-    <form ng-submit="$event.preventDefault()">
-      <md-autocomplete
-          md-selected-item="vm.selectedItem"
-          md-search-text-change="vm.searchTextChange(vm.searchText)"
-          md-search-text="vm.searchText"
-          md-selected-item-change="vm.selectedItemChange(item)"
-          md-items="item in vm.challenges | filter: vm.searchText"
-          md-item-text="item.name"
-          md-min-length="0"
-          placeholder="{{'hackathonApp.search.placeHolder' | translate}}">
-          <md-item-template>
-            <span md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.name}} - </span>
-            <span md-highlight-text="vm.searchText" md-highlight-flags = "^i">{{item.company.name}}</span>
-          </md-item-template>
-          <md-not-found>
-              <span data-translate="hackathonApp.search.noResult">No result were found!</span>
-          </md-not-found>
-      </md-autocomplete>
-    </form>
-  </md-content>
-<!-- challenge filter by status-->
-  <div class="md-padding col-sm-12 col-md-4 col-lg-4 status-filter">
-    <div ng-repeat="status in vm.getStatus()">
-        <!-- <md-checkbox type="checkbox" ng-model="vm.filter[status]" class="status-checkbox">{{ status }}</md-checkbox> -->
-        <md-checkbox ng-if="status != 'DRAFT'" type="checkbox" ng-model="vm.filter[status]" class="status-checkbox">{{ status }}</md-checkbox>
+<div layout="column" ng-cloak>
+  <md-toolbar class="md-parimary">
+    <div class="md-toolbar-tools">
+      <h2 class="md-flex">All challenge</h2>
+      <div flex></div>
+      <md-button class="md-fab  md-mini" aria-label="Search " ng-click="vm.toggleOpenSearch()">
+        <md-icon class="material-icons" ng-show="!vm.openSearch">search</md-icon>
+        <md-icon class="material-icons" ng-show="vm.openSearch">close</md-icon>
+      </md-button>
     </div>
-  </div>
-<!-- challenge filter by date-->
-  <div class="md-padding date-filter col-sm-12 col-md-3 col-lg-3">
-    <md-datepicker ng-model="vm.startDate" md-open-on-focus md-placeholder="{{'hackathonApp.search.startBefore' | translate}}" md-hide-icons="all" class="date-picker-filter" required></md-datepicker>
-    <md-datepicker ng-model="vm.endDate" md-open-on-focus md-placeholder="{{'hackathonApp.search.endAfter' | translate}}" md-hide-icons="all" class="date-picker-filter" required></md-datepicker>
-  </div>
-</div>
-<hr />
 
-<div class="row">
-  <div class="col-sm-12 col-md-4" ng-repeat="challenge in vm.challenges | filter: vm.searchText | filter: vm.filterByStatus | filter: vm.filterByStartDate | filter: vm.filterByEndDate" ng-if="challenge.info.status != 'DRAFT'">
-    <md-card class="challenge-container" >
-      <img md-card-image ng-src="{{challenge.bannerUrl}}" ui-sref="challengeslist-detail({id:challenge.id})" class='challenge-banner' ng-class="{'img-grey': vm.getApplicationStatus(challenge) == 'CLOSED'}">
+  </md-toolbar>
+  <div ng-show="vm.openSearch" flex layout="row">
+    <md-input-container class="md-block" flex-gt-sm>
+      <label>Name</label>
+      <input ng-model="vm.challengeSearch.name" ng-change="vm.querySearchName()" ng-model-options="{ debounce: 500 }" style="color:black !important;">
+    </md-input-container>
+    <md-input-container>
+      <label>Start date</label>
+      <md-datepicker ng-model="vm.challengeSearch.eventStartTime" ng-change="vm.querySearchName()"></md-datepicker>
+    </md-input-container>
+    <md-input-container>
+      <label>End date</label>
+      <md-datepicker ng-model="vm.challengeSearch.eventEndTime" ng-change="vm.querySearchName()"></md-datepicker>
+    </md-input-container>
+  </div>
+  <md-content flex layout-padding infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
+    <div class="col-sm-12 col-md-4" ng-repeat="challenge in vm.challenges" ng-if="challenge.info.status != 'DRAFT'">
+      <md-card class="challenge-container">
+        <img md-card-image ng-src="{{challenge.bannerUrl}}" ui-sref="challengeslist-detail({id:challenge.id})" class='challenge-banner'
+          ng-class="{'img-grey': vm.getApplicationStatus(challenge) == 'CLOSED'}">
         <md-card-title class='challenge-title' ui-sref="challengeslist-detail({id:challenge.id})">{{challenge.name}}</md-card-title>
         <md-card-subtitle class='challenge-owner' ui-sref="challengeslist-detail({id:challenge.id})">{{company.name}}</md-card-subtitle>
         <div class="line"></div>
         <md-card-content class='challenge-content' ui-sref="challengeslist-detail({id:challenge.id})">
           <md-list>
             <md-list-item>
-              <span class="list-item"><i class="material-icons challenge-icon">place</i><span>{{challenge.info.location}}</span></span>
+              <span class="list-item">
+                <i class="material-icons challenge-icon">place</i>
+                <span>{{challenge.info.location}}</span>
+              </span>
             </md-list-item>
             <md-list-item>
-              <span class="list-item"><i class="material-icons challenge-icon">stars</i><span>{{challenge.info.prize}}</span></span>
+              <span class="list-item">
+                <i class="material-icons challenge-icon">stars</i>
+                <span>{{challenge.info.prize}}</span>
+              </span>
             </md-list-item>
             <md-list-item>
-              <span ng-show="challenge.timeLeft > 0" class="list-item"><i class="material-icons challenge-icon">alarm</i><span>Apply in {{challenge.timeLeft}} day(s)</span></span>
-              <span ng-if="challenge.timeLeft === 0" class="list-item"><i class="material-icons challenge-icon">alarm</i><span>Deadline Today!</span></span>
+              <span ng-show="challenge.timeLeft > 0" class="list-item">
+                <i class="material-icons challenge-icon">alarm</i>
+                <span>Apply in {{challenge.timeLeft}} day(s)</span>
+              </span>
+              <span ng-if="challenge.timeLeft === 0" class="list-item">
+                <i class="material-icons challenge-icon">alarm</i>
+                <span>Deadline Today!</span>
+              </span>
             </md-list-item>
           </md-list>
         </md-card-content>
@@ -62,13 +63,16 @@
             <a href="#" ui-sref="login-signup" ng-switch-when="false" data-translate="hackathonApp.applicationStatus.apply">Apply now!</a>
             <a href="#" ui-sref="complete-profile({id: challenge.id})" ng-switch-when="true" data-translate="hackathonApp.applicationStatus.apply">Apply now!</a>
           </button>
-          <button class="btn btn-block challenge-cta btn-applied" ng-click="vm.getApplicationId(challenge.id)" ui-sref="applicationslist-detail({id:vm.applicationId})" ng-switch-when="APPLIED">
+          <button class="btn btn-block challenge-cta btn-applied" ng-click="vm.getApplicationId(challenge.id)" ui-sref="applicationslist-detail({id:vm.applicationId})"
+            ng-switch-when="APPLIED">
             <a href="#" data-translate="hackathonApp.applicationStatus.applied">View your application</a>
           </button>
           <button class="btn btn-block challenge-cta btn-inactive" ng-switch-when="CLOSED" disabled>
             <a href="#" data-translate="hackathonApp.applicationStatus.close">Applications have closed!</a>
           </button>
         </md-card-actions>
-    </md-card>
-  </div>
+      </md-card>
+    </div>
+  </md-content>
+
 </div>
