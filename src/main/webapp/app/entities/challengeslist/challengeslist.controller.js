@@ -31,8 +31,13 @@
             vm.openSearch = !vm.openSearch;
             if (!vm.openSearch) {
                 reset();
-                vm.challengeSearch = null;
-                loadAll();
+                vm.challengeSearch = {
+                    name: null,
+                    eventStartTime: null,
+                    eventEndTime: null,
+                    applicationCloseDate: null,
+                    status: null
+                };
             }
         }
 
@@ -62,7 +67,7 @@
                 size: vm.itemsPerPage,
                 sort: sort(),
                 name: vm.challengeSearch.name ? vm.challengeSearch.name : null,
-                eventStartTime: vm.challengeSearch.eventStartTime ? vm.challengeSearch.eventEndTime : null,
+                eventStartTime: vm.challengeSearch.eventStartTime ? vm.challengeSearch.eventStartTime : null,
                 eventEndTime: vm.challengeSearch.eventEndTime ? vm.challengeSearch.eventEndTime : null,
                 applicationCloseDate: vm.challengeSearch.applicationCloseDate ? vm.challengeSearch.applicationCloseDate : null,
                 status: vm.challengeSearch.status ? vm.challengeSearch.status : null
@@ -135,12 +140,11 @@
         }
 
         function loadPage(page) {
-
             vm.page = page;
             if (!vm.challengeSearch.name) {
                 loadAll();
             } else {
-                querySearchName(vm.challengeSearch.name);
+                querySearchNameContinue();
             }
         }
         // ----------------------------
@@ -188,24 +192,82 @@
         }
 
         function querySearchName() {
-
-            return Challenge.query({
-                page: 0,
+            vm.page = 0;
+            vm.challenges = [];
+            Challenge.query({
+                page: vm.page,
                 size: vm.itemsPerPage,
+                sort: sort(),
                 name: vm.challengeSearch.name ? vm.challengeSearch.name : null,
                 eventStartTime: vm.challengeSearch.eventStartTime ? vm.challengeSearch.eventStartTime : null,
                 eventEndTime: vm.challengeSearch.eventEndTime ? vm.challengeSearch.eventEndTime : null,
                 applicationCloseDate: vm.challengeSearch.applicationCloseDate ? vm.challengeSearch.applicationCloseDate : null,
                 status: vm.challengeSearch.status ? vm.challengeSearch.status : null
-            }).$promise.then(function (result) {
-                vm.challenges = result;
+            }, onSuccess, onError);
+            function sort() {
+                var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
+                if (vm.predicate !== 'id') {
+                    result.push('id');
+                }
+                return result;
+            }
+
+            function onSuccess(data, headers) {
+                vm.links = ParseLinks.parse(headers('link'));
+                vm.totalItems = headers('X-Total-Count');
+                for (var i = 0; i < data.length; i++) {
+                    vm.challenges.push(data[i]);
+                }
                 vm.challenges.map(function (challenge) {
                     var today = (new Date()).getTime();
                     var endDate = new Date(challenge.info.applicationCloseDate).getTime();
                     var diff = endDate - today;
                     challenge.timeLeft = parseInt(Math.ceil(diff / (1000 * 60 * 60 * 24)));
                 })
-            });
+            }
+
+            function onError(error) {
+                AlertService.error(error.data.message);
+            }
+
+        }
+
+        function querySearchNameContinue() {
+            Challenge.query({
+                page: vm.page,
+                size: vm.itemsPerPage,
+                sort: sort(),
+                name: vm.challengeSearch.name ? vm.challengeSearch.name : null,
+                eventStartTime: vm.challengeSearch.eventStartTime ? vm.challengeSearch.eventStartTime : null,
+                eventEndTime: vm.challengeSearch.eventEndTime ? vm.challengeSearch.eventEndTime : null,
+                applicationCloseDate: vm.challengeSearch.applicationCloseDate ? vm.challengeSearch.applicationCloseDate : null,
+                status: vm.challengeSearch.status ? vm.challengeSearch.status : null
+            }, onSuccess, onError);
+            function sort() {
+                var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
+                if (vm.predicate !== 'id') {
+                    result.push('id');
+                }
+                return result;
+            }
+
+            function onSuccess(data, headers) {
+                vm.links = ParseLinks.parse(headers('link'));
+                vm.totalItems = headers('X-Total-Count');
+                for (var i = 0; i < data.length; i++) {
+                    vm.challenges.push(data[i]);
+                }
+                vm.challenges.map(function (challenge) {
+                    var today = (new Date()).getTime();
+                    var endDate = new Date(challenge.info.applicationCloseDate).getTime();
+                    var diff = endDate - today;
+                    challenge.timeLeft = parseInt(Math.ceil(diff / (1000 * 60 * 60 * 24)));
+                })
+            }
+
+            function onError(error) {
+                AlertService.error(error.data.message);
+            }
 
         }
 
