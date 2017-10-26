@@ -24,6 +24,7 @@
         vm.registerAccount = {};
         vm.success = null;
         vm.loginAccount = loginAccount;
+        vm.rememberMe = true;
 
         $timeout(function () { angular.element('#username').focus(); });
 
@@ -62,6 +63,7 @@
             Auth.login({
                 username: vm.username,
                 password: vm.password,
+                rememberMe: vm.rememberMe
             }).then(function () {
                 vm.authenticationError = false;
 
