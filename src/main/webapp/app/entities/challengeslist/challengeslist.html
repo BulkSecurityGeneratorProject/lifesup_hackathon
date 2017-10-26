@@ -10,7 +10,7 @@
     </div>
 
   </md-toolbar>
-  <div ng-show="vm.openSearch" flex layout="row">
+  <div ng-show="vm.openSearch" flex layout="row" layout-xs="column">
     <md-input-container class="md-block" flex-gt-sm>
       <label>Name</label>
       <input ng-model="vm.challengeSearch.name" ng-change="vm.querySearchName()" ng-model-options="{ debounce: 500 }" style="color:black !important;">
@@ -25,8 +25,8 @@
     </md-input-container>
   </div>
   <md-content flex layout-padding infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
-    <div class="col-sm-12 col-md-4" ng-repeat="challenge in vm.challenges" ng-if="challenge.info.status != 'DRAFT'">
-      <md-card class="challenge-container">
+    <div   class="col-sm-12 col-md-4 animation" ng-repeat="challenge in vm.challenges" ng-if="challenge.info.status != 'DRAFT'">
+      <md-card  class="challenge-container ">
         <img md-card-image ng-src="{{challenge.bannerUrl}}" ui-sref="challengeslist-detail({id:challenge.id})" class='challenge-banner'
           ng-class="{'img-grey': vm.getApplicationStatus(challenge) == 'CLOSED'}">
         <md-card-title class='challenge-title' ui-sref="challengeslist-detail({id:challenge.id})">{{challenge.name}}</md-card-title>
@@ -73,6 +73,11 @@
         </md-card-actions>
       </md-card>
     </div>
+    <md-button class="md-raised md-primary" ng-show="vm.page < vm.links['last']" style="position: fixed; bottom: 0px; margin:auto; left:50%;z-index:100000;"
+      ng-click="vm.gotoBottom();vm.loadPage(vm.page + 1);">
+      <md-icon class="material-icons" >arrow_downward</md-icon>
+      Pull to load more
+    </md-button>
   </md-content>
 
 </div>

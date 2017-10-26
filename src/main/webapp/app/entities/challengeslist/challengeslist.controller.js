@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('ChallengesListController', ChallengesListController);
 
-    ChallengesListController.$inject = ['$log', '$timeout', '$q', 'Principal', 'Challenge', 'ApplicationsByUser', 'ParseLinks', 'paginationConstants'];
+    ChallengesListController.$inject = ['$log', '$timeout', '$q', 'Principal', 'Challenge', 'ApplicationsByUser', 'ParseLinks', 'paginationConstants', 'AlertService', '$location', '$anchorScroll'];
 
-    function ChallengesListController($log, $timeout, $q, Principal, Challenge, ApplicationsByUser, ParseLinks, paginationConstants) {
+    function ChallengesListController($log, $timeout, $q, Principal, Challenge, ApplicationsByUser, ParseLinks, paginationConstants, AlertService, $location, $anchorScroll) {
         var vm = this;
         vm.isAuthenticated = Principal.isAuthenticated;
         vm.challenges = [];
@@ -23,6 +23,16 @@
         vm.challengeId = [];
         vm.applicationId = '';
         vm.querySearchName = querySearchName;
+        vm.gotoBottom = gotoBottom;
+
+        function gotoBottom() {
+            // set the location.hash to the id of
+            // the element you wish to scroll to.
+            $location.hash('mainFooter');
+
+            // call $anchorScroll()
+            $anchorScroll();
+        }
 
         //Tuanpm: Open Search
         vm.openSearch = false;

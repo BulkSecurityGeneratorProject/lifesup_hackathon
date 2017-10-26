@@ -20,7 +20,8 @@
             'ngMaterial',
             'ngMessages',
             'lfNgMdFileInput',
-            'naif.base64'
+            'naif.base64',
+            'ngAnimate'
         ])
         .run(run);
 
