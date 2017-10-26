@@ -645,6 +645,31 @@ md-progress-linear .md-bar {
   z-index: 333;
 }
 
+
+.approved-stamp:after {
+  border: solid 0.1em green;
+  border-radius: .2em;
+  color: green;
+  content: 'APPROVED';
+  font-size: 100px;
+  font-weight: bold;
+  line-height: 1;
+  position: absolute;
+  top: 30vh;
+  padding: .1em .5em;
+  margin: 0 auto;
+  text-transform: uppercase;
+  opacity: 0;
+  transform-origin: 50% 50%;
+  transform: rotate(-15deg);
+  transition: all 0.5s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+}
+
+.approved .approved-stamp:after {
+  opacity: .75;
+  z-index: 333;
+}
+
 /*============ Become a Host =================*/
 
 .form-wrapper {

@@ -18,7 +18,7 @@
             </div>
            <!--  <button class="cta-btn"><a href="#">APPLY NOW</a></button> -->
            <div ng-switch="vm.getApplicationStatus()">
-             <button has-authority="ROLE_USER" class="cta-btn" ng-switch-when="ACTIVE" ng-switch="vm.isAuthenticated()">
+             <button has-authority-except="ROLE_HOST" class="cta-btn" ng-switch-when="ACTIVE" ng-switch="vm.isAuthenticated()">
                <a href="#" ui-sref="login-signup" ng-switch-when="false" data-translate="hackathonApp.applicationStatus.apply">Apply now!</a>
                <a href="#" ui-sref="complete-profile({id: vm.challenge.id})" ng-switch-when="true" data-translate="hackathonApp.applicationStatus.apply">Apply now!</a>
              </button>

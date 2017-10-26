@@ -37,6 +37,7 @@
         vm.decline = false;
 
         vm.reload = reload;
+        vm.rememberMe = true;
 
         vm.account = null;
         Principal.identity().then(function (account) {
@@ -107,6 +108,7 @@
             Auth.login({
                 username: vm.username,
                 password: vm.password,
+                rememberMe: vm.rememberMe
             }).then(function () {
                 vm.authenticationError = false;
                 if ($state.current.name === 'register' || $state.current.name === 'activate' ||

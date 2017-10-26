@@ -10,14 +10,14 @@
     function stateConfig($stateProvider) {
         $stateProvider.state('login-signup', {
             parent: 'app',
-            url: '/login-signup',
+            url: '/login',
             data: {
                 authorities: [],
-                title: "loginsignup.title"
+                pageTitle: "loginsignup.title"
             },
             views: {
                 'content@': {
-                    templateUrl: 'app/login-signup/login-signup.html',
+                    templateUrl: 'app/components/login-signup/login-signup.html',
                     controller: 'LoginSignupController',
                     controllerAs: 'vm'
                 }

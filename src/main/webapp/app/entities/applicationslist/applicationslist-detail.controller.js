@@ -25,8 +25,6 @@
     vm.validateApplication = validateApplication;
     vm.validations = [];
 
-    console.log(entity);
-
     vm.account = null;
     Principal.identity().then(function (account) {
         vm.account = account;
@@ -66,7 +64,7 @@
     }
 
     function progressCount() {
-      return vm.determinateValue += 10;
+      return vm.determinateValue += 100/7;
     }
 
     function approve(application) {
@@ -91,10 +89,12 @@
     function validateApplication() {
       ApplicationValidation.query({applicationId: vm.application.id}, function(data) {
         vm.validations = data;
+        console.log(data);
         vm.validations = vm.validations.map(function(item) {
           return item.split(',');
         })
       })
     }
+
   }
 })();
