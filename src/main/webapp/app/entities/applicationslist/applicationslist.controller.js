@@ -11,6 +11,7 @@
         var vm = this;
 
         vm.applications = entity;
+        console.log(entity);
         vm.approve = approve;
         vm.reject = reject;
         vm.getValidation = getValidation;

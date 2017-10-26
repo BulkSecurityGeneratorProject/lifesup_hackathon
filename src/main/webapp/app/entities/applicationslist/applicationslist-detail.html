@@ -1,5 +1,6 @@
-<div ng-hide="vm.application.status === 'CLOSED'" ng-class="{rejected:vm.application.status === 'REJECTED'}">
-	<div class="rejected-stamp">
+<div ng-hide="vm.application.status === 'CLOSED'" ng-class="{rejected:vm.application.status === 'REJECTED', approved: vm.application.status === 'APPROVED'}">
+	<div ng-class="{'rejected-stamp':vm.application.status === 'REJECTED', 'approved-stamp': vm.application.status === 'APPROVED'}">
+
 		<div class="application-heading jumbotron-fluid">
 			<h1>{{vm.application.teamName}}</h1>
 			<h3>{{vm.application.companyName}}</h3>
@@ -9,9 +10,9 @@
 			<div class="team-info col-md-8 col-xs-12">
 				<div class="card-wrapper">
 					<br>
-					<div class="text-center alert alert-success" ng-if="vm.application.status == 'APPROVED'">
+					<!-- <div class="text-center alert alert-success" ng-if="vm.application.status == 'APPROVED'">
 						<strong>Congratulation!</strong> Your application has been approved.
-					</div>
+					</div> -->
 					<!--======== member card ============-->
 					<div class="member-wrapper horizontal-card row" ng-repeat="member in vm.members">
 						<div ng-if="member.id">
@@ -63,7 +64,7 @@
 							<h3 data-translate="hackathonApp.applicationslist.detail.ideasDescription">Ideas Description</h3>
 							<p>{{vm.application.ideasDescription}}</p>
 						</div>
-						<button ng-if="vm.application.status !== 'APPROVED' && vm.application.status !== 'REJECTED'" class="btn custom-btn" ui-sref="team({id:vm.application.challengeId})" data-translate="hackathonApp.applicationslist.detail.editApplication">Edit your application</button>
+						<button has-authority-except="ROLE_HOST" ng-if="vm.application.status !== 'APPROVED' && vm.application.status !== 'REJECTED'" class="btn custom-btn" ui-sref="team({id:vm.application.challengeId})" data-translate="hackathonApp.applicationslist.detail.editApplication">Edit your application</button>
 					</div>
 				</div>
 			</div>
@@ -110,7 +111,7 @@
 					<button class="btn custom-btn challenge-link" ui-sref="challengeslist" data-translate="hackathonApp.applicationslist.challengeInfo.challengePage">VIEW THE CHALLENGE PAGE</button>
 				</div>
 				<!--======== approve/reject buttons ============-->
-				<div has-any-authority='ROLE_HOST,ROLE_ADMIN'>
+				<div has-any-authority="ROLE_HOST,ROLE_ADMIN" ng-show="vm.application.status !== 'DRAFT'">
 					<div class="action-btn-group">
 						<button ng-disabled="!vm.application.status==='WAITING_FOR_APPROVE'" class="action-btn approve-btn" ng-click="vm.approve(vm.application)" data-translate="hackathonApp.applicationslist.challengeInfo.approve">APPROVE</button>
 						<button class="action-btn reject-btn" ng-click="vm.reject(vm.application)" data-translate="hackathonApp.applicationslist.challengeInfo.reject">REJECT</button>

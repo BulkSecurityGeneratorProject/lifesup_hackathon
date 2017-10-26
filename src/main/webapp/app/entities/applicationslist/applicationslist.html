@@ -28,7 +28,7 @@
     <h5 class="alert alert-danger">Sorry, there's no application of this challenge yet!</h5>
   </div>
   <div class="col-sm-12 col-md-3" ng-repeat="application in vm.applications">
-    <div ng-show="vm.isReadyToApprove()">
+    <div>
       <md-card class="application-card">
         <md-card-title class="team-name">
           <h3>{{application.teamName}}</h3>
@@ -42,10 +42,10 @@
         </md-card-content>
         <md-card-actions ng-switch="application.status">
           <span class="action-btn-group">
-            <button class="btn btn-block challenge-cta btn-applied" ng-switch-when="APPROVED">
+            <button ng-show="vm.isReadyToApprove()" class="btn btn-block challenge-cta btn-applied" ng-switch-when="APPROVED">
               <a>Approved</a>
             </button>
-            <button class="btn btn-block challenge-cta btn-inactive" ng-switch-when="REJECTED">
+            <button ng-show="vm.isReadyToApprove()" class="btn btn-block challenge-cta btn-inactive" ng-switch-when="REJECTED">
               <a>Rejected</a>
             </button>
           </span>
