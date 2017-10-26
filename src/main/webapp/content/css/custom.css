@@ -692,28 +692,33 @@ md-progress-linear .md-bar {
 .animation.ng-enter, 
 .animation.ng-leave
 { 
-    -webkit-transition: 725ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-    -moz-transition: 725ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-    -ms-transition: 725ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-    -o-transition: 725ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-    transition: 725ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
-    position: relative;
-    display: block;
-    overflow: hidden;
-    text-overflow: clip;
-    white-space:nowrap;
+  -webkit-transition: 100ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  -moz-transition: 100ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  -ms-transition: 100ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  -o-transition: 100ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  transition: 100ms cubic-bezier(0.250, 0.250, 0.750, 0.750) all;
+  position: relative;
+  display: block;
 } 
  
 .animation.ng-leave.animation.ng-leave-active,
 .animation.ng-enter {
-    opacity: 0;
-    width: 0px;
-    height: 0px;
+  -webkit-transform: rotateX(90deg) rotateZ(90deg);
+  -moz-transform: rotateX(90deg) rotateZ(90deg);
+  -ms-transform: rotateX(90deg) rotateZ(90deg);
+  -o-transform: rotateX(90deg) rotateZ(90deg);
+  transform: rotateX(90deg) rotateZ(90deg);
+  opacity: 0;
+  height: 0px;
 }
  
 .animation.ng-enter.animation.ng-enter-active, 
 .animation.ng-leave {
-    opacity: 1;
-    width: 150px;
-    height: 30px;
+  -webkit-transform: rotateX(0deg) rotateZ(0deg);
+  -moz-transform: rotateX(0deg) rotateZ(0deg);
+  -ms-transform: rotateX(0deg) rotateZ(0deg);
+  -o-transform: rotateX(0deg) rotateZ(0deg);
+  transform: rotateX(0deg) rotateZ(0deg);
+  opacity: 1;
+  height: 30px;
 }
