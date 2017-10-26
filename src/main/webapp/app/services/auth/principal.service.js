@@ -15,6 +15,7 @@
             authenticate: authenticate,
             hasAnyAuthority: hasAnyAuthority,
             hasAuthority: hasAuthority,
+            hasAuthorityExcept: hasAuthorityExcept,
             identity: identity,
             isAuthenticated: isAuthenticated,
             isIdentityResolved: isIdentityResolved
@@ -42,6 +43,18 @@
         }
 
         function hasAuthority (authority) {
+            if (!_authenticated) {
+                return $q.when(false);
+            }
+
+            return this.identity().then(function(_id) {
+                return _id.authorities && _id.authorities.indexOf(authority) !== -1;
+            }, function(){
+                return false;
+            });
+        }
+
+        function hasAuthorityExcept (authority) {
             if (!_authenticated) {
                 return $q.when(false);
             }

@@ -63,7 +63,7 @@
 							<h3 data-translate="hackathonApp.applicationslist.detail.ideasDescription">Ideas Description</h3>
 							<p>{{vm.application.ideasDescription}}</p>
 						</div>
-						<button ng-if="vm.application.status !== 'APPROVED'" class="btn custom-btn" ui-sref="team({id:vm.application.challengeId})" data-translate="hackathonApp.applicationslist.detail.editApplication">Edit your application</button>
+						<button ng-if="vm.application.status !== 'APPROVED' && vm.application.status !== 'REJECTED'" class="btn custom-btn" ui-sref="team({id:vm.application.challengeId})" data-translate="hackathonApp.applicationslist.detail.editApplication">Edit your application</button>
 					</div>
 				</div>
 			</div>

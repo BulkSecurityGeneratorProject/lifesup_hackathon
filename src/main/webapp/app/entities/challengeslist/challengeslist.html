@@ -58,7 +58,7 @@
           </md-list>
         </md-card-content>
         <md-card-actions ng-switch="vm.getApplicationStatus(challenge)">
-          <button class="btn btn-block challenge-cta btn-active" ng-switch-when="ACTIVE" ng-switch="vm.isAuthenticated()" has-authority="ROLE_USER">
+          <button class="btn btn-block challenge-cta btn-active" ng-switch-when="ACTIVE" ng-switch="vm.isAuthenticated()" has-authority-except="ROLE_HOST">
             <a href="#" ui-sref="login-signup" ng-switch-when="false" data-translate="hackathonApp.applicationStatus.apply">Apply now!</a>
             <a href="#" ui-sref="complete-profile({id: challenge.id})" ng-switch-when="true" data-translate="hackathonApp.applicationStatus.apply">Apply now!</a>
           </button>
