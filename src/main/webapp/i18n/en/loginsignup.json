@@ -1,48 +1,46 @@
 {
     "loginsignup": {
-        "title": "Login or Sign up",
+        "title": "Sign up or Login",
         "subtitle": "Welcome to Lifesup Hackathon!",
         "form": {
-            "fullName": "Full name",
-            "fullName.placeholder": "Full name",
             "firstName": "First name",
             "lastName": "Last name",
             "email": "Email",
-            "email.placeholder": "Email",
             "password": "Password",
-            "password.placeholder": "Your password",
             "confirmpassword": "Confirm password",
+            "rememberMe": "Remember me",
             "headers": {
                 "signup": "Start by creating your account",
                 "login": "Login with existing account"
             },
-            "signupterm": "By creating an account you agree to our <a href=\"#\">Terms</a> and that you have read our <a href=\"#\">Privace Policy</a>"
+            "signupterm": "By creating an account you agree to our <a href=\"#\">Terms</a> and that you have read our <a href=\"#\">Privace Policy</a>",
+            "buttons": {
+                "signup": "Create account",
+                "login": "Login"
+            }
         },
         "messages": {
            "error": {
                 "fail": "<strong>Registration failed!</strong> Please try again later.",
+                "authentication": "<strong>Failed to sign in!</strong> Please check your credentials and try again.",
                 "userexists": "<strong>Login name already registered!</strong> Please choose another one.",
-                "emailexists": "<strong>E-mail is already in use!</strong> Please choose another one."
+                "emailexists": "<strong>E-mail is already in use!</strong> Please choose another one.",
+                "dontmatch": "The password and its confirmation do not match!"
             },
             "success": "<strong>Registration saved!</strong> Please check your email for confirmation.",
             "validate": {
-                "fullName": {
-                    "required": "Your name is required.",
-                    "minlength": "Your name is required to be at least 5 character",
-                    "maxlength": "Your name cannot be longer than 50 characters"
-                },
                 "firstName": {
                     "required": "Your first name is required.",
-                    "minlength": "Your first name is required to be at least 5 character",
-                    "maxlength": "Your first name cannot be longer than 50 characters"
+                    "maxlength": "Your first name cannot be longer than 30 characters."
                 },
                 "lastName": {
                     "required": "Your last name is required.",
-                    "minlength": "Your last name is required to be at least 5 character",
-                    "maxlength": "Your last name cannot be longer than 50 characters"
+                    "maxlength": "Your last name cannot be longer than 30 characters"
                 },
                 "email": {
-                    "pattern": "Your email must be between 10 and 100 characters long and look like an e-mail address.",
+                    "pattern": "Your input doesn't look like an e-mail address.",
+                    "minlength": "Your email is required to be at least 10 characters.",
+                    "maxlength": "Your email cannot be longer than 50 characters.",
                     "required": "Your email is required."
                 },
                 "password": {
@@ -58,10 +56,7 @@
                     "maxlength": "Your confirmation password cannot be longer than 50 characters."
                 }
             }
-        },
-        "buttons": {
-            "signup": "Create account",
-            "login": "Login"
         }
+        
     }
 }
