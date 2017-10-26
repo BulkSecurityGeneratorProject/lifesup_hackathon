@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -7,22 +7,34 @@
 
     NavbarController.$inject = ['$state', 'Auth', 'Principal', 'ProfileService', 'LoginService'];
 
-    function NavbarController ($state, Auth, Principal, ProfileService, LoginService) {
+    function NavbarController($state, Auth, Principal, ProfileService, LoginService) {
         var vm = this;
         vm.account = null;
+        vm.visibleHost = true;
 
         vm.isNavbarCollapsed = true;
         vm.isAuthenticated = Principal.isAuthenticated;
 
-        ProfileService.getProfileInfo().then(function(response) {
+        ProfileService.getProfileInfo().then(function (response) {
             vm.inProduction = response.inProduction;
             vm.swaggerEnabled = response.swaggerEnabled;
         });
 
-        Principal.identity().then(function(account) {
-            vm.account = account;
-            vm.isAuthenticated = Principal.isAuthenticated;
-        });
+        load();
+
+        function load(){
+            Principal.identity().then(function (account) {
+                vm.account = account;
+                if (account) {
+                    if (account.authorities.indexOf('ROLE_HOST') != -1 || account.authorities.indexOf('ROLE_ADMIN') != -1) {
+                        vm.visibleHost = false;
+                    } else {
+                        vm.visibleHost = true;
+                    }
+                }
+                vm.isAuthenticated = Principal.isAuthenticated;
+            });
+        }
 
         vm.login = login;
         vm.logout = logout;
@@ -38,7 +50,7 @@
         function logout() {
             collapseNavbar();
             Auth.logout();
-            $state.go('home');
+            $state.go('challengeslist');
         }
 
         function toggleNavbar() {

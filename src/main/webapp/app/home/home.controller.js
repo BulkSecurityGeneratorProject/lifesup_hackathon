@@ -18,6 +18,12 @@
             getAccount();
         });
 
+        redirect();
+
+        function redirect(){
+            $state.go('challengeslist');
+        }
+
         getAccount();
 
         function getAccount() {

@@ -47,7 +47,7 @@
                         if (time <= 1) {
                             element.timeLeft = 'Apply in less than 1 day';
                         } else {
-                            element.timeLeft = 'Apply in ' + parseInt(Math.ceil(time)) + 'day(s)';
+                            element.timeLeft = 'Apply in ' + parseInt(Math.ceil(time)) + ' day(s)';
                         }
 
                     } else {
