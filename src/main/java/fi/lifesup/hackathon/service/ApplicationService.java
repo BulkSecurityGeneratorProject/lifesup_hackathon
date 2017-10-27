@@ -63,29 +63,25 @@ public class ApplicationService {
 
 	public boolean checkApplication(Application application) {
 		
-		int check = 1;
 		if (application.getTeamName() == null || application.getDescription() == null
 				|| application.getIdeasDescription() == null || application.getMotivation() == null) {
-			check = 0;
+			return false;
 		}
 
 		ApplicationBasicDTO basic = getApplicationBasic(application.getId());
 
 		if (!(application.getChallenge().getMinTeamNumber() <= basic.getMembers().size()
 				&& application.getChallenge().getMaxTeamNumber() >= basic.getMembers().size())) {
-			check = 0;
+			return false;
 		}
 
 		for (String m : basic.getMembers()) {
 			String[] s = m.split(",");
 			if (!s[1].equals(UserStatus.PROFILE_COMPLETE.toString())) {
-				check = 0;
-				break;
+				return false;
 			}			
 		}
-		if (check == 0) {
-			return false;
-		}
+
 		return true;
 	}
 	
@@ -94,10 +90,9 @@ public class ApplicationService {
 		if(application.getStatus() == ApplicationStatus.APPROVED || application.getStatus() == ApplicationStatus.REJECTED){
 			return;
 		}
-		int check = 1;
 		if (application.getTeamName() == null || application.getDescription() == null
 				|| application.getIdeasDescription() == null || application.getMotivation() == null) {
-			check = 0;
+			return;
 		}
 		
 		Application a = applicationRepository.findOne(id);
@@ -105,28 +100,16 @@ public class ApplicationService {
 		
 		if (!(a.getChallenge().getMinTeamNumber() <= application.getMembers().size()
 				&& a.getChallenge().getMaxTeamNumber() >= application.getMembers().size())) {
-			check = 0;
+			return;
 		}
 		
 		for (ApplicationMemberDTO m : application.getMembers()) {
 			if (m.getUserStatus() != UserStatus.PROFILE_COMPLETE) {
-				check = 0;
-				break;
+				return;
 			}	
 		}
-
-		
-		
-		if (check == 1) {
 			a.setStatus(ApplicationStatus.WAITING_FOR_APPROVE);
 			applicationRepository.save(a);
-			return;
-		}
-	}
-
-	public String checkApplication(String s, Long id) {
-		String s1 = challengeUserApplicationRepository.checkChallengeUserApplication(s, id);
-		return s1;
 	}
 
 	public Application createApplication(ApplicationBasicDTO applicationDTO, String baseUrl) {
@@ -141,23 +124,16 @@ public class ApplicationService {
 		Application result = applicationRepository.save(application);
 
 		User user = userService.getUserWithAuthorities();
-		ChallengeUserApplication userApplication = new ChallengeUserApplication();
-		userApplication.setApplicationId(result.getId());
-		userApplication.setChallengeId(applicationDTO.getChallengeId());
-		userApplication.setUserId(user.getId());
-		challengeUserApplicationRepository.save(userApplication);
+		addChallengeUserApplication(application, user.getId());
 		ApplicationBasicDTO basicDTO = getApplicationBasic(application.getId());
 		
 		if (applicationDTO.getMembers() != null) {
 			for (String a : applicationDTO.getMembers()) {
 				int check = 0;
-				System.err.println(a);
 				for (String m : basicDTO.getMembers()) {
 					String s[] = m.split(",");
-					System.err.println(s[0]);
 					if(s[0].equals(a)){
 						check =1;
-						System.err.println("minh");
 						break;
 					}
 					
@@ -263,8 +239,7 @@ public class ApplicationService {
 			ApplicationMemberDTO d = new ApplicationMemberDTO();
 			d.setInvitedMail(a.getEmail());
 			memberDtos.add(d);
-		}
-		
+		}		
 		dto.setMembers(memberDtos);
 		checkApplication(dto, applicationId);
 		return dto;
@@ -297,21 +272,21 @@ public class ApplicationService {
 		return dto;
 	}
 
-	public void addChallengeUserApplication(ApplicationInviteEmail a, Long userId) {
+	public void addChallengeUserApplication(Application a, Long userId) {
 		ChallengeUserApplication userApplication = new ChallengeUserApplication();
 		userApplication.setUserId(userId);
-		userApplication.setApplicationId(a.getApplication().getId());
-		userApplication.setChallengeId(a.getApplication().getChallenge().getId());
+		userApplication.setApplicationId(a.getId());
+		userApplication.setChallengeId(a.getChallenge().getId());
 		challengeUserApplicationRepository.save(userApplication);
-		applicationInviteEmailReponsitory.delete(a);
+		
 	}
 
 	public void finishAcceptInvitation(String key, Boolean accept) {
 		ApplicationInviteEmail inviteEmail = applicationInviteEmailReponsitory.findByAcceptKey(key);
 		if (accept.booleanValue() == true) {
 			User user = userService.getUserWithAuthoritiesByEmail(inviteEmail.getEmail());
-			addChallengeUserApplication(inviteEmail, user.getId());
-
+			addChallengeUserApplication(inviteEmail.getApplication(), user.getId());
+			applicationInviteEmailReponsitory.delete(inviteEmail);
 		} else {
 			applicationInviteEmailReponsitory.deleteByAcceptKey(key);
 
@@ -441,29 +416,20 @@ public class ApplicationService {
 			}
 
 		}
-		if(checkApplication(a)){
-			a.setStatus(ApplicationStatus.WAITING_FOR_APPROVE);
-		} else {
-			a.setStatus(ApplicationStatus.DRAFT);
-		}
-		applicationRepository.save(a);
 		return list;
 	}
 
 	public void deleteMember(Long applicationId, String email) {
-		System.err.println(email);
 		ChallengeUserApplication userApplication = challengeUserApplicationRepository.getMember(applicationId, email);
 		if (userApplication == null) {
-			ApplicationInviteEmail a = applicationInviteEmailReponsitory.findByApplicationIdAndEmail(applicationId,
-					email);
 			applicationInviteEmailReponsitory.deleteByApplicationIdAndEmailLike(applicationId, email + "%");
 		} else {
 			challengeUserApplicationRepository.delete(userApplication);
 		}
+		if(getApplicationBasic(applicationId).getMembers().isEmpty()){
+			applicationRepository.delete(applicationId);
+		}
 	}
 
-	public String check(Long id, String email) {
-		return challengeUserApplicationRepository.checkChallengeUserApplication(email, id);
-	}
 
 }

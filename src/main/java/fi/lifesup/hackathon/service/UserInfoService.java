@@ -42,7 +42,7 @@ public class UserInfoService {
 		String filePath = null;
 		try {
 			// tao thu muc		
-			String dirPath = attachPath + "/userInfo/" + userInfo.getId();
+			String dirPath = attachPath + "/userInfo/";
 			File dir = new File(dirPath);
 			if (!dir.exists()) {
 				if (dir.mkdirs()) {
@@ -56,10 +56,10 @@ public class UserInfoService {
 			String[] fileTypeArray = dto.getFiletype().split("/");
 			String extention = fileTypeArray[1];
 			String fileType = fileTypeArray[0];
-			filePath = dirPath + "/" + dto.getFilename();
+			filePath = dirPath + "/" + dto.getUserInfoId()+"."+extention;
 			// tao file
 			File file = new File(filePath);
-			file.createNewFile();			
+			file.createNewFile();		
 			
 			byte[] bytes = DatatypeConverter.parseBase64Binary(dto.getBase64());
 		

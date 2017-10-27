@@ -39,7 +39,7 @@ public class ChallengeService {
 
 	private final Logger log = LoggerFactory.getLogger(ChallengeService.class);
 
-	@Value("src/main/webapp/content/images")
+	@Value("${attach.path}")
 	private String attachPath;
 
 	@Inject
@@ -112,10 +112,11 @@ public class ChallengeService {
 			String[] fileTypeArray = dto.getFiletype().split("/");
 			String extention = fileTypeArray[1];
 			String fileType = fileTypeArray[0];
-			filePath = dirPath + "/" + dto.getFilename();
+			filePath = dirPath + "/" + dto.getChallengeId()+"."+extention;
 			// tao file
 			File file = new File(filePath);
 			file.createNewFile();
+			
 
 			byte[] bytes = DatatypeConverter.parseBase64Binary(dto.getBase64());
 

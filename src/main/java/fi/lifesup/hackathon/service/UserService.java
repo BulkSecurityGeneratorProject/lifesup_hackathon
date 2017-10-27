@@ -120,7 +120,7 @@ public class UserService {
 		
 		if(!inviteEmails.isEmpty()){
 			for (ApplicationInviteEmail a : inviteEmails) {
-				applicationService.addChallengeUserApplication(a, newUser.getId());
+				applicationService.addChallengeUserApplication(a.getApplication(), newUser.getId());
 			}
 		}
 		log.debug("Created Information for User: {}", newUser);

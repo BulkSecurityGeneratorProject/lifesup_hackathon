@@ -31,11 +31,6 @@ public interface ChallengeUserApplicationRepository extends JpaRepository<Challe
 	ChallengeUserApplication findByChallengeIdAndUserId(Long challengeId, Long userId);
 
 	List<ChallengeUserApplication> findByUserId(Long userId);
-	@Query("select 'true' from User u, ChallengeUserApplication cua, ApplicationInviteEmail aie"
-			+ " where (u.id = cua.userId and u.email = ?1 and cua.applicationId = ?2) "
-			+ " or (aie.email = ?1 and aie.application.id = ?2)")
-	
-	String checkChallengeUserApplication(String email, Long applicationId);
 		
 	@Query("select u.status from User u, ChallengeUserApplication cua"
 			+ " where u.id = cua.userId and cua.applicationId = ?1")
@@ -44,4 +39,5 @@ public interface ChallengeUserApplicationRepository extends JpaRepository<Challe
 	@Query("select new fi.lifesup.hackathon.service.dto.ApplicationMemberDTO(cua.id, u.email)"
 			+ " from ChallengeUserApplication cua , User u where cua.applicationId = :#{[0]} and u.id = cua.userId")
 	List<ApplicationMemberDTO> getApplicationMemberDeatil(Long applicationId);
+	
 }

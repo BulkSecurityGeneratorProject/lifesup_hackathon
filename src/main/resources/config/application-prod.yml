@@ -47,7 +47,7 @@ liquibase:
     contexts: prod
 
 attach:
-    path: /home/fashionup/hackathon/resource/images/
+    path: hackathon/images/
 
 server:
     port: 8080
