@@ -3,13 +3,14 @@ package fi.lifesup.hackathon.service.dto;
 import java.time.ZonedDateTime;
 
 import fi.lifesup.hackathon.domain.enumeration.UserSex;
+import fi.lifesup.hackathon.domain.enumeration.UserStatus;
 
 public class ApplicationMemberDTO {
 
 	private Long id;
 	private Long userId;
 	
-
+	private UserStatus userStatus;
 	private String invitedMail;
 	private String firstName;
 	private String lastName;
@@ -55,6 +56,15 @@ public class ApplicationMemberDTO {
 		this.skills = ui.getSkills();
 		this.workArea = ui.getWorkArea();
 		this.feedbackFrom = ui.getFeedbackFrom();
+	}
+
+	
+	public UserStatus getUserStatus() {
+		return userStatus;
+	}
+
+	public void setUserStatus(UserStatus userStatus) {
+		this.userStatus = userStatus;
 	}
 
 	public Long getUserId() {
