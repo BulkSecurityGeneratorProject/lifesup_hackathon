@@ -250,7 +250,7 @@ public class ChallengeService {
 		Query count = em.createQuery(sbCount.toString() + where);
 
 		if (search.getStatus()!= null) {
-			query.setParameter("status", search.getStatus());
+			count.setParameter("status", search.getStatus());
 		}
 		
 		total = (Long) count.getSingleResult();
