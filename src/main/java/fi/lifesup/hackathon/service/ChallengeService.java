@@ -207,6 +207,16 @@ public class ChallengeService {
 			where.append(" and p.status = :status");
 
 		}
+		if (search.getEventStartTime() != null && search.getEventEndTime() == null) {
+			where.append(" and p.eventStartTime >= :startTime ");
+		} else if (search.getEventStartTime() == null && search.getEventEndTime() != null) {
+			where.append(" and p.eventEndTime >= :endTime ");
+
+		} else if (search.getEventStartTime() != null && search.getEventEndTime() != null) {
+			where.append(" and ( p.eventStartTime >= :startTime  or p.eventEndTime >= :endTime )");
+
+		}
+
 		return where.toString();
 	}
 
@@ -243,6 +253,12 @@ public class ChallengeService {
 		if (search.getStatus()!= null) {
 			query.setParameter("status", search.getStatus());
 		}
+		if (search.getEventStartTime() != null) {
+			query.setParameter("startTime", search.getEventStartTime());
+		}
+		if (search.getEventEndTime() != null) {
+			query.setParameter("endTime", search.getEventEndTime());
+		}
 		
 		System.out.println(search);
 		lst = query.getResultList();
@@ -252,7 +268,12 @@ public class ChallengeService {
 		if (search.getStatus()!= null) {
 			count.setParameter("status", search.getStatus());
 		}
-		
+		if (search.getEventStartTime() != null) {
+			count.setParameter("startTime", search.getEventStartTime());
+		}
+		if (search.getEventEndTime() != null) {
+			count.setParameter("endTime", search.getEventEndTime());
+		}
 		total = (Long) count.getSingleResult();
 		return new PageImpl<>(lst, pageable, total);
 

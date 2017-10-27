@@ -31,7 +31,7 @@
         <md-input-container class="md-block" flex-gt-sm="100">
             <label>Status</label>
             <md-select ng-model="vm.challengeSearch.status" ng-change="vm.querySearchName()">
-                <md-option ng-value="status.value" ng-repeat="status in vm.allStatus">{{status.value}}</md-option>
+                <md-option ng-value="status" ng-repeat="status in vm.allStatus">{{status}}</md-option>
             </md-select>
         </md-input-container>
 

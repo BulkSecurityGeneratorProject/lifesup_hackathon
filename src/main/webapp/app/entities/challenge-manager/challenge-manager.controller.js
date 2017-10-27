@@ -11,7 +11,7 @@
         var vm = this;
 
         vm.challenges = [];
-        vm.displayChallenges = [];
+        vm.allStatus = ['','ACTIVE', 'DRAFT', 'CLOSED'];
         vm.hasNoChallenge = false;
         vm.querySearchName = querySearchName;
 
@@ -32,8 +32,41 @@
             last: 0
         };
         vm.predicate = 'id';
-        vm.reset = reset;
         vm.reverse = true;
+        vm.reset = reset;
+        
+        loadAll();
+
+        function sort() {
+            var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
+            if (vm.predicate !== 'id') {
+                result.push('id');
+            }
+            return result;
+        }
+
+        function parseChallengeStatus(challenges){
+            challenges.map(function (challenge) {
+                if (challenge.info.status == 'ACTIVE') {
+                    // Auto update challenge status on loading
+                    var now = new Date().getTime();
+                    var date = new Date(challenge.info.applicationCloseDate);
+                    var end = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1).getTime();
+                    var diff = end - now;
+                    var time = diff / (1000 * 60 * 60 * 24);
+                    if (diff < 0) {
+                        challenge.info.status = 'CLOSED';
+                        ChallengeInfo.update(challenge.info);
+                    }
+
+                    if (time <= 1) {
+                        challenge.timeLeft = 'Apply in less than 1 day';
+                    } else {
+                        challenge.timeLeft = 'Apply in ' + parseInt(Math.ceil(time)) + ' day(s)';
+                    }
+                }
+            })
+        }
 
         function loadAll() {
             ChallengeByUser.query({
@@ -41,14 +74,6 @@
                 size: vm.itemsPerPage,
                 sort: sort()
             }, onSuccess, onError);
-            function sort() {
-                var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
-                if (vm.predicate !== 'id') {
-                    result.push('id');
-                }
-                return result;
-            }
-
             function onSuccess(data, headers) {
                 if (!data.length) {
                     vm.hasNoChallenge = true;
@@ -59,28 +84,8 @@
                 for (var i = 0; i < data.length; i++) {
                     vm.challenges.push(data[i]);
                 }
-                vm.challenges.map(function (challenge) {
-                    if (challenge.info.status == 'ACTIVE') {
-                        // Auto update challenge status on loading
-                        var now = new Date().getTime();
-                        var date = new Date(challenge.info.applicationCloseDate);
-                        var end = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1).getTime();
-                        var diff = end - now;
-                        var time = diff / (1000 * 60 * 60 * 24);
-                        if (diff < 0) {
-                            challenge.info.status = 'CLOSED';
-                            ChallengeInfo.update(challenge.info);
-                        }
-
-                        if (time <= 1) {
-                            challenge.timeLeft = 'Apply in less than 1 day';
-                        } else {
-                            challenge.timeLeft = 'Apply in ' + parseInt(Math.ceil(time)) + ' day(s)';
-                        }
-                    }
-                })
+                parseChallengeStatus(vm.challenges);
             }
-
             function onError(error) {
                 AlertService.error(error.data.message);
             }
@@ -100,14 +105,7 @@
                 querySearchNameContinue();
             }
         }
-        loadAll();
-
-        vm.status = null;
-        vm.allStatus = [
-            { id: 1, value: 'ACTIVE' },
-            { id: 2, value: 'DRAFT' },
-            { id: 3, value: 'CLOSED' }
-        ];
+        
 
         function querySearchName() {
             vm.page = 0;
@@ -122,13 +120,6 @@
                 applicationCloseDate: vm.challengeSearch.applicationCloseDate ? vm.challengeSearch.applicationCloseDate : null,
                 status: vm.challengeSearch.status ? vm.challengeSearch.status : null
             }, onSuccess, onError);
-            function sort() {
-                var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
-                if (vm.predicate !== 'id') {
-                    result.push('id');
-                }
-                return result;
-            }
 
             function onSuccess(data, headers) {
                 vm.links = ParseLinks.parse(headers('link'));
@@ -136,32 +127,12 @@
                 for (var i = 0; i < data.length; i++) {
                     vm.challenges.push(data[i]);
                 }
-                vm.challenges.map(function (challenge) {
-                    if (challenge.info.status == 'ACTIVE') {
-                        // Auto update challenge status on loading
-                        var now = new Date().getTime();
-                        var date = new Date(challenge.info.applicationCloseDate);
-                        var end = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1).getTime();
-                        var diff = end - now;
-                        var time = diff / (1000 * 60 * 60 * 24);
-                        if (diff < 0) {
-                            challenge.info.status = 'CLOSED';
-                            ChallengeInfo.update(challenge.info);
-                        }
-
-                        if (time <= 1) {
-                            challenge.timeLeft = 'Apply in less than 1 day';
-                        } else {
-                            challenge.timeLeft = 'Apply in ' + parseInt(Math.ceil(time)) + ' day(s)';
-                        }
-                    }
-                })
+                parseChallengeStatus(vm.challenges);
             }
 
             function onError(error) {
                 AlertService.error(error.data.message);
             }
-
         }
 
         function querySearchNameContinue() {
@@ -175,46 +146,18 @@
                 applicationCloseDate: vm.challengeSearch.applicationCloseDate ? vm.challengeSearch.applicationCloseDate : null,
                 status: vm.challengeSearch.status ? vm.challengeSearch.status : null
             }, onSuccess, onError);
-            function sort() {
-                var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
-                if (vm.predicate !== 'id') {
-                    result.push('id');
-                }
-                return result;
-            }
-
+            
             function onSuccess(data, headers) {
                 vm.links = ParseLinks.parse(headers('link'));
                 vm.totalItems = headers('X-Total-Count');
                 for (var i = 0; i < data.length; i++) {
                     vm.challenges.push(data[i]);
                 }
-                vm.challenges.map(function (challenge) {
-                    if (challenge.info.status == 'ACTIVE') {
-                        // Auto update challenge status on loading
-                        var now = new Date().getTime();
-                        var date = new Date(challenge.info.applicationCloseDate);
-                        var end = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1).getTime();
-                        var diff = end - now;
-                        var time = diff / (1000 * 60 * 60 * 24);
-                        if (diff < 0) {
-                            challenge.info.status = 'CLOSED';
-                            ChallengeInfo.update(challenge.info);
-                        }
-
-                        if (time <= 1) {
-                            challenge.timeLeft = 'Apply in less than 1 day';
-                        } else {
-                            challenge.timeLeft = 'Apply in ' + parseInt(Math.ceil(time)) + ' day(s)';
-                        }
-                    }
-                })
+                parseChallengeStatus(vm.challenges);
             }
-
             function onError(error) {
                 AlertService.error(error.data.message);
             }
-
         }
     }
 })();
