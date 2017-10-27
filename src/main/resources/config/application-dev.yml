@@ -25,7 +25,6 @@ spring:
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:postgresql://localhost:5432/hackathon
-        name:
         username: hackathon
         password: hackathon
     jpa:
@@ -51,6 +50,10 @@ spring:
         cache-seconds: 1
     thymeleaf:
         cache: false
+    http:
+        multipart:
+            max-file-size: 100Mb
+            max-request-size: 100Mb
 
 liquibase:
     contexts: dev

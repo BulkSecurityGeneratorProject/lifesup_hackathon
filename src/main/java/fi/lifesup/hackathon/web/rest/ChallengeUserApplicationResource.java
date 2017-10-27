@@ -172,13 +172,13 @@ public class ChallengeUserApplicationResource {
 	@PutMapping("/challenge-user-applications/accept-invitation")
 	@Timed
 	public ResponseEntity<Void> finishAcceptedInvitation(@RequestBody String acceptKey) {		
-		String result = applicationService.finishAcceptInvitation(acceptKey, true);
+		applicationService.finishAcceptInvitation(acceptKey, true);
 		return ResponseEntity.ok().build();
 	}
 	@PutMapping("/challenge-user-applications/decline-invitation")
 	@Timed
 	public ResponseEntity<Void> finishDeclinedInvitation(@RequestBody String acceptKey) {		
-		String result = applicationService.finishAcceptInvitation(acceptKey, false);
+	applicationService.finishAcceptInvitation(acceptKey, false);
 		return ResponseEntity.ok().build();
 	}
 }

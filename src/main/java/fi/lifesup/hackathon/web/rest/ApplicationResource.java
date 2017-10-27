@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 
 import fi.lifesup.hackathon.domain.Application;
+import fi.lifesup.hackathon.domain.enumeration.ApplicationStatus;
 import fi.lifesup.hackathon.repository.ApplicationRepository;
 import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
 import fi.lifesup.hackathon.security.AuthoritiesConstants;
@@ -99,6 +100,12 @@ public class ApplicationResource {
 	public ResponseEntity<Application> updateApplication(@Valid @RequestBody ApplicationBasicDTO application,
 			HttpServletRequest request) throws URISyntaxException {
 		log.debug("REST request to update Application : {}", application);
+		Application a = applicationRepository.findOne(application.getId());
+		if(a.getStatus() == ApplicationStatus.REJECTED || a.getStatus() == ApplicationStatus.APPROVED){
+			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("application", "idexists",
+					"A application cannot update when it's status approved ỏ rejected")).body(null);
+		}
+		
 		String baseUrl = request.getScheme() + // "http"
 				"://" + // "://"
 				request.getServerName() + // "myhost"

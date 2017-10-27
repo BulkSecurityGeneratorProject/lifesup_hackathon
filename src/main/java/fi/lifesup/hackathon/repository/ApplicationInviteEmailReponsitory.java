@@ -19,5 +19,7 @@ public interface ApplicationInviteEmailReponsitory extends JpaRepository<Applica
 	
 	ApplicationInviteEmail findByApplicationIdAndEmail(Long applicationId , String email);
 	
+	List<ApplicationInviteEmail> findByEmail( String email);
+	
 	List<ApplicationInviteEmail> findByApplicationId(Long applicationId);
 }

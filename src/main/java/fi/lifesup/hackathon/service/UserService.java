@@ -1,16 +1,13 @@
 package fi.lifesup.hackathon.service;
 
-import fi.lifesup.hackathon.domain.Authority;
-import fi.lifesup.hackathon.domain.User;
-import fi.lifesup.hackathon.domain.UserInfo;
-import fi.lifesup.hackathon.domain.enumeration.UserStatus;
-import fi.lifesup.hackathon.repository.AuthorityRepository;
-import fi.lifesup.hackathon.repository.UserInfoRepository;
-import fi.lifesup.hackathon.repository.UserRepository;
-import fi.lifesup.hackathon.security.AuthoritiesConstants;
-import fi.lifesup.hackathon.security.SecurityUtils;
-import fi.lifesup.hackathon.service.util.RandomUtil;
-import fi.lifesup.hackathon.web.rest.vm.ManagedUserVM;
+import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
+
+import javax.inject.Inject;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -18,9 +15,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.ZonedDateTime;
-import javax.inject.Inject;
-import java.util.*;
+import fi.lifesup.hackathon.domain.ApplicationInviteEmail;
+import fi.lifesup.hackathon.domain.Authority;
+import fi.lifesup.hackathon.domain.User;
+import fi.lifesup.hackathon.domain.enumeration.UserStatus;
+import fi.lifesup.hackathon.repository.ApplicationInviteEmailReponsitory;
+import fi.lifesup.hackathon.repository.AuthorityRepository;
+import fi.lifesup.hackathon.repository.UserInfoRepository;
+import fi.lifesup.hackathon.repository.UserRepository;
+import fi.lifesup.hackathon.security.AuthoritiesConstants;
+import fi.lifesup.hackathon.security.SecurityUtils;
+import fi.lifesup.hackathon.service.util.RandomUtil;
+import fi.lifesup.hackathon.web.rest.vm.ManagedUserVM;
 
 /**
  * Service class for managing users.
@@ -44,6 +50,12 @@ public class UserService {
 	private UserInfoService userInfoService;
 	@Inject
 	private UserInfoRepository userInfoRepository;
+	
+	@Inject
+	private ApplicationInviteEmailReponsitory applicationInviteEmailReponsitory;
+	
+	@Inject
+	private ApplicationService applicationService;
 
 	public Optional<User> activateRegistration(String key) {
 		log.debug("Activating user for activation key {}", key);
@@ -84,7 +96,6 @@ public class UserService {
 
 	public User createUser(String login, String password, String firstName, String lastName, String email,
 			String langKey) {
-
 		User newUser = new User();
 		Authority authority = authorityRepository.findOne(AuthoritiesConstants.USER);
 		Set<Authority> authorities = new HashSet<>();
@@ -103,7 +114,15 @@ public class UserService {
 		authorities.add(authority);
 		newUser.setAuthorities(authorities);
 		newUser.setStatus(UserStatus.INACTIVATED);
-		userRepository.save(newUser);
+		newUser = userRepository.save(newUser);
+		
+		List<ApplicationInviteEmail> inviteEmails = applicationInviteEmailReponsitory.findByEmail(email);
+		
+		if(!inviteEmails.isEmpty()){
+			for (ApplicationInviteEmail a : inviteEmails) {
+				applicationService.addChallengeUserApplication(a, newUser.getId());
+			}
+		}
 		log.debug("Created Information for User: {}", newUser);
 		return newUser;
 	}
@@ -130,7 +149,7 @@ public class UserService {
 		user.setResetKey(RandomUtil.generateResetKey());
 		user.setResetDate(ZonedDateTime.now());
 		user.setActivated(true);
-		// user.setStatus(UserStatus.INACTIVATED);
+		user.setStatus(UserStatus.INACTIVATED);
 		userRepository.save(user);
 		log.debug("Created Information for User: {}", user);
 		return user;
