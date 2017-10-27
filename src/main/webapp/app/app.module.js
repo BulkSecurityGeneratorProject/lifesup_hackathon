@@ -1,11 +1,11 @@
-(function() {
+(function () {
     'use strict';
 
     angular
         .module('hackathonApp', [
-            'ngStorage', 
+            'ngStorage',
             'tmh.dynamicLocale',
-            'pascalprecht.translate', 
+            'pascalprecht.translate',
             'ngResource',
             'ngCookies',
             'ngAria',
@@ -22,7 +22,9 @@
             'lfNgMdFileInput',
             'naif.base64',
             'ngAnimate'
-        ])
+        ]).config(['$mdDateLocaleProvider', function ($mdDateLocaleProvider) {
+         
+        }]  )
         .run(run);
 
     run.$inject = ['stateHandler', 'translationHandler'];
