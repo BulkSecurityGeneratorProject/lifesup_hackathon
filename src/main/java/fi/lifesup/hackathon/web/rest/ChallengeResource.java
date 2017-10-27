@@ -172,9 +172,18 @@ public class ChallengeResource {
 
 	@GetMapping("/challenges-by-user")
 	@Timed
-	public List<Challenge> getChallengeByUser() {
-		log.debug("REST request to get all Challenge by user login : {}");
-		return challengeService.getChallengeByUser();
+//	public List<Challenge> getChallengeByUser() {
+//		log.debug("REST request to get all Challenge by user login : {}");
+//		return challengeService.getChallengeByUser();
+//	}
+	public ResponseEntity<List<Challenge>> getManageChallenges(ChallengeSearch challengeSearch,Pageable pageable
+			) throws URISyntaxException {
+		System.out.println(challengeSearch);
+		Page<Challenge> page = challengeService.getChallengeManageSearch(challengeSearch, pageable);
+		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/challenges-by-user");
+		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+		
+		
 	}
 
 	@GetMapping("/challenges-by-authories")

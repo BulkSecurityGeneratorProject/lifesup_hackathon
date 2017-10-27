@@ -21,12 +21,21 @@ public class Challenge implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private Long created_by;
 
     @NotNull
     @Column(name = "name", nullable = false)
     private String name;
 
-    @NotNull
+    public Long getCreated_by() {
+		return created_by;
+	}
+
+	public void setCreated_by(Long created_by) {
+		this.created_by = created_by;
+	}
+
+	@NotNull
     @Column(name = "introduction", nullable = false)
     private String introduction;
 
