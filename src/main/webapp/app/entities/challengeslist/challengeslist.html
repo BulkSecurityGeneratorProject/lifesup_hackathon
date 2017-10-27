@@ -25,7 +25,7 @@
     </md-input-container>
   </div>
   <md-content flex layout-padding infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
-    <div   class="col-sm-12 col-md-4 animation" ng-repeat="challenge in vm.challenges" ng-if="challenge.info.status != 'DRAFT'">
+    <div   class="col-sm-12 col-md-4 repeated-item " ng-repeat="challenge in vm.challenges" ng-if="challenge.info.status != 'DRAFT'">
       <md-card  class="challenge-container ">
         <img md-card-image ng-src="{{challenge.bannerUrl}}" ui-sref="challengeslist-detail({id:challenge.id})" class='challenge-banner'
           ng-class="{'img-grey': vm.getApplicationStatus(challenge) == 'CLOSED'}">

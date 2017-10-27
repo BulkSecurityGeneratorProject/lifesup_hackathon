@@ -62,7 +62,7 @@
         <div class="col-md-3"></div>
     </div>
 
-    <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="challenge in vm.challenges | filter: vm.searchText" infinite-scroll="vm.loadPage(vm.page + 1)"
+    <div class="col-md-4 col-sm-6 col-xs-12 repeated-item" ng-repeat="challenge in vm.challenges | filter: vm.searchText" infinite-scroll="vm.loadPage(vm.page + 1)"
         infinite-scroll-disabled="vm.page >= vm.links['last']">
         <md-card class="challenge-card" ng-switch="challenge.info.status">
             <div ng-switch-when="ACTIVE" class="ribbon-wrapper">
