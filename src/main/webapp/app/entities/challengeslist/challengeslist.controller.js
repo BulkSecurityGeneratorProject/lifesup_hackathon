@@ -88,6 +88,7 @@
             function onSuccess(data, headers) {
                 vm.links = ParseLinks.parse(headers('link'));
                 vm.totalItems = headers('X-Total-Count');
+                console.log(data);
                 for (var i = 0; i < data.length; i++) {
                     vm.challenges.push(data[i]);
                 }
@@ -112,7 +113,7 @@
 
         function loadPage(page) {
             vm.page = page;
-            if (!vm.challengeSearch.name) {
+            if (!vm.challengeSearch.name && !vm.challengeSearch.eventStartTime && !vm.challengeSearch.eventEndTime) {
                 loadAll();
             } else {
                 querySearchNameContinue();
