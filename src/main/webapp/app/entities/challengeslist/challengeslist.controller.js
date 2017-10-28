@@ -81,28 +81,26 @@
 
         function parseChallengeStatus(challenges) {
             challenges.map(function (challenge) {
-                if (challenge.info.status !== 'REMOVED') {
-                    var today = new Date().getTime();
-                    var appClose = new Date(challenge.info.applicationCloseDate);
-                    var endApp = new Date(appClose.getFullYear(), appClose.getMonth(), appClose.getDate() + 1).getTime();
+                var today = new Date().getTime();
+                var appClose = new Date(challenge.info.applicationCloseDate);
+                var endApp = new Date(appClose.getFullYear(), appClose.getMonth(), appClose.getDate() + 1).getTime();
 
-                    var evClose = new Date(challenge.info.eventEndTime);
-                    var endEv = new Date(evClose.getFullYear(), evClose.getMonth(), evClose.getDate() + 1).getTime();
+                var evClose = new Date(challenge.info.eventEndTime);
+                var endEv = new Date(evClose.getFullYear(), evClose.getMonth(), evClose.getDate() + 1).getTime();
 
-                    if (endEv - today < 0) {
-                        challenge.info.status = 'CLOSED';
+                if (endEv - today < 0) {
+                    challenge.info.status = 'CLOSED';
+                    ChallengeInfo.update(challenge.info);
+                } else {
+                    if (endApp - today < 0) {
+                        challenge.info.status = 'INACTIVE';
                         ChallengeInfo.update(challenge.info);
                     } else {
-                        if (endApp - today < 0) {
-                            challenge.info.status = 'INACTIVE';
-                            ChallengeInfo.update(challenge.info);
+                        var time = (endApp - today) / (1000 * 60 * 60 * 24);
+                        if (time <= 1) {
+                            challenge.timeLeft = 'Apply in less than 1 day';
                         } else {
-                            var time = (endApp - today) / (1000 * 60 * 60 * 24);
-                            if (time <= 1) {
-                                challenge.timeLeft = 'Apply in less than 1 day';
-                            } else {
-                                challenge.timeLeft = 'Apply in ' + parseInt(Math.ceil(time)) + ' day(s)';
-                            }
+                            challenge.timeLeft = 'Apply in ' + parseInt(Math.ceil(time)) + ' day(s)';
                         }
                     }
                 }

@@ -25,21 +25,24 @@
 
 
         function parseChallengeStatus() {
-            var today = new Date().getTime();
-            var appClose = new Date(vm.challenge.info.applicationCloseDate);
-            var endApp = new Date(appClose.getFullYear(), appClose.getMonth(), appClose.getDate() + 1).getTime();
-            vm.timeLeft = endApp - today;
-            if (vm.timeLeft < 0) {
-                vm.challenge.timeLeft = "Time's Up";
-                vm.challenge.info.status = 'INACTIVE';
-                ChallengeInfo.update(vm.challenge.info);
-            } else {
-                var time = vm.timeLeft / (1000 * 60 * 60 * 24);
-                if (time <= 1) {
-                    vm.challenge.timeLeft = 'Apply in less than 1 day';
+            if (vm.challenge.info.status != 'INACTIVE') {
+                var today = new Date().getTime();
+                var appClose = new Date(vm.challenge.info.applicationCloseDate);
+                var endApp = new Date(appClose.getFullYear(), appClose.getMonth(), appClose.getDate() + 1).getTime();
+                vm.timeLeft = endApp - today;
+                if (vm.timeLeft < 0) {
+                    vm.challenge.info.status = 'INACTIVE';
+                    ChallengeInfo.update(vm.challenge.info);
                 } else {
-                    vm.challenge.timeLeft = 'Apply in ' + parseInt(Math.ceil(time)) + ' day(s)';
+                    var time = vm.timeLeft / (1000 * 60 * 60 * 24);
+                    if (time <= 1) {
+                        vm.challenge.timeLeft = 'Apply in less than 1 day';
+                    } else {
+                        vm.challenge.timeLeft = 'Apply in ' + parseInt(Math.ceil(time)) + ' day(s)';
+                    }
                 }
+            } else {
+                vm.challenge.timeLeft = "Time's Up";
             }
         }
 
