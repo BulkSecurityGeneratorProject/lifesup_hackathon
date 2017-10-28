@@ -217,7 +217,7 @@ public class ChallengeService {
 			where.append(" and ( p.eventStartTime >= :startTime  or p.eventEndTime >= :endTime )");
 
 		}
-
+			where.append("and c.info.status not like 'REMOVED' ");
 		return where.toString();
 	}
 
@@ -233,7 +233,7 @@ public class ChallengeService {
 
 		if (user == null) {
 			user = userRepository.getUserByAuthority(SecurityUtils.getCurrentUserLogin(), "ROLE_HOST");
-
+			
 			t = 1;
 			if (user == null) {
 				user = userRepository.getUserByAuthority(SecurityUtils.getCurrentUserLogin(), "ROLE_HOST");
