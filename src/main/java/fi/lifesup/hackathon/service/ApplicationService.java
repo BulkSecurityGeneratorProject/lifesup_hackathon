@@ -61,59 +61,63 @@ public class ApplicationService {
 	@Inject
 	private ApplicationInviteEmailReponsitory applicationInviteEmailReponsitory;
 
-	public boolean checkApplication(Application application) {
-		
+	public void checkApplication(Application application) {
+		boolean check = true;
 		if (application.getTeamName() == null || application.getDescription() == null
 				|| application.getIdeasDescription() == null || application.getMotivation() == null) {
-			return false;
+			check = false;
 		}
 
 		ApplicationBasicDTO basic = getApplicationBasic(application.getId());
 
 		if (!(application.getChallenge().getMinTeamNumber() <= basic.getMembers().size()
 				&& application.getChallenge().getMaxTeamNumber() >= basic.getMembers().size())) {
-			return false;
+			check = false;
 		}
 
 		for (String m : basic.getMembers()) {
 			String[] s = m.split(",");
 			if (!s[1].equals(UserStatus.PROFILE_COMPLETE.toString())) {
-				return false;
-			}			
+				check = false;
+			}
 		}
 
-		return true;
+		if (check == true) {
+			application.setStatus(ApplicationStatus.WAITING_FOR_APPROVE);
+		} else {
+			application.setStatus(ApplicationStatus.DRAFT);
+		}
 	}
-	
+
 	public void checkApplication(ApplicationDTO application, Long id) {
-		
-		if(application.getStatus() == ApplicationStatus.APPROVED || application.getStatus() == ApplicationStatus.REJECTED){
+
+		if (application.getStatus() == ApplicationStatus.APPROVED
+				|| application.getStatus() == ApplicationStatus.REJECTED) {
 			return;
 		}
 		if (application.getTeamName() == null || application.getDescription() == null
 				|| application.getIdeasDescription() == null || application.getMotivation() == null) {
 			return;
 		}
-		
+
 		Application a = applicationRepository.findOne(id);
-		
-		
+
 		if (!(a.getChallenge().getMinTeamNumber() <= application.getMembers().size()
 				&& a.getChallenge().getMaxTeamNumber() >= application.getMembers().size())) {
 			return;
 		}
-		
+
 		for (ApplicationMemberDTO m : application.getMembers()) {
 			if (m.getUserStatus() != UserStatus.PROFILE_COMPLETE) {
 				return;
-			}	
+			}
 		}
-			a.setStatus(ApplicationStatus.WAITING_FOR_APPROVE);
-			applicationRepository.save(a);
+		a.setStatus(ApplicationStatus.WAITING_FOR_APPROVE);
+		applicationRepository.save(a);
 	}
 
 	public Application createApplication(ApplicationBasicDTO applicationDTO, String baseUrl) {
-		
+
 		Application application = new Application();
 		application.setTeamName(applicationDTO.getTeamName());
 		application.setCompanyName(applicationDTO.getCompanyName());
@@ -126,19 +130,19 @@ public class ApplicationService {
 		User user = userService.getUserWithAuthorities();
 		addChallengeUserApplication(application, user.getId());
 		ApplicationBasicDTO basicDTO = getApplicationBasic(application.getId());
-		
+
 		if (applicationDTO.getMembers() != null) {
 			for (String a : applicationDTO.getMembers()) {
 				int check = 0;
 				for (String m : basicDTO.getMembers()) {
 					String s[] = m.split(",");
-					if(s[0].equals(a)){
-						check =1;
+					if (s[0].equals(a)) {
+						check = 1;
 						break;
 					}
-					
+
 				}
-				if(check == 0){
+				if (check == 0) {
 					ApplicationInviteEmail invited = new ApplicationInviteEmail();
 					invited.setEmail(a);
 					invited.setApplication(result);
@@ -150,18 +154,12 @@ public class ApplicationService {
 				}
 			}
 		}
-
-		if (checkApplication(result)) {
-			result.setStatus(ApplicationStatus.WAITING_FOR_APPROVE);
-		} else {
-			result.setStatus(ApplicationStatus.DRAFT);
-		}
-
+		checkApplication(result);
 		return applicationRepository.save(result);
 	}
 
 	public Application updateApplication(ApplicationBasicDTO applicationDTO, String baseUrl) {
-		
+		System.err.println("update");
 		Application application = applicationRepository.findOne(applicationDTO.getId());
 		application.setTeamName(applicationDTO.getTeamName());
 		application.setCompanyName(applicationDTO.getCompanyName());
@@ -174,12 +172,12 @@ public class ApplicationService {
 				int check = 0;
 				for (String m : basicDTO.getMembers()) {
 					String s[] = m.split(",");
-					if(s[0].equals(a)){
-						check =1;
+					if (s[0].equals(a)) {
+						check = 1;
 						break;
-					}	
+					}
 				}
-				if(check == 0){
+				if (check == 0) {
 					ApplicationInviteEmail invited = new ApplicationInviteEmail();
 					invited.setEmail(a);
 					invited.setApplication(application);
@@ -191,13 +189,7 @@ public class ApplicationService {
 				}
 			}
 		}
-		
-
-		if (checkApplication(application)) {
-			application.setStatus(ApplicationStatus.WAITING_FOR_APPROVE);
-		} else {
-			application.setStatus(ApplicationStatus.DRAFT);
-		}
+		checkApplication(application);
 		return applicationRepository.save(application);
 	}
 
@@ -239,7 +231,7 @@ public class ApplicationService {
 			ApplicationMemberDTO d = new ApplicationMemberDTO();
 			d.setInvitedMail(a.getEmail());
 			memberDtos.add(d);
-		}		
+		}
 		dto.setMembers(memberDtos);
 		checkApplication(dto, applicationId);
 		return dto;
@@ -278,7 +270,7 @@ public class ApplicationService {
 		userApplication.setApplicationId(a.getId());
 		userApplication.setChallengeId(a.getChallenge().getId());
 		challengeUserApplicationRepository.save(userApplication);
-		
+
 	}
 
 	public void finishAcceptInvitation(String key, Boolean accept) {
@@ -287,17 +279,18 @@ public class ApplicationService {
 			User user = userService.getUserWithAuthoritiesByEmail(inviteEmail.getEmail());
 			addChallengeUserApplication(inviteEmail.getApplication(), user.getId());
 			applicationInviteEmailReponsitory.delete(inviteEmail);
+
 		} else {
 			applicationInviteEmailReponsitory.deleteByAcceptKey(key);
 
 		}
-		if (checkApplication(inviteEmail.getApplication())) {
-			inviteEmail.getApplication().setStatus(ApplicationStatus.WAITING_FOR_APPROVE);
-		} else {
-			inviteEmail.getApplication().setStatus(ApplicationStatus.DRAFT);
-		}
-		applicationRepository.save(inviteEmail.getApplication());
+		checkApplication(inviteEmail.getApplication());
+	}
 
+	public void finishAcceptInvitation(ApplicationInviteEmail inviteEmail, Long userId) {
+		addChallengeUserApplication(inviteEmail.getApplication(), userId);
+		applicationInviteEmailReponsitory.delete(inviteEmail);
+		checkApplication(inviteEmail.getApplication());
 	}
 
 	public void deleteApplication(Long id) {
@@ -416,20 +409,23 @@ public class ApplicationService {
 			}
 
 		}
+
+		checkApplication(a);
 		return list;
 	}
 
 	public void deleteMember(Long applicationId, String email) {
+		System.err.println("delete");
 		ChallengeUserApplication userApplication = challengeUserApplicationRepository.getMember(applicationId, email);
 		if (userApplication == null) {
 			applicationInviteEmailReponsitory.deleteByApplicationIdAndEmailLike(applicationId, email + "%");
 		} else {
 			challengeUserApplicationRepository.delete(userApplication);
 		}
-		if(getApplicationBasic(applicationId).getMembers().isEmpty()){
+		if (getApplicationBasic(applicationId).getMembers().isEmpty()) {
 			applicationRepository.delete(applicationId);
 		}
+		checkApplication(applicationRepository.findOne(applicationId));
 	}
-
 
 }
