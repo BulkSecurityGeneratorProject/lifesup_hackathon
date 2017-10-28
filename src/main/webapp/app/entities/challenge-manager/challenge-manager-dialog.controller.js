@@ -43,10 +43,10 @@
         function save() {
             vm.isSaving = true;
             var today = new Date().getTime();
-            var appClose = new Date(challenge.info.applicationCloseDate);
+            var appClose = new Date(vm.challengeInfo.applicationCloseDate);
             var endApp = new Date(appClose.getFullYear(), appClose.getMonth(), appClose.getDate() + 1).getTime();
 
-            var evClose = new Date(challenge.info.eventEndTime);
+            var evClose = new Date(vm.challengeInfo.eventEndTime);
             var endEv = new Date(evClose.getFullYear(), evClose.getMonth(), evClose.getDate() + 1).getTime();
 
             if (endEv - today < 0) {
