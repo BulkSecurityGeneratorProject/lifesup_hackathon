@@ -205,8 +205,10 @@ public class ChallengeService {
 		StringBuilder where = new StringBuilder();
 		where.append(" where c.info.id = p.id and c.name like '%").append(search.getName()).append("%'");
 		if (search.getStatus() != null) {
-			where.append(" and p.status = :status");
-
+			where.append(" and p.status = :status ");
+		}
+		else{
+			where.append("and p.status not like 'REMOVED' ");
 		}
 		if (search.getEventStartTime() != null && search.getEventEndTime() == null) {
 			where.append(" and p.eventStartTime >= :startTime ");
@@ -217,7 +219,7 @@ public class ChallengeService {
 			where.append(" and ( p.eventStartTime >= :startTime  or p.eventEndTime >= :endTime )");
 
 		}
-			where.append("and c.info.status not like 'REMOVED' ");
+
 		return where.toString();
 	}
 
