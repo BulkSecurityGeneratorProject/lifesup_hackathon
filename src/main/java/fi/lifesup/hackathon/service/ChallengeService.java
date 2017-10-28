@@ -22,8 +22,10 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import fi.lifesup.hackathon.domain.Application;
 import fi.lifesup.hackathon.domain.Challenge;
 import fi.lifesup.hackathon.domain.User;
+import fi.lifesup.hackathon.domain.enumeration.ChallengeStatus;
 import fi.lifesup.hackathon.repository.ApplicationRepository;
 import fi.lifesup.hackathon.repository.ChallengeRepository;
 import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
@@ -59,6 +61,9 @@ public class ChallengeService {
 
 	@Inject
 	private ApplicationRepository applicationRepository;
+	
+	@Inject
+	private ApplicationService applicationService;
 
 	@Inject
 	private EntityManager em;
@@ -134,8 +139,14 @@ public class ChallengeService {
 	}
 
 	public void deleteChanllenge(Long id) {
-
-		challengeRepository.delete(id);
+		Challenge challenge = challengeRepository.findOne(id);
+		challenge.getInfo().setStatus(ChallengeStatus.REMOVED);
+		
+		List<Application> applications = applicationRepository.findByChallengeId(id);
+		for (Application application : applications) {
+			applicationService.deleteApplication(application.getId());
+		}
+		challengeRepository.save(challenge);
 
 	}
 

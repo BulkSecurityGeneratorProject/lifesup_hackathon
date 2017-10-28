@@ -294,6 +294,7 @@ public class ApplicationService {
 	}
 
 	public void deleteApplication(Long id) {
+		applicationInviteEmailReponsitory.deleteByApplicationId(id);
 		challengeUserApplicationRepository.deleteByApplicationId(id);
 		applicationRepository.delete(id);
 	}
@@ -427,5 +428,5 @@ public class ApplicationService {
 		}
 		checkApplication(applicationRepository.findOne(applicationId));
 	}
-
+	
 }

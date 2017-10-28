@@ -17,6 +17,8 @@ public interface ApplicationInviteEmailReponsitory extends JpaRepository<Applica
 	
 	void deleteByApplicationIdAndEmailLike(Long applicationId , String email);
 	
+	void deleteByApplicationId(Long applicationId);
+	
 	ApplicationInviteEmail findByApplicationIdAndEmail(Long applicationId , String email);
 	
 	List<ApplicationInviteEmail> findByEmail( String email);
