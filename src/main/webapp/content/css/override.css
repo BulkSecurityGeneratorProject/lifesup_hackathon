@@ -42,3 +42,15 @@ md-dialog{
     max-width: none;
 }
 
+/* Increase visible width of md-chip input */
+
+
+.md-chips .md-chip-input-container input:not([type]), .md-chips .md-chip-input-container input[type="email"], .md-chips .md-chip-input-container input[type="number"], .md-chips .md-chip-input-container input[type="tel"], .md-chips .md-chip-input-container input[type="url"], .md-chips .md-chip-input-container input[type="text"]{
+    min-width: 250px;
+}
+
+/* Navbar */
+
+.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus{
+    background-color: rgb(250,250,250);
+}

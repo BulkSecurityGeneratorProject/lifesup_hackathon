@@ -31,7 +31,7 @@
 
         function removeMail(mail) {
             vm.deleteMail.push(mail);
-            vm.members.splice(vm.members.indexOf(mail));
+            vm.members.splice(vm.members.indexOf(mail), 1);
             vm.emptySlot++;
         }
 
@@ -92,7 +92,7 @@
             vm.team.members = [];
             if (vm.deleteMail) {
                 vm.deleteMail.forEach(function (element) {
-                    DeleteInvitedMail.delete({ email: element, applicationId: vm.applicationId }, onDeleteSuccess, onDeleteError);
+                    DeleteInvitedMail.delete({ email: element[0], applicationId: vm.applicationId }, onDeleteSuccess, onDeleteError);
                 })
             }
 
@@ -124,7 +124,7 @@
         }
 
         function onSaveSuccess(result) {
-            $state.go('applicationslist-detail', { id: result.id });
+            $state.go('applicationslist-detail', { id: result.id }, {reload: true});
         }
 
 

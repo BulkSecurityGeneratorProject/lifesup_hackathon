@@ -24,6 +24,7 @@
     vm.challengeUserApplication = {};
     vm.validateApplication = validateApplication;
     vm.validations = [];
+    vm.numOfFields = null;
 
     vm.account = null;
     Principal.identity().then(function (account) {
@@ -64,7 +65,7 @@
     }
 
     function progressCount() {
-      return vm.determinateValue += 100/7;
+      return vm.determinateValue += 100 / vm.numOfFields;
     }
 
     function approve(application) {
@@ -89,6 +90,7 @@
     function validateApplication() {
       ApplicationValidation.query({applicationId: vm.application.id}, function(data) {
         vm.validations = data;
+        vm.numOfFields = data.length;
         console.log(data);
         vm.validations = vm.validations.map(function(item) {
           return item.split(',');

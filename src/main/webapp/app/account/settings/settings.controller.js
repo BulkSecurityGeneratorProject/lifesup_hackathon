@@ -14,7 +14,7 @@
         vm.infoUpdated = true;
 
         vm.user = {
-            logoUrl: "content/images/default/avatar.jpg"
+            logoUrl: "content/images/default/no_avatar.png"
         };
         vm.uploadLogo = uploadLogo;
 

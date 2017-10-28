@@ -71,33 +71,51 @@
         vm.reset = reset;
         vm.reverse = true;
 
+        function sort() {
+            var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
+            if (vm.predicate !== 'id') {
+                result.push('id');
+            }
+            return result;
+        }
+
+        function parseChallengeStatus(challenges) {
+            challenges.map(function (challenge) {
+                console.log(challenge);
+                if (challenge.info.status == 'ACTIVE') {
+                    // Auto update challenge status on loading
+                    var now = new Date().getTime();
+                    var date = new Date(challenge.info.applicationCloseDate);
+                    var end = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1).getTime();
+                    var diff = end - now;
+                    var time = diff / (1000 * 60 * 60 * 24);
+                    if (diff < 0) {
+                        challenge.info.status = 'CLOSED';
+                        ChallengeInfo.update(challenge.info);
+                    }
+                    if (time <= 1) {
+                        challenge.timeLeft = 'Apply in less than 1 day';
+                    } else {
+                        challenge.timeLeft = 'Apply in ' + parseInt(Math.ceil(time)) + ' day(s)';
+                    }
+                }
+            })
+        }
+
         function loadAll() {
             Challenge.query({
                 page: vm.page,
                 size: vm.itemsPerPage,
                 sort: sort()
             }, onSuccess, onError);
-            function sort() {
-                var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
-                if (vm.predicate !== 'id') {
-                    result.push('id');
-                }
-                return result;
-            }
 
             function onSuccess(data, headers) {
                 vm.links = ParseLinks.parse(headers('link'));
                 vm.totalItems = headers('X-Total-Count');
-                console.log(data);
                 for (var i = 0; i < data.length; i++) {
                     vm.challenges.push(data[i]);
                 }
-                vm.challenges.map(function (challenge) {
-                    var today = (new Date()).getTime();
-                    var endDate = new Date(challenge.info.applicationCloseDate).getTime();
-                    var diff = endDate - today;
-                    challenge.timeLeft = parseInt(Math.ceil(diff / (1000 * 60 * 60 * 24)));
-                })
+                parseChallengeStatus(vm.challenges);
             }
 
             function onError(error) {
@@ -176,13 +194,7 @@
                 applicationCloseDate: vm.challengeSearch.applicationCloseDate ? vm.challengeSearch.applicationCloseDate : null,
                 status: vm.challengeSearch.status ? vm.challengeSearch.status : null
             }, onSuccess, onError);
-            function sort() {
-                var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
-                if (vm.predicate !== 'id') {
-                    result.push('id');
-                }
-                return result;
-            }
+
 
             function onSuccess(data, headers) {
                 vm.links = ParseLinks.parse(headers('link'));
@@ -190,12 +202,7 @@
                 for (var i = 0; i < data.length; i++) {
                     vm.challenges.push(data[i]);
                 }
-                vm.challenges.map(function (challenge) {
-                    var today = (new Date()).getTime();
-                    var endDate = new Date(challenge.info.applicationCloseDate).getTime();
-                    var diff = endDate - today;
-                    challenge.timeLeft = parseInt(Math.ceil(diff / (1000 * 60 * 60 * 24)));
-                })
+                parseChallengeStatus(vm.challenges);
             }
 
             function onError(error) {
@@ -215,13 +222,6 @@
                 applicationCloseDate: vm.challengeSearch.applicationCloseDate ? vm.challengeSearch.applicationCloseDate : null,
                 status: vm.challengeSearch.status ? vm.challengeSearch.status : null
             }, onSuccess, onError);
-            function sort() {
-                var result = [vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc')];
-                if (vm.predicate !== 'id') {
-                    result.push('id');
-                }
-                return result;
-            }
 
             function onSuccess(data, headers) {
                 vm.links = ParseLinks.parse(headers('link'));
@@ -229,18 +229,12 @@
                 for (var i = 0; i < data.length; i++) {
                     vm.challenges.push(data[i]);
                 }
-                vm.challenges.map(function (challenge) {
-                    var today = (new Date()).getTime();
-                    var endDate = new Date(challenge.info.applicationCloseDate).getTime();
-                    var diff = endDate - today;
-                    challenge.timeLeft = parseInt(Math.ceil(diff / (1000 * 60 * 60 * 24)));
-                })
+                parseChallengeStatus(vm.challenges);
             }
 
             function onError(error) {
                 AlertService.error(error.data.message);
             }
-
         }
 
 

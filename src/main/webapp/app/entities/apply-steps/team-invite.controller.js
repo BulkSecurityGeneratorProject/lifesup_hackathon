@@ -11,10 +11,12 @@
         var vm = this;
         vm.login = login;
         vm.isAuthenticated = Principal.isAuthenticated;
-        vm.applicationId = null;
+        vm.rememberMe = true;
 
-        vm.determinateValue = 0;
-        vm.progressCount = progressCount;
+        // Reg acc
+        vm.register = register;
+        vm.requestResetPassword = requestResetPassword;
+        vm.registerAccount = {};
 
         // Reg acc notif
         vm.doNotMatch = null;
@@ -23,29 +25,31 @@
         vm.password = null;
         vm.errorUserExists = null;
         vm.authenticationError = false;
-        vm.success = null;
+        vm.regSuccess = null;
 
-        vm.register = register;
-        vm.requestResetPassword = requestResetPassword;
-        vm.registerAccount = {};
+        // Validation
+        vm.determinateValue = 0;
+        vm.progressCount = progressCount;
+        vm.numOfFields = null;
 
+        // Actions for invitation
         vm.acceptInvite = acceptInvite;
         vm.declineInvite = declineInvite;
-
-        vm.isInvitedMail = false;
-        vm.accept = false;
-        vm.decline = false;
+        vm.accepted = false;
+        vm.declined = false;
 
         vm.reload = reload;
-        vm.rememberMe = true;
+        vm.applicationId = null;
+        vm.isInvitedMail = false;
+        vm.invitedMail = null;
 
         vm.account = null;
         Principal.identity().then(function (account) {
             vm.account = account;
         });
 
-
         ApplicationByAcceptKey.get({ acceptkey: $stateParams.id }, function (result) {
+            vm.invitedMail = result.mail;
             vm.registerAccount.email = result.email;
             vm.applicationId = result.application.id;
             if (vm.account) {
@@ -62,21 +66,48 @@
 
             ApplicationValidation.query({ applicationId: result.application.id }, function (data) {
                 vm.validations = data;
+                vm.numOfFields = data.length;
                 vm.validations = vm.validations.map(function (item) {
                     return item.split(',');
                 })
             })
         });
 
-        UserDetail.query(function (data) {
-            return vm.userInfo = data;
-        });
-
         function progressCount() {
-            return vm.determinateValue += 10;
+            return vm.determinateValue += 100 / vm.numOfFields;
         }
 
-        $timeout(function () { angular.element('#username').focus(); });
+        function acceptInvite() {
+            AcceptInvitation.update($stateParams.id, onAcceptSuccess, onError);
+        }
+
+        function declineInvite() {
+            DeclineInvitation.update($stateParams.id, onDeclineSuccess, onError);
+        }
+
+        function onAcceptSuccess() {
+            vm.accepted = true;
+            $timeout(function () {
+                $state.go('applicationslist-detail', { id: vm.applicationId }, {reload: true});
+            }, 2000);
+            console.log("Accept Successful");
+        }
+
+        function onDeclineSuccess() {
+            vm.declined = true;
+            $timeout(function () {
+                $state.go('challengeslist');
+            }, 2000);
+            console.log("Decline Successful");
+        }
+
+        function onError() {
+            alert("Accept or Decline Failed");
+        }
+
+        function reload() {
+            $state.reload();
+        }
 
         function register() {
             if (vm.registerAccount.password !== vm.confirmPassword) {
@@ -89,9 +120,9 @@
                 vm.errorEmailExists = null;
 
                 Auth.createAccount(vm.registerAccount).then(function () {
-                    vm.success = 'OK';
+                    vm.regSuccess = 'OK';
                 }).catch(function (response) {
-                    vm.success = null;
+                    vm.regSuccess = false;
                     if (response.status === 400 && response.data === 'login already in use') {
                         vm.errorUserExists = 'ERROR';
                     } else if (response.status === 400 && response.data === 'e-mail address already in use') {
@@ -103,6 +134,10 @@
             }
         }
 
+        function requestResetPassword() {
+            $state.go('requestReset');
+        }
+
         function login(event) {
             event.preventDefault();
             Auth.login({
@@ -111,52 +146,11 @@
                 rememberMe: vm.rememberMe
             }).then(function () {
                 vm.authenticationError = false;
-                if ($state.current.name === 'register' || $state.current.name === 'activate' ||
-                    $state.current.name === 'finishReset' || $state.current.name === 'requestReset') {
-                    $state.go('home');
-                }
                 $rootScope.$broadcast('authenticationSuccess');
                 $state.reload();
             }).catch(function () {
                 vm.authenticationError = true;
             });
         }
-
-        function requestResetPassword() {
-            $state.go('requestReset');
-        }
-
-        function acceptInvite() {
-            AcceptInvitation.update($stateParams.id, onAcceptSuccess, onError);
-        }
-
-        function declineInvite() {
-            DeclineInvitation.update($stateParams.id, onDeclineSuccess, onError);
-        }
-
-        function onAcceptSuccess() {
-            vm.accept = true;
-            $timeout(function() {
-                $state.go('settings');
-            }, 3000);
-            console.log("Accept Successful");
-        }
-
-        function onDeclineSuccess() {
-            vm.decline = true;
-            $timeout(function() {
-                $state.go('challengeslist');
-            }, 3000);
-            console.log("Decline Successful");
-        }
-
-        function onError() {
-            console.log("Accept or Decline Failed");
-        }
-
-        function reload(){
-            $state.reload();
-        }
-
     }
 })();
