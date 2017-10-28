@@ -8,7 +8,7 @@
 <div>
     <!-- Alert -->
     <div class="col-md-12">
-        <div class="alert alert-success" ng-show="vm.success" data-translate="loginsignup.messages.success"></div>
+        <div class="alert alert-success" ng-show="vm.regSuccess" data-translate="loginsignup.messages.success"></div>
         <div class="alert alert-danger" ng-show="vm.error" data-translate="loginsignup.messages.error.fail"></div>
         <div class="alert alert-danger" ng-show="vm.errorUserExists" data-translate="loginsignup.messages.error.userexists"></div>
         <div class="alert alert-danger" ng-show="vm.errorEmailExists" data-translate="loginsignup.messages.error.emailexists"></div>
@@ -18,11 +18,11 @@
     </div>
 
     <!-- Login & Sign up -->
-    <div ng-show="!vm.success" class="row">
+    <div ng-show="!vm.regSuccess" class="row">
 
         <!-- Signup form -->
         <div class="col-md-6 col-lg-6">
-            <form id="signup-form" name="signupForm" ng-show="!vm.success" name="form" role="form" novalidate ng-submit="vm.register()">
+            <form id="signup-form" name="signupForm" ng-show="!vm.regSuccess" name="form" role="form" ng-submit="vm.register()">
                 <div class="form-heading">
                     <h3 data-translate="loginsignup.form.headers.signup"></h3>
                 </div>
@@ -84,15 +84,14 @@
                     <p data-translate="loginsignup.form.signupterm"></p>
                 </div>
 
-                <md-button type="submit" class="md-raised md-primary w3-green btn-block" data-translate="loginsignup.form.buttons.signup"></md-button>
+                <md-button aria-label="create account" type="submit" class="md-raised md-primary w3-green btn-block" data-translate="loginsignup.form.buttons.signup"></md-button>
 
             </form>
         </div>
 
         <!-- Login Form -->
         <div class="col-md-6 col-lg-6">
-            <form name="loginForm" role="form" id='login-form' ng-show="!vm.success" name="form" role="form" novalidate ng-submit="vm.login($event)"
-                show-validation>
+            <form name="loginForm" role="form" id='login-form' ng-show="!vm.regSuccess" name="form" role="form" ng-submit="vm.login($event)">
                 <div class="form-heading">
                     <h3 data-translate="loginsignup.form.headers.login"></h3>
                 </div>
@@ -110,14 +109,14 @@
                 </md-input-container>
 
                 <!-- Remember -->
-                <md-checkbox name="rememberMe" ng-model="vm.rememberMe">
+                <md-checkbox aria-label="remember" name="rememberMe" ng-model="vm.rememberMe">
                     <span data-translate="loginsignup.form.rememberMe"></span>
                 </md-checkbox>
 
                 <div class="alert alert-warning forgot-password">
                     <a class="alert-link" href="" ng-click="vm.requestResetPassword()" data-translate="loginsignup.messages.validate.password.forgot"></a>
                 </div>
-                <md-button type="submit" class="md-raised md-primary btn-block" data-translate="loginsignup.form.buttons.login"></md-button>
+                <md-button aria-label="login" type="submit" class="md-raised md-primary btn-block" data-translate="loginsignup.form.buttons.login"></md-button>
             </form>
         </div>
     </div>

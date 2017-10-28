@@ -3,7 +3,7 @@
     <div class="md-toolbar-tools">
       <h2 class="md-flex">All challenge</h2>
       <div flex></div>
-      <md-button class="md-fab  md-mini" aria-label="Search " ng-click="vm.toggleOpenSearch()">
+      <md-button class="md-fab  md-mini" aria-label="Search" ng-click="vm.toggleOpenSearch()">
         <md-icon class="material-icons" ng-show="!vm.openSearch">search</md-icon>
         <md-icon class="material-icons" ng-show="vm.openSearch">close</md-icon>
       </md-button>
@@ -25,7 +25,7 @@
     </md-input-container>
   </div>
   <md-content flex layout-padding infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
-    <div   class="col-sm-12 col-md-4 repeated-item " ng-repeat="challenge in vm.challenges" ng-if="challenge.info.status != 'DRAFT'">
+    <div class="col-sm-12 col-md-4 repeated-item" ng-repeat="challenge in vm.challenges" ng-if="challenge.info.status != 'DRAFT'">
       <md-card  class="challenge-container ">
         <img md-card-image ng-src="{{challenge.bannerUrl}}" ui-sref="challengeslist-detail({id:challenge.id})" class='challenge-banner'
           ng-class="{'img-grey': vm.getApplicationStatus(challenge) == 'CLOSED'}">
@@ -33,30 +33,26 @@
         <md-card-subtitle class='challenge-owner' ui-sref="challengeslist-detail({id:challenge.id})">{{company.name}}</md-card-subtitle>
         <div class="line"></div>
         <md-card-content class='challenge-content' ui-sref="challengeslist-detail({id:challenge.id})">
-          <md-list>
-            <md-list-item>
-              <span class="list-item">
-                <i class="material-icons challenge-icon">place</i>
-                <span>{{challenge.info.location}}</span>
-              </span>
-            </md-list-item>
-            <md-list-item>
-              <span class="list-item">
-                <i class="material-icons challenge-icon">stars</i>
-                <span>{{challenge.info.prize}}</span>
-              </span>
-            </md-list-item>
-            <md-list-item>
-              <span ng-show="challenge.timeLeft > 0" class="list-item">
-                <i class="material-icons challenge-icon">alarm</i>
-                <span>Apply in {{challenge.timeLeft}} day(s)</span>
-              </span>
-              <span ng-if="challenge.timeLeft === 0" class="list-item">
-                <i class="material-icons challenge-icon">alarm</i>
-                <span>Deadline Today!</span>
-              </span>
-            </md-list-item>
-          </md-list>
+            <md-list>
+                <md-list-item>
+                  <span class="list-item">
+                    <i class="material-icons challenge-icon w3-text-red">place</i>
+                    <span>{{challenge.info.location}}</span>
+                  </span>
+                </md-list-item>
+                <md-list-item>
+                  <span class="list-item">
+                    <i class="material-icons challenge-icon w3-text-indigo">stars</i>
+                    <span>{{challenge.info.prize}}</span>
+                  </span>
+                </md-list-item>
+                <md-list-item>
+                  <span class="list-item">
+                    <i class="material-icons challenge-icon w3-text-orange">alarm</i>
+                    <span>{{challenge.timeLeft}}</span>
+                  </span>
+                </md-list-item>
+              </md-list>
         </md-card-content>
         <md-card-actions ng-switch="vm.getApplicationStatus(challenge)">
           <button class="btn btn-block challenge-cta btn-active" ng-switch-when="ACTIVE" ng-switch="vm.isAuthenticated()" has-authority-except="ROLE_HOST">

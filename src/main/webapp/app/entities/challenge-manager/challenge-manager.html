@@ -1,5 +1,5 @@
+<!-- Search & Filter challenges -->
 <div ng-cloak layout="row">
-
     <div layout="row" flex="30">
         <md-input-container flex-gt-sm="50">
             <label>
@@ -16,7 +16,6 @@
             <md-datepicker id="datepicker" md-hide-icons="all" md-open-on-focus ng-model="vm.challengeSearch.eventEndTime" ng-change="vm.querySearchName()"></md-datepicker>
         </md-input-container>
     </div>
-
     <div layout="row" flex="50">
         <md-input-container class="md-block" flex-gt-sm="100">
             <label>
@@ -26,7 +25,6 @@
             <input ng-model="vm.challengeSearch.name" ng-change="vm.querySearchName()" ng-model-options="{ debounce: 500 }" style="color:black !important;">
         </md-input-container>
     </div>
-    
     <div layout="row" flex="10">
         <md-input-container class="md-block" flex-gt-sm="100">
             <label>Status</label>
@@ -44,27 +42,29 @@
 </div>
 
 <hr>
-
-<div class="row" ng-cloak>
-    <div class="row" ng-if="vm.hasNoChallenge" class="text-center">
-        <div class="col-md-3"></div>
-        <div class="col-md-6 text-center">
-            <uib-alert type="warning">
-                <span data-translate="hackathonApp.messages.empty">Haven't got any challenges? </span>
-                <a ui-sref="challenge-manager.new" data-translate="hackathonApp.messages.create">
-                    <strong>Create one!</strong>
-                </a>
-            </uib-alert>
-            <div>
-                <img src='content/images/default/no-challenge.png' class="img img-responsive">
-            </div>
+<!-- No challenge -->
+<div class="row" ng-if="vm.hasNoChallenge" class="text-center">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 text-center">
+        <uib-alert type="warning">
+            <span data-translate="hackathonApp.messages.empty">Haven't got any challenges? </span>
+            <a ui-sref="challenge-manager.new" data-translate="hackathonApp.messages.create">
+                <strong>Create one!</strong>
+            </a>
+        </uib-alert>
+        <div>
+            <img src='content/images/default/no-challenge.png' class="img img-responsive">
         </div>
-        <div class="col-md-3"></div>
     </div>
+    <div class="col-md-3"></div>
+</div>
 
-    <div class="col-md-4 col-sm-6 col-xs-12 repeated-item" ng-repeat="challenge in vm.challenges | filter: vm.searchText" infinite-scroll="vm.loadPage(vm.page + 1)"
+<!-- Challenge cards -->
+<div class="row" ng-cloak>
+    <div class="col-md-4 col-sm-6 col-xs-12 repeated-item" ng-repeat="challenge in vm.challenges" infinite-scroll="vm.loadPage(vm.page + 1)"
         infinite-scroll-disabled="vm.page >= vm.links['last']">
         <md-card class="challenge-card" ng-switch="challenge.info.status">
+            <!-- Display ribbon -->
             <div ng-switch-when="ACTIVE" class="ribbon-wrapper">
                 <div class="ribbon-green">Active</div>
             </div>
@@ -74,16 +74,40 @@
             <div ng-switch-when="CLOSED" class="ribbon-wrapper">
                 <div class="ribbon-grey">Closed</div>
             </div>
-            <img ui-sref="challenge-manager-detail({id:challenge.id})" ng-src="{{challenge.bannerUrl}}" ng-class="{'img-grey': challenge.info.status == 'CLOSED', 'img-blur': challenge.info.status == 'DRAFT'}"
-                class="md-card-image" alt="">
-            <md-card-title ng-class="{'w3-green': challenge.info.status == 'ACTIVE', 'w3-grey': challenge.info.status == 'CLOSED', 'w3-brown': challenge.info.status=='DRAFT'}">
+            <!-- Display cover -->
+            <img ng-switch-when="ACTIVE" ui-sref="challenge-manager-detail({id:challenge.id})" ng-src="{{challenge.bannerUrl}}" class="md-card-image"
+                alt="">
+            <img ng-switch-when="DRAFT" ui-sref="challenge-manager-detail({id:challenge.id})" ng-src="{{challenge.bannerUrl}}" class="md-card-image img-blur"
+                alt="">
+            <img ng-switch-when="CLOSED" ui-sref="challenge-manager-detail({id:challenge.id})" ng-src="{{challenge.bannerUrl}}" class="md-card-image img-grey"
+                alt="">
+            <!-- Challenge info -->
+            <md-card-title ng-switch-when="ACTIVE" class="w3-green">
                 <md-card-title-text>
                     <span ui-sref="challenge-manager-detail({id:challenge.id})" class="md-headline">
                         <strong>{{challenge.name}}</strong>
                     </span>
                 </md-card-title-text>
             </md-card-title>
+
+            <md-card-title ng-switch-when="DRAFT" class="w3-brown">
+                <md-card-title-text>
+                    <span ui-sref="challenge-manager-detail({id:challenge.id})" class="md-headline">
+                        <strong>{{challenge.name}}</strong>
+                    </span>
+                </md-card-title-text>
+            </md-card-title>
+
+            <md-card-title ng-switch-when="CLOSED" class="w3-grey">
+                <md-card-title-text>
+                    <span ui-sref="challenge-manager-detail({id:challenge.id})" class="md-headline">
+                        <strong>{{challenge.name}}</strong>
+                    </span>
+                </md-card-title-text>
+            </md-card-title>
+            <!-- Border -->
             <div class="w3-border-top w3-border-light-grey"></div>
+
             <md-card-content class="challenge-content" ui-sref="challenge-manager-detail({id:challenge.id})">
                 <md-list ng-switch="challenge.info.status">
                     <md-list-item>
@@ -104,7 +128,9 @@
                     </md-list-item>
                 </md-list>
             </md-card-content>
+            <!-- Border -->
             <div class="w3-border-top w3-border-light-grey"></div>
+            <!-- Actions -->
             <md-card-actions layout="row" layout-align="end center">
                 <md-button class="w3-border" ui-sref="applicationslist({id:challenge.id})">
                     <b>See Applications</b>

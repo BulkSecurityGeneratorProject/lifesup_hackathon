@@ -6,9 +6,9 @@
         .controller('LoginSignupController', LoginSignupController);
 
 
-    LoginSignupController.$inject = ['$translate', '$timeout', 'Auth', 'LoginService', '$state', '$rootScope', 'Principal'];
+    LoginSignupController.$inject = ['$translate', 'Auth', 'LoginService', '$state', '$rootScope', 'Principal'];
 
-    function LoginSignupController($translate, $timeout, Auth, LoginService, $state, $rootScope, Principal) {
+    function LoginSignupController($translate, Auth, LoginService, $state, $rootScope, Principal) {
         var vm = this;
 
         vm.doNotMatch = null;
@@ -20,13 +20,9 @@
         vm.authenticationError = false;
         vm.register = register;
         vm.requestResetPassword = requestResetPassword;
-        vm.credentials = {};
         vm.registerAccount = {};
-        vm.success = null;
-        vm.loginAccount = loginAccount;
+        vm.regSuccess = null;
         vm.rememberMe = true;
-
-        $timeout(function () { angular.element('#username').focus(); });
 
         function register() {
             if (vm.registerAccount.password !== vm.confirmPassword) {
@@ -39,9 +35,9 @@
                 vm.errorEmailExists = null;
 
                 Auth.createAccount(vm.registerAccount).then(function () {
-                    vm.success = 'OK';
+                    vm.regSuccess = 'OK';
                 }).catch(function (response) {
-                    vm.success = null;
+                    vm.regSuccess = null;
                     if (response.status === 400 && response.data === 'login already in use') {
                         vm.errorUserExists = 'ERROR';
                     } else if (response.status === 400 && response.data === 'e-mail address already in use') {
@@ -55,11 +51,8 @@
         function requestResetPassword() {
             $state.go('requestReset');
         }
-        function loginAccount() {
-            $state.go('register');
-        }
+        
         function login(event) {
-            event.preventDefault();
             Auth.login({
                 username: vm.username,
                 password: vm.password,
@@ -67,11 +60,7 @@
             }).then(function () {
                 vm.authenticationError = false;
 
-                if ($state.current.name === 'register' || $state.current.name === 'activate' ||
-                    $state.current.name === 'finishReset' || $state.current.name === 'requestReset') {
-                    $state.go('home');
-                }
-
+                // $rootScope broadcast to all child $scope ($on) on all controller that user has logged in successfully
                 $rootScope.$broadcast('authenticationSuccess');
 
                 // previousState was set in the authExpiredInterceptor before being redirected to login modal.
@@ -83,7 +72,6 @@
 
                         Principal.identity().then(function (account) {
                             vm.account = account;
-                            console.log(vm.account);
                         });
 
                         previousState.name = "challengeslist";
@@ -94,7 +82,6 @@
                 else {
                     Principal.identity().then(function (account) {
                         vm.account = account;
-                        console.log(vm.account);
                         if (vm.account.authorities.indexOf('ROLE_ADMIN') !== -1 || vm.account.authorities.indexOf('ROLE_HOST') !== -1)
                             $state.go("challenge-manager");
                         else {

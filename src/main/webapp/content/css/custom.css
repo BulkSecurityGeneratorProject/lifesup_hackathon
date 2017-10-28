@@ -56,8 +56,9 @@ button { /*quick fix close button inside md-autocomplete input*/
 /*============= navbar ==============*/
 #main-nav {
   border: none;
-  /*background-color: #fefefe;*/
-  box-shadow: 0 5px 10px #ccc;
+  background-color: #eee;
+  /* box-shadow: 0 5px 10px #ccc; */
+  border-bottom: 1px solid #eee;
   width: 100%;
   height: 60px;
   border-radius: 0px;
@@ -81,7 +82,7 @@ button { /*quick fix close button inside md-autocomplete input*/
 }
 
 .nav-item {
-  margin: 0 3px;
+  margin: 0;
 }
 
 .nav-item,
@@ -115,8 +116,8 @@ a.align-center {
 
 /*============= navbar ==============*/
 .footer {
-  background: #fefefe;
-  box-shadow: 0 -5px 10px #ccc;
+  /* background: #fefefe; */
+  /* box-shadow: 0 -5px 10px #ccc; */
   height: 60px;
 }
 
@@ -722,3 +723,6 @@ md-progress-linear .md-bar {
   opacity: 1;
   height: 30px;
 }
+
+
+

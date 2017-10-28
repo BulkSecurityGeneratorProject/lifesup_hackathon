@@ -40,7 +40,7 @@
                                 <i class="material-icons w3-text-red">clear</i>Profile incomplete</span>
                         </div>
                         <div ng-show="vm.removable" class="col-md-1">
-                            <span ng-if="member[0] !== vm.account.email" class="btn btn-danger btn-xs pull-right glyphicon glyphicon-remove" ng-click="vm.removeMail(member[0])"></span>
+                            <span ng-if="member[0] !== vm.account.email" class="btn btn-danger btn-xs pull-right glyphicon glyphicon-remove" ng-click="vm.removeMail(member)"></span>
                             <span ng-if="member[0] === vm.account.email" class="btn btn-danger btn-xs pull-right glyphicon glyphicon-remove" ng-click="vm.showConfirm($event)"></span>
                         </div>
                     </div>
