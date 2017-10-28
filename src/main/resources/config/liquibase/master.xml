@@ -28,4 +28,5 @@
     <include file="classpath:config/liquibase/changelog/20171009090903_added_entity_ApplicationInviteMail.xml" relativeToChangelogFile="false"/>
      <include file="classpath:config/liquibase/changelog/20171025130530_add_column_table_Challenge.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171025130535_added_entity_constraints_Challenge.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171028084523_modify_column_table_UserInfo.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
