@@ -14,7 +14,7 @@ import java.util.List;
 public interface ApplicationRepository extends JpaRepository<Application, Long> {
 
 	List<Application> findByChallengeId(Long challengeId);
-	void deleteByChalengeId(Long challengeId);
+	void deleteByChallengeId(Long challengeId);
 
 	@Query("select new fi.lifesup.hackathon.service.dto.ApplicationDTO(a.id, a.teamName, a.companyName, a.description,"
 			+ " a.motivation, a.ideasDescription, a.status, a.challenge.id)"
