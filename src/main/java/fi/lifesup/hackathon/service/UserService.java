@@ -116,13 +116,6 @@ public class UserService {
 		newUser.setStatus(UserStatus.INACTIVATED);
 		newUser = userRepository.save(newUser);
 		
-		List<ApplicationInviteEmail> inviteEmails = applicationInviteEmailReponsitory.findByEmail(email);
-		
-		if(!inviteEmails.isEmpty()){
-			for (ApplicationInviteEmail a : inviteEmails) {
-				applicationService.finishAcceptInvitation(a, newUser.getId());
-			}
-		}
 		log.debug("Created Information for User: {}", newUser);
 		return newUser;
 	}
@@ -149,7 +142,7 @@ public class UserService {
 		user.setResetKey(RandomUtil.generateResetKey());
 		user.setResetDate(ZonedDateTime.now());
 		user.setActivated(true);
-		user.setStatus(UserStatus.INACTIVATED);
+		user.setStatus(UserStatus.ACTIVATED);
 		userRepository.save(user);
 		log.debug("Created Information for User: {}", user);
 		return user;

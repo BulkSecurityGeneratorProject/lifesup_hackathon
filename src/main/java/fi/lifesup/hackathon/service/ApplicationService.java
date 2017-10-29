@@ -287,12 +287,6 @@ public class ApplicationService {
 		checkApplication(inviteEmail.getApplication());
 	}
 
-	public void finishAcceptInvitation(ApplicationInviteEmail inviteEmail, Long userId) {
-		addChallengeUserApplication(inviteEmail.getApplication(), userId);
-		applicationInviteEmailReponsitory.delete(inviteEmail);
-		checkApplication(inviteEmail.getApplication());
-	}
-
 	public void deleteApplication(Long id) {
 		applicationInviteEmailReponsitory.deleteByApplicationId(id);
 		challengeUserApplicationRepository.deleteByApplicationId(id);
