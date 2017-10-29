@@ -49,13 +49,16 @@
         });
 
         ApplicationByAcceptKey.get({ acceptkey: $stateParams.id }, function (result) {
-            vm.invitedMail = result.mail;
+            vm.invitedMail = result.email;
+            console.log(result);
             vm.registerAccount.email = result.email;
+
             vm.applicationId = result.application.id;
             if (vm.account) {
                 if (result.email === vm.account.email) vm.isInvitedMail = true;
             }
             vm.challenge = Challenge.get({ id: result.application.challenge.id });
+            console.log(vm.challenge);
             vm.application = ApplicationsListDetails.get({ id: result.application.id }, function (result) {
                 vm.members = result.members;
                 vm.members.forEach(function (element) {
@@ -78,18 +81,17 @@
         }
 
         function acceptInvite() {
+            console.log("We go here");
             AcceptInvitation.update($stateParams.id, onAcceptSuccess, onError);
         }
 
         function declineInvite() {
             DeclineInvitation.update($stateParams.id, onDeclineSuccess, onError);
         }
+        console.log(vm.isAuthenticated);
 
         function onAcceptSuccess() {
             vm.accepted = true;
-            $timeout(function () {
-                $state.go('applicationslist-detail', { id: vm.applicationId }, {reload: true});
-            }, 2000);
             console.log("Accept Successful");
         }
 
@@ -120,6 +122,7 @@
                 vm.errorEmailExists = null;
 
                 Auth.createAccount(vm.registerAccount).then(function () {
+                    acceptInvite();
                     vm.regSuccess = 'OK';
                 }).catch(function (response) {
                     vm.regSuccess = false;

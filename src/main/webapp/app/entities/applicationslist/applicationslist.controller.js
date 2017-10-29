@@ -11,7 +11,6 @@
         var vm = this;
 
         vm.applications = entity;
-        console.log(entity);
         vm.approve = approve;
         vm.reject = reject;
         vm.getValidation = getValidation;
@@ -21,13 +20,16 @@
         getValidation();
 
         function approve(application) {
+          console.log(application);
             application.status = 'APPROVED';
-            // ApplicationStatus.update(application, onSaveSuccess, onSaveError);
+            application.challengeId = application.challenge.id;
+            ApplicationStatus.update(application, onSaveSuccess, onSaveError);
         }
 
         function reject(application) {
             application.status = 'REJECTED';
-            // ApplicationStatus.update(application, onSaveSuccess, onSaveError);
+            application.members = null;
+            ApplicationStatus.update(application, onSaveSuccess, onSaveError);
         }
 
         function onSaveError(){

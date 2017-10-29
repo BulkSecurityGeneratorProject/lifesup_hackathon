@@ -30,6 +30,7 @@
                     }]
                 }
             })
+            
             .state('challengeslist-detail', {
                 parent: 'entity',
                 url: '/challengeslist/{id}',

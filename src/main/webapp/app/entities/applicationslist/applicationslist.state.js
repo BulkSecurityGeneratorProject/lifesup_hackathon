@@ -37,7 +37,7 @@
                 parent: 'entity',
                 url: '/applicationslist-detail/{id}',
                 data: {
-                    authorities: ['ROLE_USER'],
+                    authorities: ['ROLE_ADMIN', 'ROLE_HOST', 'ROLE_USER'],
                     pageTitle: 'hackathonApp.application.detail.title'
                 },
                 views: {

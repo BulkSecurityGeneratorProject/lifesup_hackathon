@@ -56,21 +56,6 @@
                     }]
                 }
             })
-            .state('success', {
-                parent: 'challengeslist',
-                url: '/{id}/success',
-                data: {
-                    authorities: ['ROLE_USER'],
-                    pageTitle: 'hackathonApp.application.home.title'
-                },
-                views: {
-                    'content@': {
-                        templateUrl: 'app/entities/apply-steps/success.html',
-                        controller: 'SuccessController',
-                        controllerAs: 'vm'
-                    }
-                }
-            })
             .state('invitation', {
                 parent: 'app',
                 url: '/{id}/invitation',
