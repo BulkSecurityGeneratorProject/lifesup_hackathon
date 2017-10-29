@@ -22,13 +22,13 @@
 							</div>
 							<div class="member-info col-md-3 col-xs-12">
 								<p>
-									<strong>{{member.firstName}}</strong>
+									<strong>{{member.firstName}} {{member.lastName}}</strong>
 								</p>
 								<p>{{member.jobTitle}}</p>
 								<p>{{member.companyName}}</p>
 							</div>
 							<div class="member-detail col-md-7 col-xs-12">
-								<button ng-if="!member.introduction && member.invitedMail == vm.account.email" class="btn custom-btn challenge-link" ui-sref="settings">Complete your profile</button>
+								<button ng-if="!member.introduction && member.invitedMail == vm.account.email" class="btn custom-btn challenge-link w3-red" ui-sref="settings">Complete your profile</button>
 								<div class="member-description">{{member.introduction}}</div>
 								<div class="member-skill" ng-repeat="skill in member.skills track by $index">
 									<span class="skill-badge">{{skill}}</span>
@@ -64,7 +64,7 @@
 							<h3 data-translate="hackathonApp.applicationslist.detail.ideasDescription">Ideas Description</h3>
 							<p>{{vm.application.ideasDescription}}</p>
 						</div>
-						<button has-authority-except="ROLE_HOST" ng-if="vm.application.status !== 'APPROVED' && vm.application.status !== 'REJECTED'" class="btn custom-btn" ui-sref="team({id:vm.application.challengeId})" data-translate="hackathonApp.applicationslist.detail.editApplication">Edit your application</button>
+						<button has-authority-except="ROLE_HOST" ng-if="vm.application.status !== 'APPROVED' && vm.application.status !== 'REJECTED'" class="btn custom-btn w3-blue" ui-sref="team({id:vm.application.challengeId})" data-translate="hackathonApp.applicationslist.detail.editApplication">Edit your application</button>
 					</div>
 				</div>
 			</div>
@@ -108,7 +108,7 @@
 					</div>
 				</div>
 				<div>
-					<button class="btn custom-btn challenge-link" ui-sref="challengeslist" data-translate="hackathonApp.applicationslist.challengeInfo.challengePage">VIEW THE CHALLENGE PAGE</button>
+					<button class="btn custom-btn challenge-link w3-blue" ui-sref="challengeslist" data-translate="hackathonApp.applicationslist.challengeInfo.challengePage">VIEW THE CHALLENGE PAGE</button>
 				</div>
 				<!--======== approve/reject buttons ============-->
 				<div has-any-authority="ROLE_HOST,ROLE_ADMIN" ng-show="vm.application.status !== 'DRAFT'">

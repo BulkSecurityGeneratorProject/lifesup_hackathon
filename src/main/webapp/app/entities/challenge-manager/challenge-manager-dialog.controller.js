@@ -42,13 +42,21 @@
         
         function save() {
             vm.isSaving = true;
-            var now = new Date().getTime();
-            var date = new Date(vm.challengeInfo.applicationCloseDate);
-            var end = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1).getTime();
-            var time = end - now;
-            if (time < 0) {
+            var today = new Date().getTime();
+            var appClose = new Date(challenge.info.applicationCloseDate);
+            var endApp = new Date(appClose.getFullYear(), appClose.getMonth(), appClose.getDate() + 1).getTime();
+
+            var evClose = new Date(challenge.info.eventEndTime);
+            var endEv = new Date(evClose.getFullYear(), evClose.getMonth(), evClose.getDate() + 1).getTime();
+
+            if (endEv - today < 0) {
                 vm.challengeInfo.status = 'CLOSED';
+            } else{
+                if (endApp - today < 0){
+                    vm.challengeInfo.status = 'INACTIVE';
+                }
             }
+
             if (vm.challengeInfo.id !== null) {
                 ChallengeInfo.update(vm.challengeInfo, onSaveInfoSuccess, onSaveInfoError);
             } else {

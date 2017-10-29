@@ -11,15 +11,18 @@
         var vm = this;
 
         vm.challenge = entity;
+        console.log(entity);
         vm.clear = clear;
         vm.confirmDelete = confirmDelete;
         function clear() {
             $mdDialog.cancel();
         }
 
-        function confirmDelete(id) {
-            ChallengeManager.delete({ id: id });
-            $mdDialog.hide(id);
+        function confirmDelete() {
+            // ChallengeManager.delete({ id: id });
+            vm.challenge.info.status = 'REMOVED';
+            ChallengeInfo.update(vm.challenge.info);
+            $mdDialog.hide(vm.challenge);
         }
     }
 })();
