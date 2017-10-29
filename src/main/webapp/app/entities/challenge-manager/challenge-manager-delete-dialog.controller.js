@@ -18,11 +18,12 @@
             $mdDialog.cancel();
         }
 
-        function confirmDelete() {
-            // ChallengeManager.delete({ id: id });
-            vm.challenge.info.status = 'REMOVED';
-            ChallengeInfo.update(vm.challenge.info);
-            $mdDialog.hide(vm.challenge);
+        function confirmDelete(id) {
+            ChallengeManager.delete({ id: id });
+            
+            // vm.challenge.info.status = 'REMOVED';
+            // ChallengeInfo.update(vm.challenge.info);
+            $mdDialog.hide(id);
         }
     }
 })();
