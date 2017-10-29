@@ -108,7 +108,7 @@
 					</div>
 				</div>
 				<div>
-					<button class="btn custom-btn challenge-link w3-blue" ui-sref="challengeslist" data-translate="hackathonApp.applicationslist.challengeInfo.challengePage">VIEW THE CHALLENGE PAGE</button>
+					<a class="btn custom-btn challenge-link w3-blue"  data-translate="hackathonApp.applicationslist.challengeInfo.challengePage" target="_blank" ui-sref="challengeslist-detail({id:vm.application.challengeId})">VIEW THE CHALLENGE PAGE</a>
 				</div>
 				<!--======== approve/reject buttons ============-->
 				<div has-any-authority="ROLE_HOST,ROLE_ADMIN" ng-show="vm.application.status !== 'DRAFT'">

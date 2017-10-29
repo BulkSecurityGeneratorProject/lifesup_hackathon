@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('ChallengesListController', ChallengesListController);
 
-    ChallengesListController.$inject = ['$log', '$timeout', '$q', 'Principal', 'Challenge', 'ApplicationsByUser', 'ParseLinks', 'paginationConstants', 'AlertService', '$location', '$anchorScroll', 'ChallengeInfo'];
+    ChallengesListController.$inject = ['$scope', '$log', '$timeout', '$q', 'Principal', 'Challenge', 'ApplicationsByUser', 'ParseLinks', 'paginationConstants', 'AlertService', '$location', '$anchorScroll', 'ChallengeInfo'];
 
-    function ChallengesListController($log, $timeout, $q, Principal, Challenge, ApplicationsByUser, ParseLinks, paginationConstants, AlertService, $location, $anchorScroll, ChallengeInfo) {
+    function ChallengesListController($scope, $log, $timeout, $q, Principal, Challenge, ApplicationsByUser, ParseLinks, paginationConstants, AlertService, $location, $anchorScroll, ChallengeInfo) {
         var vm = this;
         vm.isAuthenticated = Principal.isAuthenticated;
         vm.challenges = [];

@@ -22,7 +22,7 @@
                             <p>{{member.companyName}}</p>
                         </div>
                         <div class="member-detail col-md-7 col-xs-12">
-                            <button ng-if="!member.introduction && member.invitedMail == vm.account.email" class="btn custom-btn challenge-link" ui-sref="settings">Complete your profile</button>
+                            <button ng-if="!member.introduction && member.invitedMail == vm.account.email" class="btn custom-btn challenge-link w3-red" ui-sref="settings">Complete your profile</button>
                             <div class="member-description">{{member.introduction}}</div>
                             <div class="member-skill" ng-repeat="skill in member.skills track by $index">
                                 <span class="skill-badge">{{skill}}</span>
@@ -76,10 +76,10 @@
                     <div class="alert alert-danger" ng-show="vm.doNotMatch" data-translate="loginsignup.messages.error.dontmatch"></div>
                     <div class="alert alert-danger" ng-show="vm.authenticationError" data-translate="loginsignup.messages.error.authentication"></div>
                     <div class="alert alert-success" ng-show="vm.accepted">
-                        <strong>You've accepted to join {{vm.application.teamName}} team</strong>
+                        You've accepted to join <strong>{{vm.application.teamName}}</strong> team. Click <b><a ui-sref="login-signup">here</a></b> to login.
                     </div>
                     <div class="alert alert-warning" ng-show="vm.declined">
-                        <strong>You've declined to join {{vm.application.teamName}} team</strong>
+                        You've declined to join <strong>{{vm.application.teamName}}</strong> team.
                     </div>
                     <hr>
                 </div>
@@ -251,7 +251,8 @@
                 </div>
             </div>
             <div>
-                <button class="btn custom-btn challenge-link" ui-sref="challengeslist" data-translate="hackathonApp.applicationslist.challengeInfo.challengePage">VIEW THE CHALLENGE PAGE</button>
+                
+                <a class="btn custom-btn challenge-link w3-blue"  data-translate="hackathonApp.applicationslist.challengeInfo.challengePage" target="_blank" ui-sref="challengeslist-detail({id:vm.challenge.id})">VIEW THE CHALLENGE PAGE</a>
             </div>
         </div>
     </div>
