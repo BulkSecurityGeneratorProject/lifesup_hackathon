@@ -24,6 +24,8 @@
         vm.applicationId = '';
         vm.querySearchName = querySearchName;
         vm.gotoBottom = gotoBottom;
+        vm.hasNoChallenge = false;
+        vm.hideToolbar = false;
 
         function gotoBottom() {
             // set the location.hash to the id of
@@ -115,6 +117,10 @@
             }, onSuccess, onError);
 
             function onSuccess(data, headers) {
+                if (!data.length){
+                    vm.hasNoChallenge = true;
+                    vm.hideToolbar = true;
+                }
                 vm.links = ParseLinks.parse(headers('link'));
                 vm.totalItems = headers('X-Total-Count');
                 for (var i = 0; i < data.length; i++) {

@@ -1,5 +1,5 @@
 <div layout="column" ng-cloak>
-  <md-toolbar class="md-parimary">
+  <md-toolbar ng-if="!vm.hideToolbar" class="md-parimary">
     <div class="md-toolbar-tools">
       <h2 class="md-flex">All challenge</h2>
       <div flex></div>
@@ -25,6 +25,21 @@
     </md-input-container>
   </div>
 
+  <!-- No challenge -->
+  <div class="row" ng-if="vm.hasNoChallenge" class="text-center">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 text-center">
+      <uib-alert type="warning">
+        <span>Sorry! We're having no challenge now.</span>
+      </uib-alert>
+      <div>
+        <img src='content/images/default/no-challenge.png' class="img img-responsive">
+      </div>
+
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+
   <md-content flex layout-padding infinite-scroll="vm.loadPage(vm.page + 1)" infinite-scroll-disabled="vm.page >= vm.links['last']">
 
     <div class="col-sm-12 col-md-4 repeated-item" ng-repeat="challenge in vm.challenges">
@@ -37,26 +52,26 @@
         <div class="line"></div>
 
         <md-card-content class='challenge-content' ui-sref="challengeslist-detail({id:challenge.id})">
-            <md-list ng-switch="challenge.info.status">
-                <md-list-item>
-                  <span class="list-item">
-                    <i class="material-icons challenge-icon w3-text-red">place</i>
-                    <span>{{challenge.info.location}}</span>
-                  </span>
-                </md-list-item>
-                <md-list-item>
-                  <span class="list-item">
-                    <i class="material-icons challenge-icon w3-text-indigo">stars</i>
-                    <span>{{challenge.info.prize}}</span>
-                  </span>
-                </md-list-item>
-                <md-list-item ng-switch-when="ACTIVE">
-                    <i class="challenge-icon material-icons w3-text-orange">alarm</i>{{challenge.timeLeft}}
-                </md-list-item>
-                <md-list-item ng-switch-when="INACTIVE">
-                    <i class="challenge-icon material-icons w3-text-red">alarm_off</i>Time's Up
-                </md-list-item>
-              </md-list>
+          <md-list ng-switch="challenge.info.status">
+            <md-list-item>
+              <span class="list-item">
+                <i class="material-icons challenge-icon w3-text-red">place</i>
+                <span>{{challenge.info.location}}</span>
+              </span>
+            </md-list-item>
+            <md-list-item>
+              <span class="list-item">
+                <i class="material-icons challenge-icon w3-text-indigo">stars</i>
+                <span>{{challenge.info.prize}}</span>
+              </span>
+            </md-list-item>
+            <md-list-item ng-switch-when="ACTIVE">
+              <i class="challenge-icon material-icons w3-text-orange">alarm</i>{{challenge.timeLeft}}
+            </md-list-item>
+            <md-list-item ng-switch-when="INACTIVE">
+              <i class="challenge-icon material-icons w3-text-red">alarm_off</i>Time's Up
+            </md-list-item>
+          </md-list>
 
         </md-card-content>
 
@@ -78,10 +93,10 @@
         </md-card-actions>
       </md-card>
     </div>
-    
+
     <md-button class="md-raised md-primary" ng-show="vm.page < vm.links['last']" style="position: fixed; bottom: 0px; margin:auto; left:50%;z-index:100000;"
       ng-click="vm.gotoBottom();vm.loadPage(vm.page + 1);">
-      <md-icon class="material-icons" >arrow_downward</md-icon>
+      <md-icon class="material-icons">arrow_downward</md-icon>
       Pull to load more
     </md-button>
   </md-content>
