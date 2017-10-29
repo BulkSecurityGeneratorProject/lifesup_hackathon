@@ -14,9 +14,14 @@
                 <div class="ribbon-brown">Draft</div>
             </div>
 
+            <div ng-switch-when="INACTIVE" class="ribbon-wrapper">
+                <div class="ribbon-grey">Inactive</div>
+            </div>
+
             <div ng-switch-when="CLOSED" class="ribbon-wrapper">
                 <div class="ribbon-grey">Closed</div>
             </div>
+
             <h3>Base Info</h3>
 
             <div class="info-wrapper">
@@ -27,9 +32,9 @@
                 <hr>
                 <p><i class="material-icons">people</i>{{vm.challenge.minTeamNumber}} - {{vm.challenge.maxTeamNumber}} member(s)
                     / team</p>
-                <hr>
+                <!-- <hr>
                 <p ng-if="vm.challenge.timeLeft > 0"><i class="material-icons">alarm</i>Application closes in {{vm.challenge.timeLeft}} day(s)</p>
-                <p ng-if="vm.challenge.timeLeft <= 0"><i class="material-icons">close</i>Application has closed</p>
+                <p ng-if="vm.challenge.timeLeft <= 0"><i class="material-icons">close</i>Application has closed</p> -->
             </div>
         </div>
 

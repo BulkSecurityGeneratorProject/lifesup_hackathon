@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('ChallengesListController', ChallengesListController);
 
-    ChallengesListController.$inject = ['$log', '$timeout', '$q', 'Principal', 'Challenge', 'ApplicationsByUser', 'ParseLinks', 'paginationConstants', 'AlertService', '$location', '$anchorScroll'];
+    ChallengesListController.$inject = ['$log', '$timeout', '$q', 'Principal', 'Challenge', 'ApplicationsByUser', 'ParseLinks', 'paginationConstants', 'AlertService', '$location', '$anchorScroll', 'ChallengeInfo'];
 
-    function ChallengesListController($log, $timeout, $q, Principal, Challenge, ApplicationsByUser, ParseLinks, paginationConstants, AlertService, $location, $anchorScroll) {
+    function ChallengesListController($log, $timeout, $q, Principal, Challenge, ApplicationsByUser, ParseLinks, paginationConstants, AlertService, $location, $anchorScroll, ChallengeInfo) {
         var vm = this;
         vm.isAuthenticated = Principal.isAuthenticated;
         vm.challenges = [];
@@ -81,22 +81,27 @@
 
         function parseChallengeStatus(challenges) {
             challenges.map(function (challenge) {
-                console.log(challenge);
-                if (challenge.info.status == 'ACTIVE') {
-                    // Auto update challenge status on loading
-                    var now = new Date().getTime();
-                    var date = new Date(challenge.info.applicationCloseDate);
-                    var end = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1).getTime();
-                    var diff = end - now;
-                    var time = diff / (1000 * 60 * 60 * 24);
-                    if (diff < 0) {
-                        challenge.info.status = 'CLOSED';
+                var today = new Date().getTime();
+                var appClose = new Date(challenge.info.applicationCloseDate);
+                var endApp = new Date(appClose.getFullYear(), appClose.getMonth(), appClose.getDate() + 1).getTime();
+
+                var evClose = new Date(challenge.info.eventEndTime);
+                var endEv = new Date(evClose.getFullYear(), evClose.getMonth(), evClose.getDate() + 1).getTime();
+
+                if (endEv - today < 0) {
+                    challenge.info.status = 'CLOSED';
+                    ChallengeInfo.update(challenge.info);
+                } else {
+                    if (endApp - today < 0) {
+                        challenge.info.status = 'INACTIVE';
                         ChallengeInfo.update(challenge.info);
-                    }
-                    if (time <= 1) {
-                        challenge.timeLeft = 'Apply in less than 1 day';
                     } else {
-                        challenge.timeLeft = 'Apply in ' + parseInt(Math.ceil(time)) + ' day(s)';
+                        var time = (endApp - today) / (1000 * 60 * 60 * 24);
+                        if (time <= 1) {
+                            challenge.timeLeft = 'Apply in less than 1 day';
+                        } else {
+                            challenge.timeLeft = 'Apply in ' + parseInt(Math.ceil(time)) + ' day(s)';
+                        }
                     }
                 }
             })
@@ -168,8 +173,8 @@
         function getApplicationStatus(challenge) {
             if (vm.challengeId.indexOf(challenge.id) > -1) {
                 return "APPLIED";
-            } else if (challenge.timeLeft < 0 || challenge.info.status === "CLOSED") {
-                return "CLOSED";
+            } else if (challenge.timeLeft < 0 || challenge.info.status === "INACTIVE") {
+                return "INACTIVE";
             } else {
                 return "ACTIVE";
             }

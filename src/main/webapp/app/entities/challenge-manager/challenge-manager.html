@@ -71,6 +71,10 @@
             <div ng-switch-when="DRAFT" class="ribbon-wrapper">
                 <div class="ribbon-brown">Draft</div>
             </div>
+            <div ng-switch-when="INACTIVE" class="ribbon-wrapper">
+                <div class="ribbon-grey">Inactive</div>
+            </div>
+
             <div ng-switch-when="CLOSED" class="ribbon-wrapper">
                 <div class="ribbon-grey">Closed</div>
             </div>
@@ -79,6 +83,9 @@
                 alt="">
             <img ng-switch-when="DRAFT" ui-sref="challenge-manager-detail({id:challenge.id})" ng-src="{{challenge.bannerUrl}}" class="md-card-image img-blur"
                 alt="">
+            <img ng-switch-when="INACTIVE" ui-sref="challenge-manager-detail({id:challenge.id})" ng-src="{{challenge.bannerUrl}}" class="md-card-image img-grey"
+                alt="">
+
             <img ng-switch-when="CLOSED" ui-sref="challenge-manager-detail({id:challenge.id})" ng-src="{{challenge.bannerUrl}}" class="md-card-image img-grey"
                 alt="">
             <!-- Challenge info -->
@@ -91,6 +98,14 @@
             </md-card-title>
 
             <md-card-title ng-switch-when="DRAFT" class="w3-brown">
+                <md-card-title-text>
+                    <span ui-sref="challenge-manager-detail({id:challenge.id})" class="md-headline">
+                        <strong>{{challenge.name}}</strong>
+                    </span>
+                </md-card-title-text>
+            </md-card-title>
+
+            <md-card-title ng-switch-when="INACTIVE" class="w3-grey">
                 <md-card-title-text>
                     <span ui-sref="challenge-manager-detail({id:challenge.id})" class="md-headline">
                         <strong>{{challenge.name}}</strong>
@@ -123,8 +138,12 @@
                     <md-list-item ng-switch-when="DRAFT">
                         <i class="challenge-icon material-icons w3-text-khaki">vpn_key</i>Activation required
                     </md-list-item>
+                    <md-list-item ng-switch-when="INACTIVE">
+                        <i class="challenge-icon material-icons w3-text-red">alarm_off</i>Application has closed
+                    </md-list-item>
+
                     <md-list-item ng-switch-when="CLOSED">
-                        <i class="challenge-icon material-icons w3-text-red">close</i>Application has closed
+                        <i class="challenge-icon material-icons w3-text-red">close</i>Event has ended
                     </md-list-item>
                 </md-list>
             </md-card-content>

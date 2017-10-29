@@ -82,7 +82,7 @@
                 else {
                     Principal.identity().then(function (account) {
                         vm.account = account;
-                        if (vm.account.authorities.indexOf('ROLE_ADMIN') !== -1 || vm.account.authorities.indexOf('ROLE_HOST') !== -1)
+                        if (vm.account.authorities.indexOf('ROLE_ADMIN') != -1 || vm.account.authorities.indexOf('ROLE_HOST') != -1)
                             $state.go("challenge-manager");
                         else {
                             $state.go("challengeslist");

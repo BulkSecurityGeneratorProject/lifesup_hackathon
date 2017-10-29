@@ -11,7 +11,7 @@
         var vm = this;
 
         vm.challenges = [];
-        vm.allStatus = ['','ACTIVE', 'DRAFT', 'CLOSED'];
+        vm.allStatus = ['', 'DRAFT', 'ACTIVE', 'INACTIVE', 'CLOSED'];
         vm.hasNoChallenge = false;
         vm.querySearchName = querySearchName;
 
@@ -34,7 +34,7 @@
         vm.predicate = 'id';
         vm.reverse = true;
         vm.reset = reset;
-        
+
         loadAll();
 
         function sort() {
@@ -44,25 +44,31 @@
             }
             return result;
         }
-
-        function parseChallengeStatus(challenges){
+        function parseChallengeStatus(challenges) {
+            
             challenges.map(function (challenge) {
-                if (challenge.info.status == 'ACTIVE') {
-                    // Auto update challenge status on loading
-                    var now = new Date().getTime();
-                    var date = new Date(challenge.info.applicationCloseDate);
-                    var end = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1).getTime();
-                    var diff = end - now;
-                    var time = diff / (1000 * 60 * 60 * 24);
-                    if (diff < 0) {
-                        challenge.info.status = 'CLOSED';
-                        ChallengeInfo.update(challenge.info);
-                    }
+                console.log(challenge)
+                var today = new Date().getTime();
+                var appClose = new Date(challenge.info.applicationCloseDate);
+                var endApp = new Date(appClose.getFullYear(), appClose.getMonth(), appClose.getDate() + 1).getTime();
 
-                    if (time <= 1) {
-                        challenge.timeLeft = 'Apply in less than 1 day';
+                var evClose = new Date(challenge.info.eventEndTime);
+                var endEv = new Date(evClose.getFullYear(), evClose.getMonth(), evClose.getDate() + 1).getTime();
+
+                if (endEv - today < 0) {
+                    challenge.info.status = 'CLOSED';
+                    ChallengeInfo.update(challenge.info);
+                } else {
+                    if (endApp - today < 0) {
+                        challenge.info.status = 'INACTIVE';
+                        ChallengeInfo.update(challenge.info);
                     } else {
-                        challenge.timeLeft = 'Apply in ' + parseInt(Math.ceil(time)) + ' day(s)';
+                        var time = (endApp - today) / (1000 * 60 * 60 * 24);
+                        if (time <= 1) {
+                            challenge.timeLeft = 'Apply in less than 1 day';
+                        } else {
+                            challenge.timeLeft = 'Apply in ' + parseInt(Math.ceil(time)) + ' day(s)';
+                        }
                     }
                 }
             })
@@ -105,7 +111,7 @@
                 querySearchNameContinue();
             }
         }
-        
+
 
         function querySearchName() {
             vm.page = 0;
@@ -146,7 +152,7 @@
                 applicationCloseDate: vm.challengeSearch.applicationCloseDate ? vm.challengeSearch.applicationCloseDate : null,
                 status: vm.challengeSearch.status ? vm.challengeSearch.status : null
             }, onSuccess, onError);
-            
+
             function onSuccess(data, headers) {
                 vm.links = ParseLinks.parse(headers('link'));
                 vm.totalItems = headers('X-Total-Count');

@@ -33,6 +33,7 @@
         vm.infoUpdated = true;
 
         load();
+        
         function load() {
             if (entity.userInfo) {
                 vm.user = entity.userInfo;

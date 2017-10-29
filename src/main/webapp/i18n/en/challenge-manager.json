@@ -45,7 +45,8 @@
             "status": {
                 "draft": "Draft",
                 "active": "Active",
-                "close": "Close"
+                "inactive": "Inactive",
+                "close": "Closed"
             }
         },
         "search":{

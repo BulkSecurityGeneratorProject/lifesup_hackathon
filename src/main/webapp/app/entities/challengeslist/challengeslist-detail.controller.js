@@ -1,13 +1,13 @@
-(function() {
+(function () {
     'use strict';
 
     angular
         .module('hackathonApp')
         .controller('ChallengesListDetailController', ChallengesListDetailController);
 
-    ChallengesListDetailController.$inject = ['$stateParams', 'Challenge', 'entity', 'Principal', 'ApplicationsByUser'];
+    ChallengesListDetailController.$inject = ['$stateParams', 'Challenge', 'ChallengeInfo', 'entity', 'Principal', 'ApplicationsByUser'];
 
-    function ChallengesListDetailController($stateParams, Challenge, entity, Principal, ApplicationsByUser) {
+    function ChallengesListDetailController($stateParams, Challenge, ChallengeInfo, entity, Principal, ApplicationsByUser) {
         var vm = this;
         vm.isAuthenticated = Principal.isAuthenticated;
         vm.challenge = entity;
@@ -17,42 +17,60 @@
         vm.getApplicationByUser = getApplicationByUser;
         vm.challengeId = [];
         vm.applicationId = '';
+        vm.timeLeft = null;
 
-        var today = (new Date()).getTime();
-        var endDate = new Date(vm.challenge.info.applicationCloseDate).getTime();
-        var diff = endDate - today;
-        vm.timeLeft = parseInt(Math.ceil(diff / (1000 * 60 * 60 * 24)));
 
         getApplicationByUser();
+        parseChallengeStatus();
+
+
+        function parseChallengeStatus() {
+            var today = new Date().getTime();
+            var appClose = new Date(vm.challenge.info.applicationCloseDate);
+            var endApp = new Date(appClose.getFullYear(), appClose.getMonth(), appClose.getDate() + 1).getTime();
+            vm.timeLeft = endApp - today;
+            if (vm.timeLeft < 0) {
+                vm.challenge.timeLeft = "Time's Up";
+                vm.challenge.info.status = 'INACTIVE';
+                ChallengeInfo.update(vm.challenge.info);
+            } else {
+                var time = vm.timeLeft / (1000 * 60 * 60 * 24);
+                if (time <= 1) {
+                    vm.challenge.timeLeft = 'Apply in less than 1 day';
+                } else {
+                    vm.challenge.timeLeft = 'Apply in ' + parseInt(Math.ceil(time)) + ' day(s)';
+                }
+            }
+        }
 
         function getApplicationByUser() {
-            ApplicationsByUser.query(function(data) {
+            ApplicationsByUser.query(function (data) {
                 vm.applicationsByUser = data;
                 getChallengeId();
             });
         }
 
         function getChallengeId() {
-            vm.challengeId = vm.applicationsByUser.map(function(item){
-              return item.challengeId;
+            vm.challengeId = vm.applicationsByUser.map(function (item) {
+                return item.challengeId;
             });
         }
 
         function getApplicationId(id) {
-            vm.applicationsByUser.map(function(item){
-              if (item.challengeId === id) {
-                return vm.applicationId = item.applicationId;
-              }
+            vm.applicationsByUser.map(function (item) {
+                if (item.challengeId === id) {
+                    return vm.applicationId = item.applicationId;
+                }
             });
         }
 
         function getApplicationStatus() {
             if (vm.challengeId.indexOf(vm.challenge.id) > -1) {
-              return "APPLIED";
+                return "APPLIED";
             } else if (vm.timeLeft < 0) {
-              return "CLOSED";
+                return "INACTIVE";
             } else {
-              return "ACTIVE";
+                return "ACTIVE";
             }
         }
     }
