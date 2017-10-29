@@ -41,6 +41,7 @@
 
     function getSkills() {
       if (vm.members) {
+        console.log(vm.members);
         vm.members.map(function (member) {
           if (member.skills) {
             return member.skills = member.skills.split(',');

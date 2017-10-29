@@ -20,7 +20,6 @@
         getValidation();
 
         function approve(application) {
-          console.log(application);
             application.status = 'APPROVED';
             application.challengeId = application.challenge.id;
             ApplicationStatus.update(application, onSaveSuccess, onSaveError);
@@ -44,7 +43,6 @@
           vm.applications.map(function(application) {
             ApplicationValidation.query({applicationId: application.id}, function(validate) {
               vm.validations = validate;
-              console.log(vm.validations);
             })
           })
         }
