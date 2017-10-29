@@ -118,7 +118,7 @@
                     <div layout-gt-sm="row">
                         <md-input-container class="md-block" flex-gt-sm>
                             <label>Introduction</label>
-                            <textarea name="introduction" ng-model="vm.user.introduction" md-maxlength="250" rows="5" md-select-on-focus required></textarea>
+                            <textarea name="introduction" ng-model="vm.user.introduction" md-maxlength="1000" rows="5" md-select-on-focus required></textarea>
                             <div ng-messages="userForm.introduction.$error">
                                 <div ng-message="required" data-translate="settings.messages.validate.introduction.required"></div>
                             </div>
