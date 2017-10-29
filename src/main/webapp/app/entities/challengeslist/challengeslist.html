@@ -53,6 +53,10 @@
 
         <md-card-content class='challenge-content' ui-sref="challengeslist-detail({id:challenge.id})">
           <md-list ng-switch="challenge.info.status">
+              <md-list-item>
+                  <i class="challenge-icon material-icons w3-text-indigo">date_range</i> {{challenge.info.eventStartTime | date:'MMM dd, yyyy'}} - {{challenge.info.eventEndTime
+                  | date:'MMM dd, yyyy'}}
+              </md-list-item>
             <md-list-item>
               <span class="list-item">
                 <i class="material-icons challenge-icon w3-text-red">place</i>

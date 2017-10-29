@@ -70,7 +70,7 @@
         function getApplicationStatus() {
             if (vm.challengeId.indexOf(vm.challenge.id) > -1) {
                 return "APPLIED";
-            } else if (vm.timeLeft < 0) {
+            } else if (vm.timeLeft < 0 || vm.challenge.info.status === 'INACTIVE') {
                 return "INACTIVE";
             } else {
                 return "ACTIVE";
