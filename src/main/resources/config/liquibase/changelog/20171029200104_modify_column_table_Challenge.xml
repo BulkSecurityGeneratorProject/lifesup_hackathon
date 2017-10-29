@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet id="20171028084523" author="jhipster">
+        <modifyDataType tableName="challenge" columnName="introduction" newDataType="varchar(999)"/>
+        <modifyDataType tableName="challenge" columnName="challenge_text" newDataType="varchar(999)"/>
+        <modifyDataType tableName="challenge" columnName="resource_text" newDataType="varchar(999)"/>
+        <modifyDataType tableName="challenge" columnName="rewards_text" newDataType="varchar(999)"/>
+        <modifyDataType tableName="challenge" columnName="timeline_text" newDataType="varchar(999)"/>
+        <modifyDataType tableName="challenge" columnName="rules_text" newDataType="varchar(999)"/>
+        <modifyDataType tableName="challenge" columnName="additional_text" newDataType="varchar(999)"/>
+    </changeSet>
+</databaseChangeLog>

@@ -29,4 +29,7 @@
      <include file="classpath:config/liquibase/changelog/20171025130530_add_column_table_Challenge.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171025130535_added_entity_constraints_Challenge.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171028084523_modify_column_table_UserInfo.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171029200104_modify_column_table_Challenge.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171029200105_modify_column_table_Application.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171029200106_modify_column_table_UserInfo.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>
