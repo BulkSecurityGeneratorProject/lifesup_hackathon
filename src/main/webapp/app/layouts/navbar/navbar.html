@@ -30,7 +30,7 @@
                     </a>
                 </li>
                 <!-- Manage Challenge (need to change ui-sref to link to challenges list view for admin/manager)-->
-                <li ui-sref-active="active" ng-class="{active: vm.$state.includes('admin')}" ng-switch-when="true" has-authority="ROLE_HOST" class="nav-item">
+                <li ui-sref-active="active" ng-switch-when="true" has-authority="ROLE_HOST" class="nav-item">
                     <a ui-sref="challenge-manager" ng-click="vm.collapseNavbar()" id="admin-menu" class="align-center">
                         <span class="glyphicon glyphicon-cog"></span>
                         <span class="hidden-sm">Manage challenges</span>
@@ -52,7 +52,7 @@
                 </li>
 
                 <!-- Small avatar should have linked to account details-->
-                <li class="dropdown" uib-dropdown ng-switch-when="true" class="nav-item">
+                <li ui-sref-active="active" class="dropdown" uib-dropdown ng-switch-when="true" class="nav-item">
                     <a href="" uib-dropdown-toggle ng-disabled="disabled" class="nav-menu" id="avatar"><img class="img-circle" width="22" height="22" ng-src="{{'content/images/logo-jhipster.png'}}" /></a>
 
                     <div class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="ls">

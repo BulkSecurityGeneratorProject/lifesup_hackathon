@@ -22,7 +22,7 @@
 							</div>
 							<div class="member-info col-md-3 col-xs-12">
 								<p>
-									<strong>{{member.firstName}} {{member.lastName}}</strong>
+									<a ui-sref="user-management-detail({login:member.invitedMail})"><strong>{{member.firstName}} {{member.lastName}}</strong></a>
 								</p>
 								<p>{{member.jobTitle}}</p>
 								<p>{{member.companyName}}</p>
