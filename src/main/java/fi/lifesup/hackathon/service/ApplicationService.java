@@ -62,58 +62,64 @@ public class ApplicationService {
 	private ApplicationInviteEmailReponsitory applicationInviteEmailReponsitory;
 
 	public void checkApplication(Application application) {
-		boolean check = true;
-		if (application.getTeamName() == null || application.getDescription() == null
-				|| application.getIdeasDescription() == null || application.getMotivation() == null) {
-			check = false;
-		}
-
-		ApplicationBasicDTO basic = getApplicationBasic(application.getId());
-
-		if (!(application.getChallenge().getMinTeamNumber() <= basic.getMembers().size()
-				&& application.getChallenge().getMaxTeamNumber() >= basic.getMembers().size())) {
-			check = false;
-		}
-
-		for (String m : basic.getMembers()) {
-			String[] s = m.split(",");
-			if (!s[1].equals(UserStatus.PROFILE_COMPLETE.toString())) {
+		if (application.getStatus() == ApplicationStatus.WAITING_FOR_APPROVE
+				|| application.getStatus() == ApplicationStatus.DRAFT) {
+			boolean check = true;
+			if (application.getTeamName() == null || application.getDescription() == null
+					|| application.getIdeasDescription() == null || application.getMotivation() == null) {
 				check = false;
 			}
-		}
 
-		if (check == true) {
-			application.setStatus(ApplicationStatus.WAITING_FOR_APPROVE);
-		} else {
-			application.setStatus(ApplicationStatus.DRAFT);
+			ApplicationBasicDTO basic = getApplicationBasic(application.getId());
+
+			if (!(application.getChallenge().getMinTeamNumber() <= basic.getMembers().size()
+					&& application.getChallenge().getMaxTeamNumber() >= basic.getMembers().size())) {
+				check = false;
+			}
+
+			for (String m : basic.getMembers()) {
+				String[] s = m.split(",");
+				if (!s[1].equals(UserStatus.PROFILE_COMPLETE.toString())) {
+					check = false;
+				}
+			}
+
+			if (check == true) {
+				application.setStatus(ApplicationStatus.WAITING_FOR_APPROVE);
+			} else {
+				application.setStatus(ApplicationStatus.DRAFT);
+			}
 		}
 	}
 
 	public void checkApplication(ApplicationDTO application, Long id) {
+		if (application.getStatus() == ApplicationStatus.WAITING_FOR_APPROVE
+				|| application.getStatus() == ApplicationStatus.DRAFT) {
+			boolean check = true;
+			if (application.getTeamName() == null || application.getDescription() == null
+					|| application.getIdeasDescription() == null || application.getMotivation() == null) {
+				check = false;
+			}
 
-		if (application.getStatus() == ApplicationStatus.APPROVED
-				|| application.getStatus() == ApplicationStatus.REJECTED) {
-			return;
-		}
-		if (application.getTeamName() == null || application.getDescription() == null
-				|| application.getIdeasDescription() == null || application.getMotivation() == null) {
-			return;
-		}
+			Application a = applicationRepository.findOne(id);
 
-		Application a = applicationRepository.findOne(id);
+			if (!(a.getChallenge().getMinTeamNumber() <= application.getMembers().size()
+					&& a.getChallenge().getMaxTeamNumber() >= application.getMembers().size())) {
+				check = false;
+			}
 
-		if (!(a.getChallenge().getMinTeamNumber() <= application.getMembers().size()
-				&& a.getChallenge().getMaxTeamNumber() >= application.getMembers().size())) {
-			return;
-		}
-
-		for (ApplicationMemberDTO m : application.getMembers()) {
-			if (m.getUserStatus() != UserStatus.PROFILE_COMPLETE) {
-				return;
+			for (ApplicationMemberDTO m : application.getMembers()) {
+				if (m.getUserStatus() != UserStatus.PROFILE_COMPLETE) {
+					check = false;
+					break;
+				}
+			}
+			if (check == true) {
+				a.setStatus(ApplicationStatus.WAITING_FOR_APPROVE);
+			} else {
+				a.setStatus(ApplicationStatus.DRAFT);
 			}
 		}
-		a.setStatus(ApplicationStatus.WAITING_FOR_APPROVE);
-		applicationRepository.save(a);
 	}
 
 	public Application createApplication(ApplicationBasicDTO applicationDTO, String baseUrl) {
@@ -422,5 +428,5 @@ public class ApplicationService {
 		}
 		checkApplication(applicationRepository.findOne(applicationId));
 	}
-	
+
 }

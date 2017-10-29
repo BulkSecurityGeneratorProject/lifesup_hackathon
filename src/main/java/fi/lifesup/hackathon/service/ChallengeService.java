@@ -89,12 +89,10 @@ public class ChallengeService {
 		return challengeRepository.getChallengeByUser(user.getId());
 	}
 
-	public Challenge saveChallenge(Challenge challenge) {
+	public Challenge createChallenge(Challenge challenge) {
 		User user = userService.getUserWithAuthorities();
 		challenge.setCreated_by(user.getId());
-
 		challenge.setCompany(user.getCompany());
-
 		return challengeRepository.save(challenge);
 	}
 
