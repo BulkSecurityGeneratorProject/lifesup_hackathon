@@ -32,4 +32,8 @@
     <include file="classpath:config/liquibase/changelog/20171029200104_modify_column_table_Challenge.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171029200105_modify_column_table_Application.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171029200106_modify_column_table_UserInfo.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171030093605_modify_column_table_ChallengeInfo.xml" relativeToChangelogFile="false"/>
+     <include file="classpath:config/liquibase/changelog/20171030094005_modify_column_table_UserSkill.xml" relativeToChangelogFile="false"/>
+      <include file="classpath:config/liquibase/changelog/20171030094104_modify_column_table_UserExperience.xml" relativeToChangelogFile="false"/>
+    
 </databaseChangeLog>
