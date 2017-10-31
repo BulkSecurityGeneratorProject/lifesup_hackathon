@@ -1,0 +1,54 @@
+{
+    "hackathonApp": {
+        "challengeslist": {
+            "home": {
+                "title": "Challenges List"
+            }
+        },
+        "challengesDetails": {
+						"title": "Challenge Details",
+						"challengeIntro": "About the challenge",
+						"companyIntro": "About the company",
+						"resourceText": "Available Resources",
+						"rewardsText": "Rewards",
+						"timelineText": "Timeline of the challenge",
+						"rulesText": "Rules",
+						"bannerUrl": "Banner URL",
+						"additionalText": "Additional information",
+						"maxTeamMember": "Max Team Member",
+						"minTeamMember": "Min Team Member",
+						"subtitle": "Apply to challenge",
+            "eventStartTime": "Event Start",
+            "eventEndTime": "Event End",
+            "applicationCloseDate": "Application Close",
+            "kickoffWebinarDate": "Kick Off Webinar",
+            "selectionInformDate": "Inform Date",
+            "pilotSubmissionCloseDate": "Submission Close",
+            "pilotPhaseStartDate": "Pilot Phase Start",
+            "pilotPhaseEndDate": "Pilot Phase End",
+            "prize": "Prize",
+            "location": "Location",
+            "status": {
+                "draft": "Draft",
+                "active": "Active",
+                "close": "Close"
+            }
+        },
+        "search":{
+            "placeHolder" : "What is your favorite company or challenge?",
+            "noResult" : "No result were found!",
+						"endAfter": "End After",
+						"startBefore": "Start Before"
+        },
+				"applicationStatus": {
+						"close": "Applications have closed",
+						"applied": "View your application",
+						"apply": "Apply now!"
+				},
+				"subscribe": {
+					"remind": "Remind me to apply",
+					"infoText": "Sign up to hear when the application deadline is close.",
+					"signup": "Sign up"
+				}
+    }
+}
