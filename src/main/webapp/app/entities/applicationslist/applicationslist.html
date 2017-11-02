@@ -1,6 +1,6 @@
 <div class="custom-jumbotron jumbotron">
   <div>
-    <h1 data-translate="hackathonApp.applicationslist.home.title">Applications List</h1>
+    <h1 data-translate="hackathonApp.applicationslist.home.title"></h1>
   </div>
   <div class="search-panel">
     <md-content class="searchBox">
@@ -13,7 +13,7 @@
             <span md-highlight-text="vm.searchText" md-highlight-flags="^i">{{item.teamName}}</span>
           </md-item-template>
           <md-not-found>
-            <span data-translate="hackathonApp.applicationslist.home.search.noResult">No result were found.</span>
+            <span data-translate="hackathonApp.applicationslist.home.search.noResult"></span>
           </md-not-found>
         </md-autocomplete>
       </form>
@@ -25,7 +25,7 @@
     <div class="text-center">
       <img src="content/images/default/no-challenge.png">
     </div>
-    <h5 class="alert alert-danger">Sorry, there's no application of this challenge yet!</h5>
+    <h5 class="alert alert-danger" data-translate="hackathonApp.applicationslist.detail.noApplication"></h5>
   </div>
   <div class="col-sm-12 col-md-3" ng-repeat="application in vm.applications">
     <div>
@@ -38,15 +38,15 @@
         </md-card-subtitle>
         <md-card-content class='application-description'>
           <p>{{application.description}}</p>
-          <a ui-sref="applicationslist-detail({id:application.id})" class="go-detail" data-translate="hackathonApp.applicationslist.home.detail">More Details</a>
+          <a ui-sref="applicationslist-detail({id:application.id})" class="go-detail" data-translate="hackathonApp.applicationslist.home.detail"></a>
         </md-card-content>
         <md-card-actions ng-switch="application.status">
           <span class="action-btn-group">
             <button ng-show="vm.isReadyToApprove()" class="btn btn-block challenge-cta btn-applied" ng-switch-when="APPROVED">
-              <a>Approved</a>
+              <a data-translate="hackathonApp.applicationslist.detail.approved"></a>
             </button>
             <button ng-show="vm.isReadyToApprove()" class="btn btn-block challenge-cta btn-inactive" ng-switch-when="REJECTED">
-              <a>Rejected</a>
+              <a data-translate="hackathonApp.applicationslist.detail.rejected"></a>
             </button>
           </span>
           <span class="action-btn-group" ng-switch-when="WAITING_FOR_APPROVE">

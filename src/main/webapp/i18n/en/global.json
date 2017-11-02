@@ -39,7 +39,13 @@
                 "database": "Database",
                 "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
             },
-            "language": "Language"
+            "language": "Language",
+            "challenge": "Challenges",
+            "becomeHost": "Become Host",
+            "manageChallenges": "Manage Challenges",
+            "accountSetting": "Account Setting",
+            "accountDetail": "Account Detail",
+            "manageUser": "Manage User"
         },
         "form": {
             "username": "Username",

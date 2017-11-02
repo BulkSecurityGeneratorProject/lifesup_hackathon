@@ -1,0 +1,9 @@
+{
+    "hackathonApp": {
+        "UserSex" : {
+            "null": "",
+            "MALE": "MALE",
+            "FEMALE": "FEMALE"
+        }
+    }
+}

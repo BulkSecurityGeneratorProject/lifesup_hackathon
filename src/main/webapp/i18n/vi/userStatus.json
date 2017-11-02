@@ -1,0 +1,11 @@
+{
+    "hackathonApp": {
+        "UserStatus" : {
+            "null": "",
+            "INACTIVATED": "INACTIVATED",
+            "ACTIVATED": "ACTIVATED",
+            "PROFILE_COMPLETE": "PROFILE_COMPLETE",
+            "REMOVED": "REMOVED"
+        }
+    }
+}

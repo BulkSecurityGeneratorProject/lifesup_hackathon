@@ -12,7 +12,17 @@
             "question": "Bạn có chắc chắn muốn xóa tài khoản {{ login }}?"
         },
         "detail": {
-            "title": "Tài khoản"
+            "title": "Tài khoản",
+            "more": "Xem thêm",
+            "moreInformation": "Thông tin thêm",
+            "gender": "Giới tính",
+            "birthday": "Ngày sinh",
+            "email": "Email",
+            "phone": "Số điện thoại",
+            "address": "Địa chỉ",
+            "back": "Trở về",
+            "skills": "Kỹ năng",
+            "workExperience": "Lĩnh vực đã làm"
         },
         "login": "Tên đăng nhập",
         "firstName": "Tên",

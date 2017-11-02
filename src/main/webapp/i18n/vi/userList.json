@@ -1,0 +1,37 @@
+{
+    "hackathonApp": {
+        "userList" : {
+            "home": {
+                "title": "User Lists",
+                "createLabel": "Create a new User List",
+                "createOrEditLabel": "Create or edit a User List",
+                "search": "Search for User List"
+            },
+            "created": "A new User List is created with identifier {{ param }}",
+            "updated": "A User List is updated with identifier {{ param }}",
+            "deleted": "A User List is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete User List {{ id }}?"
+            },
+            "detail": {
+                "title": "User List"
+            },
+            "email": "Email",
+            "password": "Password",
+            "fullName": "Full Name",
+            "phone": "Phone",
+            "sex": "Sex",
+            "companyName": "Company Name",
+            "jobTitle": "Job Title",
+            "logoUrl": "Logo Url",
+            "country": "Country",
+            "city": "City",
+            "nationality": "Nationality",
+            "birthday": "Birthday",
+            "status": "Status",
+            "userInfo": "User Info",
+            "company": "Company",
+            "applications": "Applications"
+        }
+    }
+}

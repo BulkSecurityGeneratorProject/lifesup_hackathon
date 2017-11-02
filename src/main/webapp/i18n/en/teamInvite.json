@@ -1,0 +1,21 @@
+{
+    "teamInvite": {
+        "login": "Login or sign up to accept invitation",
+        "existLogin": "Login with existing account",
+        "existLoginPlaceholder": "You are already logged in so you just need to click the button to accept this team invite!",
+        "alert": {
+            "accept":"You've accepted to join <strong>{{param}}</strong> team.",
+            "decline":"You've declined to join <strong>{{param}}</strong> team."
+        },
+        "button": {
+            "accept":"Accept team invite",
+            "decline":"Decline request"
+        },
+        "form":{
+            "decline": {
+                "title":"Decline request",
+                "subtitle":"You can also decline this request, if you do not want to join this team. Once invitation is declined you can not claim it anymore."
+            }
+        }
+    }
+}

@@ -1,7 +1,7 @@
 <div layout="column" ng-cloak>
   <md-toolbar ng-if="!vm.hideToolbar" class="md-parimary">
     <div class="md-toolbar-tools">
-      <h2 class="md-flex">All challenge</h2>
+      <h2 class="md-flex" data-translate="hackathonApp.challengeslist.home.title"></h2>
       <div flex></div>
       <md-button class="md-fab md-mini" aria-label="Search" ng-click="vm.toggleOpenSearch()">
         <md-icon class="material-icons" ng-show="!vm.openSearch">search</md-icon>
@@ -12,15 +12,15 @@
 
   <div ng-show="vm.openSearch" flex layout="row" layout-xs="column">
     <md-input-container class="md-block" flex-gt-sm>
-      <label>Name</label>
+      <label data-translate="hackathonApp.search.name"></label>
       <input ng-model="vm.challengeSearch.name" ng-change="vm.querySearchName()" ng-model-options="{ debounce: 500 }" style="color:black !important;">
     </md-input-container>
     <md-input-container>
-      <label>Start date</label>
+      <label data-translate="hackathonApp.search.startDate"></label>
       <md-datepicker ng-model="vm.challengeSearch.eventStartTime" ng-change="vm.querySearchName()"></md-datepicker>
     </md-input-container>
     <md-input-container>
-      <label>End date</label>
+      <label data-translate="hackathonApp.search.endDate"></label>
       <md-datepicker ng-model="vm.challengeSearch.eventEndTime" ng-change="vm.querySearchName()"></md-datepicker>
     </md-input-container>
   </div>
@@ -30,7 +30,7 @@
     <div class="col-md-3"></div>
     <div class="col-md-6 text-center">
       <uib-alert type="warning">
-        <span>Sorry! We're having no challenge now.</span>
+        <span data-translate="hackathonApp.challengeslist.noChallenge"></span>
       </uib-alert>
       <div>
         <img src='content/images/default/no-challenge.png' class="img img-responsive">
@@ -73,7 +73,7 @@
               <i class="challenge-icon material-icons w3-text-orange">alarm</i>{{challenge.timeLeft}}
             </md-list-item>
             <md-list-item ng-switch-when="INACTIVE">
-              <i class="challenge-icon material-icons w3-text-red">alarm_off</i>Time's Up
+              <i class="challenge-icon material-icons w3-text-red">alarm_off</i><span data-translate="hackathonApp.challengesDetails.timeUp"></span>
             </md-list-item>
           </md-list>
 
@@ -82,17 +82,17 @@
         <md-card-actions ng-switch="vm.getApplicationStatus(challenge)" has-authority-except="ROLE_HOST">
 
           <button class="btn btn-block challenge-cta btn-active" ng-switch-when="ACTIVE" ng-switch="vm.isAuthenticated()">
-            <a href="#" ui-sref="login-signup" ng-switch-when="false" data-translate="hackathonApp.applicationStatus.apply">Apply now!</a>
-            <a href="#" ui-sref="complete-profile({id: challenge.id})" ng-switch-when="true" data-translate="hackathonApp.applicationStatus.apply">Apply now!</a>
+            <a href="#" ui-sref="login-signup" ng-switch-when="false" data-translate="hackathonApp.applicationStatus.apply"></a>
+            <a href="#" ui-sref="complete-profile({id: challenge.id})" ng-switch-when="true" data-translate="hackathonApp.applicationStatus.apply"></a>
           </button>
 
           <button class="btn btn-block challenge-cta btn-applied" ng-click="vm.getApplicationId(challenge.id)" ui-sref="applicationslist-detail({id:vm.applicationId})"
             ng-switch-when="APPLIED">
-            <a href="#" data-translate="hackathonApp.applicationStatus.applied">View your application</a>
+            <a href="#" data-translate="hackathonApp.applicationStatus.applied"></a>
           </button>
 
           <button class="btn btn-block challenge-cta btn-inactive" ng-switch-when="INACTIVE" disabled>
-            <a href="#" data-translate="hackathonApp.applicationStatus.close">Applications have closed!</a>
+            <a href="#" data-translate="hackathonApp.applicationStatus.close"></a>
           </button>
         </md-card-actions>
       </md-card>
@@ -101,7 +101,7 @@
     <md-button class="md-raised md-primary" ng-show="vm.page < vm.links['last']" style="position: fixed; bottom: 0px; margin:auto; left:50%;z-index:100000;"
       ng-click="vm.gotoBottom();vm.loadPage(vm.page + 1);">
       <md-icon class="material-icons">arrow_downward</md-icon>
-      Pull to load more
+      <span data-translate="hackathonApp.search.pull"></span>
     </md-button>
   </md-content>
 

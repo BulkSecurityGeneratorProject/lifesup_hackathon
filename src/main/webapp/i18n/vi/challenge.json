@@ -1,24 +1,8 @@
 {
     "hackathonApp": {
-        "filter":{
-            "startDate":"Start Date",
-            "endDate":"End Date",
-            "search":"Enter challenge name",
-            "status":"Status"
-        },
-        "card":{
-            "active":"Active",
-            "inactive":"Inactive",
-            "draft":"Draft",
-            "closed":"Closed",
-            "activationRequired": "Activation Required",
-            "appClosed": "Application has closed",
-            "eventEnded": "Event has ended",
-            "seeApp": "See Applications"
-        },
         "challenge": {
             "home": {
-                "title": "Challenge Manager",
+                "title": "Challenges Management",
                 "createLabel": "Create a new Challenge",
                 "createOrEditLabel": "Create or edit a Challenge",
                 "search": "Search for Challenge"
@@ -30,7 +14,7 @@
                 "question": "Are you sure you want to delete challenge <b>{{ id }}</b>?"
             },
             "detail": {
-                "title": "Challenge Manager Detail"
+                "title": "Challenge"
             },
             "name": "Challenge Name",
             "introduction": "Introduction",
@@ -39,21 +23,13 @@
             "rewardsText": "Rewards Text",
             "timelineText": "Timeline Text",
             "rulesText": "Rules Text",
-            "bannerUrl": "Upload Banner Imange",
+            "bannerUrl": "Banner URL",
             "additionalText": "Additional Text",
             "maxTeamNumber": "Max Team Number",
             "minTeamNumber": "Min Team Number",
             "info": "Info",
             "applications": "Applications",
             "company": "Company"
-        },
-        "challengeDetail":{
-            "sidebar":{
-                "title":"Base Info",
-                "title":"Base Info",
-                "title":"Base Info",
-                "title":"Base Info"
-            }
         },
         "challengeInfo": {
             "eventStartTime": "Event Start",
@@ -69,8 +45,7 @@
             "status": {
                 "draft": "Draft",
                 "active": "Active",
-                "inactive": "Inactive",
-                "close": "Closed"
+                "close": "Close"
             }
         },
         "search":{
@@ -110,14 +85,10 @@
                     "required": "Banner url is required."
                 },
                 "maxTeamNumber": {
-                    "required": "Max team members is required.",
-                    "min": "Invalid team size",
-                    "max": "Team member cannot be over 100"
+                    "required": "Max team members is required."
                 },
                 "minTeamNumber": {
-                    "required": "Min team members is required.",
-                    "min": "Team member is required at least 1",
-                    "max": "Invalid team size"
+                    "required": "Min team members is required."
                 },
                 "eventStartTime": {
                     "required": "Event start time is required."

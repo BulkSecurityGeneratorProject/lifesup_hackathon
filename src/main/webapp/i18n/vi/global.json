@@ -31,7 +31,13 @@
                 "database": "Cơ sở dữ liệu",
                 "jhipster-needle-menu-add-admin-element": "JHipster will add additional menu entries here (do not translate!)"
             },
-            "language": "Ngôn ngữ"
+            "language": "Ngôn ngữ",
+            "challenge": "Thử thách",
+            "becomeHost": "Làm nhà tổ chức",
+            "manageChallenges": "Quản lí thử thách",
+            "accountSetting": "Cập nhật thông tin",
+            "accountDetail": "Thông tin cá nhân",
+            "manageUser": "Quản lí người dùng"
         },
         "form": {
             "username": "Tên tài khoản",

@@ -1,0 +1,24 @@
+{
+    "hackathonApp": {
+        "challengeUserApplication" : {
+            "home": {
+                "title": "Challenge User Applications",
+                "createLabel": "Create a new Challenge User Application",
+                "createOrEditLabel": "Create or edit a Challenge User Application",
+                "search": "Search for Challenge User Application"
+            },
+            "created": "A new Challenge User Application is created with identifier {{ param }}",
+            "updated": "A Challenge User Application is updated with identifier {{ param }}",
+            "deleted": "A Challenge User Application is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Challenge User Application {{ id }}?"
+            },
+            "detail": {
+                "title": "Challenge User Application"
+            },
+            "challengeId": "Challenge Id",
+            "userId": "User Id",
+            "applicationId": "Application Id"
+        }
+    }
+}

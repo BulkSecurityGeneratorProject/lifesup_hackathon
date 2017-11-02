@@ -20,7 +20,11 @@
                 "status": "Status",
                 "challenge": "Challenge",
                 "users": "Users",
-                "noApplication": "Sorry, there's no application of this challenge yet!"
+                "noApplication": "Sorry, there's no application of this challenge yet!",
+                "approved": "Approved",
+                "rejected": "Rejected",
+                "completeProfile": "Complete your profile",
+                "pending": "<strong>Pending invitation to</strong>"
             },
             "challengeInfo": {
                 "challenge": "You are applying to _",

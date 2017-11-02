@@ -1,117 +1,138 @@
 {
     "hackathonApp": {
+        "filter":{
+            "startDate":"Ngày bắt đầu",
+            "endDate":"Ngày kết thúc",
+            "search":"Nhập tên thử thách cần tìm",
+            "status":"Trạng thái"
+        },
+        "card":{
+            "active":"Kích hoạt",
+            "inactive":"Chưa kích hoạt",
+            "draft":"Nháp",
+            "closed":"Kết thúc",
+            "activationRequired": "Cần được kích hoạt",
+            "appClosed": "Đã ngừng nhận đơn",
+            "eventEnded": "Sự kiện đã kết thúc",
+            "seeApp": "Xem danh sách đơn"
+        },
         "challenge": {
             "home": {
-                "title": "Challenge Manager",
-                "createLabel": "Create a new Challenge",
-                "createOrEditLabel": "Create or edit a Challenge",
-                "search": "Search for Challenge"
+                "title": "Quản lí thử thách",
+                "createLabel": "Tạo một thử thách mới",
+                "createOrEditLabel": "Tạo hoặc sửa thử thách",
+                "search": "Tìm kiếm thử thách"
             },
-            "created": "A new Challenge is created with identifier {{ param }}",
-            "updated": "A Challenge is updated with identifier {{ param }}",
-            "deleted": "A Challenge is deleted with identifier {{ param }}",
+            "created": "Một thử thách đã được tạo với định danh {{ param }}",
+            "updated": "Một thử thách đã được cập nhật với định danh {{ param }}",
+            "deleted": "Một thử thách đã được xóa với định danh {{ param }}",
             "delete": {
-                "question": "Are you sure you want to delete challenge <b>{{ id }}</b>?"
+                "question": "Bạn có chắc muốn xóa thử thách <b>{{ id }}</b>?"
             },
             "detail": {
-                "title": "Challenge Manager Detail"
+                "title": "Chi tiết quản lí thử thách"
             },
-            "name": "Challenge Name",
-            "introduction": "Introduction",
-            "challengeText": "Challenge Text",
-            "resourceText": "Resource Text",
-            "rewardsText": "Rewards Text",
-            "timelineText": "Timeline Text",
-            "rulesText": "Rules Text",
-            "bannerUrl": "Banner URL",
-            "additionalText": "Additional Text",
-            "maxTeamNumber": "Max Team Number",
-            "minTeamNumber": "Min Team Number",
-            "info": "Info",
-            "applications": "Applications",
-            "company": "Company"
+            "name": "Tên thử thách",
+            "introduction": "Giới thiệu",
+            "challengeText": "Nội dung thử thách",
+            "resourceText": "Tài nguyên",
+            "rewardsText": "Giải thưởng",
+            "timelineText": "Lịch trình",
+            "rulesText": "Quy tắc",
+            "bannerUrl": "Tải lên ảnh bìa",
+            "additionalText": "Thông tin bổ sung",
+            "maxTeamNumber": "Số thành viên tối đa",
+            "minTeamNumber": "Số thành viên tối thiểu",
+            "info": "Thông tin",
+            "applications": "Các đơn tham dự",
+            "company": "Công ty"
+        },
+        "challengeDetail":{
+            "sidebar":{
+                "title":"Thông tin cơ bản"
+            }
         },
         "challengeInfo": {
-            "eventStartTime": "Event Start",
-            "eventEndTime": "Event End",
-            "applicationCloseDate": "Application Close",
-            "kickoffWebinarDate": "Kick Off Webinar",
-            "selectionInformDate": "Inform Date",
+            "eventStartTime": "Sự kiện bắt đầu",
+            "eventEndTime": "Sự kiện kết thúc",
+            "applicationCloseDate": "Hạn nộp đơn",
+            "kickoffWebinarDate": "Ngày hội thảo",
+            "selectionInformDate": "Ngày thông báo trúng tuyển",
             "pilotSubmissionCloseDate": "Submission Close",
             "pilotPhaseStartDate": "Pilot Phase Start",
             "pilotPhaseEndDate": "Pilot Phase End",
-            "prize": "Prize",
-            "location": "Location",
+            "prize": "Giải thưởng",
+            "location": "Địa điểm",
             "status": {
-                "draft": "Draft",
-                "active": "Active",
-                "inactive": "Inactive",
-                "close": "Closed"
+                "draft": "Nháp",
+                "active": "Kích hoạt",
+                "inactive": "Chưa kích hoạt",
+                "close": "Kết thúc"
             }
         },
         "search":{
-            "placeHolder" : "Input challenge or company name.",
-            "noResult" : "No result were found."
+            "placeHolder" : "Nhập tên thử thách hoặc tên công ty",
+            "noResult" : "Không có kết quả trả về."
         },
         "messages": {
-            "empty": "Haven't got any challenges? ",
-            "create": "<strong>Create one!</strong>",
+            "empty": "Chưa có thử thách nào? ",
+            "create": "<strong>Tạo ngay!</strong>",
             "error": {
-                "fail": "<strong>An error has occurred!</strong> Settings could not be saved.",
-                "emailexists": "<strong>E-mail is already in use!</strong> Please choose another one."
+                "fail": "<strong>Có lỗi xảy ra!</strong> Thiết lập chưa được lưu.",
+                "emailexists": "<strong>E-mail đã được sử dụng!</strong> Hãy chọn email khác."
             },
-            "success": "<strong>Settings saved!</strong>",
+            "success": "<strong>Thiết lập đã được lưu!</strong>",
             "validate": {
                 "name": {
-                    "required": "Challenge name is required.",
-                    "minlength": "Challenge name is required to be at least 5 character",
-                    "maxlength": "Challenge name cannot be longer than 50 characters"
+                    "required": "Tên thử thách là bắt buộc.",
+                    "minlength": "Tên thử thách phải dài tối thiểu 5 kí tự",
+                    "maxlength": "Tên thử thách không được phép quá 50 kí tự"
                 },
                 "challengeText": {
-                    "required": "Challenge text is required."
+                    "required": "Nội dung thử thách không được bỏ trống"
                 },
                 "resourceText": {
-                    "required": "Resource text is required."
+                    "required": "Tài nguyên không được bỏ trống"
                 },
                 "rewardsText": {
-                    "required": "Rewards text is required."
+                    "required": "Giải thưởng không được bỏ trống"
                 },
                 "timelineText": {
-                    "required": "Timeline text is required."
+                    "required": "Lịch trình không được bỏ trống"
                 },
                 "rulesText": {
-                    "required": "Rules text is required."
+                    "required": "Quy tắc không được bỏ trống"
                 },
                 "bannerUrl": {
-                    "required": "Banner url is required."
+                    "required": "Ảnh bìa là bắt buộc"
                 },
                 "maxTeamNumber": {
-                    "required": "Max team members is required.",
-                    "min": "Invalid team size",
-                    "max": "Team member cannot be over 100"
+                    "required": "Số thành viên tối đa không được bỏ trống",
+                    "min": "Số thành viên không hợp lệ",
+                    "max": "Tổng số thành viên không thể vượt quá 100"
                 },
                 "minTeamNumber": {
-                    "required": "Min team members is required.",
-                    "min": "Team member is required at least 1",
-                    "max": "Invalid team size"
+                    "required": "Số thành viên tối thiểu không được bỏ trống",
+                    "min": "Số thành viên tối thiểu không được nhỏ hơn 1",
+                    "max": "Số thành viên không hợp lệ"
                 },
                 "eventStartTime": {
-                    "required": "Event start time is required."
+                    "required": "Thời gian bắt đầu không được bỏ trống"
                 },
                 "eventEndTime": {
-                    "required": "Event end time is required."
+                    "required": "Thời gian kết thúc không được bỏ trống"
                 },
                 "applicationCloseDate": {
-                    "required": "Application close time is required."
+                    "required": "Hạn nộp đơn không được bỏ trống"
                 },
                 "kickoffWebinarDate": {
-                    "required": "Kick off webinar time is required."
+                    "required": "Ngày hội thảo không được bỏ trống"
                 },
                 "selectionInformDate": {
-                    "required": "Inform date is required."
+                    "required": "Ngày thông báo trúng tuyển không được bỏ trống"
                 },
                 "pilotSubmissionCloseDate": {
-                    "required": "Submission close date is required."
+                    "required": "Ngày kết thúc nhận sản phẩm"
                 },
                 "pilotPhaseStartDate": {
                     "required": "Pilot phase start date is required."
@@ -120,13 +141,13 @@
                     "required": "Pilot phase end date is required."
                 },
                 "prize": {
-                    "required": "Challenge prize is required."
+                    "required": "Giải thưởng không được bỏ trống"
                 },
                 "location": {
-                    "required": "Challenge location is required."
+                    "required": "Địa điểm không được bỏ trống"
                 },
                 "status": {
-                    "required": "Challenge status is required."
+                    "required": "Trạng thái không được bỏ trống"
                 }
             }
         }

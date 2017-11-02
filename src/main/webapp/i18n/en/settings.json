@@ -1,7 +1,12 @@
 {
     "settings": {
         "title": "User settings for [<b>{{username}}</b>]",
+        "profile":{
+            "title": "Fill in your profile",
+            "subtitle": "Your information will not be published."
+        },
         "form": {
+            "edit": "Edit",
             "fullname": "Full Name",
             "gender": "Gender",
             "birthday": "Birthday",
@@ -19,9 +24,19 @@
             "skills": "Choose your skills",
             "workAreas": "Choose your work area",
             "feedBackFrom": "Reference from:",
-            "other": "Other..."
+            "friends": "Friends",
+            "social": "Social Media",
+            "aCompany": "A Company",
+            "other": "Other...",
+            "save": "Save"
+        },
+        "sidebar":{
+            "application": "Your applications",
+            "challenge": "Your challenges",
+            "changePassword": "Change password"
         },
         "messages": {
+            "avatar": "Update your info first",
             "error": {
                 "fail": "<strong>An error has occurred!</strong> Settings could not be saved.",
                 "emailexists": "<strong>E-mail is already in use!</strong> Please choose another one."

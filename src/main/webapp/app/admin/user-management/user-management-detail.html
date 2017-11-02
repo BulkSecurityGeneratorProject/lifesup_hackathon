@@ -17,21 +17,21 @@
                         </div>
                         <div class="card-footer">
                             <button class="btn btn-simple" ng-click="vm.rotateCard(this)">
-                                   <i class="fa fa-mail-forward"></i> More
+                                   <i class="fa fa-mail-forward"></i><span data-translate="userManagement.detail.more"></span>
                                </button>
                         </div>
                     </div>
                 </div>
                 <div class="back">
                     <div class="header">
-                        <h5 class="motto">More infomantion!</h5>
+                        <h5 class="motto" data-translate="userManagement.detail.moreInformation"></h5>
                     </div>
                     <div class="content">
                         <div class="main">
                             <table class="w3-table">
                                 <tr>
                                     <th>
-                                        <span class="user-info_icon"><i class="challenge-icon material-icons">wc</i></span><span class="hidden-sm hidden-xs">Gender</span>
+                                        <span class="user-info_icon"><i class="challenge-icon material-icons">wc</i></span><span class="hidden-sm hidden-xs" data-translate="userManagement.detail.gender"></span>
                                     </th>
                                     <td>
                                         <span>{{vm.userInfo.sex}}</span>
@@ -39,7 +39,7 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        <span class="user-info_icon"><i class="challenge-icon material-icons">cake</i></span><span class="hidden-sm hidden-xs">Birthday</span>
+                                        <span class="user-info_icon"><i class="challenge-icon material-icons">cake</i></span><span class="hidden-sm hidden-xs" data-translate="userManagement.detail.birthday"></span>
                                     </th>
                                     <td>
                                         <span>{{vm.userInfo.birthday | date: 'dd/MM/yyyy'}}</span>
@@ -47,7 +47,7 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        <span class="user-info_icon"><i class="challenge-icon material-icons">email</i></span><span class="hidden-sm hidden-xs">Email</span>
+                                        <span class="user-info_icon"><i class="challenge-icon material-icons">email</i></span><span class="hidden-sm hidden-xs" data-translate="userManagement.detail.email"></span>
                                     </th>
                                     <td>
                                         <span>{{vm.user.email}}</span>
@@ -55,7 +55,7 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        <span class="user-info_icon"><i class="challenge-icon material-icons">call</i></span><span class="hidden-sm hidden-xs">Phone</span>
+                                        <span class="user-info_icon"><i class="challenge-icon material-icons">call</i></span><span class="hidden-sm hidden-xs" data-translate="userManagement.detail.phone"></span>
                                     </th>
                                     <td>
                                         <span>{{vm.userInfo.phone}}</span>
@@ -63,7 +63,7 @@
                                 </tr>
                                 <tr>
                                     <th>
-                                        <span class="user-info_icon"><i class="challenge-icon material-icons">pin_drop</i></span><span class="hidden-sm hidden-xs">Address</span>
+                                        <span class="user-info_icon"><i class="challenge-icon material-icons">pin_drop</i></span><span class="hidden-sm hidden-xs" data-translate="userManagement.detail.address"></span>
                                     </th>
                                     <td>
                                         <span>{{vm.userInfo.city}}, {{vm.userInfo.country}}</span>
@@ -75,7 +75,7 @@
                     </div>
                     <div class="card-footer">
                         <button class="btn btn-simple" rel="tooltip" title="Flip Card" ng-click="vm.rotateCard(this)">
-                               <i class="fa fa-reply"></i> Back
+                               <i class="fa fa-reply"></i> <span data-translate="userManagement.detail.back"></span>
                            </button>
                         <div class="social-links text-center">
                             <a href="{{vm.userInfo.websiteUrl}}" target="_blank"><i class="fa fa-link fa-fw"></i></a>
@@ -90,7 +90,7 @@
     <div class="col-md-4">
         <ul class="w3-ul w3-border">
             <li class="w3-highway-red text-center">
-                <h4>Skills</h4>
+                <h4 data-translate="userManagement.detail.skills"></h4>
             </li>
             <li ng-repeat="skill in vm.skills">{{skill}}</li>
         </ul>
@@ -98,7 +98,7 @@
     <div class="col-md-4">
         <ul class="w3-ul w3-border">
             <li class="w3-highway-blue text-center">
-                <h4>Work Experience</h4>
+                <h4 data-translate="userManagement.detail.workExperience"></h4>
             </li>
             <li ng-repeat="workArea in vm.workAreas">{{workArea}}</li>
         </ul>
@@ -106,6 +106,6 @@
 </div>
 <div>
     <button has-authority="ROLE_ADMIN" type="submit" ui-sref="user-management" class="btn btn-info">
-                    <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+                    <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"></span>
                 </button>
 </div>

@@ -2,22 +2,23 @@
     "hackathonApp": {
         "challengeslist": {
             "home": {
-                "title": "Challenges List"
-            }
+                "title": "All Challenge"
+            },
+            "noChallenge": "Sorry! We're having no challenge now."
         },
         "challengesDetails": {
-						"title": "Challenge Details",
-						"challengeIntro": "About the challenge",
-						"companyIntro": "About the company",
-						"resourceText": "Available Resources",
-						"rewardsText": "Rewards",
-						"timelineText": "Timeline of the challenge",
-						"rulesText": "Rules",
-						"bannerUrl": "Banner URL",
-						"additionalText": "Additional information",
-						"maxTeamMember": "Max Team Member",
-						"minTeamMember": "Min Team Member",
-						"subtitle": "Apply to challenge",
+            "title": "Challenge Details",
+            "challengeIntro": "About the challenge",
+            "companyIntro": "About the company",
+            "resourceText": "Available Resources",
+            "rewardsText": "Rewards",
+            "timelineText": "Timeline of the challenge",
+            "rulesText": "Rules",
+            "bannerUrl": "Banner URL",
+            "additionalText": "Additional information",
+            "maxTeamMember": "Max Team Member",
+            "minTeamMember": "Min Team Member",
+            "subtitle": "Apply to challenge",
             "eventStartTime": "Event Start",
             "eventEndTime": "Event End",
             "applicationCloseDate": "Application Close",
@@ -32,23 +33,28 @@
                 "draft": "Draft",
                 "active": "Active",
                 "close": "Close"
-            }
+            },
+            "timeUp": "Time's Up"
         },
-        "search":{
-            "placeHolder" : "What is your favorite company or challenge?",
-            "noResult" : "No result were found!",
-						"endAfter": "End After",
-						"startBefore": "Start Before"
+        "search": {
+            "name": "Challenge Name",
+            "startDate": "Start Date",
+            "endDate": "End Date",
+            "placeHolder": "What is your favorite company or challenge?",
+            "noResult": "No result were found!",
+            "endAfter": "End After",
+            "startBefore": "Start Before",
+            "pull": "Pull to load more"
         },
-				"applicationStatus": {
-						"close": "Applications have closed",
-						"applied": "View your application",
-						"apply": "Apply now!"
-				},
-				"subscribe": {
-					"remind": "Remind me to apply",
-					"infoText": "Sign up to hear when the application deadline is close.",
-					"signup": "Sign up"
-				}
+        "applicationStatus": {
+            "close": "Applications have closed",
+            "applied": "View your application",
+            "apply": "Apply now!"
+        },
+        "subscribe": {
+            "remind": "Remind me to apply",
+            "infoText": "Sign up to hear when the application deadline is close.",
+            "signup": "Sign up"
+        }
     }
 }

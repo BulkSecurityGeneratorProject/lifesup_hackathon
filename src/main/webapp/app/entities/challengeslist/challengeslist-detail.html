@@ -5,7 +5,7 @@
 <div class="row challenge-detail-wrapper">
     <div scroll class="side-wrapper col-xs-12 col-md-4 col-lg-4 col-md-push-8" ng-class="{sidebarFix:boolChangeClass}">
         <div class="side-info">
-            <h3 data-translate="hackathonApp.challengesDetails.subtitle">Apply to challenge</h3>
+            <h3 data-translate="hackathonApp.challengesDetails.subtitle"></h3>
             <div class="line"></div>
             <div class="info-wrapper">
                 <p><i class="material-icons side-icons">date_range</i>{{vm.challenge.info.eventStartTime | date}} - {{vm.challenge.info.eventEndTime | date}}</p><hr>
@@ -17,25 +17,25 @@
            <!--  <button class="cta-btn"><a href="#">APPLY NOW</a></button> -->
            <div ng-switch="vm.getApplicationStatus()" has-authority-except="ROLE_HOST">
              <button class="cta-btn" ng-switch-when="ACTIVE" ng-switch="vm.isAuthenticated()">
-               <a href="#" ui-sref="login-signup" ng-switch-when="false" data-translate="hackathonApp.applicationStatus.apply">Apply now!</a>
-               <a href="#" ui-sref="complete-profile({id: vm.challenge.id})" ng-switch-when="true" data-translate="hackathonApp.applicationStatus.apply">Apply now!</a>
+               <a href="#" ui-sref="login-signup" ng-switch-when="false" data-translate="hackathonApp.applicationStatus.apply"></a>
+               <a href="#" ui-sref="complete-profile({id: vm.challenge.id})" ng-switch-when="true" data-translate="hackathonApp.applicationStatus.apply"></a>
              </button>
              <button class="cta-btn" ng-click="vm.getApplicationId(vm.challenge.id)" ui-sref="applicationslist-detail({id:vm.applicationId})" ng-switch-when="APPLIED">
-               <a href="#" data-translate="hackathonApp.applicationStatus.applied">View your application</a>
+               <a href="#" data-translate="hackathonApp.applicationStatus.applied"></a>
              </button>
              <button class="cta-btn" ng-switch-when="INACTIVE">
-               <a href="#" data-translate="hackathonApp.applicationStatus.close">Applications have closed!</a>
+               <a href="#" data-translate="hackathonApp.applicationStatus.close"></a>
              </button>
            </div>
         </div>
 
         <div class="side-subscribe">
-            <h3 data-translate="hackathonApp.subscribe.remind">Remind me to apply</h3>
+            <h3 data-translate="hackathonApp.subscribe.remind"></h3>
             <div class="line"></div>
-            <p data-translate="hackathonApp.subscribe.infoText">Sign up to hear when the application deadline is close.</p>
+            <p data-translate="hackathonApp.subscribe.infoText"></p>
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="yourEmail@example.com"  aria-describedby="btnGroupAddon">
-                <span class="input-group-addon subscribe-btn" id="btnGroupAddon" ui-sref="login-signup" data-translate="hackathonApp.subscribe.signup">Sign up</span>
+                <span class="input-group-addon subscribe-btn" id="btnGroupAddon" ui-sref="login-signup" data-translate="hackathonApp.subscribe.signup"></span>
             </div>
         </div>
     </div>
@@ -50,43 +50,43 @@
                 <p>{{vm.challenge.introduction}}</p>
             </div>
             <div class="content-wrapper">
-                <h3 class="sub-heading" data-translate="hackathonApp.challengesDetails.challengeIntro">About the challenge</h3>
+                <h3 class="sub-heading" data-translate="hackathonApp.challengesDetails.challengeIntro"></h3>
                 <p>{{vm.challenge.challengeText}}</p>
             </div>
             <div class="content-wrapper">
-                <h3 class="sub-heading" data-translate="hackathonApp.challengesDetails.companyIntro">About Company</h3>
+                <h3 class="sub-heading" data-translate="hackathonApp.challengesDetails.companyIntro"></h3>
                 <p>{{vm.challenge.company.text}}</p>
             </div>
             <div class="content-wrapper">
-                <h3 class="sub-heading" data-translate="hackathonApp.challengesDetails.resourceText">Available Resources</h3>
+                <h3 class="sub-heading" data-translate="hackathonApp.challengesDetails.resourceText"></h3>
                 <p>{{vm.challenge.resourceText}}</p>
             </div>
             <div class="content-wrapper">
-                <h3 class="sub-heading" data-translate="hackathonApp.challengesDetails.rewardsText">Rewards</h3>
+                <h3 class="sub-heading" data-translate="hackathonApp.challengesDetails.rewardsText"></h3>
                 <p>{{vm.challenge.rewardsText}}</p>
             </div>
             <div class="content-wrapper">
-                <h3 class="sub-heading" data-translate="hackathonApp.challengesDetails.rulesText">Rules</h3>
+                <h3 class="sub-heading" data-translate="hackathonApp.challengesDetails.rulesText"></h3>
                 <p>{{vm.challenge.rulesText}}</p>
             </div>
             <div class="content-wrapper">
-                <h3 class="sub-heading" data-translate="hackathonApp.challengesDetails.timelineText">Timeline of the challenge</h3>
+                <h3 class="sub-heading" data-translate="hackathonApp.challengesDetails.timelineText"></h3>
                 <div>
-                    <p><strong data-translate="hackathonApp.challengesDetails.eventStartTime">Event Start:</strong>&nbsp;{{vm.challenge.info.eventStartTime | date: 'longDate'}}</p>
-                    <p><strong data-translate="hackathonApp.challengesDetails.eventEndTime">Event End:</strong>&nbsp;{{vm.challenge.info.eventEndTime | date: 'longDate'}}</p>
-                    <p><strong data-translate="hackathonApp.challengesDetails.kickoffWebinarDate">Kich Off Webinar:</strong>&nbsp;{{vm.challenge.info.kickoffWebinarDate | date: 'longDate'}}</p>
-                    <p><strong data-translate="hackathonApp.challengesDetails.applicationCloseDate">Application Close:</strong>&nbsp;{{vm.challenge.info.applicationCloseDate | date: 'longDate'}}</p>
-                    <p><strong data-translate="hackathonApp.challengesDetails.selectionInformDate">Inform Date:</strong>&nbsp;{{vm.challenge.info.selectionInformDate | date: 'longDate'}}</p>
-                    <p><strong data-translate="hackathonApp.challengesDetails.pilotSubmissionCloseDate">Pilot Submission Close:</strong>&nbsp;{{vm.challenge.info.pilotSubmissionCloseDate | date: 'longDate'}}</p>
-                    <p><strong data-translate="hackathonApp.challengesDetails.pilotPhaseStartDate">Pilot Phase Start Date:</strong>&nbsp;{{vm.challenge.info.pilotPhaseStartDate | date: 'longDate'}}</p>
-                    <p><strong data-translate="hackathonApp.challengesDetails.pilotPhaseEndDate">Pilot Phase End Date:</strong>&nbsp;{{vm.challenge.info.pilotPhaseEndDate | date: 'longDate'}}</p>
+                    <p><strong data-translate="hackathonApp.challengesDetails.eventStartTime"></strong>&nbsp;{{vm.challenge.info.eventStartTime | date: 'longDate'}}</p>
+                    <p><strong data-translate="hackathonApp.challengesDetails.eventEndTime"></strong>&nbsp;{{vm.challenge.info.eventEndTime | date: 'longDate'}}</p>
+                    <p><strong data-translate="hackathonApp.challengesDetails.kickoffWebinarDate"></strong>&nbsp;{{vm.challenge.info.kickoffWebinarDate | date: 'longDate'}}</p>
+                    <p><strong data-translate="hackathonApp.challengesDetails.applicationCloseDate"></strong>&nbsp;{{vm.challenge.info.applicationCloseDate | date: 'longDate'}}</p>
+                    <p><strong data-translate="hackathonApp.challengesDetails.selectionInformDate"></strong>&nbsp;{{vm.challenge.info.selectionInformDate | date: 'longDate'}}</p>
+                    <p><strong data-translate="hackathonApp.challengesDetails.pilotSubmissionCloseDate"></strong>&nbsp;{{vm.challenge.info.pilotSubmissionCloseDate | date: 'longDate'}}</p>
+                    <p><strong data-translate="hackathonApp.challengesDetails.pilotPhaseStartDate"></strong>&nbsp;{{vm.challenge.info.pilotPhaseStartDate | date: 'longDate'}}</p>
+                    <p><strong data-translate="hackathonApp.challengesDetails.pilotPhaseEndDate"></strong>&nbsp;{{vm.challenge.info.pilotPhaseEndDate | date: 'longDate'}}</p>
                 </div>
             </div>
             <div class="content-wrapper">
-                <h3 class="sub-heading" data-translate="hackathonApp.challengesDetails.additionalText">Additional information</h3>
+                <h3 class="sub-heading" data-translate="hackathonApp.challengesDetails.additionalText"> </h3>
                 <p>{{vm.challenge.additionalText}}</p>
-                <span data-translate="hackathonApp.challengesDetails.maxTeamMember">Max Team Member</span><span>: {{vm.challenge.maxTeamNumber}}</span><br>
-                <span data-translate="hackathonApp.challengesDetails.minTeamMember">Min Team Member</span><span>: {{vm.challenge.minTeamNumber}}</span>
+                <span data-translate="hackathonApp.challengesDetails.maxTeamMember"></span><span>: {{vm.challenge.maxTeamNumber}}</span><br>
+                <span data-translate="hackathonApp.challengesDetails.minTeamMember"></span><span>: {{vm.challenge.minTeamNumber}}</span>
             </div>
         </div><!-- end of main info -->
     </div>
