@@ -1,0 +1,104 @@
+entity Challenge {}
+
+relationship OneToOne {
+	ChallengeWorkspace {challenge} to Challenge
+}
+
+entity ChallengeWorkspace {
+	id Long,
+    createdDate ZonedDateTime,
+    termsAndConditions String
+}
+
+entity ChallengeWorkspaceNews {
+	id Long,
+    title String required,
+    content String required,
+    createdDate ZonedDateTime,
+    createdBy String
+}
+
+relationship OneToMany {
+	ChallengeWorkspace {workspaceNews} to ChallengeWorkspaceNews {workspace}
+}
+
+//cannot be edit if there is answer already
+entity ChallengeWorkspaceQuestion {
+	id Long,
+    applicationId Long required,
+    subject String required,
+    content String required,
+    createdDate ZonedDateTime,
+    createdBy String
+}
+
+relationship OneToMany {
+	ChallengeWorkspace {workspaceQuestions} to ChallengeWorkspaceQuestion {workspace}
+}
+
+enum WorkspaceAnswerType {
+	BY_USER, BY_HOST
+}
+
+entity ChallengeWorkspaceAnswer {
+	id Long,
+    content String required,
+    answerByType WorkspaceAnswerType required,
+    createdDate ZonedDateTime,
+    createdBy ZonedDateTime
+}
+
+relationship OneToMany {
+	ChallengeWorkspaceQuestion {answers} to ChallengeWorkspaceAnswer {question}
+}
+
+entity ChallengeResult {
+	id Long,
+    firstTeam Long required, //applicationId
+    secondTeam Long,
+    thirdTeam Long,
+    additionalNote String
+}
+
+entity ChallengeFeedback {
+	id Long,
+    applicationId Long required,
+    feedbackForUs String,
+    feedbackForChallenge String,
+    publicFeedback String,
+    rating Integer required
+}
+
+relationship OneToOne {
+	Challenge {result} to ChallengeResult
+}
+
+relationship OneToOne {
+	Challenge {feedback} to ChallengeFeedback
+}
+
+entity ChallengeSubmission {
+	id Long,
+    applicationId Long required,
+    filePath String,
+    additionalNote String,
+    modifiedDate ZonedDateTime,
+    modifiedBy String
+}
+
+entity ChallengeSubmissionFeedback {
+	id Long,
+    feedbackText String,
+    createdDate ZonedDateTime,
+    createdBy String
+}
+
+relationship OneToMany {
+	ChallengeWorkspace {submissions} to ChallengeSubmission {workspace}
+}
+
+relationship OneToOne {
+	ChallengeSubmission {feedback} to ChallengeSubmissionFeedback
+}
+
+

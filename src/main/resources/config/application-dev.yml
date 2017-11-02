@@ -60,6 +60,7 @@ liquibase:
 
 server:
     port: 1234
+    
 attach:
     path: src/main/webapp/content/images
 
