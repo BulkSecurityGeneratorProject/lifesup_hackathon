@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('NavbarController', NavbarController);
 
-    NavbarController.$inject = ['$state', 'Auth', 'Principal', 'ProfileService', 'LoginService'];
+    NavbarController.$inject = ['$state', 'Auth', 'Principal', 'ProfileService', 'LoginService', 'UserDetail'];
 
-    function NavbarController($state, Auth, Principal, ProfileService, LoginService) {
+    function NavbarController($state, Auth, Principal, ProfileService, LoginService, UserDetail) {
         var vm = this;
         vm.account = null;
         vm.visibleHost = true;
@@ -28,7 +28,7 @@
 
         load();
 
-        function load(){
+        function load() {
             Principal.identity().then(function (account) {
                 vm.account = account;
                 if (account) {
