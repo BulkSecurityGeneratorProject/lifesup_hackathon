@@ -163,5 +163,11 @@ public class CompanyResource {
 		
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
-
+    @GetMapping("/companies/name")
+    @Timed
+    public List<String> getNameCompany() {
+        log.debug("REST request to get Name Company ");
+        List<String> names = companyRepository.getNameCompany();
+        return names;
+    }
 }
