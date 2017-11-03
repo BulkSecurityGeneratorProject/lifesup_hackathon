@@ -2,8 +2,8 @@
 
     <div class="col-md-8">
         <md-content layout-padding>
-            <h2>Team Application</h2>
-            <h5>This part is the actual application for this specific challenge.</h5>
+            <h2 data-translate="teamApplication.home.title"></h2>
+            <h5 data-translate="teamApplication.home.subtitle"></h5>
         </md-content>
     </div>
 </div>
@@ -17,13 +17,13 @@
                     <div layout-gt-sm="row" flex>
                         <div class="col-md-6">
                             <md-input-container class="md-block" flex-gt-sm>
-                                <label>Team Name</label>
+                                <label data-translate="teamApplication.teamName"></label>
                                 <input name="name" ng-model="vm.team.teamName" required>
                             </md-input-container>
                         </div>
                         <div class="col-md-6">
                             <md-input-container class="md-block" flex-gt-sm>
-                                <label>Company (Optional)</label>
+                                <label data-translate="teamApplication.company"></label>
                                 <input name="company" ng-model="vm.team.companyName">
                             </md-input-container>
                         </div>
@@ -34,10 +34,10 @@
                             <p>{{member[0]}}</p>
                         </div>
                         <div class="col-md-5">
-                            <span style="display: flex" ng-if="member[1] === 'PROFILE_COMPLETE' ">
-                                <i class="material-icons w3-text-green">done</i>Profile completed</span>
-                            <span style="display: flex" ng-if="member[1] !== 'PROFILE_COMPLETE'">
-                                <i class="material-icons w3-text-red">clear</i>Profile incomplete</span>
+                            <span style="display: flex" ng-if="member[1] === 'PROFILE_COMPLETE' " data-translate="teamApplication.profileComplete">
+                                <i class="material-icons w3-text-green">done</i></span>
+                            <span style="display: flex" ng-if="member[1] !== 'PROFILE_COMPLETE'" data-translate="teamApplication.profileIncomplete">
+                                <i class="material-icons w3-text-red">clear</i></span>
                         </div>
                         <div ng-show="vm.removable" class="col-md-1">
                             <span ng-if="member[0] !== vm.account.email" class="btn btn-danger btn-xs pull-right glyphicon glyphicon-remove" ng-click="vm.removeMail(member)"></span>
@@ -48,12 +48,12 @@
                     <div ng-show="vm.emptySlot > 1" layout-gt-sm="row" flex>
 
                         <div class="col-md-12">
-                            <p class="w3-text-indigo"><i>Note: Your maximum team member is {{vm.maxMember}} including you.</i></p>
-                            <md-chips md-max-chips="{{vm.emptySlot}}" ng-model="vm.inviteMails" name="inviteMails" md-removable="true" placeholder="Enter email, Tab for many"
+                            <p class="w3-text-indigo" data-translate="teamApplication.note" translate-values="{param: '{{vm.maxMember}}'}"><i></i></p>
+                            <md-chips md-max-chips="{{vm.emptySlot}}" ng-model="vm.inviteMails" name="inviteMails" md-removable="true" placeholder="{{'teamApplication.chipPlaceholder' | translate}}"
                                 md-separator-keys="vm.separator">
                             </md-chips>
                             <div class="alert w3-text-red" ng-messages="teamForm.inviteMails.$error">
-                                <div ng-message="md-max-chips">Maximum member of team reached.</div>
+                                <div ng-message="md-max-chips" data-translate="teamApplication.validate.maxChip"></div>
                             </div>
                         </div>
                     </div>
@@ -61,7 +61,7 @@
                     <div layout-gt-sm="row" flex>
                         <div class="col-md-12">
                             <md-input-container class="md-block" flex-gt-sm>
-                                <label>Team Description</label>
+                                <label data-translate="teamApplication.description"></label>
                                 <textarea name="description" md-maxlength="1000" ng-model="vm.team.description" rows="7" md-select-on-focus required></textarea>
                             </md-input-container>
                         </div>
@@ -70,7 +70,7 @@
                     <div layout-gt-sm="row" flex>
                         <div class="col-md-12">
                             <md-input-container class="md-block" flex-gt-sm>
-                                <label>Motivation</label>
+                                <label data-translate="teamApplication.motivation"></label>
                                 <textarea name="motivation" md-maxlength="1000" ng-model="vm.team.motivation" rows="7" md-select-on-focus required></textarea>
                             </md-input-container>
                         </div>
@@ -79,7 +79,7 @@
                     <div layout-gt-sm="row" flex>
                         <div class="col-md-12">
                             <md-input-container class="md-block" flex-gt-sm>
-                                <label>Ideas Description</label>
+                                <label data-translate="teamApplication.idea"></label>
                                 <textarea name="ideasDescription" md-maxlength="1000" ng-model="vm.team.ideasDescription" rows="7" md-select-on-focus required></textarea>
                             </md-input-container>
                         </div>
@@ -96,7 +96,7 @@
 
 <div class="row" ng-cloak>
     <div class="text-center">
-        <md-button class="md-raised" ui-sref="complete-profile({id: vm.challengeId})">Back</md-button>
-        <md-button class="md-raised md-primary" ng-click="vm.save()" ng-disabled="teamForm.$invalid">Save Application</md-button>
+        <md-button class="md-raised" ui-sref="complete-profile({id: vm.challengeId})" data-translate="teamApplication.back"></md-button>
+        <md-button class="md-raised md-primary" ng-click="vm.save()" ng-disabled="teamForm.$invalid" data-translate="teamApplication.save"></md-button>
     </div>
 </div>

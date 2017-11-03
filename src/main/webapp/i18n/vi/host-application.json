@@ -1,17 +1,18 @@
 {
     "hackathonApp": {
         "host" : {
-            "title": "Become a Host",
-            "name": "What is your name?",
-            "company": "What is your company name?",
-            "phone": "What is your phone number?",
-            "email": "What is your email?",
-            "note": "Add additional note here",
+            "title": "Trở thành nhà tổ chức",
+            "name": "Tên bạn?",
+            "company": "Tên công ty bạn?",
+            "phone": "Số điện thoại của bạn?",
+            "email": "Email của bạn?",
+            "note": "Ghi chú thêm",
+            "submit": "Gửi đi",
             "messages": {
-              "name": "your name is required",
-              "company": "your company name is required",
-              "phone": "your phone number is required",
-              "email": "your email is required"
+              "name": "Tên bạn không được bỏ trống",
+              "company": "Tên công ty bạn không được bỏ trống",
+              "phone": "Số điện thoại không được bỏ trống",
+              "email": "Email không được bỏ trống"
             }
         }
     }

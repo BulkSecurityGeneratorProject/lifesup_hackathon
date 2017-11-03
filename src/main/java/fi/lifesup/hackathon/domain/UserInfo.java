@@ -35,7 +35,6 @@ public class UserInfo implements Serializable {
 
     @Column(name = "company_name")
     private String companyName;
-
     
     @Column(name = "job_title")
     private String jobTitle;

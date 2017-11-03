@@ -1,0 +1,45 @@
+{
+    "hackathonApp": {
+        "applicationslist" : {
+            "home": {
+                "title": "Danh sách đơn",
+                "search": {
+                    "placeHolder": "Gõ tên nhóm cần tìm",
+                    "noResult" : "Không tìm thấy kết quả!"
+                },
+                "detail": "Xem chi tiết"
+            },
+            "detail": {
+                "title": "Chi tiết đơn ứng tuyển",
+                "teamName": "Tên nhóm",
+                "companyName": "Tên công ty",
+                "description": "Mô tả về nhóm",
+                "motivation": "Động lực của nhóm",
+                "ideasDescription": "Các ý tưởng của nhóm",
+                "editApplication": "Chỉnh sửa đơn ứng tuyển",
+                "status": "Trạng thái",
+                "challenge": "Thử thách",
+                "users": "Người dùng",
+                "noApplication": "Xin lỗi, hiện tại chưa có đơn ứng tuyển cho thử thách này!",
+                "approved": "Đã chấp nhận",
+                "rejected": "Đã từ chối",
+                "completeProfile": "Hoàn thiện thông tin của bạn",
+                "pending": "<strong>Đang chờ chấp nhận từ</strong>"
+            },
+            "challengeInfo": {
+                "challenge": "Bạn đang nộp đơn vào _",
+                "deadline": "Hạn chót nộp đơn _",
+                "progress": "Đơn sẵn sàng _",
+                "status": {
+                    "heading": "Đơn này là",
+                    "valid": "Hợp lệ",
+                    "invalid": "Không hợp lệ"
+                },
+                "challengePage": "Xem trang thử thách",
+                "approve": "Chấp nhận",
+                "reject": "Từ chối",
+                "additionalText": "Sau hạn chót, đơn sẽ được kiểm duyệt"
+            }
+        }
+    }
+}

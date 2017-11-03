@@ -2,53 +2,60 @@
     "hackathonApp": {
         "challengeslist": {
             "home": {
-                "title": "Challenges List"
-            }
+                "title": "Tất cả thử thách"
+            },
+            "noChallenge": "Rất tiếc! Hiện tại chưa có thử thách nào."
         },
         "challengesDetails": {
-						"title": "Challenge Details",
-						"challengeIntro": "About the challenge",
-						"companyIntro": "About the company",
-						"resourceText": "Available Resources",
-						"rewardsText": "Rewards",
-						"timelineText": "Timeline of the challenge",
-						"rulesText": "Rules",
-						"bannerUrl": "Banner URL",
-						"additionalText": "Additional information",
-						"maxTeamMember": "Max Team Member",
-						"minTeamMember": "Min Team Member",
-						"subtitle": "Apply to challenge",
-            "eventStartTime": "Event Start",
-            "eventEndTime": "Event End",
-            "applicationCloseDate": "Application Close",
-            "kickoffWebinarDate": "Kick Off Webinar",
-            "selectionInformDate": "Inform Date",
+            "title": "Chi tiết về thử thách",
+            "challengeIntro": "Về thử thách",
+            "companyIntro": "Về công ty",
+            "resourceText": "Nguồn tài nguyên hiện có",
+            "rewardsText": "Giải thưởng",
+            "timelineText": "Lịch trình",
+            "rulesText": "Quy tắc",
+            "bannerUrl": "Địa chỉ ảnh bìa",
+            "additionalText": "Thông tin bổ sung",
+            "maxTeamMember": "Số thành viên tối đa",
+            "minTeamMember": "Số thành viên tối thiểu",
+            "subtitle": "Tham gia thử thách",
+            "eventStartTime": "Sự kiện bắt đầu",
+            "eventEndTime": "Sự kiện kết thúc",
+            "applicationCloseDate": "Hạn nộp đơn",
+            "kickoffWebinarDate": "Ngày hội thảo",
+            "selectionInformDate": "Ngày thông báo trúng tuyển",
             "pilotSubmissionCloseDate": "Submission Close",
             "pilotPhaseStartDate": "Pilot Phase Start",
             "pilotPhaseEndDate": "Pilot Phase End",
-            "prize": "Prize",
-            "location": "Location",
+            "prize": "Giải thưởng",
+            "location": "Địa điểm",
             "status": {
-                "draft": "Draft",
-                "active": "Active",
-                "close": "Close"
-            }
+                "draft": "Nháp",
+                "active": "Kích hoạt",
+                "inactive": "Chưa kích hoạt",
+                "close": "Kết thúc"
+            },
+            "timeUp": "Hết hạn nộp đơn"
         },
-        "search":{
-            "placeHolder" : "What is your favorite company or challenge?",
-            "noResult" : "No result were found!",
-						"endAfter": "End After",
-						"startBefore": "Start Before"
+        "search": {
+            "name": "Tên thử thách",
+            "startDate": "Ngày bắt đầu",
+            "endDate": "Ngày kết thúc",
+            "placeHolder": "Thử thách hoặc công ty yêu thích của bạn là gì?",
+            "noResult": "Không có kết quả trả về!",
+            "endAfter": "Kết thúc sau",
+            "startBefore": "Bắt đầu trước",
+            "pull": "Kéo xuống để tải thêm"
         },
-				"applicationStatus": {
-						"close": "Applications have closed",
-						"applied": "View your application",
-						"apply": "Apply now!"
-				},
-				"subscribe": {
-					"remind": "Remind me to apply",
-					"infoText": "Sign up to hear when the application deadline is close.",
-					"signup": "Sign up"
-				}
+        "applicationStatus": {
+            "close": "Đã ngừng nhận đơn",
+            "applied": "Xem đơn của bạn",
+            "apply": "Tham gia ngay!"
+        },
+        "subscribe": {
+            "remind": "Nhắc tôi tham gia",
+            "infoText": "Đăng kí để nhận thông báo.",
+            "signup": "Đăng kí"
+        }
     }
 }

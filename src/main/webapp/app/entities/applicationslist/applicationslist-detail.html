@@ -10,9 +10,6 @@
 			<div class="team-info col-md-8 col-xs-12">
 				<div class="card-wrapper">
 					<br>
-					<!-- <div class="text-center alert alert-success" ng-if="vm.application.status == 'APPROVED'">
-						<strong>Congratulation!</strong> Your application has been approved.
-					</div> -->
 					<!--======== member card ============-->
 					<div class="member-wrapper horizontal-card row" ng-repeat="member in vm.members">
 						<div ng-if="member.id">
@@ -28,7 +25,7 @@
 								<p>{{member.companyName}}</p>
 							</div>
 							<div class="member-detail col-md-7 col-xs-12">
-								<button ng-if="!member.introduction && member.invitedMail == vm.account.email" class="btn custom-btn challenge-link w3-red" ui-sref="settings">Complete your profile</button>
+								<button ng-if="!member.introduction && member.invitedMail == vm.account.email" class="btn custom-btn challenge-link w3-red" ui-sref="settings" data-translate="hackathonApp.applicationslist.detail.completeProfile"></button>
 								<div class="member-description">{{member.introduction}}</div>
 								<div class="member-skill" ng-repeat="skill in member.skills track by $index">
 									<span class="skill-badge">{{skill}}</span>
@@ -41,7 +38,7 @@
 							</div>
 							<div class="member-info col-md-10 col-xs-12">
 								<!-- <p> -->
-								<strong>Pending invitation to</strong>
+								<strong data-translate="hackathonApp.applicationslist.detail.pending"></strong>
 								<!-- </p> -->
 								<p>{{member.jobTitle}}</p>
 								<p>{{member.invitedMail}}</p>
@@ -53,18 +50,18 @@
 					<!--======== other info ============-->
 					<div class="horizontal-card">
 						<div class="team-description">
-							<h3 data-translate="hackathonApp.applicationslist.detail.description">Team Description</h3>
+							<h3 data-translate="hackathonApp.applicationslist.detail.description"></h3>
 							<p>{{vm.application.description}}</p>
 						</div>
 						<div class="team-motivation">
-							<h3 data-translate="hackathonApp.applicationslist.detail.motivation">Team Motivation</h3>
+							<h3 data-translate="hackathonApp.applicationslist.detail.motivation"></h3>
 							<p>{{vm.application.motivation}}</p>
 						</div>
 						<div class="team-conclusion">
-							<h3 data-translate="hackathonApp.applicationslist.detail.ideasDescription">Ideas Description</h3>
+							<h3 data-translate="hackathonApp.applicationslist.detail.ideasDescription"></h3>
 							<p>{{vm.application.ideasDescription}}</p>
 						</div>
-						<button has-authority-except="ROLE_HOST" ng-if="vm.application.status !== 'APPROVED' && vm.application.status !== 'REJECTED'" class="btn custom-btn w3-blue" ui-sref="team({id:vm.application.challengeId})" data-translate="hackathonApp.applicationslist.detail.editApplication">Edit your application</button>
+						<button has-authority-except="ROLE_HOST" ng-if="vm.application.status !== 'APPROVED' && vm.application.status !== 'REJECTED'" class="btn custom-btn w3-blue" ui-sref="team({id:vm.application.challengeId})" data-translate="hackathonApp.applicationslist.detail.editApplication"></button>
 					</div>
 				</div>
 			</div>
@@ -73,15 +70,15 @@
 			<div class="application-progress col-md-3 col-xs-12 horizontal-card">
 				<div style="background-image:url({{vm.challenge.bannerUrl}})" class="challenge-banner"></div>
 				<div>
-					<p class="application-sub-title" data-translate="hackathonApp.applicationslist.challengeInfo.challenge">You are applying to _</p>
+					<p class="application-sub-title" data-translate="hackathonApp.applicationslist.challengeInfo.challenge"></p>
 					<h3 class="challenge-name">{{vm.challenge.name}}</h3>
 				</div>
 				<div>
-					<p class="application-sub-title" data-translate="hackathonApp.applicationslist.challengeInfo.deadline">Application deadline _</p>
+					<p class="application-sub-title" data-translate="hackathonApp.applicationslist.challengeInfo.deadline"></p>
 					<span>{{vm.challenge.info.eventEndTime | date}}</span>
 				</div>
 				<div>
-					<p class="application-sub-title" data-translate="hackathonApp.applicationslist.challengeInfo.progress">Application Readiness _</p>
+					<p class="application-sub-title" data-translate="hackathonApp.applicationslist.challengeInfo.progress"></p>
 					<md-progress-linear md-mode="determinate" value="{{vm.determinateValue}}"></md-progress-linear>
 				</div>
 				<!-- team validation -->
@@ -94,27 +91,27 @@
 				</div>
 
 				<div>
-					<h3 data-translate="hackathonApp.applicationslist.challengeInfo.status.heading">This application is</h3>
+					<h3 data-translate="hackathonApp.applicationslist.challengeInfo.status.heading"></h3>
 					<div ng-switch="vm.application.status==='WAITING_FOR_APPROVE' || vm.application.status==='APPROVED'">
 						<div ng-switch-when="true" class="application-status application-valid">
 							<i class="material-icons">thumb_up</i>
-							<span data-translate="hackathonApp.applicationslist.challengeInfo.status.valid">Valid</span>
+							<span data-translate="hackathonApp.applicationslist.challengeInfo.status.valid"></span>
 						</div>
 						<div ng-switch-when="false" class="application-status application-invalid">
 							<i class="material-icons">thumb_down</i>
-							<span data-translate="hackathonApp.applicationslist.challengeInfo.status.invalid">Invalid</span>
+							<span data-translate="hackathonApp.applicationslist.challengeInfo.status.invalid"></span>
 						</div>
-						<div class="text-center" data-translate="hackathonApp.applicationslist.challengeInfo.additionalText">After the deadline the application will be screened</div>
+						<div class="text-center" data-translate="hackathonApp.applicationslist.challengeInfo.additionalText"></div>
 					</div>
 				</div>
 				<div>
-					<a class="btn custom-btn challenge-link w3-blue"  data-translate="hackathonApp.applicationslist.challengeInfo.challengePage" target="_blank" ui-sref="challengeslist-detail({id:vm.application.challengeId})">VIEW THE CHALLENGE PAGE</a>
+					<a class="btn custom-btn challenge-link w3-blue"  data-translate="hackathonApp.applicationslist.challengeInfo.challengePage" target="_blank" ui-sref="challengeslist-detail({id:vm.application.challengeId})"></a>
 				</div>
 				<!--======== approve/reject buttons ============-->
 				<div has-any-authority="ROLE_HOST,ROLE_ADMIN" ng-show="vm.application.status !== 'DRAFT'">
 					<div class="action-btn-group">
-						<button ng-disabled="!vm.application.status==='WAITING_FOR_APPROVE'" class="action-btn approve-btn" ng-click="vm.approve(vm.application)" data-translate="hackathonApp.applicationslist.challengeInfo.approve">APPROVE</button>
-						<button class="action-btn reject-btn" ng-click="vm.reject(vm.application)" data-translate="hackathonApp.applicationslist.challengeInfo.reject">REJECT</button>
+						<button ng-disabled="!vm.application.status==='WAITING_FOR_APPROVE'" class="action-btn approve-btn" ng-click="vm.approve(vm.application)" data-translate="hackathonApp.applicationslist.challengeInfo.approve"></button>
+						<button class="action-btn reject-btn" ng-click="vm.reject(vm.application)" data-translate="hackathonApp.applicationslist.challengeInfo.reject"></button>
 					</div>
 				</div>
 			</div>

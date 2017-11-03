@@ -1,0 +1,22 @@
+{
+    "teamApplication": {
+        "home": {
+            "title": "Team Application",
+            "subtitle": "This part is the actual application for this specific challenge."
+        },
+        "profileComplete": "Profile Complete",
+        "profileIncomplete": "Profile Incomplete",
+        "teamName": "Team Name",
+        "note": "Note: Your maximum team member is {{param}} including you.",
+        "company": "Company (Optional)",
+        "description": "Description",
+        "motivation": "Motivation",
+        "idea": "Ideas Description",
+        "back": "Back",
+        "save": "Save Application",
+        "chipPlaceholder":"Enter email, Tab for many",
+        "validate":{
+            "maxChip": "Maximum member of team reached."
+        }
+    }
+}

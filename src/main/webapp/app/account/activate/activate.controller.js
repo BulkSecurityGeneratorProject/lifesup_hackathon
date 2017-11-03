@@ -19,16 +19,11 @@
             vm.error = 'ERROR';
         });
 
-        
-
         function redirect() {
-            console.log('abc');
             $timeout(function () {
                 $state.go('login-signup');
             }, 3500);
         }
-
-
 
         vm.login = LoginService.open;
     }

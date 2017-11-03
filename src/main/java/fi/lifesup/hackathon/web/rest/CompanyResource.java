@@ -24,13 +24,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 
-import fi.lifesup.hackathon.domain.Application;
 import fi.lifesup.hackathon.domain.Company;
 import fi.lifesup.hackathon.domain.User;
 import fi.lifesup.hackathon.repository.CompanyRepository;
 import fi.lifesup.hackathon.service.MailService;
 import fi.lifesup.hackathon.service.UserService;
-import fi.lifesup.hackathon.service.dto.ApplicationBasicDTO;
 import fi.lifesup.hackathon.service.dto.CompanyDTO;
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 

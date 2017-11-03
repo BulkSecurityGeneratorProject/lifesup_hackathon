@@ -4,14 +4,14 @@
         <md-input-container flex-gt-sm="50">
             <label>
                 <span class="glyphicon glyphicon-calendar"></span>&nbsp;
-                <span>Start date</span>
+                <span data-translate="hackathonApp.filter.startDate"></span>
             </label>
             <md-datepicker id="datepicker" md-hide-icons="all" md-open-on-focus ng-model="vm.challengeSearch.eventStartTime" ng-change="vm.querySearchName()"></md-datepicker>
         </md-input-container>
         <md-input-container flex-gt-sm="50">
             <label>
                 <span class="glyphicon glyphicon-calendar"></span>&nbsp;
-                <span>End date</span>
+                <span data-translate="hackathonApp.filter.endDate"></span>
             </label>
             <md-datepicker id="datepicker" md-hide-icons="all" md-open-on-focus ng-model="vm.challengeSearch.eventEndTime" ng-change="vm.querySearchName()"></md-datepicker>
         </md-input-container>
@@ -20,14 +20,14 @@
         <md-input-container class="md-block" flex-gt-sm="100">
             <label>
                 <span class="glyphicon glyphicon-search"></span>&nbsp;
-                <span>Enter challenge name</span>
+                <span data-translate="hackathonApp.filter.search"></span>
             </label>
             <input ng-model="vm.challengeSearch.name" ng-change="vm.querySearchName()" ng-model-options="{ debounce: 500 }" style="color:black !important;">
         </md-input-container>
     </div>
     <div layout="row" flex="10">
         <md-input-container class="md-block" flex-gt-sm="100">
-            <label>Status</label>
+            <label data-translate="hackathonApp.filter.status"></label>
             <md-select ng-model="vm.challengeSearch.status" ng-change="vm.querySearchName()">
                 <md-option ng-value="status" ng-repeat="status in vm.allStatus">{{status}}</md-option>
             </md-select>
@@ -47,9 +47,8 @@
     <div class="col-md-3"></div>
     <div class="col-md-6 text-center">
         <uib-alert type="warning">
-            <span data-translate="hackathonApp.messages.empty">Haven't got any challenges? </span>
+            <span data-translate="hackathonApp.messages.empty"></span>
             <a ui-sref="challenge-manager.new" data-translate="hackathonApp.messages.create">
-                <strong>Create one!</strong>
             </a>
         </uib-alert>
         <div>
@@ -65,19 +64,19 @@
         infinite-scroll-disabled="vm.page >= vm.links['last']">
         <md-card class="challenge-card" ng-switch="challenge.info.status">
             <!-- Display ribbon -->
-            <div ng-switch-when="ACTIVE" class="ribbon-wrapper">
-                <div class="ribbon-green">Active</div>
+            <!-- <div ng-switch-when="ACTIVE" class="ribbon-wrapper">
+                <div class="ribbon-green" data-translate="hackathonApp.card.active"></div>
             </div>
             <div ng-switch-when="DRAFT" class="ribbon-wrapper">
-                <div class="ribbon-brown">Draft</div>
+                <div class="ribbon-brown" data-translate="hackathonApp.card.draft"></div>
             </div>
             <div ng-switch-when="INACTIVE" class="ribbon-wrapper">
-                <div class="ribbon-grey">Inactive</div>
+                <div class="ribbon-grey" data-translate="hackathonApp.card.inactive"></div>
             </div>
 
             <div ng-switch-when="CLOSED" class="ribbon-wrapper">
-                <div class="ribbon-grey">Closed</div>
-            </div>
+                <div class="ribbon-grey" data-translate="hackathonApp.card.closed"></div>
+            </div> -->
             <!-- Display cover -->
             <img ng-switch-when="ACTIVE" ui-sref="challenge-manager-detail({id:challenge.id})" ng-src="{{challenge.bannerUrl}}" class="md-card-image"
                 alt="">
@@ -143,14 +142,14 @@
                         <i class="challenge-icon material-icons w3-text-orange">alarm</i>{{challenge.timeLeft}}
                     </md-list-item>
                     <md-list-item ng-switch-when="DRAFT">
-                        <i class="challenge-icon material-icons w3-text-khaki">vpn_key</i>Activation required
+                        <i class="challenge-icon material-icons w3-text-khaki">vpn_key</i><span data-translate="hackathonApp.card.activationRequired"></span>
                     </md-list-item>
                     <md-list-item ng-switch-when="INACTIVE">
-                        <i class="challenge-icon material-icons w3-text-red">alarm_off</i>Application has closed
+                        <i class="challenge-icon material-icons w3-text-red">alarm_off</i><span data-translate="hackathonApp.card.appClosed"></span>
                     </md-list-item>
 
                     <md-list-item ng-switch-when="CLOSED">
-                        <i class="challenge-icon material-icons w3-text-red">close</i>Event has ended
+                        <i class="challenge-icon material-icons w3-text-red">close</i><span data-translate="hackathonApp.card.eventEnded"></span>
                     </md-list-item>
                 </md-list>
             </md-card-content>
@@ -159,7 +158,7 @@
             <!-- Actions -->
             <md-card-actions layout="row" layout-align="end center">
                 <md-button class="w3-border" ui-sref="applicationslist({id:challenge.id})">
-                    <b>See Applications</b>
+                    <b data-translate="hackathonApp.card.seeApp"></b>
                 </md-button>
                 <span flex></span>
                 <md-button ui-sref="challenge-manager.delete({id:challenge.id})" class="md-fab md-mini md-hue-3" title="Delete" aria-label="Delete">

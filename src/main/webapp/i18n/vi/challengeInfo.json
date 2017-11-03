@@ -1,0 +1,26 @@
+{
+    "hackathonApp": {
+        "challengeInfo" : {
+            "home": {
+                "title": "Challenge Infos",
+                "createLabel": "Create a new Challenge Info",
+                "createOrEditLabel": "Create or edit a Challenge Info",
+                "search": "Search for Challenge Info"
+            },
+            "created": "A new Challenge Info is created with identifier {{ param }}",
+            "updated": "A Challenge Info is updated with identifier {{ param }}",
+            "deleted": "A Challenge Info is deleted with identifier {{ param }}",
+            "delete": {
+                "question": "Are you sure you want to delete Challenge Info {{ id }}?"
+            },
+            "detail": {
+                "title": "Challenge Info"
+            },
+            "eventStartTime": "Event Start Time",
+            "eventEndTime": "Event End Time",
+            "location": "Location",
+            "status": "Status",
+            "prize": "Prize"
+        }
+    }
+}

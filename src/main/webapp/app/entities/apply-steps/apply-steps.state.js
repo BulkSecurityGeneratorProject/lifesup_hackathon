@@ -52,6 +52,7 @@
                         $translatePartialLoader.addPart('application');
                         $translatePartialLoader.addPart('applicationStatus');
                         $translatePartialLoader.addPart('global');
+                        $translatePartialLoader.addPart('teamApplication');
                         return $translate.refresh();
                     }]
                 }
@@ -75,6 +76,7 @@
                         $translatePartialLoader.addPart('loginsignup');
                         $translatePartialLoader.addPart('login');
                         $translatePartialLoader.addPart('applicationslist');
+                        $translatePartialLoader.addPart('teamInvite');
                         return $translate.refresh();
                     }]
                 }

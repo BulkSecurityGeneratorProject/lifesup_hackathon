@@ -7,22 +7,20 @@
     <div class="side-wrapper col-xs-12 col-md-4 col-lg-4 col-lg-push-8 col-md-push-8">
         <div class="info-column" ng-switch="vm.challenge.info.status">
             <div ng-switch-when="ACTIVE" class="ribbon-wrapper">
-                <div class="ribbon-green">Active</div>
+                <div class="ribbon-green" data-translate="hackathonApp.card.active"></div>
             </div>
-
             <div ng-switch-when="DRAFT" class="ribbon-wrapper">
-                <div class="ribbon-brown">Draft</div>
+                <div class="ribbon-brown" data-translate="hackathonApp.card.draft"></div>
             </div>
-
             <div ng-switch-when="INACTIVE" class="ribbon-wrapper">
-                <div class="ribbon-grey">Inactive</div>
+                <div class="ribbon-grey" data-translate="hackathonApp.card.inactive"></div>
             </div>
 
             <div ng-switch-when="CLOSED" class="ribbon-wrapper">
-                <div class="ribbon-grey">Closed</div>
+                <div class="ribbon-grey" data-translate="hackathonApp.card.closed"></div>
             </div>
 
-            <h3>Base Info</h3>
+            <h3 data-translate="hackathonApp.challengeDetail.sidebar.title"></h3>
 
             <div class="info-wrapper">
                 <p><i class="material-icons">date_range</i>{{vm.challenge.info.eventStartTime | date}} - {{vm.challenge.info.eventEndTime
@@ -30,50 +28,46 @@
                 <hr>
                 <p><i class="material-icons">pin_drop</i>{{vm.challenge.info.location}}</p>
                 <hr>
-                <p><i class="material-icons">people</i>{{vm.challenge.minTeamNumber}} - {{vm.challenge.maxTeamNumber}} member(s)
-                    / team</p>
-                <!-- <hr>
-                <p ng-if="vm.challenge.timeLeft > 0"><i class="material-icons">alarm</i>Application closes in {{vm.challenge.timeLeft}} day(s)</p>
-                <p ng-if="vm.challenge.timeLeft <= 0"><i class="material-icons">close</i>Application has closed</p> -->
+                <p><i class="material-icons">people</i>{{vm.challenge.minTeamNumber}} - {{vm.challenge.maxTeamNumber}}</p>
             </div>
         </div>
 
     </div>
     <div class="container main-content col-xs-12 col-md-8 col-lg-8 col-lg-pull-4 col-md-pull-4">
         <dl class="dl-horizontal jh-entity-details">
-            <h3><span data-translate="hackathonApp.challenge.introduction">Introduction</span></h3>
+            <h3><span data-translate="hackathonApp.challenge.introduction"></span></h3>
             <p>
                 <span>{{vm.challenge.introduction}}</span>
             </p>
-            <h3><span data-translate="hackathonApp.challenge.challengeText">Challenge Content</span></h3>
+            <h3><span data-translate="hackathonApp.challenge.challengeText"></span></h3>
             <p>
                 <span>{{vm.challenge.challengeText}}</span>
             </p>
-            <h3><span data-translate="hackathonApp.challenge.resourceText">Resource</span></h3>
+            <h3><span data-translate="hackathonApp.challenge.resourceText"></span></h3>
             <p>
                 <span>{{vm.challenge.resourceText}}</span>
             </p>
-            <h3><span data-translate="hackathonApp.challenge.rewardsText">Rewards</span></h3>
+            <h3><span data-translate="hackathonApp.challenge.rewardsText"></span></h3>
             <p>
                 <span>{{vm.challenge.rewardsText}}</span>
             </p>
-            <h3><span data-translate="hackathonApp.challenge.timelineText">Timeline</span></h3>
+            <h3><span data-translate="hackathonApp.challenge.timelineText"></span></h3>
             <ul>
-                <li><label>Application Close:</label>&nbsp;{{vm.challenge.info.applicationCloseDate | date: 'longDate'}}</li>
-                <li><label>Inform Date:</label>&nbsp;{{vm.challenge.info.selectionInformDate | date: 'longDate'}}</li>
-                <li><label>Kich Off Webinar:</label>&nbsp;{{vm.challenge.info.kickoffWebinarDate | date: 'longDate'}}</li>
-                <li><label>Event Start:</label>&nbsp;{{vm.challenge.info.eventStartTime | date: 'longDate'}}</li>
-                <li><label>Pilot Submission Close:</label>&nbsp;{{vm.challenge.info.pilotSubmissionCloseDate | date: 'longDate'}}</li>
-                <li><label>Pilot Phase Start Date:</label>&nbsp;{{vm.challenge.info.pilotPhaseStartDate | date: 'longDate'}}</li>
-                <li><label>Pilot Phase End Date:</label>&nbsp;{{vm.challenge.info.pilotPhaseEndDate | date: 'longDate'}}</li>
-                <li><label>Event End:</label>&nbsp;{{vm.challenge.info.eventEndTime | date: 'longDate'}}</li>
+                <li><label data-translate="hackathonApp.challengeInfo.applicationCloseDate"></label>:&nbsp;{{vm.challenge.info.applicationCloseDate | date: 'longDate'}}</li>
+                <li><label data-translate="hackathonApp.challengeInfo.selectionInformDate"></label>:&nbsp;{{vm.challenge.info.selectionInformDate | date: 'longDate'}}</li>
+                <li><label data-translate="hackathonApp.challengeInfo.kickoffWebinarDate"></label>:&nbsp;{{vm.challenge.info.kickoffWebinarDate | date: 'longDate'}}</li>
+                <li><label data-translate="hackathonApp.challengeInfo.eventStartTime"></label>:&nbsp;{{vm.challenge.info.eventStartTime | date: 'longDate'}}</li>
+                <li><label data-translate="hackathonApp.challengeInfo.pilotSubmissionCloseDate"></label>:&nbsp;{{vm.challenge.info.pilotSubmissionCloseDate | date: 'longDate'}}</li>
+                <li><label data-translate="hackathonApp.challengeInfo.pilotPhaseStartDate"></label>:&nbsp;{{vm.challenge.info.pilotPhaseStartDate | date: 'longDate'}}</li>
+                <li><label data-translate="hackathonApp.challengeInfo.pilotPhaseEndDate"></label>:&nbsp;{{vm.challenge.info.pilotPhaseEndDate | date: 'longDate'}}</li>
+                <li><label data-translate="hackathonApp.challengeInfo.eventEndTime"></label>:&nbsp;{{vm.challenge.info.eventEndTime | date: 'longDate'}}</li>
             </ul>
-            <h3><span data-translate="hackathonApp.challenge.rulesText">Rules</span></h3>
+            <h3><span data-translate="hackathonApp.challenge.rulesText"></span></h3>
             <p>
                 <span>{{vm.challenge.rulesText}}</span>
             </p>
 
-            <h3><span data-translate="hackathonApp.challenge.additionalText">Additional</span></h3>
+            <h3><span data-translate="hackathonApp.challenge.additionalText"></span></h3>
             <p>
                 <span>{{vm.challenge.additionalText}}</span>
             </p>
@@ -84,16 +78,16 @@
 
     <div>
         <button type="submit" ui-sref="{{ vm.previousState }}" class="btn btn-info">
-        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"> Back</span>
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span data-translate="entity.action.back"></span>
     </button>
 
         <button type="button" ui-sref="challenge-manager-detail.edit({id:vm.challenge.id})" class="btn btn-primary">
         <span class="glyphicon glyphicon-pencil"></span>
-        <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"> Edit</span>
+        <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"></span>
     </button>
         <button type="button" ui-sref="challenge-manager-detail.delete({id:vm.challenge.id})" class="btn btn-primary btn-danger">
         <span class="glyphicon glyphicon-remove"></span>
-        <span class="hidden-xs hidden-sm" data-translate="entity.action.delete"> delete</span>
+        <span class="hidden-xs hidden-sm" data-translate="entity.action.delete"></span>
     </button>
     </div>
 </div>

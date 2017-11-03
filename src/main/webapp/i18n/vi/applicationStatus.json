@@ -1,0 +1,12 @@
+{
+    "hackathonApp": {
+        "ApplicationStatus" : {
+            "null": "",
+            "DRAFT": "DRAFT",
+            "WAITING_FOR_APPROVE": "WAITING_FOR_APPROVE",
+            "APPROVED": "APPROVED",
+            "REJECTED": "REJECTED",
+            "CLOSED": "CLOSED"
+        }
+    }
+}

@@ -1,30 +1,80 @@
 {
     "settings": {
-        "title": "Cài đặt người dùng của [<b>{{username}}</b>]",
+        "title": "User settings for [<b>{{username}}</b>]",
+        "profile":{
+            "title": "Fill in your profile",
+            "subtitle": "Your information will not be published."
+        },
         "form": {
-            "firstname": "Tên",
-            "firstname.placeholder": "Nhập tên của bạn",
-            "lastname": "Họ",
-            "lastname.placeholder": "Nhập họ của bạn",
-            "language": "Ngôn ngữ",
-            "button": "Lưu"
+            "edit": "Chỉnh sửa",
+            "fullname": "Full Name",
+            "gender": "Giới tính",
+            "birthday": "Ngày sinh",
+            "company": "Công ty",
+            "jobtitle": "Chức vụ",
+            "phone": "Số điện thoại",
+            "email": "Email",
+            "country": "Quốc gia",
+            "city": "Thành phố",
+            "nationality": "Quốc tịch",
+            "introduction": "Giới thiệu",
+            "twitter": "Twitter URL",
+            "linkedin": "LinkedIn URL",
+            "website": "Website URL",
+            "skills": "Chọn kĩ năng của bạn",
+            "workAreas": "Chọn lĩnh vực bạn đã làm",
+            "feedBackFrom": "Được giới thiệu từ:",
+            "friends": "Bạn bè",
+            "social": "Phương tiện truyền thông",
+            "aCompany": "Một công ty",
+            "other": "Khác...",
+            "save": "Lưu"
+        },
+        "sidebar":{
+            "application": "Các đơn của bạn",
+            "challenge": "Các thử thách của bạn",
+            "changePassword": "Đổi mật khẩu"
         },
         "messages": {
+            "avatar": "Cập nhật thông tin của bạn trước",
             "error": {
-                "fail": "<strong>Có lỗi xảy ra!</strong> Không thể lưu cài đặt.",
-                "emailexists": "<strong>Email đã được sử dụng!</strong> Vui lòng nhập email khác."
+                "fail": "<strong>Có lỗi xảy ra!</strong> Thiết lập chưa được lưu.",
+                "emailexists": "<strong>E-mail đã được sử dụng!</strong> Xin chọn email khác."
             },
-            "success": "<strong>Đã lưu cài đặt!</strong>",
+            "success": "<strong>Thiết lập đã được lưu!</strong>",
             "validate": {
-                "firstname": {
-                    "required": "Bạn phải nhập tên.",
-                    "minlength": "Tên phải có ít nhất 1 ký tự",
-                    "maxlength": "Tên không được vượt quá 50 ký tự"
+                "fullname": {
+                    "required": "Tên bạn không được bỏ trống",
+                    "minlength": "Tên bạn không được ngắn hơn 5 kí tự",
+                    "maxlength": "Tên bạn không thể dài hơn 50 kí tự"
                 },
-                "lastname": {
-                    "required": "Bạn phải nhập họ tên.",
-                    "minlength": "Họ tên phải có ít nhất 1 ký tự",
-                    "maxlength": "Họ tên không được vượt quá 50 ký tự"
+                "gender": {
+                    "required": "Giới tính không được bỏ trống"
+                },
+                "birthday": {
+                    "required": "Ngày sinh không được bỏ trống"
+                },
+                "country": {
+                    "required": "Hãy chọn quốc gia của bạn"
+                },
+                "city": {
+                    "required": "Hãy nhập vào thành phố của bạn."
+                },
+                "nationality": {
+                    "required": "Hãy chọn quốc tịch của bạn."
+                },
+                "introduction": {
+                    "required": "Hãy viết vài điều về bạn!"
+                },
+                "skills": {
+                    "required": "Hãy chọn kĩ năng của bạn!"
+                },
+                "phone": {
+                    "required": "Số điện thoại không được bỏ trống."
+                },
+                "email": {
+                    "pattern": "Email của bạn phải có độ dài từ 10-100 và phải đúng định dạng",
+                    "required": "Email không được bỏ trống"
                 }
             }
         }
