@@ -1,10 +1,14 @@
 package fi.lifesup.hackathon.service;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Base64;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -61,7 +65,7 @@ public class ChallengeService {
 
 	@Inject
 	private ApplicationRepository applicationRepository;
-	
+
 	@Inject
 	private ApplicationService applicationService;
 
@@ -101,7 +105,7 @@ public class ChallengeService {
 		String filePath = null;
 		try {
 			// tao thu muc
-			String dirPath = attachPath + "/challenge/" + challenge.getId();
+			String dirPath = attachPath + "challenge/";
 			File dir = new File(dirPath);
 			if (!dir.exists()) {
 				if (dir.mkdirs()) {
@@ -115,11 +119,10 @@ public class ChallengeService {
 			String[] fileTypeArray = dto.getFiletype().split("/");
 			String extention = fileTypeArray[1];
 			String fileType = fileTypeArray[0];
-			filePath = dirPath + "/" + dto.getChallengeId()+"."+extention;
+			filePath = dirPath + dto.getChallengeId() + "." + extention;
 			// tao file
 			File file = new File(filePath);
 			file.createNewFile();
-			
 
 			byte[] bytes = DatatypeConverter.parseBase64Binary(dto.getBase64());
 
@@ -127,8 +130,7 @@ public class ChallengeService {
 			BufferedImage bImageFromConvert = ImageIO.read(in);
 			ImageIO.write(bImageFromConvert, extention, file);
 
-			String displayPath = filePath.replace("src/main/webapp/", "");
-			challenge.setBannerUrl(displayPath);
+			challenge.setBannerUrl(filePath);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -139,7 +141,7 @@ public class ChallengeService {
 	public void deleteChanllenge(Long id) {
 		Challenge challenge = challengeRepository.findOne(id);
 		challenge.getInfo().setStatus(ChallengeStatus.REMOVED);
-		
+
 		List<Application> applications = applicationRepository.findByChallengeId(id);
 		for (Application application : applications) {
 			applicationService.deleteApplication(application.getId());
@@ -215,8 +217,7 @@ public class ChallengeService {
 		where.append(" where c.info.id = p.id and c.name like '%").append(search.getName()).append("%'");
 		if (search.getStatus() != null) {
 			where.append(" and p.status = :status ");
-		}
-		else{
+		} else {
 			where.append("and p.status not like 'REMOVED' ");
 		}
 		if (search.getEventStartTime() != null && search.getEventEndTime() == null) {
@@ -244,7 +245,7 @@ public class ChallengeService {
 
 		if (user == null) {
 			user = userRepository.getUserByAuthority(SecurityUtils.getCurrentUserLogin(), "ROLE_HOST");
-			
+
 			t = 1;
 			if (user == null) {
 				user = userRepository.getUserByAuthority(SecurityUtils.getCurrentUserLogin(), "ROLE_HOST");
@@ -253,16 +254,14 @@ public class ChallengeService {
 		}
 
 		String where = buildQueryManageChallenge(search);
-		if(t==1)
-		{
-			where=where+" and c.created_by= "+ user.getId();
+		if (t == 1) {
+			where = where + " and c.created_by= " + user.getId();
 		}
 
-		Query query = em.createQuery(sbQuery.toString() + where ,
-				Challenge.class);
+		Query query = em.createQuery(sbQuery.toString() + where, Challenge.class);
 		query.setFirstResult(pageable.getOffset()).setMaxResults(pageable.getPageSize());
 
-		if (search.getStatus()!= null) {
+		if (search.getStatus() != null) {
 			query.setParameter("status", search.getStatus());
 		}
 		if (search.getEventStartTime() != null) {
@@ -271,13 +270,13 @@ public class ChallengeService {
 		if (search.getEventEndTime() != null) {
 			query.setParameter("endTime", search.getEventEndTime());
 		}
-		
+
 		System.out.println(search);
 		lst = query.getResultList();
 
 		Query count = em.createQuery(sbCount.toString() + where);
 
-		if (search.getStatus()!= null) {
+		if (search.getStatus() != null) {
 			count.setParameter("status", search.getStatus());
 		}
 		if (search.getEventStartTime() != null) {
@@ -289,6 +288,27 @@ public class ChallengeService {
 		total = (Long) count.getSingleResult();
 		return new PageImpl<>(lst, pageable, total);
 
+	}
+
+	public String converbase64(Long id) {
+		String fileName = challengeRepository.findOne(id).getBannerUrl();
+		File file = new File(fileName);
+		String base64 = null;
+		FileInputStream fis;
+		try {
+			fis = new FileInputStream(fileName);
+			BufferedInputStream bis = new BufferedInputStream(fis);
+			byte[] bytes = new byte[(int) file.length()];
+			bis.read(bytes);
+			base64 = Base64.getEncoder().encodeToString(bytes);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return base64;
 	}
 
 }

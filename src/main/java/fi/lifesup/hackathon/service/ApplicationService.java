@@ -130,9 +130,10 @@ public class ApplicationService {
 		application.setDescription(applicationDTO.getDescription());
 		application.setIdeasDescription(applicationDTO.getIdeasDescription());
 		application.setMotivation(applicationDTO.getMotivation());
+		application.setStatus(ApplicationStatus.DRAFT);
 		application.setChallenge(challengeRepository.findOne(applicationDTO.getChallengeId()));
 		Application result = applicationRepository.save(application);
-
+		
 		User user = userService.getUserWithAuthorities();
 		addChallengeUserApplication(application, user.getId());
 		ApplicationBasicDTO basicDTO = getApplicationBasic(application.getId());
@@ -165,7 +166,6 @@ public class ApplicationService {
 	}
 
 	public Application updateApplication(ApplicationBasicDTO applicationDTO, String baseUrl) {
-		System.err.println("update");
 		Application application = applicationRepository.findOne(applicationDTO.getId());
 		application.setTeamName(applicationDTO.getTeamName());
 		application.setCompanyName(applicationDTO.getCompanyName());
@@ -416,7 +416,6 @@ public class ApplicationService {
 	}
 
 	public void deleteMember(Long applicationId, String email) {
-		System.err.println("delete");
 		ChallengeUserApplication userApplication = challengeUserApplicationRepository.getMember(applicationId, email);
 		if (userApplication == null) {
 			applicationInviteEmailReponsitory.deleteByApplicationIdAndEmailLike(applicationId, email + "%");

@@ -129,8 +129,7 @@ public class ChallengeResource {
 	@GetMapping("/challenges")
 	@Timed
 	public ResponseEntity<List<Challenge>> getAllChallenges(ChallengeSearch challengeSearch,Pageable pageable
-			) throws URISyntaxException {
-		System.out.println(challengeSearch);
+			) throws URISyntaxException {		
 		Page<Challenge> page = challengeService.getChallengeSearch(challengeSearch, pageable);
 		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/challenges");
 		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
@@ -150,7 +149,9 @@ public class ChallengeResource {
 	@Timed
 	public ResponseEntity<Challenge> getChallenge(@PathVariable Long id) {
 		log.debug("REST request to get Challenge : {}", id);
+		
 		Challenge challenge = challengeRepository.findOne(id);
+		
 		return Optional.ofNullable(challenge).map(result -> new ResponseEntity<>(result, HttpStatus.OK))
 				.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
@@ -178,7 +179,6 @@ public class ChallengeResource {
 //	}
 	public ResponseEntity<List<Challenge>> getManageChallenges(ChallengeSearch challengeSearch,Pageable pageable
 			) throws URISyntaxException {
-		System.out.println(challengeSearch);
 		Page<Challenge> page = challengeService.getChallengeManageSearch(challengeSearch, pageable);
 		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/challenges-by-user");
 		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
@@ -203,6 +203,13 @@ public class ChallengeResource {
 		Challenge result = challengeService.updateChallengeBanner(imageDTO);
 		return ResponseEntity.ok()
 				.headers(HeaderUtil.createEntityUpdateAlert("challenge", imageDTO.getChallengeId().toString())).body(result);
+	}
+	@GetMapping("/challenges/{id}/get-banner-base64")
+	@Timed
+	public String getChallengesBase64(@PathVariable Long id) {
+		log.debug("REST request to get all Challenges By Authories");
+		String base = challengeService.converbase64(id);
+		return base;
 	}
 	
 }
