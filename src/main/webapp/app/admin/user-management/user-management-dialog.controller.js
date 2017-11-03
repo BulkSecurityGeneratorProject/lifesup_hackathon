@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('UserManagementDialogController',UserManagementDialogController);
 
-    UserManagementDialogController.$inject = ['$stateParams', '$uibModalInstance', 'entity', 'User', 'JhiLanguageService'];
+    UserManagementDialogController.$inject = ['$stateParams', '$uibModalInstance', 'entity', 'User', 'JhiLanguageService', 'CompanyName'];
 
-    function UserManagementDialogController ($stateParams, $uibModalInstance, entity, User, JhiLanguageService) {
+    function UserManagementDialogController ($stateParams, $uibModalInstance, entity, User, JhiLanguageService, CompanyName) {
         var vm = this;
 
         vm.authorities = ['ROLE_USER', 'ROLE_ADMIN', 'ROLE_HOST'];
@@ -15,7 +15,33 @@
         vm.languages = null;
         vm.save = save;
         vm.user = entity;
+        vm.companies = [];
+        vm.complete = complete;
+        vm.fillTextbox = fillTextbox;
 
+        getCompanyName();
+
+        function getCompanyName() {
+            CompanyName.query(function(data) {
+                return vm.companies = data;
+            })
+        }
+
+        function complete(string){
+            vm.hidethis = false;
+            var output = [];
+            angular.forEach(vm.companies, function(company){
+                if(company.toLowerCase().indexOf(string.toLowerCase()) >= 0) {
+                   output.push(company);
+                }
+            });
+            vm.filterCompany = output;
+        }
+
+        function fillTextbox(string){
+             vm.company = string;
+             vm.hidethis = true;
+        }
 
         JhiLanguageService.getAll().then(function (languages) {
             vm.languages = languages;

@@ -75,6 +75,14 @@
         </div>
 
         <div class="form-group">
+            <label class="control-label" data-translate="userManagement.company"></label>
+            <input type="text" name="company" ng-model="vm.company" ng-keyup="vm.complete(company)" class="form-control">
+                 <ul class="list-group" ng-hide="vm.hidethis">
+                      <li class="list-group-item" ng-repeat="companyName in vm.filterCompany" ng-click="vm.fillTextbox(companyName)">{{companyName}}</li>
+                 </ul>
+        </div>
+
+        <div class="form-group">
             <label data-translate="userManagement.langKey"></label>
             <select class="form-control" name="langKey" ng-model="vm.user.langKey"
                     ng-options="language as language for language in vm.languages track by language">
