@@ -45,7 +45,8 @@
             "manageChallenges": "Manage Challenges",
             "accountSetting": "Account Setting",
             "accountDetail": "Account Detail",
-            "manageUser": "Manage User"
+            "manageUser": "Manage User",
+            "company": "Company"
         },
         "form": {
             "username": "Username",

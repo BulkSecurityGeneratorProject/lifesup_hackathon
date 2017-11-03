@@ -85,19 +85,19 @@
                     <md-tooltip md-direction="bottom">Add new Company</md-tooltip>
                     <md-icon class="material-icons white">add</md-icon>
                 </md-button>
-                <md-button class="md-fab md-mini mobile-hidden" aria-label="t" md-colors="{background: 'blue-500'}" ng-show="vm.selected.length==1"
+                <md-button class="md-fab md-mini mobile-hidden" aria-label="t" md-colors="vm.selected.length==1?{background: 'blue-500'} : {background:'blue-100'}" ng-disabled="!vm.selected.length==1"
                     ng-click="vm.showCompanyDetail()" ui-sref="company-detail({id:vm.selected[0].id})">
                     <md-tooltip md-direction="bottom">Infomation</md-tooltip>
                     <md-icon class="material-icons white">remove_red_eye</md-icon>
                 </md-button>
 
-                <md-button class="md-fab md-mini mobile-hidden" aria-label="t" md-colors="{background: 'pink-300'}" ng-show="vm.selected.length==1"
+                <md-button class="md-fab md-mini mobile-hidden" aria-label="t" md-colors="vm.selected.length==1?{background: 'indigo-300'}:{background: 'indigo-100'} " ng-disabled="!vm.selected.length==1"
                     ng-click="vm.showCompanyDetail()" ui-sref="company.edit({id:vm.selected[0].id})">
                     <md-tooltip md-direction="bottom">Edit</md-tooltip>
                     <md-icon class="material-icons white">border_color</md-icon>
                 </md-button>
 
-                <md-button class="md-fab md-mini mobile-hidden" aria-label="t" md-colors="{background: 'red-500'}" ng-show="vm.selected.length>=1"
+                <md-button class="md-fab md-mini mobile-hidden" aria-label="t" md-colors="vm.selected.length>=1?{background: 'red-500'}:{background: 'red-100'}" ng-disabled="!vm.selected.length>=1"
                     ng-click="vm.deleteCskh()" ui-sref="company.delete({id:vm.selected[0].id})">
                     <md-tooltip md-direction="bottom">Delete</md-tooltip>
                     <md-icon class="material-icons white">remove</md-icon>
