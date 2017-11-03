@@ -62,7 +62,7 @@ server:
     port: 1234
     
 attach:
-    path: src/main/webapp/content/images
+    path: F:/suffer/project/hackathon/image/ 
 
 # ===================================================================
 # JHipster specific properties

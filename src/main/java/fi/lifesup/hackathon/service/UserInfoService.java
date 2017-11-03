@@ -1,10 +1,14 @@
 package fi.lifesup.hackathon.service;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Base64;
 
 import javax.imageio.ImageIO;
 import javax.inject.Inject;
@@ -33,7 +37,7 @@ public class UserInfoService {
 		String filePath = null;
 		try {
 			// tao thu muc
-			String dirPath = attachPath + "/userInfo/";
+			String dirPath = attachPath + "userInfo/";
 			File dir = new File(dirPath);
 			if (!dir.exists()) {
 				if (dir.mkdirs()) {
@@ -46,7 +50,7 @@ public class UserInfoService {
 			// lay thong tin file
 			String[] fileTypeArray = dto.getFiletype().split("/");
 			String extention = fileTypeArray[1];
-			filePath = dirPath + "/" + dto.getUserInfoId() + "." + extention;
+			filePath = dirPath + dto.getUserInfoId() + "." + extention;
 			// tao file
 			File file = new File(filePath);
 			file.createNewFile();
@@ -57,14 +61,34 @@ public class UserInfoService {
 			BufferedImage bImageFromConvert = ImageIO.read(in);
 			ImageIO.write(bImageFromConvert, extention, file);
 
-			String displayPath = filePath.replace("src/main/webapp/", "");
-			userInfo.setLogoUrl(displayPath);
+			userInfo.setLogoUrl(filePath);
 		}
 		catch (IOException e) {
 			e.printStackTrace();
 		}
 
 		return userInfoRepository.save(userInfo);
+	}
+	
+	public String converbase64(Long id) {
+		String fileName = userInfoRepository.findOne(id).getLogoUrl();
+		File file = new File(fileName);
+		String base64 = null;
+		FileInputStream fis;
+		try {
+			fis = new FileInputStream(fileName);
+			BufferedInputStream bis = new BufferedInputStream(fis);
+			byte[] bytes = new byte[(int) file.length()];
+			bis.read(bytes);
+			base64 = Base64.getEncoder().encodeToString(bytes);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return base64;
 	}
 
 }
