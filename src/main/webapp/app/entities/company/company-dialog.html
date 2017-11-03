@@ -1,74 +1,57 @@
-
-<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+<!-- <form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
 
     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                ng-click="vm.clear()">&times;</button>
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="vm.clear()">&times;</button>
         <h4 class="modal-title" id="myCompanyLabel" data-translate="hackathonApp.company.home.createOrEditLabel">Create or edit a Company</h4>
     </div>
     <div class="modal-body">
         <jhi-alert-error></jhi-alert-error>
         <div class="form-group" ng-show="vm.company.id">
             <label for="id" data-translate="global.field.id">ID</label>
-            <input type="text" class="form-control" id="id" name="id"
-                    ng-model="vm.company.id" readonly />
+            <input type="text" class="form-control" id="id" name="id" ng-model="vm.company.id" readonly />
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="hackathonApp.company.name" for="field_name">Name</label>
-            <input type="text" class="form-control" name="name" id="field_name"
-                    ng-model="vm.company.name"
-                    required />
+            <input type="text" class="form-control" name="name" id="field_name" ng-model="vm.company.name" required />
             <div ng-show="editForm.name.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.name.$error.required" data-translate="entity.validation.required">
+                <p class="help-block" ng-show="editForm.name.$error.required" data-translate="entity.validation.required">
                     This field is required.
                 </p>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="hackathonApp.company.fullAddress" for="field_fullAddress">Full Address</label>
-            <input type="text" class="form-control" name="fullAddress" id="field_fullAddress"
-                    ng-model="vm.company.fullAddress"
-                    required />
+            <input type="text" class="form-control" name="fullAddress" id="field_fullAddress" ng-model="vm.company.fullAddress" required
+            />
             <div ng-show="editForm.fullAddress.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.fullAddress.$error.required" data-translate="entity.validation.required">
+                <p class="help-block" ng-show="editForm.fullAddress.$error.required" data-translate="entity.validation.required">
                     This field is required.
                 </p>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="hackathonApp.company.phone" for="field_phone">Phone</label>
-            <input type="text" class="form-control" name="phone" id="field_phone"
-                    ng-model="vm.company.phone"
-                    required />
+            <input type="text" class="form-control" name="phone" id="field_phone" ng-model="vm.company.phone" required />
             <div ng-show="editForm.phone.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.phone.$error.required" data-translate="entity.validation.required">
+                <p class="help-block" ng-show="editForm.phone.$error.required" data-translate="entity.validation.required">
                     This field is required.
                 </p>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="hackathonApp.company.email" for="field_email">Email</label>
-            <input type="text" class="form-control" name="email" id="field_email"
-                    ng-model="vm.company.email"
-                    required />
+            <input type="text" class="form-control" name="email" id="field_email" ng-model="vm.company.email" required />
             <div ng-show="editForm.email.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.email.$error.required" data-translate="entity.validation.required">
+                <p class="help-block" ng-show="editForm.email.$error.required" data-translate="entity.validation.required">
                     This field is required.
                 </p>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label" data-translate="hackathonApp.company.website" for="field_website">Website</label>
-            <input type="text" class="form-control" name="website" id="field_website"
-                    ng-model="vm.company.website"
-                    required />
+            <input type="text" class="form-control" name="website" id="field_website" ng-model="vm.company.website" required />
             <div ng-show="editForm.website.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.website.$error.required" data-translate="entity.validation.required">
+                <p class="help-block" ng-show="editForm.website.$error.required" data-translate="entity.validation.required">
                     This field is required.
                 </p>
             </div>
@@ -77,10 +60,142 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
-            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span data-translate="entity.action.cancel">Cancel</span>
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;
+            <span data-translate="entity.action.cancel">Cancel</span>
         </button>
         <button type="submit" ng-disabled="editForm.$invalid || vm.isSaving" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;<span data-translate="entity.action.save">Save</span>
+            <span class="glyphicon glyphicon-save"></span>&nbsp;
+            <span data-translate="entity.action.save">Save</span>
         </button>
     </div>
-</form>
+</form> -->
+<md-dialog aria-label="" flex="50">
+
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Create Company</h2>
+            <span flex>
+                <jhi-alert-error></jhi-alert-error>
+            </span>
+            <md-button class="md-icon-button" ng-click="vm.cancel()">
+                <i class="material-icons">clear</i>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <div layout="column" ng-cloak>
+
+        <md-content layout-padding>
+            <form name="editForm" ng-submit="vm.save()">
+
+                <div layout-gt-sm="row">
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label data-translate="hackathonApp.company.name">company name</label>
+                        <input md-maxlength="50" required name="name" ng-model="vm.company.name" ng-disabled="vm.company.name" ng-pattern="/^[_'.@A-Za-z0-9-]*$/" />
+
+                        <div ng-messages="editForm.name.$error">
+                            <div ng-message="required" data-translate="entity.validation.required">Name is required.</div>
+                            <div ng-message="md-maxlength">The name has to be less than 50 characters long.</div>
+                        </div>
+                    </md-input-container>
+
+                    <div flex="5" hide-xs hide-sm>
+                        <!-- Spacer //-->
+                    </div>
+
+
+
+                </div>
+                <div layout-gt-sm="row">
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label data-translate="hackathonApp.company.fullAddress">company fullAddress</label>
+                        <input md-maxlength="150" required name="fullAddress" ng-model="vm.company.fullAddress" />
+
+                        <div ng-messages="editForm.fullAddress.$error">
+                            <div ng-message="required" data-translate="entity.validation.required">Name is required.</div>
+                            <div ng-message="md-maxlength">The address has to be less than 150 characters long.</div>
+                        </div>
+                    </md-input-container>
+
+                    <div flex="5" hide-xs hide-sm>
+                        <!-- Spacer //-->
+                    </div>
+
+
+
+                </div>
+
+                <div layout-gt-sm="row">
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label data-translate="hackathonApp.company.email">Email</label>
+                        <input name="email" ng-model="vm.company.email" required minlength="5" maxlength="100" ng-pattern="/^.+@.+\..+$/" />
+
+                        <div ng-messages="editForm.email.$error">
+                            <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
+                                Your email must be between 5 and 100 characters long and look like an e-mail address.
+                            </div>
+                        </div>
+                    </md-input-container>
+
+                    <div flex="5" hide-xs hide-sm>
+                        <!-- Spacer //-->
+                    </div>
+
+                </div>
+
+                <div layout-gt-sm="row">
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label data-translate="hackathonApp.company.website">company website</label>
+                        <input md-maxlength="150" required name="website" ng-model="vm.company.website" />
+
+                        <div ng-messages="editForm.website.$error">
+                            <div ng-message="required" data-translate="entity.validation.required">Name is required.</div>
+                            <div ng-message="md-maxlength">The website has to be less than 150 characters long.</div>
+                        </div>
+                    </md-input-container>
+
+                    <div flex="5" hide-xs hide-sm>
+                        <!-- Spacer //-->
+                    </div>
+
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label data-translate="hackathonApp.company.phone">Phone Number</label>
+                        <input name="phone" required ng-model="vm.company.phone" />
+
+                        <div ng-messages="editForm.phone.$error">
+                            <div ng-message-exp="['required']">Please enter a valid phone number.</div>
+                        </div>
+                    </md-input-container>
+
+                    <style>
+                        /*
+                                   * The Material demos system does not currently allow targeting the body element, so this
+                                   * must go here in the HTML.
+                                   */
+
+                        body[dir=rtl] .hint {
+                            right: 2px;
+                            left: auto;
+                        }
+                    </style>
+                </div>
+                <md-dialog-actions layout="row">
+                    <span flex></span>
+                    <md-button ng-disabled="editForm.$invalid || vm.isSaving" type="submit">
+                        Save
+                    </md-button>
+                    <md-button ng-click="vm.cancel()">
+                        Cancel
+                    </md-button>
+                </md-dialog-actions>
+            </form>
+        </md-content>
+
+    </div>
+
+
+</md-dialog>

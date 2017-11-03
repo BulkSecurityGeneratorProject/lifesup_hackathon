@@ -94,13 +94,14 @@
             data: {
                 authorities: ['ROLE_USER']
             },
-            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
-                $uibModal.open({
+            onEnter: ['$stateParams', '$state', '$mdDialog', function($stateParams, $state, $mdDialog) {
+                $mdDialog.show({
                     templateUrl: 'app/entities/company/company-dialog.html',
                     controller: 'CompanyDialogController',
+                    parent: angular.element(document.body),
                     controllerAs: 'vm',
-                    backdrop: 'static',
-                    size: 'lg',
+                    clickOutsideToClose: false,
+                    fullscreen: true,
                     resolve: {
                         entity: function () {
                             return {
@@ -113,7 +114,7 @@
                             };
                         }
                     }
-                }).result.then(function() {
+                }).then(function() {
                     $state.go('company', null, { reload: 'company' });
                 }, function() {
                     $state.go('company');
@@ -126,19 +127,20 @@
             data: {
                 authorities: ['ROLE_USER']
             },
-            onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
-                $uibModal.open({
+            onEnter: ['$stateParams', '$state', '$mdDialog', function($stateParams, $state, $mdDialog) {
+                $mdDialog.show({
                     templateUrl: 'app/entities/company/company-dialog.html',
                     controller: 'CompanyDialogController',
+                    parent: angular.element(document.body),
                     controllerAs: 'vm',
-                    backdrop: 'static',
-                    size: 'lg',
+                    clickOutsideToClose: false,
+                    fullscreen: true,
                     resolve: {
                         entity: ['Company', function(Company) {
                             return Company.get({id : $stateParams.id}).$promise;
                         }]
                     }
-                }).result.then(function() {
+                }).then(function() {
                     $state.go('company', null, { reload: 'company' });
                 }, function() {
                     $state.go('^');

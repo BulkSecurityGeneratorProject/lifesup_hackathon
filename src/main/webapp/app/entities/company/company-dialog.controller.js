@@ -1,28 +1,28 @@
-(function() {
+(function () {
     'use strict';
 
     angular
         .module('hackathonApp')
         .controller('CompanyDialogController', CompanyDialogController);
 
-    CompanyDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$uibModalInstance', 'entity', 'Company'];
+    CompanyDialogController.$inject = ['$timeout', '$scope', '$stateParams', 'entity', 'Company', '$mdDialog'];
 
-    function CompanyDialogController ($timeout, $scope, $stateParams, $uibModalInstance, entity, Company) {
+    function CompanyDialogController($timeout, $scope, $stateParams, entity, Company, $mdDialog) {
         var vm = this;
 
         vm.company = entity;
-        vm.clear = clear;
+        vm.cancel = cancel;
         vm.save = save;
 
-        $timeout(function (){
+        $timeout(function () {
             angular.element('.form-group:eq(1)>input').focus();
         });
 
-        function clear () {
-            $uibModalInstance.dismiss('cancel');
+        function cancel() {
+            $mdDialog.cancel();
         }
 
-        function save () {
+        function save() {
             vm.isSaving = true;
             if (vm.company.id !== null) {
                 Company.update(vm.company, onSaveSuccess, onSaveError);
@@ -31,13 +31,13 @@
             }
         }
 
-        function onSaveSuccess (result) {
+        function onSaveSuccess(result) {
             $scope.$emit('hackathonApp:companyUpdate', result);
-            $uibModalInstance.close(result);
+            $mdDialog.hide(result);
             vm.isSaving = false;
         }
 
-        function onSaveError () {
+        function onSaveError() {
             vm.isSaving = false;
         }
 

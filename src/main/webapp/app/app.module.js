@@ -21,7 +21,8 @@
             'ngMessages',
             'lfNgMdFileInput',
             'naif.base64',
-            'ngAnimate'
+            'ngAnimate',
+            'md.data.table'
         ]).config(['$mdDateLocaleProvider', function ($mdDateLocaleProvider) {
          
         }]  )

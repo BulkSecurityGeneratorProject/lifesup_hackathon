@@ -1,4 +1,4 @@
-<div>
+<!-- <div>
     <h2 data-translate="hackathonApp.company.home.title">Companies</h2>
     <jhi-alert></jhi-alert>
     <div class="container-fluid">
@@ -61,4 +61,94 @@
             </tbody>
         </table>
     </div>
-</div>
+</div> -->
+<md-content laout="column" style="max-height: 100%;">
+    <md-toolbar class="md-table-toolbar md-default">
+        <div class="md-toolbar-tools" layout="row">
+            <md-button class="md-fab md-mini" aria-label="t" ng-click="vm.toggleSearchBox()">
+                <md-tooltip md-direction="bottom">Search</md-tooltip>
+                <md-icon class="material-icons white" ng-show="!vm.showSearchBox">search</md-icon>
+                <md-icon class="material-icons white" ng-show="vm.showSearchBox">close</md-icon>
+            </md-button>
+            <md-input-container class="md-toolbar-tools" layout="row" flex ng-show="vm.showSearchBox">
+                <input flex ng-model-options="{debounce:800}" type="text" ng-model="vm.queryString" ng-change="vm.query(vm.queryString)">
+            </md-input-container>
+            <md-button class="md-mini" md-colors="{background: 'lime-500'}" aria-label="t" ng-show="vm.showSearchBox">
+                Advance
+            </md-button>
+            <div layout="row" class="md-toolbar-tools" flex ng-show="!vm.showSearchBox">
+                <span>Danh sách Company({{vm.companies.length}})</span>
+                <span flex="5"></span>
+                <span ng-show="options.rowSelection && vm.selected.length">{{vm.selected.length}} công ty được chọn</span>
+                <div flex></div>
+                <md-button class="md-fab md-mini mobile-hidden" aria-label="t" md-colors="{background: 'green-500'}" ui-sref="company.new">
+                    <md-tooltip md-direction="bottom">Add new Company</md-tooltip>
+                    <md-icon class="material-icons white">add</md-icon>
+                </md-button>
+                <md-button class="md-fab md-mini mobile-hidden" aria-label="t" md-colors="{background: 'blue-500'}" ng-show="vm.selected.length==1"
+                    ng-click="vm.showCompanyDetail()" ui-sref="company-detail({id:vm.selected[0].id})">
+                    <md-tooltip md-direction="bottom">Infomation</md-tooltip>
+                    <md-icon class="material-icons white">remove_red_eye</md-icon>
+                </md-button>
+
+                <md-button class="md-fab md-mini mobile-hidden" aria-label="t" md-colors="{background: 'pink-300'}" ng-show="vm.selected.length==1"
+                    ng-click="vm.showCompanyDetail()" ui-sref="company.edit({id:vm.selected[0].id})">
+                    <md-tooltip md-direction="bottom">Edit</md-tooltip>
+                    <md-icon class="material-icons white">border_color</md-icon>
+                </md-button>
+
+                <md-button class="md-fab md-mini mobile-hidden" aria-label="t" md-colors="{background: 'red-500'}" ng-show="vm.selected.length>=1"
+                    ng-click="vm.deleteCskh()" ui-sref="company.delete({id:vm.selected[0].id})">
+                    <md-tooltip md-direction="bottom">Delete</md-tooltip>
+                    <md-icon class="material-icons white">remove</md-icon>
+                </md-button>
+
+                <md-button class="md-icon-button" ng-click="vm.loadStuff()">
+                    <md-tooltip md-direction="bottom">Refresh</md-tooltip>
+                    <md-icon>refresh</md-icon>
+                </md-button>
+            </div>
+
+        </div>
+    </md-toolbar>
+    <md-table-container flex style="max-height:30%;">
+        <md-card ng-cloak>
+            <table md-table md-row-select="true" multiple="false" ng-model="vm.selected" md-progress="promise" style="background: white;">
+                <thead ng-if="!options.decapitate" md-head md-order="query.order" md-on-reorder="logOrder">
+                    <tr md-row md-colors="{background: 'indigo-100'}">
+                        <th md-column md-order-by="name">
+                            <span>Name</span>
+                        </th>
+                        <th md-column md-order-by="fullAddress" md-desc>
+                            <span>Full Address</span>
+                        </th>
+                        <th md-column md-order-by="phone" md-desc>
+                            <span>Phone</span>
+                        </th>
+                        <th md-column md-order-by="email" md-desc>
+                            <span>Email</span>
+                        </th>
+                        <th md-column md-order-by="website" md-desc>
+                            <span>Website</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody md-body>
+                    <tr md-row md-select="company" md-on-select="logItem" md-auto-select="options.autoSelect" ng-repeat="company in vm.companies | filter: vm.queryString | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
+                        <td md-cell>{{company.name}}</td>
+                        <td md-cell>{{company.fullAddress}}</td>
+                        <td md-cell>{{company.phone}}</td>
+                        <td md-cell>{{company.email}}</td>
+                        <td md-cell>{{company.website}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-card>
+
+    </md-table-container>
+    <md-card ng-cloak>
+
+        <md-table-pagination id="pagi-company" md-limit="query.limit" md-limit-options="limitOptions" md-page="query.page" md-total="{{vm.companies.length}}"
+            md-page-select="options.pageSelect" md-boundary-links="false" md-on-paginate="logPagination"></md-table-pagination>
+    </md-card>
+</md-content>
