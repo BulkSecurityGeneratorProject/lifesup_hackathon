@@ -23,7 +23,7 @@
                     </a>
                 </li>
                 <!-- become a host -->
-                <li has-authority-except="ROLE_HOST" ui-sref-active="active" class="nav-item">
+                <li has-authority-except="ROLE_HOST" ui-sref-active="active" class="nav-item" ng-hide="vm.isAuthenticated()">
                     <a ui-sref="host-application" ng-click="vm.collapseNavbar()" class="align-center">
                         <span class="glyphicon glyphicon-tower"></span>
                         <span class="hidden-sm" data-translate="global.menu.becomeHost">Become a Host</span>
@@ -68,10 +68,10 @@
                     <a href="" uib-dropdown-toggle ng-disabled="disabled" class="nav-menu" id="avatar"><img class="img-circle" width="22" height="22" ng-src="{{'content/images/logo-jhipster.png'}}" /></a>
 
                     <div class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="ls">
-                        <a><span ui-sref-active="active"><a ui-sref="settings" ui-sref-opts="{reload: true}" class="dropdown-item" data-translate="global.menu.accountSetting">Account Setting</a></span>
+                        <a><span ui-sref-active="active"><a ui-sref="settings" ui-sref-opts="{reload: true}" class="dropdown-item" data-translate="global.menu.accountSetting" has-authority-except="ROLE_HOST">Account Setting</a></span>
                         </a>
 
-                        <a><span ui-sref-active="active"><a ui-sref="user-management-detail({login: vm.account.login})" ui-sref-opts="{reload: true}" class="dropdown-item" data-translate="global.menu.accountDetail">Account Detail</a></span>
+                        <a><span ui-sref-active="active"><a ui-sref="user-management-detail({login: vm.account.login})" ui-sref-opts="{reload: true}" class="dropdown-item" data-translate="global.menu.accountDetail" has-authority-except="ROLE_HOST">Account Detail</a></span>
                         </a>
 
                         <a><span ui-sref-active="active"><a has-authority="ROLE_ADMIN" ui-sref="user-management" ui-sref-opts="{reload: true}" class="dropdown-item" data-translate="global.menu.manageUser">Manage User</a></span>
@@ -82,7 +82,7 @@
                     </div>
                 </li>
 
-                
+
             </ul>
         </div>
     </div>
