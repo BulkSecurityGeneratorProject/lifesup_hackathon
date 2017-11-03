@@ -292,7 +292,6 @@ public class ChallengeService {
 
 	public String converbase64(Long id) {
 		String fileName = challengeRepository.findOne(id).getBannerUrl();
-		System.err.println(fileName);
 		File file = new File(fileName);
 		String base64 = null;
 		FileInputStream fis;
