@@ -713,9 +713,16 @@ md-progress-linear .md-bar {
   opacity: 1;
   height: 30px;
 }
+
 #pagi-company .label{
   color: rgba(0, 0, 0, 0.54);;
 }
 .white{
   color: white !important;
+}
+
+.autocomplete-list-group {
+    max-height: 5em;
+    overflow: auto;
+    border-radius: 0;
 }
