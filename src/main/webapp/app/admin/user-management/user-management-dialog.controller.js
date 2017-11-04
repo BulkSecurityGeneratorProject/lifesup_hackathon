@@ -18,6 +18,7 @@
         vm.companies = [];
         vm.complete = complete;
         vm.fillTextbox = fillTextbox;
+        vm.company = "";
 
         getCompanyName();
 
@@ -29,6 +30,9 @@
 
         function complete(string){
             vm.hidethis = false;
+            if (vm.company.length === 0) {
+                vm.hidethis = true;
+            }
             var output = [];
             angular.forEach(vm.companies, function(company){
                 if(company.toLowerCase().indexOf(string.toLowerCase()) >= 0) {

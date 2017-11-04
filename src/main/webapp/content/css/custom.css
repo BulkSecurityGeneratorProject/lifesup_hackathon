@@ -713,3 +713,9 @@ md-progress-linear .md-bar {
   opacity: 1;
   height: 30px;
 }
+
+.autocomplete-list-group {
+    max-height: 5em;
+    overflow: auto;
+    border-radius: 0;
+}
