@@ -11,8 +11,14 @@
         <p th:text="#{email.creation.text1}">
             Your JHipster account has been created, please click on the URL below to access it:
         </p>
+        <p th:text="#{email.creation.login(${user.login})}">
+            Your JHipster account has been created, please click on the URL below to access it:
+        </p>
+        <p th:text="#{email.creation.password(${password})}">
+            Your JHipster account has been created, please click on the URL below to access it:
+        </p>
         <p>
-          <a th:href="@{|${baseUrl}/#/reset/finish?key=${user.resetKey}|}"
+          <a th:href="@{|${baseUrl}}"
              th:text="|${user.login}|">login</a>
         </p>
         <p>

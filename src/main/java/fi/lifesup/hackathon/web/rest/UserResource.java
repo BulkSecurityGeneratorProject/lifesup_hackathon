@@ -12,6 +12,7 @@ import fi.lifesup.hackathon.repository.UserRepository;
 import fi.lifesup.hackathon.security.AuthoritiesConstants;
 import fi.lifesup.hackathon.service.MailService;
 import fi.lifesup.hackathon.service.UserService;
+import fi.lifesup.hackathon.service.util.RandomUtil;
 import fi.lifesup.hackathon.web.rest.vm.ManagedUserVM;
 
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
@@ -119,7 +120,8 @@ public class UserResource {
 					.headers(HeaderUtil.createFailureAlert("userManagement", "emailexists", "Email already in use"))
 					.body(null);
 		} else {
-			User newUser = userService.createUser(managedUserVM);
+			String password = RandomUtil.generatePassword();			
+			User newUser = userService.createUser(managedUserVM, password);
 			String baseUrl = request.getScheme() + // "http"
 					"://" + // "://"
 					request.getServerName() + // "myhost"
@@ -127,7 +129,7 @@ public class UserResource {
 					request.getServerPort() + // "80"
 					request.getContextPath(); // "/myContextPath" or "" if
 												// deployed in root context
-			mailService.sendCreationEmail(newUser, baseUrl);
+			mailService.sendCreationEmail(newUser, baseUrl,password);
 			return ResponseEntity.created(new URI("/api/users/" + newUser.getLogin()))
 					.headers(HeaderUtil.createAlert("userManagement.created", newUser.getLogin())).body(newUser);
 		}

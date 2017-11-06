@@ -43,6 +43,7 @@ public class MailService {
 	private static final String BASE_URL = "baseUrl";
 	private static final String CHALLENGE = "challenge";
 	private static final String COMPANY = "company";
+	private static final String PASSWORD = "password";
 
 	@Inject
 	private JHipsterProperties jHipsterProperties;
@@ -89,12 +90,13 @@ public class MailService {
 	}
 
 	@Async
-	public void sendCreationEmail(User user, String baseUrl) {
+	public void sendCreationEmail(User user, String baseUrl, String password) {
 		log.debug("Sending creation e-mail to '{}'", user.getEmail());
 		Locale locale = Locale.forLanguageTag(user.getLangKey());
 		Context context = new Context(locale);
 		context.setVariable(USER, user);
 		context.setVariable(BASE_URL, baseUrl);
+		context.setVariable(PASSWORD, password);
 		String content = templateEngine.process("creationEmail", context);
 		String subject = messageSource.getMessage("email.activation.title", null, locale);
 		sendEmail(user.getEmail(), subject, content, false, true);

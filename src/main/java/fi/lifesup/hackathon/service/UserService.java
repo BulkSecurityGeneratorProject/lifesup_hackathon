@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fi.lifesup.hackathon.domain.ApplicationInviteEmail;
 import fi.lifesup.hackathon.domain.Authority;
+import fi.lifesup.hackathon.domain.Company;
 import fi.lifesup.hackathon.domain.User;
 import fi.lifesup.hackathon.domain.enumeration.UserStatus;
 import fi.lifesup.hackathon.repository.ApplicationInviteEmailReponsitory;
@@ -120,12 +121,15 @@ public class UserService {
 		return newUser;
 	}
 
-	public User createUser(ManagedUserVM managedUserVM) {
+	public User createUser(ManagedUserVM managedUserVM, String password) {
 		User user = new User();
 		user.setLogin(managedUserVM.getLogin());
 		user.setFirstName(managedUserVM.getFirstName());
 		user.setLastName(managedUserVM.getLastName());
 		user.setEmail(managedUserVM.getEmail());
+		if(managedUserVM.getCompany() != null){
+			user.setCompany(managedUserVM.getCompany());
+		}
 		if (managedUserVM.getLangKey() == null) {
 			user.setLangKey("en"); // default language
 		} else {
@@ -136,8 +140,8 @@ public class UserService {
 			managedUserVM.getAuthorities().stream()
 					.forEach(authority -> authorities.add(authorityRepository.findOne(authority)));
 			user.setAuthorities(authorities);
-		}
-		String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
+		}	
+		String encryptedPassword = passwordEncoder.encode(password);
 		user.setPassword(encryptedPassword);
 		user.setResetKey(RandomUtil.generateResetKey());
 		user.setResetDate(ZonedDateTime.now());
@@ -148,13 +152,16 @@ public class UserService {
 		return user;
 	}
 
-	public void updateUser(String firstName, String lastName, String email, String langKey) {
+	public void updateUser(String firstName, String lastName, String email, String langKey, Company company) {
 		userRepository.findOneByLogin(SecurityUtils.getCurrentUserLogin()).ifPresent(u -> {
 			u.setFirstName(firstName);
 			u.setLastName(lastName);
 			u.setEmail(email);
 			u.setLangKey(langKey);
 			u.setStatus(UserStatus.ACTIVATED);
+			if(company != null){
+				u.setCompany(company);
+			}
 			userRepository.save(u);
 			log.debug("Changed Information for User: {}", u);
 		});
