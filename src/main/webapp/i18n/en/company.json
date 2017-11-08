@@ -20,7 +20,9 @@
             "fullAddress": "Full Address",
             "phone": "Phone",
             "email": "Email",
-            "website": "Website"
+            "website": "Website",
+            "listCompany": "List all companies ({{ param }})",
+            "selectedCompany": "{{param}} company selected."
         }
     }
 }

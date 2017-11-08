@@ -1,67 +1,3 @@
-<!-- <div>
-    <h2 data-translate="hackathonApp.company.home.title">Companies</h2>
-    <jhi-alert></jhi-alert>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-xs-4 no-padding-left">
-                <button class="btn btn-primary" ui-sref="company.new" >
-                    <span class="glyphicon glyphicon-plus"></span>
-                    <span  data-translate="hackathonApp.company.home.createLabel">
-                        Create new Company
-                    </span>
-                </button>
-            </div>
-        </div>
-    </div>
-    <br/>
-    <div class="table-responsive">
-        <table class="jh-table table table-striped">
-            <thead>
-                <tr>
-                    <th><span data-translate="global.field.id">ID</span></th>
-                    <th><span data-translate="hackathonApp.company.name">Name</span></th>
-                    <th><span data-translate="hackathonApp.company.fullAddress">Full Address</span></th>
-                    <th><span data-translate="hackathonApp.company.phone">Phone</span></th>
-                    <th><span data-translate="hackathonApp.company.email">Email</span></th>
-                    <th><span data-translate="hackathonApp.company.website">Website</span></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="company in vm.companies track by company.id">
-                    <td><a ui-sref="company-detail({id:company.id})">{{company.id}}</a></td>
-                    <td>{{company.name}}</td>
-                    <td>{{company.fullAddress}}</td>
-                    <td>{{company.phone}}</td>
-                    <td>{{company.email}}</td>
-                    <td>{{company.website}}</td>
-                    <td class="text-right">
-                        <div class="btn-group flex-btn-group-container">
-                            <button type="submit"
-                                    ui-sref="company-detail({id:company.id})"
-                                    class="btn btn-info btn-sm">
-                                <span class="glyphicon glyphicon-eye-open"></span>
-                                <span class="hidden-xs hidden-sm" data-translate="entity.action.view"></span>
-                            </button>
-                            <button type="submit"
-                                    ui-sref="company.edit({id:company.id})"
-                                    class="btn btn-primary btn-sm">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="hidden-xs hidden-sm" data-translate="entity.action.edit"></span>
-                            </button>
-                            <button type="submit"
-                                    ui-sref="company.delete({id:company.id})"
-                                    class="btn btn-danger btn-sm">
-                                <span class="glyphicon glyphicon-remove-circle"></span>
-                                <span class="hidden-xs hidden-sm" data-translate="entity.action.delete"></span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div> -->
 <md-content laout="column" style="max-height: 100%;">
     <md-toolbar class="md-table-toolbar md-default">
         <div class="md-toolbar-tools" layout="row">
@@ -77,28 +13,28 @@
                 Advance
             </md-button>
             <div layout="row" class="md-toolbar-tools" flex ng-show="!vm.showSearchBox">
-                <span>Danh sách Company({{vm.companies.length}})</span>
+                <span data-translate="hackathonApp.company.listCompany" translate-values="{param: '{{vm.companies.length}}'}">Danh sách Company({{vm.companies.length}})</span>
                 <span flex="5"></span>
-                <span ng-show="options.rowSelection && vm.selected.length">{{vm.selected.length}} công ty được chọn</span>
+                <span ng-show="options.rowSelection && vm.selected.length" data-translate="hackathonApp.company.selectedCompany" translate-values="{param: '{{vm.selected.length}}'}">{{vm.selected.length}} công ty được chọn</span>
                 <div flex></div>
                 <md-button class="md-fab md-mini mobile-hidden" aria-label="t" md-colors="{background: 'green-500'}" ui-sref="company.new">
                     <md-tooltip md-direction="bottom">Add new Company</md-tooltip>
                     <md-icon class="material-icons white">add</md-icon>
                 </md-button>
-                <md-button class="md-fab md-mini mobile-hidden" aria-label="t" md-colors="vm.selected.length==1?{background: 'blue-500'} : {background:'blue-100'}" ng-disabled="!vm.selected.length==1"
-                    ng-click="vm.showCompanyDetail()" ui-sref="company-detail({id:vm.selected[0].id})">
+                <md-button class="md-fab md-mini mobile-hidden" aria-label="t" md-colors="vm.selected.length==1?{background: 'blue-500'} : {background:'blue-100'}"
+                    ng-disabled="!vm.selected.length==1" ng-click="vm.showCompanyDetail()" ui-sref="company-detail({id:vm.selected[0].id})">
                     <md-tooltip md-direction="bottom">Infomation</md-tooltip>
                     <md-icon class="material-icons white">remove_red_eye</md-icon>
                 </md-button>
 
-                <md-button class="md-fab md-mini mobile-hidden" aria-label="t" md-colors="vm.selected.length==1?{background: 'indigo-300'}:{background: 'indigo-100'} " ng-disabled="!vm.selected.length==1"
-                    ng-click="vm.showCompanyDetail()" ui-sref="company.edit({id:vm.selected[0].id})">
+                <md-button class="md-fab md-mini mobile-hidden" aria-label="t" md-colors="vm.selected.length==1?{background: 'indigo-300'}:{background: 'indigo-100'} "
+                    ng-disabled="!vm.selected.length==1" ng-click="vm.showCompanyDetail()" ui-sref="company.edit({id:vm.selected[0].id})">
                     <md-tooltip md-direction="bottom">Edit</md-tooltip>
                     <md-icon class="material-icons white">border_color</md-icon>
                 </md-button>
 
-                <md-button class="md-fab md-mini mobile-hidden" aria-label="t" md-colors="vm.selected.length>=1?{background: 'red-500'}:{background: 'red-100'}" ng-disabled="!vm.selected.length>=1"
-                    ng-click="vm.deleteCskh()" ui-sref="company.delete({id:vm.selected[0].id})">
+                <md-button class="md-fab md-mini mobile-hidden" aria-label="t" md-colors="vm.selected.length>=1?{background: 'red-500'}:{background: 'red-100'}"
+                    ng-disabled="!vm.selected.length>=1" ng-click="vm.deleteCskh()" ui-sref="company.delete({id:vm.selected[0].id})">
                     <md-tooltip md-direction="bottom">Delete</md-tooltip>
                     <md-icon class="material-icons white">remove</md-icon>
                 </md-button>
@@ -117,19 +53,19 @@
                 <thead ng-if="!options.decapitate" md-head md-order="query.order" md-on-reorder="logOrder">
                     <tr md-row md-colors="{background: 'indigo-100'}">
                         <th md-column md-order-by="name">
-                            <span>Name</span>
+                            <span data-translate="hackathonApp.company.name">Name</span>
                         </th>
                         <th md-column md-order-by="fullAddress" md-desc>
-                            <span>Full Address</span>
+                            <span data-translate="hackathonApp.company.fullAddress">Full Address</span>
                         </th>
                         <th md-column md-order-by="phone" md-desc>
-                            <span>Phone</span>
+                            <span data-translate="hackathonApp.company.phone">Phone</span>
                         </th>
                         <th md-column md-order-by="email" md-desc>
-                            <span>Email</span>
+                            <span data-translate="hackathonApp.company.email">Email</span>
                         </th>
                         <th md-column md-order-by="website" md-desc>
-                            <span>Website</span>
+                            <span data-translate="hackathonApp.company.website">Website</span>
                         </th>
                     </tr>
                 </thead>

@@ -92,7 +92,7 @@
 
                     <md-input-container class="md-block" flex-gt-sm>
                         <label data-translate="hackathonApp.company.name">company name</label>
-                        <input md-maxlength="50" required name="name" ng-model="vm.company.name" ng-disabled="vm.company.id" ng-pattern="/^[_'.@A-Za-z0-9-]*$/" />
+                        <input md-maxlength="50" required name="name" ng-model="vm.company.name" ng-disabled="vm.company.id" />
 
                         <div ng-messages="editForm.name.$error">
                             <div ng-message="required" data-translate="entity.validation.required">Name is required.</div>

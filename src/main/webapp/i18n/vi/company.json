@@ -1,26 +1,28 @@
 {
     "hackathonApp": {
-        "company" : {
+        "company": {
             "home": {
-                "title": "Companies",
-                "createLabel": "Create a new Company",
-                "createOrEditLabel": "Create or edit a Company",
-                "search": "Search for Company"
+                "title": "Công ty",
+                "createLabel": "Tạo mới một công ty",
+                "createOrEditLabel": "Tạo hoặc sửa công ty",
+                "search": "Tìm kiếm công ty"
             },
-            "created": "A new Company is created with identifier {{ param }}",
-            "updated": "A Company is updated with identifier {{ param }}",
-            "deleted": "A Company is deleted with identifier {{ param }}",
+            "created": "Một company được tạo với định danh {{ param }}",
+            "updated": "Một company được cập nhật với định danh {{ param }}",
+            "deleted": "Một company được xóa với định danh {{ param }}",
             "delete": {
-                "question": "Are you sure you want to delete Company {{ id }}?"
+                "question": "Bạn có muốn xóa công ty ngày không?"
             },
             "detail": {
-                "title": "Company"
+                "title": "Công ty"
             },
-            "name": "Name",
-            "fullAddress": "Full Address",
-            "phone": "Phone",
+            "name": "Tên",
+            "fullAddress": "Địa chỉ",
+            "phone": "Số điện thoại",
             "email": "Email",
-            "website": "Website"
+            "website": "Website",
+            "listCompany": "Danh sách công ty ({{ param }})",
+            "selectedCompany": "{{param}} Công ty được chọn."
         }
     }
 }
