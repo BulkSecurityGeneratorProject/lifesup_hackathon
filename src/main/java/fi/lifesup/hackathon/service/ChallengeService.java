@@ -290,13 +290,12 @@ public class ChallengeService {
 
 	}
 
-	public String converbase64(Long id) {
-		String fileName = challengeRepository.findOne(id).getBannerUrl();
-		File file = new File(fileName);
+	public String converbase64(String url) {
+		File file = new File(url);
 		String base64 = null;
 		FileInputStream fis;
 		try {
-			fis = new FileInputStream(fileName);
+			fis = new FileInputStream(url);
 			BufferedInputStream bis = new BufferedInputStream(fis);
 			byte[] bytes = new byte[(int) file.length()];
 			bis.read(bytes);

@@ -173,10 +173,6 @@ public class ChallengeResource {
 
 	@GetMapping("/challenges-by-user")
 	@Timed
-//	public List<Challenge> getChallengeByUser() {
-//		log.debug("REST request to get all Challenge by user login : {}");
-//		return challengeService.getChallengeByUser();
-//	}
 	public ResponseEntity<List<Challenge>> getManageChallenges(ChallengeSearch challengeSearch,Pageable pageable
 			) throws URISyntaxException {
 		Page<Challenge> page = challengeService.getChallengeManageSearch(challengeSearch, pageable);
@@ -204,9 +200,9 @@ public class ChallengeResource {
 		return ResponseEntity.ok()
 				.headers(HeaderUtil.createEntityUpdateAlert("challenge", imageDTO.getChallengeId().toString())).body(result);
 	}
-	@GetMapping("/challenges/{id}/get-banner-base64")
+	@PostMapping("/challenges/get-banner-base64")
 	@Timed
-	public String getChallengesBase64(@PathVariable Long id) {
+	public String getChallengesBase64(@RequestBody String id) {
 		log.debug("REST request to get all Challenges By Authories");
 		String base = challengeService.converbase64(id);
 		return base;

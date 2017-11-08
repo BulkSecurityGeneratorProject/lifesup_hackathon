@@ -183,11 +183,11 @@ public class UserInfoResource {
 				.headers(HeaderUtil.createEntityUpdateAlert("challenge", result.getId().toString())).body(result);
 	}
 	
-	@GetMapping("/user-info/{id}/get-banner-base64")
+	@PostMapping("/user-info/get-banner-base64")
 	@Timed
-	public String getChallengesBase64(@PathVariable Long id) {
+	public String getChallengesBase64(@RequestBody String url) {
 		log.debug("REST request to get all Challenges By Authories");
-		String base = userInfoService.converbase64(id);
+		String base = userInfoService.converbase64(url);
 		return base;
 	}
 
