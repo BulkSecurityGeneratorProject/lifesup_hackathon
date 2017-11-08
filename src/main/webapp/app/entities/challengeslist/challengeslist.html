@@ -44,7 +44,7 @@
 
     <div class="col-sm-12 col-md-4 repeated-item" ng-repeat="challenge in vm.challenges">
       <md-card class="challenge-container">
-        <img md-card-image ng-src="{{challenge.bannerUrl}}" ui-sref="challengeslist-detail({id:challenge.id})" class='md-card-image'
+        <img md-card-image src="{{challenge.bannerBase64}}" ui-sref="challengeslist-detail({id:challenge.id})" class='md-card-image'
           ng-class="{'img-grey': vm.getApplicationStatus(challenge) == 'INACTIVE'}" alt="">
 
         <md-card-title class='challenge-title' ui-sref="challengeslist-detail({id:challenge.id})">{{challenge.name}}</md-card-title>
@@ -53,10 +53,10 @@
 
         <md-card-content class='challenge-content' ui-sref="challengeslist-detail({id:challenge.id})">
           <md-list ng-switch="challenge.info.status">
-              <md-list-item>
-                  <i class="challenge-icon material-icons w3-text-indigo">date_range</i> {{challenge.info.eventStartTime | date:'MMM dd, yyyy'}} - {{challenge.info.eventEndTime
-                  | date:'MMM dd, yyyy'}}
-              </md-list-item>
+            <md-list-item>
+              <i class="challenge-icon material-icons w3-text-indigo">date_range</i> {{challenge.info.eventStartTime | date:'MMM dd, yyyy'}} - {{challenge.info.eventEndTime | date:'MMM
+              dd, yyyy'}}
+            </md-list-item>
             <md-list-item>
               <span class="list-item">
                 <i class="material-icons challenge-icon w3-text-red">place</i>
@@ -73,7 +73,8 @@
               <i class="challenge-icon material-icons w3-text-orange">alarm</i>{{challenge.timeLeft}}
             </md-list-item>
             <md-list-item ng-switch-when="INACTIVE">
-              <i class="challenge-icon material-icons w3-text-red">alarm_off</i><span data-translate="hackathonApp.challengesDetails.timeUp"></span>
+              <i class="challenge-icon material-icons w3-text-red">alarm_off</i>
+              <span data-translate="hackathonApp.challengesDetails.timeUp"></span>
             </md-list-item>
           </md-list>
 
@@ -83,7 +84,9 @@
 
           <button class="btn btn-block challenge-cta btn-active" ng-switch-when="ACTIVE" ng-switch="vm.isAuthenticated()">
             <a href="#" ui-sref="login-signup" ng-switch-when="false" data-translate="hackathonApp.applicationStatus.apply"></a>
-            <a href="#" ui-sref="complete-profile({id: challenge.id})" ng-switch-when="true" data-translate="hackathonApp.applicationStatus.apply"></a>
+            <a href="#" ui-sref="complete-profile({id: challenge.id})" ng-if="vm.userInfo.status!='PROFILE_COMPLETE'" ng-switch-when="true"
+              data-translate="hackathonApp.applicationStatus.apply"></a>
+            <a href="#" ui-sref="team({id: challenge.id})" ng-if="vm.userInfo.status=='PROFILE_COMPLETE'" ng-switch-when="true" data-translate="hackathonApp.applicationStatus.apply"></a>
           </button>
 
           <button class="btn btn-block challenge-cta btn-applied" ng-click="vm.getApplicationId(challenge.id)" ui-sref="applicationslist-detail({id:vm.applicationId})"

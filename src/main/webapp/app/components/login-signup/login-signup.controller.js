@@ -63,37 +63,41 @@
                 // $rootScope broadcast to all child $scope ($on) on all controller that user has logged in successfully
                 $rootScope.$broadcast('authenticationSuccess');
                 UserDetail.get(function (rs) {
-                    if (rs.status !== "PROFILE_COMPLETE") {
-                        $state.go("settings");
-                    } else {
-                        // previousState was set in the authExpiredInterceptor before being redirected to login modal.
-                        // since login is succesful, go to stored previousState and clear previousState
-                        if (Auth.getPreviousState()) {
-                            var previousState = Auth.getPreviousState();
-                            Auth.resetPreviousState();
-                            if (previousState.name === "home") {
+                    Principal.identity().then(function (account) {
+                        if (rs.status !== "PROFILE_COMPLETE" && account.authorities.indexOf('ROLE_ADMIN') == -1) {
+                            $state.go("settings");
 
+                        } else {
+                            // previousState was set in the authExpiredInterceptor before being redirected to login modal.
+                            // since login is succesful, go to stored previousState and clear previousState
+                            if (Auth.getPreviousState()) {
+                                var previousState = Auth.getPreviousState();
+                                Auth.resetPreviousState();
+                                if (previousState.name === "home") {
+
+                                    Principal.identity().then(function (account) {
+                                        vm.account = account;
+                                    });
+
+                                    previousState.name = "challengeslist";
+
+                                }
+                                $state.go(previousState.name, previousState.params);
+                            }
+                            else {
                                 Principal.identity().then(function (account) {
                                     vm.account = account;
+                                    if (vm.account.authorities.indexOf('ROLE_ADMIN') != -1 || vm.account.authorities.indexOf('ROLE_HOST') != -1)
+                                        $state.go("challenge-manager");
+                                    else {
+                                        $state.go("challengeslist");
+                                    }
                                 });
 
-                                previousState.name = "challengeslist";
-
                             }
-                            $state.go(previousState.name, previousState.params);
                         }
-                        else {
-                            Principal.identity().then(function (account) {
-                                vm.account = account;
-                                if (vm.account.authorities.indexOf('ROLE_ADMIN') != -1 || vm.account.authorities.indexOf('ROLE_HOST') != -1)
-                                    $state.go("challenge-manager");
-                                else {
-                                    $state.go("challengeslist");
-                                }
-                            });
+                    });
 
-                        }
-                    }
                 })
 
             }).catch(function () {

@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('ChallengesListController', ChallengesListController);
 
-    ChallengesListController.$inject = ['$scope', '$log', '$timeout', '$q', 'Principal', 'Challenge', 'ApplicationsByUser', 'ParseLinks', 'paginationConstants', 'AlertService', '$location', '$anchorScroll', 'ChallengeInfo'];
+    ChallengesListController.$inject = ['$scope', '$log', '$timeout', '$q', 'Principal', 'Challenge', 'ApplicationsByUser', 'ParseLinks', 'paginationConstants', 'AlertService', '$location', '$anchorScroll', 'ChallengeInfo', 'UserDetail', '$http'];
 
-    function ChallengesListController($scope, $log, $timeout, $q, Principal, Challenge, ApplicationsByUser, ParseLinks, paginationConstants, AlertService, $location, $anchorScroll, ChallengeInfo) {
+    function ChallengesListController($scope, $log, $timeout, $q, Principal, Challenge, ApplicationsByUser, ParseLinks, paginationConstants, AlertService, $location, $anchorScroll, ChallengeInfo, UserDetail, $http) {
         var vm = this;
         vm.isAuthenticated = Principal.isAuthenticated;
         vm.challenges = [];
@@ -26,6 +26,7 @@
         vm.gotoBottom = gotoBottom;
         vm.hasNoChallenge = false;
         vm.hideToolbar = false;
+        vm.userInfo = {};
 
         function gotoBottom() {
             // set the location.hash to the id of
@@ -82,7 +83,23 @@
         }
 
         function parseChallengeStatus(challenges) {
+            angular.forEach(challenges, function (challenge) {
+                //Convert Base64 img 
+                $http({
+                    url: '/api/challenges/get-banner-base64',
+                    method: "POST",
+                    data: challenge.bannerUrl
+                })
+                    .then(function (response) {
+                        // success
+                        challenge.bannerBase64 ="data:image/jpeg;base64,"+ response.data;
+                    },
+                    function (response) { // optional
+                        // failed
+                    });
+            });
             challenges.map(function (challenge) {
+
                 var today = new Date().getTime();
                 var appClose = new Date(challenge.info.applicationCloseDate);
                 var endApp = new Date(appClose.getFullYear(), appClose.getMonth(), appClose.getDate() + 1).getTime();
@@ -106,10 +123,17 @@
                         }
                     }
                 }
+
+
             })
         }
 
         function loadAll() {
+            UserDetail.get(function (rs) {
+                vm.userInfo = rs;
+            }, function () {
+                console.log('error get User info');
+            });
             Challenge.query({
                 page: vm.page,
                 size: vm.itemsPerPage,
@@ -117,7 +141,7 @@
             }, onSuccess, onError);
 
             function onSuccess(data, headers) {
-                if (!data.length){
+                if (!data.length) {
                     vm.hasNoChallenge = true;
                     vm.hideToolbar = true;
                 }
