@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand logo" href="#/" ng-click="vm.collapseNavbar()">
-                <img class="logo-img" src="content/images/logo-jhipster.png"/>
+                <img class="logo-img" src="content/images/logo-jhipster.png" />
                 <span data-translate="global.title">Hackathon</span>
                 <span class="navbar-version">v{{VERSION}}</span>
             </a>
@@ -46,9 +46,9 @@
                 <!-- Languages -->
                 <li ui-sref-active="active" uib-dropdown class="dropdown pointer nav-item" ng-controller="JhiLanguageController as languageVm">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" ng-if="languageVm.languages.length > 0">
-                            <span class="glyphicon glyphicon-globe"></span>
-                            <span class="hidden-sm" data-translate="global.menu.language">Language</span>
-                            <b class="caret"></b>
+                        <span class="glyphicon glyphicon-globe"></span>
+                        <span class="hidden-sm" data-translate="global.menu.language">Language</span>
+                        <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu" uib-dropdown-menu ng-if="languageVm.languages.length > 0">
                         <li active-menu="{{language}}" ng-repeat="language in languageVm.languages">
@@ -72,19 +72,36 @@
                 </li>
                 <!-- Small avatar should have linked to account details-->
                 <li ui-sref-active="active" class="dropdown" uib-dropdown ng-switch-when="true" class="nav-item">
-                    <a href="" uib-dropdown-toggle ng-disabled="disabled" class="nav-menu" id="avatar"><img class="img-circle" width="22" height="22" ng-src="{{'content/images/logo-jhipster.png'}}" /></a>
+                    <a href="" uib-dropdown-toggle ng-disabled="disabled" class="nav-menu" id="avatar">
+                        <img class="img-circle" width="22" height="22" ng-src="{{'content/images/logo-jhipster.png'}}" />
+                    </a>
 
                     <div class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="ls">
-                        <a><span ui-sref-active="active"><a ui-sref="settings" ui-sref-opts="{reload: true}" class="dropdown-item" data-translate="global.menu.accountSetting" has-authority-except="ROLE_HOST">Account Setting</a></span>
+                        <a>
+                            <span ui-sref-active="active">
+                                <a ui-sref="settings" ui-sref-opts="{reload: true}" class="dropdown-item" data-translate="global.menu.accountSetting"
+                                    has-authority-except="ROLE_HOST">Account Setting</a>
+                            </span>
                         </a>
 
-                        <a><span ui-sref-active="active"><a ui-sref="user-management-detail({login: vm.account.login})" ui-sref-opts="{reload: true}" class="dropdown-item" data-translate="global.menu.accountDetail" has-authority-except="ROLE_HOST">Account Detail</a></span>
+                        <a>
+                            <span ui-sref-active="active">
+                                <a ui-sref="user-management-detail({login: vm.account.login})" ui-sref-opts="{reload: true}"
+                                    class="dropdown-item" data-translate="global.menu.accountDetail" has-authority-except="ROLE_HOST">Account Detail</a>
+                            </span>
                         </a>
 
-                        <a><span ui-sref-active="active"><a has-authority="ROLE_ADMIN" ui-sref="user-management" ui-sref-opts="{reload: true}" class="dropdown-item" data-translate="global.menu.manageUser">Manage User</a></span>
+                        <a>
+                            <span ui-sref-active="active">
+                                <a has-authority="ROLE_ADMIN" ui-sref="user-management" ui-sref-opts="{reload: true}" class="dropdown-item"
+                                    data-translate="global.menu.manageUser">Manage User</a>
+                            </span>
                         </a>
 
-                        <a><span ui-sref-active="active"><a has-authority="ROLE_ADMIN" ui-sref="docs" ui-sref-opts="{reload: true}" class="dropdown-item">API</a></span>
+                        <a>
+                            <span ui-sref-active="active">
+                                <a has-authority="ROLE_ADMIN" ui-sref="docs" ui-sref-opts="{reload: true}" class="dropdown-item">API</a>
+                            </span>
                         </a>
                     </div>
                 </li>
@@ -92,5 +109,9 @@
 
             </ul>
         </div>
+    </div>
+    <div class="container text-right">
+        <span data-translate="global.timeServer"></span>
+        <span time-server="'dd/MM/yyyy - HH:mm:ss'"></span>
     </div>
 </nav>

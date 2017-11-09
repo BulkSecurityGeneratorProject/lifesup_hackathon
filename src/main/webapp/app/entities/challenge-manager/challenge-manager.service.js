@@ -5,13 +5,15 @@
         .factory('ChallengeManager', ChallengeManager)
         .factory('ChallengeByAuthority', ChallengeByAuthority)
         .factory('ChallengeInfo', ChallengeInfo)
-        .factory('ChallengeBanner', ChallengeBanner);
+        .factory('ChallengeBanner', ChallengeBanner)
+        .factory('TimeServer', TimeServer);
 
 
     ChallengeManager.$inject = ['$resource'];
     ChallengeByAuthority.$inject = ['$resource'];
     ChallengeInfo.$inject = ['$resource', 'DateUtils'];
     ChallengeBanner.$inject = ['$resource'];
+    TimeServer.$inject = ['$resource', 'DateUtils'];
 
 
 
@@ -95,4 +97,23 @@
             'save': { method: 'POST' }
         });
     }
+
+    function TimeServer($resource, DateUtils) {
+        var resourceUrl = 'api/challenges/get-time';
+        return $resource(resourceUrl, {}, {
+            'query': { method: 'GET', isArray: true },
+            'get': {
+                method: 'GET',
+                transformResponse: function (data) {
+                    if (data) {
+                        data = angular.fromJson(data);
+                        data.timeServer = DateUtils.convertDateTimeFromServer(data.timeServer);
+                    }
+                    return data;
+                }
+            }
+        });
+    }
+    
+
 })();

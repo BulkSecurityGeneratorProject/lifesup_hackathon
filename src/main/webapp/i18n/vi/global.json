@@ -2,6 +2,7 @@
     "global": {
         "title": "Hackathon",
         "browsehappy": "Bạn đang sử dụng một trình duyệt <strong>quá cũ</strong>. Vui lòng <a href=\"http://browsehappy.com/?locale=en\">nâng cấp trình duyệt</a> của bạn để có trải nghiệm tốt nhất.",
+        "timeServer": "Thời gian hệ thống: ",
         "menu": {
             "home": "Trang chủ",
             "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
