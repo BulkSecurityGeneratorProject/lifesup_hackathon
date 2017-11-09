@@ -211,24 +211,23 @@ public class ChallengeResource {
 		String base = challengeService.converbase64(id);
 		return base;
 	}
-	@Scheduled(fixedRate= 30000)
+	@Scheduled(fixedRate= 60000)
 	@GetMapping("/challenges/check")
 	@Timed
 	public void checkChallenge() {
 		List<Challenge> challenges = challengeRepository.listChallenges();
 		ZonedDateTime time = ZonedDateTime.now();
-		System.err.println(time);
 		for (Challenge challenge : challenges) {
 			
 			if(challenge.getInfo().getStatus() == ChallengeStatus.ACTIVE &&
 					!challenge.getInfo().getApplicationCloseDate().isAfter(time)){
 				challenge.getInfo().setStatus(ChallengeStatus.INACTIVE);
-				System.err.println(challenge.getInfo().getId());
+				challengeRepository.save(challenge);
 			}
 			if(challenge.getInfo().getStatus() == ChallengeStatus.INACTIVE &&
-					challenge.getInfo().getEventEndTime().isAfter(time)){
+					!challenge.getInfo().getEventEndTime().isAfter(time)){
 				challenge.getInfo().setStatus(ChallengeStatus.CLOSED);
-				
+				challengeRepository.save(challenge);
 			}
 		}
 	}
