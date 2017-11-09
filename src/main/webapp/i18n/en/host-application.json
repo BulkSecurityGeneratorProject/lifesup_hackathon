@@ -8,11 +8,16 @@
             "email": "What is your email?",
             "note": "Add additional note here",
             "submit": "Submit",
+            "goHome": "Go to homepage",
+            "thank": "Thank you!",
+            "sorry": "Sorry",
             "messages": {
               "name": "your name is required",
               "company": "your company name is required",
               "phone": "your phone number is required",
-              "email": "your email is required"
+              "email": "your email is required",
+              "success": "Your request has been sent. We'll email you soon",
+              "failed": "Your request could not be sent. Please try again."
             }
         }
     }

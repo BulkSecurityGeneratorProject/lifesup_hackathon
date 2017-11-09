@@ -93,6 +93,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/api/application-invite-emails/acceptkey/{acceptkey}").permitAll()
             .antMatchers("/api/applications/details/{applicationId}").permitAll()
             .antMatchers("/api/applications/check/{id}").permitAll()
+            .antMatchers("/api/companies/send-mail").permitAll()
             .antMatchers("/api/user-detail").permitAll()
             .antMatchers("/api/**").authenticated()
             .antMatchers("/management/**").hasAuthority(AuthoritiesConstants.ADMIN)

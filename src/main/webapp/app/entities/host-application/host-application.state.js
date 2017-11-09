@@ -13,7 +13,7 @@
             url: '/host-application',
             data: {
                 authorities: [],
-                title: "become a host"
+                pageTitle: "Become a Host"
             },
             views: {
                 'content@': {
