@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('ChallengeManagerController', ChallengeManagerController);
 
-    ChallengeManagerController.$inject = ['$scope', '$timeout', '$state', 'ChallengeManager', 'ChallengeInfo', 'ChallengeByAuthority', 'Challenge', 'ChallengeByUser', 'ParseLinks', 'AlertService', '$anchorScroll', '$http'];
+    ChallengeManagerController.$inject = ['$scope', '$timeout', '$state', 'ChallengeManager', 'ChallengeInfo', 'ChallengeByAuthority', 'Challenge', 'ChallengeByUser', 'ParseLinks', 'AlertService', '$anchorScroll', '$http', 'TimeServer'];
 
-    function ChallengeManagerController($scope, $timeout, $state, ChallengeManager, ChallengeInfo, ChallengeByAuthority, Challenge, ChallengeByUser, ParseLinks, AlertService, $anchorScroll, $http) {
+    function ChallengeManagerController($scope, $timeout, $state, ChallengeManager, ChallengeInfo, ChallengeByAuthority, Challenge, ChallengeByUser, ParseLinks, AlertService, $anchorScroll, $http, TimeServer) {
         var vm = this;
 
         vm.challenges = [];
@@ -47,27 +47,28 @@
         function parseChallengeStatus(challenges) {
             challenges.map(function (challenge) {
                 if (challenge.info.status !== 'REMOVED') {
-                    var today = new Date().getTime();
-                    var appClose = new Date(challenge.info.applicationCloseDate);
-                    var endApp = new Date(appClose.getFullYear(), appClose.getMonth(), appClose.getDate() + 1).getTime();
 
-                    var evClose = new Date(challenge.info.eventEndTime);
-                    var endEv = new Date(evClose.getFullYear(), evClose.getMonth(), evClose.getDate() + 1).getTime();
+                    TimeServer.get(function(result){
+                        var today = new Date(result.timeServer).getTime();
 
-                    if (endEv - today < 0) {
-                        challenge.info.status = 'CLOSED';
-                    } else {
-                        if (endApp - today < 0) {
-                            challenge.info.status = 'INACTIVE';
+                        var appClose = new Date(challenge.info.applicationCloseDate);
+                        var endApp = new Date(appClose.getFullYear(), appClose.getMonth(), 
+                        appClose.getDate() + 1).getTime(); 
+    
+                        var evClose = new Date(challenge.info.eventEndTime);
+                        var endEv = new Date(evClose.getFullYear(), evClose.getMonth(), evClose.getDate() + 1).getTime();
+    
+                        if (endEv - today < 0) {
+                            challenge.info.status = 'CLOSED';
                         } else {
-                            var time = (endApp - today) / (1000 * 60 * 60 * 24);
-                            if (time <= 1) {
-                                challenge.timeLeft = 'Apply in less than 1 day';
+                            if (endApp - today < 0) {
+                                challenge.info.status = 'INACTIVE';
                             } else {
-                                challenge.timeLeft = 'Apply in ' + parseInt(Math.ceil(time)) + ' day(s)';
+                                challenge.timeLeft = endApp;
                             }
                         }
-                    }
+                    });
+                    // End Time
                 }
             })
         }

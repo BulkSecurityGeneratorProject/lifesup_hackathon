@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('ChallengesListDetailController', ChallengesListDetailController);
 
-    ChallengesListDetailController.$inject = ['$stateParams', 'Challenge', 'ChallengeInfo', 'entity', 'Principal', 'ApplicationsByUser', '$http'];
+    ChallengesListDetailController.$inject = ['$stateParams', 'Challenge', 'ChallengeInfo', 'entity', 'Principal', 'ApplicationsByUser', '$http', 'TimeServer'];
 
-    function ChallengesListDetailController($stateParams, Challenge, ChallengeInfo, entity, Principal, ApplicationsByUser, $http) {
+    function ChallengesListDetailController($stateParams, Challenge, ChallengeInfo, entity, Principal, ApplicationsByUser, $http, TimeServer) {
         var vm = this;
         vm.isAuthenticated = Principal.isAuthenticated;
         vm.challenge = entity;
@@ -50,23 +50,20 @@
 
         function parseChallengeStatus() {
             if (vm.challenge.info.status != 'INACTIVE') {
-                var today = new Date().getTime();
-                var appClose = new Date(vm.challenge.info.applicationCloseDate);
-                var endApp = new Date(appClose.getFullYear(), appClose.getMonth(), appClose.getDate() + 1).getTime();
-                vm.timeLeft = endApp - today;
-                if (vm.timeLeft < 0) {
-                    vm.challenge.info.status = 'INACTIVE';
-                } else {
-                    var time = vm.timeLeft / (1000 * 60 * 60 * 24);
-                    if (time <= 1) {
-                        vm.challenge.timeLeft = 'Apply in less than 1 day';
+                TimeServer.get(function(result){
+                    var today = new Date(result.timeServer);
+                    var appClose = new Date(vm.challenge.info.applicationCloseDate);
+                    var endApp = new Date(appClose.getFullYear(), appClose.getMonth(), appClose.getDate() + 1).getTime();
+                    vm.timeLeft = endApp - today;
+                    if (vm.timeLeft < 0) {
+                        vm.challenge.info.status = 'INACTIVE';
                     } else {
-                        vm.challenge.timeLeft = 'Apply in ' + parseInt(Math.ceil(time)) + ' day(s)';
+                        vm.challenge.timeLeft = endApp;
+                        console.log(vm.challenge.timeLeft);
                     }
-                }
-            } else {
-                vm.challenge.timeLeft = "Time's Up";
-            }
+                });
+                
+            } 
         }
 
         function getApplicationByUser() {

@@ -11,8 +11,11 @@
                 <p><i class="material-icons side-icons">date_range</i>{{vm.challenge.info.eventStartTime | date}} - {{vm.challenge.info.eventEndTime | date}}</p><hr>
                 <p><i class="material-icons side-icons">place</i>{{vm.challenge.info.location}}</p><hr>
                 <p><i class="material-icons side-icons">star_border</i>{{vm.challenge.info.prize}}</p><hr>
-                <p ng-if="vm.timeLeft > 0 && vm.challenge.info.status !== 'INACTIVE'"><i class="material-icons side-icons">alarm</i>{{vm.challenge.timeLeft}}</p>
-                <p ng-if="vm.timeLeft < 0 || vm.challenge.info.status === 'INACTIVE'"><i class="material-icons side-icons">alarm_off</i>{{vm.challenge.timeLeft}}</p>
+                
+                <p ng-if="vm.timeLeft > 0 && vm.challenge.info.status !== 'INACTIVE'"><i class="material-icons side-icons">alarm</i><span><timer end-time="vm.challenge.timeLeft"><span data-translate="hackathonApp.card.appTime" translate-values="{days: '{{days}}', hours: '{{hours}}',  minutes: '{{minutes}}', seconds: '{{seconds}}'}"></span></timer></span></p>
+                
+                <p ng-if="vm.timeLeft < 0 || vm.challenge.info.status === 'INACTIVE'"><i class="material-icons side-icons">alarm_off</i><span data-translate="hackathonApp.applicationStatus.close"></span></p>
+                
             </div>
            <!--  <button class="cta-btn"><a href="#">APPLY NOW</a></button> -->
            <div ng-switch="vm.getApplicationStatus()" has-authority-except="ROLE_HOST">

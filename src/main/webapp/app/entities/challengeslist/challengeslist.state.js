@@ -26,6 +26,7 @@
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('challengeslist');
+                        $translatePartialLoader.addPart('challenge-manager');
                         return $translate.refresh();
                     }]
                 }
@@ -48,6 +49,7 @@
                 resolve: {
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                         $translatePartialLoader.addPart('challengeslist');
+                        $translatePartialLoader.addPart('challenge-manager');
                         return $translate.refresh();
                     }],
                     entity: ['$stateParams', 'Challenge', function ($stateParams, Challenge) {
