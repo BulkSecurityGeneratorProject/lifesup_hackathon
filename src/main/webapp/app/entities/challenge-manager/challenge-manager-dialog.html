@@ -77,7 +77,7 @@
                                     <span class="glyphicon glyphicon-calendar"></span>&nbsp;
                                     <span data-translate="hackathonApp.challengeInfo.eventEndTime"></span>
                                 </label>
-                                <md-datepicker id="datepicker" md-min-date="vm.challengeInfo.eventStartTime" ng-disabled="!vm.challengeInfo.eventStartTime"
+                                <md-datepicker id="datepicker" md-min-date="vm.challengeInfo.eventEndTime" ng-disabled="!vm.challengeInfo.eventStartTime"
                                     md-hide-icons="all" md-open-on-focus name="eventEndTime" ng-model="vm.challengeInfo.eventEndTime"
                                     required></md-datepicker>
                                 <div ng-messages="challengeInfoForm.eventEndTime.$error">
@@ -102,7 +102,7 @@
                                     <span class="glyphicon glyphicon-calendar"></span>&nbsp;
                                     <span data-translate="hackathonApp.challengeInfo.pilotPhaseStartDate"></span>
                                 </label>
-                                <md-datepicker id="datepicker" md-min-date="vm.challengeInfo.pilotSubmissionCloseDate" md-max-date="vm.challengeInfo.eventEndTime" ng-disabled="!vm.challengeInfo.pilotSubmissionCloseDate"
+                                <md-datepicker id="datepicker" md-min-date="vm.challengeInfo.eventEndTime" ng-disabled="!vm.challengeInfo.pilotSubmissionCloseDate"
                                     md-hide-icons="all" md-open-on-focus name="pilotPhaseStartDate" ng-model="vm.challengeInfo.pilotPhaseStartDate"></md-datepicker>
                             </md-input-container>
 
@@ -111,7 +111,7 @@
                                     <span class="glyphicon glyphicon-calendar"></span>&nbsp;
                                     <span data-translate="hackathonApp.challengeInfo.pilotPhaseEndDate"></span>
                                 </label>
-                                <md-datepicker id="datepicker" md-min-date="vm.challengeInfo.pilotPhaseStartDate" md-max-date="vm.challengeInfo.eventEndTime" ng-disabled="!vm.challengeInfo.pilotPhaseStartDate"
+                                <md-datepicker id="datepicker" md-min-date="vm.challengeInfo.pilotPhaseStartDate" ng-disabled="!vm.challengeInfo.pilotPhaseStartDate"
                                     md-hide-icons="all" md-open-on-focus name="pilotPhaseEndDate" ng-model="vm.challengeInfo.pilotPhaseEndDate"></md-datepicker>
                             </md-input-container>
 
@@ -167,12 +167,12 @@
                     </form>
                 </md-content>
             </md-tab>
-
+<!-- DETAIL -->
             <md-tab label="Detail">
                 <md-content class="md-padding">
                     <form name="challengeForm">
                         <label data-translate="hackathonApp.challenge.bannerUrl"></label>
-                        <input type="file" ng-model="vm.banner" name="banner" base-sixty-four-input ng-maxSize="500" accept="image/*">
+                        <input type="file" ng-model="vm.banner" name="banner" base-sixty-four-input ng-maxSize="3000" accept="image/*">
                         <div ng-messages="challengeForm.banner.$invalid" role="alert">
                             <div ng-message="maxSize" data-translate="hackathonApp.messages.validate.name.required"></div>
                         </div>
