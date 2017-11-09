@@ -2,6 +2,7 @@ package fi.lifesup.hackathon.web.rest;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,11 +33,13 @@ import com.codahale.metrics.annotation.Timed;
 
 import fi.lifesup.hackathon.domain.Challenge;
 import fi.lifesup.hackathon.domain.User;
+import fi.lifesup.hackathon.domain.enumeration.ChallengeStatus;
 import fi.lifesup.hackathon.repository.ChallengeRepository;
 import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
 import fi.lifesup.hackathon.searchCriteria.ChallengeSearch;
 import fi.lifesup.hackathon.service.ChallengeService;
 import fi.lifesup.hackathon.service.dto.ChallengeImageDTO;
+import fi.lifesup.hackathon.service.dto.ChallengeTimeDTO;
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 import fi.lifesup.hackathon.web.rest.util.PaginationUtil;
 import fi.lifesup.hackathon.web.rest.vm.ManagedUserVM;
@@ -206,6 +210,34 @@ public class ChallengeResource {
 		log.debug("REST request to get all Challenges By Authories");
 		String base = challengeService.converbase64(id);
 		return base;
+	}
+	@Scheduled(fixedRate= 30000)
+	@GetMapping("/challenges/check")
+	@Timed
+	public void checkChallenge() {
+		List<Challenge> challenges = challengeRepository.listChallenges();
+		ZonedDateTime time = ZonedDateTime.now();
+		System.err.println(time);
+		for (Challenge challenge : challenges) {
+			
+			if(challenge.getInfo().getStatus() == ChallengeStatus.ACTIVE &&
+					!challenge.getInfo().getApplicationCloseDate().isAfter(time)){
+				challenge.getInfo().setStatus(ChallengeStatus.INACTIVE);
+				System.err.println(challenge.getInfo().getId());
+			}
+			if(challenge.getInfo().getStatus() == ChallengeStatus.INACTIVE &&
+					challenge.getInfo().getEventEndTime().isAfter(time)){
+				challenge.getInfo().setStatus(ChallengeStatus.CLOSED);
+				
+			}
+		}
+	}
+	
+	@GetMapping("/challenges/get-time")
+	@Timed
+	public ChallengeTimeDTO getChallengeTime() {
+		ChallengeTimeDTO challengeTimeDTO = new ChallengeTimeDTO(ZonedDateTime.now());
+		return challengeTimeDTO;
 	}
 	
 }

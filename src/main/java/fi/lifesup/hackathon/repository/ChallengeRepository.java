@@ -21,6 +21,9 @@ public interface ChallengeRepository extends JpaRepository<Challenge,Long> {
 	@Query("select c from Challenge c  where c.info.status not like 'REMOVED'")
 	List<Challenge> listChallenge();
 	
+	@Query("select c from Challenge c  where c.info.status in ('ACTIVE','INACTIVE')")
+	List<Challenge> listChallenges();
+	
 	@Query("select challenge from Challenge challenge, ChallengeInfo challengeInfo, "
 			+ "ChallengeUserApplication challengeUserApplication where challengeUserApplication.userId = :#{[0]} "
 			+ "and challengeUserApplication.challengeId = challenge.id and challenge.info.id = challengeInfo.id "
