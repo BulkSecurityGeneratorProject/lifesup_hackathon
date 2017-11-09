@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('ChallengeManagerController', ChallengeManagerController);
 
-    ChallengeManagerController.$inject = ['$scope', '$timeout', '$state', 'ChallengeManager', 'ChallengeInfo', 'ChallengeByAuthority', 'Challenge', 'ChallengeByUser', 'ParseLinks', 'AlertService', '$anchorScroll'];
+    ChallengeManagerController.$inject = ['$scope', '$timeout', '$state', 'ChallengeManager', 'ChallengeInfo', 'ChallengeByAuthority', 'Challenge', 'ChallengeByUser', 'ParseLinks', 'AlertService', '$anchorScroll', '$http'];
 
-    function ChallengeManagerController($scope, $timeout, $state, ChallengeManager, ChallengeInfo, ChallengeByAuthority, Challenge, ChallengeByUser, ParseLinks, AlertService, $anchorScroll) {
+    function ChallengeManagerController($scope, $timeout, $state, ChallengeManager, ChallengeInfo, ChallengeByAuthority, Challenge, ChallengeByUser, ParseLinks, AlertService, $anchorScroll, $http) {
         var vm = this;
 
         vm.challenges = [];
@@ -90,6 +90,28 @@
                 for (var i = 0; i < data.length; i++) {
                     vm.challenges.push(data[i]);
                 }
+                angular.forEach(data, function (challenge) {
+                    console.log('querybase64');
+                    //Convert Base64 img 
+                    $http({
+                        url: '/api/challenges/get-banner-base64',
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'text/plain'
+                        },
+                        data: challenge.bannerUrl,
+                        transformResponse: [function (data) {
+                            return data;
+                        }]
+                    })
+                        .then(function (response) {
+                            // success
+                            challenge.bannerUrl = "data:image/jpeg;base64," + response.data;
+                        },
+                        function (response) { // optional
+                            // failed
+                        });
+                });
                 parseChallengeStatus(vm.challenges);
             }
             function onError(error) {

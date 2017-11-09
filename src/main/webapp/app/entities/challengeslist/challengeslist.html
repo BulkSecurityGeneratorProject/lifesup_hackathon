@@ -44,8 +44,9 @@
 
     <div class="col-sm-12 col-md-4 repeated-item" ng-repeat="challenge in vm.challenges">
       <md-card class="challenge-container">
-        <img md-card-image src="{{challenge.bannerBase64}}" ui-sref="challengeslist-detail({id:challenge.id})" class='md-card-image'
-          ng-class="{'img-grey': vm.getApplicationStatus(challenge) == 'INACTIVE'}" alt="">
+        <img md-card-image ng-src="{{challenge.bannerUrl64 ? challenge.bannerUrl64 : '/content/images/svg/index.square-circle-preloader.svg'}}"
+          ui-sref="challengeslist-detail({id:challenge.id})" class='md-card-image' ng-class="{'img-grey': vm.getApplicationStatus(challenge) == 'INACTIVE'}"
+          alt="">
 
         <md-card-title class='challenge-title' ui-sref="challengeslist-detail({id:challenge.id})">{{challenge.name}}</md-card-title>
         <md-card-subtitle class='challenge-owner' ui-sref="challengeslist-detail({id:challenge.id})">{{company.name}}</md-card-subtitle>

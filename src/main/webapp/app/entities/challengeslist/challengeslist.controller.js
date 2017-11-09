@@ -83,21 +83,7 @@
         }
 
         function parseChallengeStatus(challenges) {
-            angular.forEach(challenges, function (challenge) {
-                //Convert Base64 img 
-                $http({
-                    url: '/api/challenges/get-banner-base64',
-                    method: "POST",
-                    data: challenge.bannerUrl
-                })
-                    .then(function (response) {
-                        // success
-                        challenge.bannerBase64 ="data:image/jpeg;base64,"+ response.data;
-                    },
-                    function (response) { // optional
-                        // failed
-                    });
-            });
+
             challenges.map(function (challenge) {
 
                 var today = new Date().getTime();
@@ -148,8 +134,31 @@
                 vm.links = ParseLinks.parse(headers('link'));
                 vm.totalItems = headers('X-Total-Count');
                 for (var i = 0; i < data.length; i++) {
+                    data[i].bannerUrl64 = null;
                     vm.challenges.push(data[i]);
                 }
+                angular.forEach(data, function (challenge) {
+                    //Convert Base64 img 
+                    $http({
+                        url: '/api/challenges/get-banner-base64',
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'text/plain'
+                        },
+                        data: challenge.bannerUrl,
+                        transformResponse: [function (data) {
+                            return data;
+                        }]
+                    })
+                        .then(function (response) {
+                            // success
+                            console.log(response);
+                            challenge.bannerUrl64 = "data:image/jpeg;base64," + response.data;
+                        },
+                        function (response) { // optional
+                            // failed
+                        });
+                });
                 parseChallengeStatus(vm.challenges);
             }
 
@@ -237,6 +246,28 @@
                 for (var i = 0; i < data.length; i++) {
                     vm.challenges.push(data[i]);
                 }
+                angular.forEach(data, function (challenge) {
+                    console.log('querybase64: ' + challenge.id);
+                    //Convert Base64 img 
+                    $http({
+                        url: '/api/challenges/get-banner-base64',
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'text/plain'
+                        },
+                        data: challenge.bannerUrl,
+                        transformResponse: [function (data) {
+                            return data;
+                        }]
+                    })
+                        .then(function (response) {
+                            // success
+                            challenge.bannerUrl = "data:image/jpeg;base64," + response.data;
+                        },
+                        function (response) { // optional
+                            // failed
+                        });
+                });
                 parseChallengeStatus(vm.challenges);
             }
 
@@ -264,6 +295,29 @@
                 for (var i = 0; i < data.length; i++) {
                     vm.challenges.push(data[i]);
                 }
+                angular.forEach(data, function (challenge) {
+                    console.log('querybase64: ' + challenge.id);
+                    //Convert Base64 img 
+                    $http({
+                        url: '/api/challenges/get-banner-base64',
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'text/plain'
+                        },
+                        data: challenge.bannerUrl,
+                        transformResponse: [function (data) {
+                            return data;
+                        }]
+                    })
+                        .then(function (response) {
+                            // success
+                            console.log(response);
+                            challenge.bannerUrl64 = "data:image/jpeg;base64," + response.data;
+                        },
+                        function (response) { // optional
+                            // failed
+                        });
+                });
                 parseChallengeStatus(vm.challenges);
             }
 

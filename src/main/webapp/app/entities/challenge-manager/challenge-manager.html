@@ -142,14 +142,17 @@
                         <i class="challenge-icon material-icons w3-text-orange">alarm</i>{{challenge.timeLeft}}
                     </md-list-item>
                     <md-list-item ng-switch-when="DRAFT">
-                        <i class="challenge-icon material-icons w3-text-khaki">vpn_key</i><span data-translate="hackathonApp.card.activationRequired"></span>
+                        <i class="challenge-icon material-icons w3-text-khaki">vpn_key</i>
+                        <span data-translate="hackathonApp.card.activationRequired"></span>
                     </md-list-item>
                     <md-list-item ng-switch-when="INACTIVE">
-                        <i class="challenge-icon material-icons w3-text-red">alarm_off</i><span data-translate="hackathonApp.card.appClosed"></span>
+                        <i class="challenge-icon material-icons w3-text-red">alarm_off</i>
+                        <span data-translate="hackathonApp.card.appClosed"></span>
                     </md-list-item>
 
                     <md-list-item ng-switch-when="CLOSED">
-                        <i class="challenge-icon material-icons w3-text-red">close</i><span data-translate="hackathonApp.card.eventEnded"></span>
+                        <i class="challenge-icon material-icons w3-text-red">close</i>
+                        <span data-translate="hackathonApp.card.eventEnded"></span>
                     </md-list-item>
                 </md-list>
             </md-card-content>
