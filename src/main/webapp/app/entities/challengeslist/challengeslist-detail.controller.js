@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('ChallengesListDetailController', ChallengesListDetailController);
 
-    ChallengesListDetailController.$inject = ['$stateParams', 'Challenge', 'ChallengeInfo', 'entity', 'Principal', 'ApplicationsByUser'];
+    ChallengesListDetailController.$inject = ['$stateParams', 'Challenge', 'ChallengeInfo', 'entity', 'Principal', 'ApplicationsByUser', '$http'];
 
-    function ChallengesListDetailController($stateParams, Challenge, ChallengeInfo, entity, Principal, ApplicationsByUser) {
+    function ChallengesListDetailController($stateParams, Challenge, ChallengeInfo, entity, Principal, ApplicationsByUser, $http) {
         var vm = this;
         vm.isAuthenticated = Principal.isAuthenticated;
         vm.challenge = entity;
@@ -23,6 +23,30 @@
         getApplicationByUser();
         parseChallengeStatus();
 
+        $http({
+            url: '/api/challenges/get-banner-base64',
+            method: "POST",
+            headers: {
+                'Content-Type': 'text/plain'
+            },
+            data: vm.challenge.bannerUrl,
+            transformResponse: [function (data) {
+                return data;
+            }]
+        })
+            .then(function (response) {
+                // success
+                if (response.data.length > 1) {
+                    vm.challenge.bannerUrl64 = "data:image/jpeg;base64," + response.data;
+
+                } else {
+                    vm.challenge.bannerUrl64 = null;
+                }
+            },
+            function (response) { // optional
+                // failed
+            });
+
 
         function parseChallengeStatus() {
             if (vm.challenge.info.status != 'INACTIVE') {
@@ -32,7 +56,6 @@
                 vm.timeLeft = endApp - today;
                 if (vm.timeLeft < 0) {
                     vm.challenge.info.status = 'INACTIVE';
-                    ChallengeInfo.update(vm.challenge.info);
                 } else {
                     var time = vm.timeLeft / (1000 * 60 * 60 * 24);
                     if (time <= 1) {

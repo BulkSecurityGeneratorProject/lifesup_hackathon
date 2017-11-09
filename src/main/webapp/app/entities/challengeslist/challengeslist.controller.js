@@ -95,11 +95,9 @@
 
                 if (endEv - today < 0) {
                     challenge.info.status = 'CLOSED';
-                    ChallengeInfo.update(challenge.info);
                 } else {
                     if (endApp - today < 0) {
                         challenge.info.status = 'INACTIVE';
-                        ChallengeInfo.update(challenge.info);
                     } else {
                         var time = (endApp - today) / (1000 * 60 * 60 * 24);
                         if (time <= 1) {

@@ -56,11 +56,9 @@
 
                     if (endEv - today < 0) {
                         challenge.info.status = 'CLOSED';
-                        ChallengeInfo.update(challenge.info);
                     } else {
                         if (endApp - today < 0) {
                             challenge.info.status = 'INACTIVE';
-                            ChallengeInfo.update(challenge.info);
                         } else {
                             var time = (endApp - today) / (1000 * 60 * 60 * 24);
                             if (time <= 1) {
@@ -75,12 +73,15 @@
         }
 
         function loadAll() {
+            var startTime = new Date().getTime();
             ChallengeByUser.query({
                 page: vm.page,
                 size: vm.itemsPerPage,
                 sort: sort()
             }, onSuccess, onError);
             function onSuccess(data, headers) {
+                var endTime = new Date().getTime();
+                console.log(endTime - startTime);
                 if (!data.length) {
                     vm.hasNoChallenge = true;
                     return;
@@ -121,6 +122,7 @@
             function onError(error) {
                 AlertService.error(error.data.message);
             }
+
         }
 
         function reset() {

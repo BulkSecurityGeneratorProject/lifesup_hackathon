@@ -11,7 +11,6 @@
     var vm = this;
     vm.isAuthenticated = Principal.isAuthenticated;
     vm.application = entity;
-    console.log(entity);
     vm.getSkills = getSkills;
     vm.members = vm.application.members;
     vm.determinateValue = 0;
@@ -41,7 +40,6 @@
 
     function getSkills() {
       if (vm.members) {
-        console.log(vm.members);
         vm.members.map(function (member) {
           if (member.skills) {
             return member.skills = member.skills.split(',');
