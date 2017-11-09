@@ -11,7 +11,7 @@
     <md-dialog-content class="challenge-dialog">
         <jhi-alert-error></jhi-alert-error>
         <md-tabs md-dynamic-height md-stretch-tabs="always" md-border-bottom>
-            <md-tab label="Basic">
+            <md-tab label="{{'hackathonApp.challenge.home.basic' | translate}}">
                 <md-content class="md-padding md-inline-form">
                     <form name="challengeInfoForm">
 
@@ -77,7 +77,7 @@
                                     <span class="glyphicon glyphicon-calendar"></span>&nbsp;
                                     <span data-translate="hackathonApp.challengeInfo.eventEndTime"></span>
                                 </label>
-                                <md-datepicker id="datepicker" md-min-date="vm.challengeInfo.eventEndTime" ng-disabled="!vm.challengeInfo.eventStartTime"
+                                <md-datepicker id="datepicker" md-min-date="vm.challengeInfo.eventStartTime" ng-disabled="!vm.challengeInfo.eventStartTime"
                                     md-hide-icons="all" md-open-on-focus name="eventEndTime" ng-model="vm.challengeInfo.eventEndTime"
                                     required></md-datepicker>
                                 <div ng-messages="challengeInfoForm.eventEndTime.$error">
@@ -168,7 +168,7 @@
                 </md-content>
             </md-tab>
 <!-- DETAIL -->
-            <md-tab label="Detail">
+            <md-tab label="{{'hackathonApp.challenge.home.detail' | translate}}">
                 <md-content class="md-padding">
                     <form name="challengeForm">
                         <label data-translate="hackathonApp.challenge.bannerUrl"></label>

@@ -30,11 +30,11 @@
         "email": "Email",
         "activated": "Kích hoạt",
         "deactivated": "Khóa",
-        "profiles": "Các quyền",
+        "profiles": "Quyền hạn",
         "langKey": "Ngôn ngữ",
         "createdBy": "Người tạo",
         "createdDate": "Ngày tạo",
-        "lastModifiedBy": "Người sửa",
-        "lastModifiedDate": "Ngày sửa"
+        "lastModifiedBy": "Người sửa gần đây",
+        "lastModifiedDate": "Ngày sửa gần đây"
     }
 }

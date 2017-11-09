@@ -21,7 +21,9 @@
                 "title": "Challenge Manager",
                 "createLabel": "Create a new Challenge",
                 "createOrEditLabel": "Create or edit a Challenge",
-                "search": "Search for Challenge"
+                "search": "Search for Challenge",
+                "basic": "Basic",
+                "detail": "Detail"
             },
             "created": "A new Challenge is created with identifier {{ param }}",
             "updated": "A Challenge is updated with identifier {{ param }}",

@@ -21,7 +21,9 @@
                 "title": "Quản lí thử thách",
                 "createLabel": "Tạo một thử thách mới",
                 "createOrEditLabel": "Tạo hoặc sửa thử thách",
-                "search": "Tìm kiếm thử thách"
+                "search": "Tìm kiếm thử thách",
+                "basic": "Cơ bản",
+                "detail": "Chi tiết"
             },
             "created": "Một thử thách đã được tạo với định danh {{ param }}",
             "updated": "Một thử thách đã được cập nhật với định danh {{ param }}",
@@ -58,9 +60,9 @@
             "applicationCloseDate": "Hạn nộp đơn",
             "kickoffWebinarDate": "Ngày hội thảo",
             "selectionInformDate": "Ngày thông báo trúng tuyển",
-            "pilotSubmissionCloseDate": "Submission Close",
-            "pilotPhaseStartDate": "Pilot Phase Start",
-            "pilotPhaseEndDate": "Pilot Phase End",
+            "pilotSubmissionCloseDate": "Hạn nộp sản phẩm",
+            "pilotPhaseStartDate": "Bắt đầu chạy thử sản phẩm",
+            "pilotPhaseEndDate": "Kết thúc chạy thử sản phẩm",
             "prize": "Giải thưởng",
             "location": "Địa điểm",
             "status": {
