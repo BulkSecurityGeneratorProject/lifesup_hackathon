@@ -78,15 +78,15 @@
                 <div class="ribbon-grey" data-translate="hackathonApp.card.closed"></div>
             </div> -->
             <!-- Display cover -->
-            <img ng-switch-when="ACTIVE" ui-sref="challenge-manager-detail({id:challenge.id})" ng-src="{{challenge.bannerUrl}}" class="md-card-image"
-                alt="">
-            <img ng-switch-when="DRAFT" ui-sref="challenge-manager-detail({id:challenge.id})" ng-src="{{challenge.bannerUrl}}" class="md-card-image img-blur"
-                alt="">
-            <img ng-switch-when="INACTIVE" ui-sref="challenge-manager-detail({id:challenge.id})" ng-src="{{challenge.bannerUrl}}" class="md-card-image img-grey"
-                alt="">
+            <img ng-switch-when="ACTIVE" ui-sref="challenge-manager-detail({id:challenge.id})" ng-src="{{challenge.bannerUrl64 ? challenge.bannerUrl64 : '/content/images/svg/index.square-circle-preloader.svg'}}"
+                class="md-card-image" alt="">
+            <img ng-switch-when="DRAFT" ui-sref="challenge-manager-detail({id:challenge.id})" ng-src="{{challenge.bannerUrl64 ? challenge.bannerUrl64 : '/content/images/svg/index.square-circle-preloader.svg'}}"
+                class="md-card-image img-blur" alt="">
+            <img ng-switch-when="INACTIVE" ui-sref="challenge-manager-detail({id:challenge.id})" ng-src="{{challenge.bannerUrl64 ? challenge.bannerUrl64 : '/content/images/svg/index.square-circle-preloader.svg'}}"
+                class="md-card-image img-grey" alt="">
 
-            <img ng-switch-when="CLOSED" ui-sref="challenge-manager-detail({id:challenge.id})" ng-src="{{challenge.bannerUrl}}" class="md-card-image img-grey"
-                alt="">
+            <img ng-switch-when="CLOSED" ui-sref="challenge-manager-detail({id:challenge.id})" ng-src="{{challenge.bannerUrl64 ? challenge.bannerUrl64 : '/content/images/svg/index.square-circle-preloader.svg'}}"
+                class="md-card-image img-grey" alt="">
             <!-- Challenge info -->
             <md-card-title ng-switch-when="ACTIVE" class="w3-green">
                 <md-card-title-text>

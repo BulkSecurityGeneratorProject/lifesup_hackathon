@@ -153,7 +153,13 @@
                         .then(function (response) {
                             // success
                             console.log(response);
-                            challenge.bannerUrl64 = "data:image/jpeg;base64," + response.data;
+                            if(response.data.length>1){
+                                challenge.bannerUrl64 = "data:image/jpeg;base64," + response.data;
+
+                            } else {
+                                challenge.bannerUrl64 = null;
+                            }
+
                         },
                         function (response) { // optional
                             // failed
@@ -262,7 +268,12 @@
                     })
                         .then(function (response) {
                             // success
-                            challenge.bannerUrl = "data:image/jpeg;base64," + response.data;
+                            if(response.data.length>1){
+                                challenge.bannerUrl64 = "data:image/jpeg;base64," + response.data;
+
+                            } else {
+                                challenge.bannerUrl64 = null;
+                            }
                         },
                         function (response) { // optional
                             // failed
@@ -311,8 +322,12 @@
                     })
                         .then(function (response) {
                             // success
-                            console.log(response);
-                            challenge.bannerUrl64 = "data:image/jpeg;base64," + response.data;
+                            if(response.data.length>1){
+                                challenge.bannerUrl64 = "data:image/jpeg;base64," + response.data;
+
+                            } else {
+                                challenge.bannerUrl64 = null;
+                            }
                         },
                         function (response) { // optional
                             // failed
