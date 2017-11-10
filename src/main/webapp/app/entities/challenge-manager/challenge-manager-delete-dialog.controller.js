@@ -11,7 +11,6 @@
         var vm = this;
 
         vm.challenge = entity;
-        console.log(entity);
         vm.clear = clear;
         vm.confirmDelete = confirmDelete;
         function clear() {

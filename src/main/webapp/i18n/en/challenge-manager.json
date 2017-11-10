@@ -14,7 +14,8 @@
             "activationRequired": "Activation Required",
             "appClosed": "Application has closed",
             "eventEnded": "Event has ended",
-            "seeApp": "See Applications"
+            "seeApp": "See Applications",
+            "appTime": "Deadline: {{days}} days, {{hours}}h {{minutes}}m {{seconds}}s"
         },
         "challenge": {
             "home": {

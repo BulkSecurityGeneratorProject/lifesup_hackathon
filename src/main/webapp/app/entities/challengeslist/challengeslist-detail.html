@@ -1,5 +1,5 @@
-<div class="banner" style="background-image:url({{vm.challenge.bannerUrl}})">
-    <!-- <div class="stripe"></div> -->
+<div class="banner">
+    <img ng-src="{{vm.challenge.bannerUrl64 ? vm.challenge.bannerUrl64 : '/content/images/svg/index.square-circle-preloader.svg'}}" class="img img-responsive banner-img">
 </div>
 <!-- challenge details -->
 <div class="row challenge-detail-wrapper">
@@ -11,8 +11,11 @@
                 <p><i class="material-icons side-icons">date_range</i>{{vm.challenge.info.eventStartTime | date}} - {{vm.challenge.info.eventEndTime | date}}</p><hr>
                 <p><i class="material-icons side-icons">place</i>{{vm.challenge.info.location}}</p><hr>
                 <p><i class="material-icons side-icons">star_border</i>{{vm.challenge.info.prize}}</p><hr>
-                <p ng-if="vm.timeLeft > 0 && vm.challenge.info.status !== 'INACTIVE'"><i class="material-icons side-icons">alarm</i>{{vm.challenge.timeLeft}}</p>
-                <p ng-if="vm.timeLeft < 0 || vm.challenge.info.status === 'INACTIVE'"><i class="material-icons side-icons">alarm_off</i>{{vm.challenge.timeLeft}}</p>
+                
+                <p ng-if="vm.timeLeft > 0 && vm.challenge.info.status !== 'INACTIVE'"><i class="material-icons side-icons">alarm</i><span><timer end-time="vm.challenge.timeLeft"><span data-translate="hackathonApp.card.appTime" translate-values="{days: '{{days}}', hours: '{{hours}}',  minutes: '{{minutes}}', seconds: '{{seconds}}'}"></span></timer></span></p>
+                
+                <p ng-if="vm.timeLeft < 0 || vm.challenge.info.status === 'INACTIVE'"><i class="material-icons side-icons">alarm_off</i><span data-translate="hackathonApp.applicationStatus.close"></span></p>
+                
             </div>
            <!--  <button class="cta-btn"><a href="#">APPLY NOW</a></button> -->
            <div ng-switch="vm.getApplicationStatus()" has-authority-except="ROLE_HOST">

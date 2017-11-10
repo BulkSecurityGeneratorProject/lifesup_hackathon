@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('ChallengesListController', ChallengesListController);
 
-    ChallengesListController.$inject = ['$scope', '$log', '$timeout', '$q', 'Principal', 'Challenge', 'ApplicationsByUser', 'ParseLinks', 'paginationConstants', 'AlertService', '$location', '$anchorScroll', 'ChallengeInfo', 'UserDetail', '$http'];
+    ChallengesListController.$inject = ['$scope', '$log', '$timeout', '$q', 'Principal', 'Challenge', 'ApplicationsByUser', 'ParseLinks', 'paginationConstants', 'AlertService', '$location', '$anchorScroll', 'ChallengeInfo', 'UserDetail', '$http', 'TimeServer'];
 
-    function ChallengesListController($scope, $log, $timeout, $q, Principal, Challenge, ApplicationsByUser, ParseLinks, paginationConstants, AlertService, $location, $anchorScroll, ChallengeInfo, UserDetail, $http) {
+    function ChallengesListController($scope, $log, $timeout, $q, Principal, Challenge, ApplicationsByUser, ParseLinks, paginationConstants, AlertService, $location, $anchorScroll, ChallengeInfo, UserDetail, $http, TimeServer) {
         var vm = this;
         vm.isAuthenticated = Principal.isAuthenticated;
         vm.challenges = [];
@@ -86,29 +86,24 @@
 
             challenges.map(function (challenge) {
 
-                var today = new Date().getTime();
-                var appClose = new Date(challenge.info.applicationCloseDate);
-                var endApp = new Date(appClose.getFullYear(), appClose.getMonth(), appClose.getDate() + 1).getTime();
+                TimeServer.get(function (result) {
+                    var today = new Date(result.timeServer).getTime();
+                    var appClose = new Date(challenge.info.applicationCloseDate);
+                    var endApp = new Date(appClose.getFullYear(), appClose.getMonth(), appClose.getDate() + 1).getTime();
 
-                var evClose = new Date(challenge.info.eventEndTime);
-                var endEv = new Date(evClose.getFullYear(), evClose.getMonth(), evClose.getDate() + 1).getTime();
+                    var evClose = new Date(challenge.info.eventEndTime);
+                    var endEv = new Date(evClose.getFullYear(), evClose.getMonth(), evClose.getDate() + 1).getTime();
 
-                if (endEv - today < 0) {
-                    challenge.info.status = 'CLOSED';
-                    ChallengeInfo.update(challenge.info);
-                } else {
-                    if (endApp - today < 0) {
-                        challenge.info.status = 'INACTIVE';
-                        ChallengeInfo.update(challenge.info);
+                    if (endEv - today < 0) {
+                        challenge.info.status = 'CLOSED';
                     } else {
-                        var time = (endApp - today) / (1000 * 60 * 60 * 24);
-                        if (time <= 1) {
-                            challenge.timeLeft = 'Apply in less than 1 day';
+                        if (endApp - today < 0) {
+                            challenge.info.status = 'INACTIVE';
                         } else {
-                            challenge.timeLeft = 'Apply in ' + parseInt(Math.ceil(time)) + ' day(s)';
+                            challenge.timeLeft = endApp;
                         }
                     }
-                }
+                })
 
 
             })
@@ -153,7 +148,7 @@
                         .then(function (response) {
                             // success
                             console.log(response);
-                            if(response.data.length>1){
+                            if (response.data.length > 1) {
                                 challenge.bannerUrl64 = "data:image/jpeg;base64," + response.data;
 
                             } else {
@@ -268,7 +263,7 @@
                     })
                         .then(function (response) {
                             // success
-                            if(response.data.length>1){
+                            if (response.data.length > 1) {
                                 challenge.bannerUrl64 = "data:image/jpeg;base64," + response.data;
 
                             } else {
@@ -322,7 +317,7 @@
                     })
                         .then(function (response) {
                             // success
-                            if(response.data.length>1){
+                            if (response.data.length > 1) {
                                 challenge.bannerUrl64 = "data:image/jpeg;base64," + response.data;
 
                             } else {

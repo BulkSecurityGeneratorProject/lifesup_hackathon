@@ -14,7 +14,8 @@
             "activationRequired": "Cần được kích hoạt",
             "appClosed": "Đã ngừng nhận đơn",
             "eventEnded": "Sự kiện đã kết thúc",
-            "seeApp": "Xem danh sách đơn"
+            "seeApp": "Xem danh sách đơn",
+            "appTime": "Còn lại: {{days}} ngày, {{hours}} giờ {{minutes}} phút {{seconds}} giây."
         },
         "challenge": {
             "home": {

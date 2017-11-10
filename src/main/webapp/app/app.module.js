@@ -22,7 +22,8 @@
             'lfNgMdFileInput',
             'naif.base64',
             'ngAnimate',
-            'md.data.table'
+            'md.data.table',
+            'timer'
         ]).config(['$mdDateLocaleProvider', function ($mdDateLocaleProvider) {
          
         }]  )

@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('ChallengeManagerDialogController', ChallengeManagerDialogController);
 
-    ChallengeManagerDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$mdDialog', '$q', 'entity', 'ChallengeManager', 'ChallengeInfo', 'Application', 'Company', 'ChallengeBanner', 'validation'];
+    ChallengeManagerDialogController.$inject = ['$timeout', '$scope', '$stateParams', '$mdDialog', '$q', 'entity', 'ChallengeManager', 'ChallengeInfo', 'Application', 'Company', 'ChallengeBanner', 'validation', 'TimeServer'];
 
-    function ChallengeManagerDialogController($timeout, $scope, $stateParams, $mdDialog, $q, entity, ChallengeManager, ChallengeInfo, Application, Company, ChallengeBanner, validation) {
+    function ChallengeManagerDialogController($timeout, $scope, $stateParams, $mdDialog, $q, entity, ChallengeManager, ChallengeInfo, Application, Company, ChallengeBanner, validation, TimeServer) {
         var vm = this;
 
         vm.challenge = entity;
@@ -16,7 +16,12 @@
         vm.save = save;
         vm.isMinMaxInvalid = validation.isMinMaxInvalid;
         vm.isLowerThan100 = validation.isLowerThan100;
-        vm.minDate = new Date();
+        vm.today = {};
+        TimeServer.get(function(result){
+            vm.today = new Date(result.timeServer);
+            vm.minDate = new Date(result.timeServer);
+        });
+        
 
         getChallengesInfo();
 
@@ -42,7 +47,7 @@
         
         function save() {
             vm.isSaving = true;
-            var today = new Date().getTime();
+            var today = vm.today.getTime();
             var appClose = new Date(vm.challengeInfo.applicationCloseDate);
             var endApp = new Date(appClose.getFullYear(), appClose.getMonth(), appClose.getDate() + 1).getTime();
 

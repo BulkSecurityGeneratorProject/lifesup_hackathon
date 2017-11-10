@@ -8,12 +8,18 @@
             "email": "Email của bạn?",
             "note": "Ghi chú thêm",
             "submit": "Gửi đi",
+            "goHome": "Về trang chủ",
+            "thank": "Cảm ơn bạn!",
+            "sorry": "Rất tiếc!",
             "messages": {
               "name": "Tên bạn không được bỏ trống",
               "company": "Tên công ty bạn không được bỏ trống",
               "phone": "Số điện thoại không được bỏ trống",
-              "email": "Email không được bỏ trống"
+              "email": "Email không được bỏ trống",
+              "success": "Yêu cầu của bạn đã được gửi. Chúng tôi sẽ liên hệ với bạn trong thời gian ngắn nhất!",
+              "failed": "Yêu cầu của bạn chưa được gửi. Hãy thử lại lần nữa!"
             }
         }
     }
 }
+
