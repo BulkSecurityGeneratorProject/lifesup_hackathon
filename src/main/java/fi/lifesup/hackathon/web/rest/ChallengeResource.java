@@ -3,10 +3,8 @@ package fi.lifesup.hackathon.web.rest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -26,25 +24,20 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.codahale.metrics.annotation.Timed;
 
 import fi.lifesup.hackathon.domain.Challenge;
-import fi.lifesup.hackathon.domain.User;
 import fi.lifesup.hackathon.domain.enumeration.ChallengeStatus;
+import fi.lifesup.hackathon.repository.ChallengeInfoRepository;
 import fi.lifesup.hackathon.repository.ChallengeRepository;
-import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
 import fi.lifesup.hackathon.searchCriteria.ChallengeSearch;
 import fi.lifesup.hackathon.service.ChallengeService;
 import fi.lifesup.hackathon.service.dto.ChallengeImageDTO;
 import fi.lifesup.hackathon.service.dto.ChallengeTimeDTO;
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 import fi.lifesup.hackathon.web.rest.util.PaginationUtil;
-import fi.lifesup.hackathon.web.rest.vm.ManagedUserVM;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiParam;
 
 /**
  * REST controller for managing Challenge.
@@ -60,6 +53,9 @@ public class ChallengeResource {
 
 	@Inject
 	private ChallengeService challengeService;
+
+	@Inject
+	private ChallengeInfoRepository challengeInfoRepository;
 
 	/**
 	 * POST /challenges : Create a new challenge.
@@ -128,17 +124,16 @@ public class ChallengeResource {
 	 *
 	 * @return the ResponseEntity with status 200 (OK) and the list of
 	 *         challenges in body
-	 * @throws URISyntaxException 
+	 * @throws URISyntaxException
 	 */
 	@GetMapping("/challenges")
 	@Timed
-	public ResponseEntity<List<Challenge>> getAllChallenges(ChallengeSearch challengeSearch,Pageable pageable
-			) throws URISyntaxException {		
+	public ResponseEntity<List<Challenge>> getAllChallenges(ChallengeSearch challengeSearch, Pageable pageable)
+			throws URISyntaxException {
 		Page<Challenge> page = challengeService.getChallengeSearch(challengeSearch, pageable);
 		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/challenges");
 		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
-		
-		
+
 	}
 
 	/**
@@ -153,9 +148,9 @@ public class ChallengeResource {
 	@Timed
 	public ResponseEntity<Challenge> getChallenge(@PathVariable Long id) {
 		log.debug("REST request to get Challenge : {}", id);
-		
+
 		Challenge challenge = challengeRepository.findOne(id);
-		
+
 		return Optional.ofNullable(challenge).map(result -> new ResponseEntity<>(result, HttpStatus.OK))
 				.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
 	}
@@ -177,13 +172,12 @@ public class ChallengeResource {
 
 	@GetMapping("/challenges-by-user")
 	@Timed
-	public ResponseEntity<List<Challenge>> getManageChallenges(ChallengeSearch challengeSearch,Pageable pageable
-			) throws URISyntaxException {
+	public ResponseEntity<List<Challenge>> getManageChallenges(ChallengeSearch challengeSearch, Pageable pageable)
+			throws URISyntaxException {
 		Page<Challenge> page = challengeService.getChallengeManageSearch(challengeSearch, pageable);
 		HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/challenges-by-user");
 		return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
-		
-		
+
 	}
 
 	@GetMapping("/challenges-by-authories")
@@ -193,7 +187,7 @@ public class ChallengeResource {
 		List<Challenge> challenges = challengeService.getChallenges();
 		return challenges;
 	}
-	
+
 	@PutMapping("/challenges/banner")
 	@Timed
 	public ResponseEntity<Challenge> updateChallengeBanner(@Valid @RequestBody ChallengeImageDTO imageDTO)
@@ -202,8 +196,10 @@ public class ChallengeResource {
 
 		Challenge result = challengeService.updateChallengeBanner(imageDTO);
 		return ResponseEntity.ok()
-				.headers(HeaderUtil.createEntityUpdateAlert("challenge", imageDTO.getChallengeId().toString())).body(result);
+				.headers(HeaderUtil.createEntityUpdateAlert("challenge", imageDTO.getChallengeId().toString()))
+				.body(result);
 	}
+
 	@PostMapping("/challenges/get-banner-base64")
 	@Timed
 	public String getChallengesBase64(@RequestBody String id) {
@@ -211,32 +207,40 @@ public class ChallengeResource {
 		String base = challengeService.converbase64(id);
 		return base;
 	}
-	@Scheduled(fixedRate= 60000)
+
+	@Scheduled(fixedRate = 60000)
 	@GetMapping("/challenges/check")
 	@Timed
 	public void checkChallenge() {
 		List<Challenge> challenges = challengeRepository.listChallenges();
 		ZonedDateTime time = ZonedDateTime.now();
 		for (Challenge challenge : challenges) {
-			
-			if(challenge.getInfo().getStatus() == ChallengeStatus.ACTIVE &&
-					!challenge.getInfo().getApplicationCloseDate().isAfter(time)){
+
+			if (challenge.getInfo().getStatus() == ChallengeStatus.ACTIVE
+					&& !challenge.getInfo().getApplicationCloseDate().isAfter(time)) {
 				challenge.getInfo().setStatus(ChallengeStatus.INACTIVE);
-				challengeRepository.save(challenge);
+				challengeInfoRepository.save(challenge.getInfo());
 			}
-			if(challenge.getInfo().getStatus() == ChallengeStatus.INACTIVE &&
-					!challenge.getInfo().getEventEndTime().isAfter(time)){
+			if (challenge.getInfo().getStatus() == ChallengeStatus.INACTIVE
+					&& !challenge.getInfo().getEventEndTime().isAfter(time)) {
 				challenge.getInfo().setStatus(ChallengeStatus.CLOSED);
-				challengeRepository.save(challenge);
+				challengeInfoRepository.save(challenge.getInfo());
 			}
 		}
 	}
-	
+
 	@GetMapping("/challenges/get-time")
 	@Timed
 	public ChallengeTimeDTO getChallengeTime() {
 		ChallengeTimeDTO challengeTimeDTO = new ChallengeTimeDTO(ZonedDateTime.now());
 		return challengeTimeDTO;
 	}
-	
+
+	@GetMapping("/challenges-by-aut/{id}")
+	@Timed
+	public List<Challenge> getChallengesBasedOnOwner(@RequestBody String id) {
+		log.debug("REST request to get all Challenges By Authories");
+		List<Challenge> challenges = challengeService.getChallenges();
+		return challenges;
+	}
 }

@@ -14,5 +14,4 @@ import java.util.List;
 public interface CompanyRepository extends JpaRepository<Company,Long> {
 	@Query("select c.name from Company c ")
 	List<String> getNameCompany();
-
 }
