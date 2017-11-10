@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('UserManagementDetailController', UserManagementDetailController);
 
-    UserManagementDetailController.$inject = ['$scope', '$stateParams', 'User', 'Skill', 'Experience', 'UserDetail', 'Principal'];
+    UserManagementDetailController.$inject = ['$scope', '$stateParams', 'User', 'Skill', 'Experience', 'UserDetail', 'Principal','$http'];
 
-    function UserManagementDetailController($scope, $stateParams, User, Skill, Experience, UserDetail, Principal) {
+    function UserManagementDetailController($scope, $stateParams, User, Skill, Experience, UserDetail, Principal, $http) {
         var vm = this;
 
         vm.user = {};
@@ -25,6 +25,29 @@
                 vm.userInfo = result.userInfo;
                 vm.skills = result.userInfo.skills.split(",");
                 vm.workAreas = result.userInfo.workArea.split(",");
+                $http({
+                    url: '/api/challenges/get-banner-base64',
+                    method: "POST",
+                    headers: {
+                      'Content-Type': 'text/plain'
+                    },
+                    data: vm.userInfo.logoUrl,
+                    transformResponse: [function (data) {
+                      return data;
+                    }]
+                  })
+                    .then(function (response) {
+                      // success
+                      if (response.data.length > 1) {
+                        vm.userInfo.logoUrl64 = "data:image/jpeg;base64," + response.data;
+          
+                      } else {
+                        vm.userInfo.logoUrl64 = null;
+                      }
+                    },
+                    function (response) { // optional
+                      // failed
+                    });
             }
         });
 

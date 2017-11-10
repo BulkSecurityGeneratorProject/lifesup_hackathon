@@ -5,9 +5,9 @@
     .module('hackathonApp')
     .controller('ApplicationsListDetailController', ApplicationsListDetailController);
 
-  ApplicationsListDetailController.$inject = ['entity', 'Principal', 'ApplicationsListDetails', 'Challenge', 'UserDetail', 'ApplicationStatus', 'ApplicationByChallengeId', 'ApplicationValidation'];
+  ApplicationsListDetailController.$inject = ['entity', 'Principal', 'ApplicationsListDetails', 'Challenge', 'UserDetail', 'ApplicationStatus', 'ApplicationByChallengeId', 'ApplicationValidation', '$http'];
 
-  function ApplicationsListDetailController(entity, Principal, ApplicationsListDetails, Challenge, UserDetail, ApplicationStatus, ApplicationByChallengeId, ApplicationValidation) {
+  function ApplicationsListDetailController(entity, Principal, ApplicationsListDetails, Challenge, UserDetail, ApplicationStatus, ApplicationByChallengeId, ApplicationValidation,$http) {
     var vm = this;
     vm.isAuthenticated = Principal.isAuthenticated;
     vm.application = entity;
@@ -28,7 +28,7 @@
 
     vm.account = null;
     Principal.identity().then(function (account) {
-        vm.account = account;
+      vm.account = account;
     });
 
     getSkills();
@@ -46,6 +46,33 @@
           }
         });
       }
+
+      angular.forEach(vm.members, function (challenge) {
+        //Convert Base64 img 
+        $http({
+          url: '/api/challenges/get-banner-base64',
+          method: "POST",
+          headers: {
+            'Content-Type': 'text/plain'
+          },
+          data: challenge.logoUrl,
+          transformResponse: [function (data) {
+            return data;
+          }]
+        })
+          .then(function (response) {
+            // success
+            if (response.data.length > 1) {
+              challenge.logoUrl64 = "data:image/jpeg;base64," + response.data;
+
+            } else {
+              challenge.logoUrl64 = null;
+            }
+          },
+          function (response) { // optional
+            // failed
+          });
+      });
     }
 
     function getChallengeInfo() {
@@ -88,10 +115,10 @@
 
     //team invitation validation
     function validateApplication() {
-      ApplicationValidation.query({applicationId: vm.application.id}, function(data) {
+      ApplicationValidation.query({ applicationId: vm.application.id }, function (data) {
         vm.validations = data;
         vm.numOfFields = data.length;
-        vm.validations = vm.validations.map(function(item) {
+        vm.validations = vm.validations.map(function (item) {
           return item.split(',');
         })
       })

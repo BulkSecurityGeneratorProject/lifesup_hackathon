@@ -64,7 +64,7 @@
                 $rootScope.$broadcast('authenticationSuccess');
                 UserDetail.get(function (rs) {
                     Principal.identity().then(function (account) {
-                        if (rs.status !== "PROFILE_COMPLETE" && account.authorities.indexOf('ROLE_ADMIN') == -1) {
+                        if (rs.status !== "PROFILE_COMPLETE" && account.authorities.indexOf('ROLE_ADMIN') == -1 && account.authorities.indexOf('ROLE_HOST') == -1) {
                             $state.go("settings");
 
                         } else {
