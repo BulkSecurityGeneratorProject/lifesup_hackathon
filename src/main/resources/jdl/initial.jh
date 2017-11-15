@@ -117,3 +117,5 @@ relationship ManyToMany {
 	UserList {applications} to Application {users}
 }
 
+skipClient for all
+

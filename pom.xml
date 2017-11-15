@@ -540,7 +540,7 @@
                     <url>jdbc:postgresql://localhost:5432/hackathon</url>
                     <defaultSchemaName></defaultSchemaName>
                     <username>hackathon</username>
-                    <password></password>
+                    <password>hackathon</password>
                     <referenceUrl>hibernate:spring:fi.lifesup.hackathon.domain?dialect=org.hibernate.dialect.PostgreSQL82Dialect&amp;hibernate.ejb.naming_strategy=org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy</referenceUrl>
                     <verbose>true</verbose>
                     <logging>debug</logging>

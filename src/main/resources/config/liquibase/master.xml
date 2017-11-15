@@ -26,14 +26,16 @@
     <include file="classpath:config/liquibase/changelog/20170929143500_add_column_table_ChallengeUserApplication.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171006145730_add_column_table_ChallengeUserApplication.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171009090903_added_entity_ApplicationInviteMail.xml" relativeToChangelogFile="false"/>
-     <include file="classpath:config/liquibase/changelog/20171025130530_add_column_table_Challenge.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171025130530_add_column_table_Challenge.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171025130535_added_entity_constraints_Challenge.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171028084523_modify_column_table_UserInfo.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171029200104_modify_column_table_Challenge.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171029200105_modify_column_table_Application.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171029200106_modify_column_table_UserInfo.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171030093605_modify_column_table_ChallengeInfo.xml" relativeToChangelogFile="false"/>
-     <include file="classpath:config/liquibase/changelog/20171030094005_modify_column_table_UserSkill.xml" relativeToChangelogFile="false"/>
-      <include file="classpath:config/liquibase/changelog/20171030094104_modify_column_table_UserExperience.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171030094005_modify_column_table_UserSkill.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171030094104_modify_column_table_UserExperience.xml" relativeToChangelogFile="false"/>
+    
+    <include file="classpath:config/liquibase/changelog/20171115211045_stage2_changelog.xml" relativeToChangelogFile="false"/>
     
 </databaseChangeLog>

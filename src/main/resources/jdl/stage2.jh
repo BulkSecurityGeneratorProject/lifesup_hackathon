@@ -73,8 +73,8 @@ relationship OneToOne {
 	Challenge {result} to ChallengeResult
 }
 
-relationship OneToOne {
-	Challenge {feedback} to ChallengeFeedback
+relationship OneToMany {
+	Challenge {feedbacks} to ChallengeFeedback {challenge}
 }
 
 entity ChallengeSubmission {
@@ -101,4 +101,4 @@ relationship OneToOne {
 	ChallengeSubmission {feedback} to ChallengeSubmissionFeedback
 }
 
-
+skipClient for all

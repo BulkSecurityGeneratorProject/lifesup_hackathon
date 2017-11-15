@@ -84,6 +84,14 @@ public class Challenge implements Serializable {
 
     @ManyToOne
     private Company company;
+    
+    @OneToOne(orphanRemoval = true)
+    @JoinColumn(unique = true)
+    private ChallengeResult challengeResult;
+    
+    @OneToMany(mappedBy = "challenge", orphanRemoval = true)
+    @JsonIgnore
+    private Set<ChallengeFeedback> feedbacks = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -286,8 +294,24 @@ public class Challenge implements Serializable {
     public void setCompany(Company company) {
         this.company = company;
     }
+    
+    public ChallengeResult getChallengeResult() {
+		return challengeResult;
+	}
 
-    @Override
+	public void setChallengeResult(ChallengeResult challengeResult) {
+		this.challengeResult = challengeResult;
+	}
+	
+	public Set<ChallengeFeedback> getFeedbacks() {
+		return feedbacks;
+	}
+
+	public void setFeedbacks(Set<ChallengeFeedback> feedbacks) {
+		this.feedbacks = feedbacks;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

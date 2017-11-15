@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="DuyPRO (generated)" id="1510780249634-1">
+        <createTable tableName="challenge_feedback">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="challenge_feedbackPK"/>
+            </column>
+            <column name="application_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="feedback_for_challenge" type="VARCHAR(255)"/>
+            <column name="feedback_for_us" type="VARCHAR(255)"/>
+            <column name="public_feedback" type="VARCHAR(255)"/>
+            <column name="rating" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="challenge_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="DuyPRO (generated)" id="1510780249634-2">
+        <createTable tableName="challenge_result">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="challenge_resultPK"/>
+            </column>
+            <column name="additional_note" type="VARCHAR(255)"/>
+            <column name="first_team" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="second_team" type="BIGINT"/>
+            <column name="third_team" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="DuyPRO (generated)" id="1510780249634-3">
+        <createTable tableName="challenge_submission">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="challenge_submissionPK"/>
+            </column>
+            <column name="additional_note" type="VARCHAR(255)"/>
+            <column name="application_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="file_path" type="VARCHAR(255)"/>
+            <column name="modified_by" type="VARCHAR(255)"/>
+            <column name="modified_date" type="timestamp"/>
+            <column name="feedback_id" type="BIGINT"/>
+            <column name="workspace_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="DuyPRO (generated)" id="1510780249634-4">
+        <createTable tableName="challenge_submission_feedback">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="challenge_submission_feedbackPK"/>
+            </column>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column name="created_date" type="timestamp"/>
+            <column name="feedback_text" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="DuyPRO (generated)" id="1510780249634-5">
+        <createTable tableName="challenge_workspace">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="challenge_workspacePK"/>
+            </column>
+            <column name="created_date" type="timestamp"/>
+            <column name="terms_and_conditions" type="VARCHAR(255)"/>
+            <column name="challenge_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="DuyPRO (generated)" id="1510780249634-6">
+        <createTable tableName="challenge_workspace_answer">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="challenge_workspace_answerPK"/>
+            </column>
+            <column name="answer_by_type" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="timestamp"/>
+            <column name="created_date" type="timestamp"/>
+            <column name="question_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="DuyPRO (generated)" id="1510780249634-7">
+        <createTable tableName="challenge_workspace_news">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="challenge_workspace_newsPK"/>
+            </column>
+            <column name="content" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column name="created_date" type="timestamp"/>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="workspace_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="DuyPRO (generated)" id="1510780249634-8">
+        <createTable tableName="challenge_workspace_question">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="challenge_workspace_questionPK"/>
+            </column>
+            <column name="application_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="content" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_by" type="VARCHAR(255)"/>
+            <column name="created_date" type="timestamp"/>
+            <column name="subject" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="workspace_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="DuyPRO (generated)" id="1510780249634-9">
+        <createTable tableName="users_applications">
+            <column name="users_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="applications_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="DuyPRO (generated)" id="1510780249634-10">
+        <addColumn tableName="challenge">
+            <column name="challenge_result_id" type="int8"/>
+        </addColumn>
+    </changeSet>
+    <changeSet author="DuyPRO (generated)" id="1510780249634-11">
+        <addPrimaryKey columnNames="users_id, applications_id" tableName="users_applications"/>
+    </changeSet>
+    <changeSet author="DuyPRO (generated)" id="1510780249634-12">
+        <addUniqueConstraint columnNames="challenge_result_id" constraintName="UC_CHALLENGECHALLENGE_RESULT_ID_COL" tableName="challenge"/>
+    </changeSet>
+    <changeSet author="DuyPRO (generated)" id="1510780249634-13">
+        <addUniqueConstraint columnNames="feedback_id" constraintName="UC_CHALLENGE_SUBMISSIONFEEDBACK_ID_COL" tableName="challenge_submission"/>
+    </changeSet>
+    <changeSet author="DuyPRO (generated)" id="1510780249634-14">
+        <addUniqueConstraint columnNames="challenge_id" constraintName="UC_CHALLENGE_WORKSPACECHALLENGE_ID_COL" tableName="challenge_workspace"/>
+    </changeSet>
+    <changeSet author="DuyPRO (generated)" id="1510780249634-15">
+        <addUniqueConstraint columnNames="name" constraintName="UC_COMPANYNAME_COL" tableName="company"/>
+    </changeSet>
+    <changeSet author="DuyPRO (generated)" id="1510780249634-16">
+        <addForeignKeyConstraint baseColumnNames="workspace_id" baseTableName="challenge_workspace_news" constraintName="FK_28kmphu5ul7glgesdny2y3iy9" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="challenge_workspace"/>
+    </changeSet>
+    <changeSet author="DuyPRO (generated)" id="1510780249634-17">
+        <addForeignKeyConstraint baseColumnNames="workspace_id" baseTableName="challenge_submission" constraintName="FK_3ip96hsos8uu3uldvinaaspcq" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="challenge_workspace"/>
+    </changeSet>
+    <changeSet author="DuyPRO (generated)" id="1510780249634-18">
+        <addForeignKeyConstraint baseColumnNames="applications_id" baseTableName="users_applications" constraintName="FK_870pq2o3yeuflh1i03xm7ri3i" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="application"/>
+    </changeSet>
+    <changeSet author="DuyPRO (generated)" id="1510780249634-19">
+        <addForeignKeyConstraint baseColumnNames="challenge_id" baseTableName="challenge_workspace" constraintName="FK_cm1w32nyd3es7vggk0s1fhpd3" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="challenge"/>
+    </changeSet>
+    <changeSet author="DuyPRO (generated)" id="1510780249634-20">
+        <addForeignKeyConstraint baseColumnNames="workspace_id" baseTableName="challenge_workspace_question" constraintName="FK_h00t712fpua9b7obpg0g26tt5" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="challenge_workspace"/>
+    </changeSet>
+    <changeSet author="DuyPRO (generated)" id="1510780249634-21">
+        <addForeignKeyConstraint baseColumnNames="question_id" baseTableName="challenge_workspace_answer" constraintName="FK_li0hxd6rway41c7q49vn6a2sd" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="challenge_workspace_question"/>
+    </changeSet>
+    <changeSet author="DuyPRO (generated)" id="1510780249634-22">
+        <addForeignKeyConstraint baseColumnNames="users_id" baseTableName="users_applications" constraintName="FK_nuyi2xe9ph4lwb5p25ckoa5fu" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="DuyPRO (generated)" id="1510780249634-23">
+        <addForeignKeyConstraint baseColumnNames="feedback_id" baseTableName="challenge_submission" constraintName="FK_nv2sa0mcn951wobc77qb7fjue" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="challenge_submission_feedback"/>
+    </changeSet>
+    <changeSet author="DuyPRO (generated)" id="1510780249634-24">
+        <addForeignKeyConstraint baseColumnNames="challenge_id" baseTableName="challenge_feedback" constraintName="FK_q1frw6gjo0eir00cwtnx5ncyk" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="challenge"/>
+    </changeSet>
+    <changeSet author="DuyPRO (generated)" id="1510780249634-25">
+        <addForeignKeyConstraint baseColumnNames="challenge_result_id" baseTableName="challenge" constraintName="FK_tnx9so4o8snaid7qw205sxvjg" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="challenge_result"/>
+    </changeSet>
+   	
+    <changeSet author="DuyPRO (generated)" id="1510780249634-41">
+        <addNotNullConstraint columnDataType="varchar(255)" columnName="accept_key" tableName="application_invite_mail"/>
+    </changeSet>
+    <changeSet author="DuyPRO (generated)" id="1510780249634-42">
+        <addNotNullConstraint columnDataType="boolean" columnName="send" tableName="application_invite_mail"/>
+    </changeSet>
+    <changeSet author="DuyPRO (generated)" id="1510780249634-43">
+        <addNotNullConstraint columnDataType="timestamp" columnName="send_time" tableName="application_invite_mail"/>
+    </changeSet>
+</databaseChangeLog>
