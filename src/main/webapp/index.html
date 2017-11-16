@@ -33,19 +33,17 @@
     <link rel="stylesheet" href="content/css/w3.css">
 </head>
 
-<body ng-app="hackathonApp" ng-strict-di>
+<body ng-app="hackathonApp" ng-strict-di layout="column">
     <!--[if lt IE 9]>
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-    <page-ribbon></page-ribbon>
     <div ui-view="navbar" ng-cloak></div>
-    <div class="container">
-        <div class="main-content" ui-view="content">
+    <div class="container" flex layout="column">
+        <div class="main-content" ui-view="content" flex layout='column'>
             <!-- Angular views -->
         </div>
     </div>
-    <div ui-view="footer" ng-cloak id="mainFooter"></div>
-
+    <div ng-cloak id="mainFooter"></div>
     <!-- Google Analytics: uncomment and change UA-XXXXX-X to be your site's ID.
     <script>
         (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
@@ -58,13 +56,13 @@
 
     <!-- build:js app/vendor.js -->
     <!-- bower:js -->
+    <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/messageformat/messageformat.js"></script>
     <script src="bower_components/json3/lib/json3.js"></script>
+    <script src="bower_components/angular-base64-upload/src/angular-base64-upload.js"></script>
     <script src="bower_components/moment/moment.js"></script>
     <script src="bower_components/humanize-duration/humanize-duration.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-base64-upload/src/angular-base64-upload.js"></script>
     <script src="bower_components/angular-aria/angular-aria.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
     <script src="bower_components/angular-cache-buster/angular-cache-buster.js"></script>
@@ -236,10 +234,6 @@
     <!-- endbuild -->
 
     <!-- external JS -->
-    <script src="libs/angular-material/angular-animate.min.js"></script>
-    <script src="libs/angular-material/angular-aria.min.js"></script>
-    <script src="libs/angular-material/angular-messages.min.js"></script>
-    <script src="libs/angular-material/angular-material.min.js"></script>
     <script src="libs/lf-ng-md-file-input/lf-ng-md-file-input.js"></script>
 
 </body>

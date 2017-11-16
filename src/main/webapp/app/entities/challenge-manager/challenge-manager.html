@@ -1,5 +1,5 @@
 <!-- Search & Filter challenges -->
-<div ng-cloak layout="row">
+<div layout="row" layout-padding>
     <div layout="row" flex="30">
         <md-input-container flex-gt-sm="50">
             <label>
@@ -59,7 +59,7 @@
 </div>
 
 <!-- Challenge cards -->
-<div class="row" ng-cloak>
+<div class="row" layout-padding>
     <div class="col-md-4 col-sm-6 col-xs-12 repeated-item" ng-repeat="challenge in vm.challenges" infinite-scroll="vm.loadPage(vm.page + 1)"
         infinite-scroll-disabled="vm.page >= vm.links['last']">
         <md-card class="challenge-card" ng-switch="challenge.info.status">
@@ -141,8 +141,10 @@
                     <md-list-item ng-switch-when="ACTIVE">
                         <i class="challenge-icon material-icons w3-text-orange">alarm</i>
                         <!-- <span data-translate="hackathonApp.card.appTime"></span> -->
-                        <timer end-time="challenge.timeLeft"><span data-translate="hackathonApp.card.appTime" translate-values="{days: '{{days}}', hours: '{{hours}}',  minutes: '{{minutes}}', seconds: '{{seconds}}'}"></span></timer>
-                        
+                        <timer end-time="challenge.timeLeft">
+                            <span data-translate="hackathonApp.card.appTime" translate-values="{days: '{{days}}', hours: '{{hours}}',  minutes: '{{minutes}}', seconds: '{{seconds}}'}"></span>
+                        </timer>
+
                     </md-list-item>
                     <md-list-item ng-switch-when="DRAFT">
                         <i class="challenge-icon material-icons w3-text-khaki">vpn_key</i>
@@ -161,7 +163,7 @@
             </md-card-content>
             <!-- Border -->
             <div class="w3-border-top w3-border-light-grey"></div>
-            
+
             <!-- Actions -->
             <md-card-actions layout="row" layout-align="end center">
                 <md-button class="w3-border" ui-sref="applicationslist({id:challenge.id})">

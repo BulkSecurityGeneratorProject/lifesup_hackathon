@@ -1,9 +1,6 @@
 /* Overide angular material */
 
-#datepicker .md-datepicker-input-container{
-    width: 100% !important;
-    overflow: hidden;
-}
+
 
 .md-card>:not(md-card-content) img, md-card>img {
     height: 180px !important;
@@ -38,9 +35,7 @@ md-dialog{
 
 
 
-.md-datepicker-input{
-    max-width: none;
-}
+
 
 /* Increase visible width of md-chip input */
 
