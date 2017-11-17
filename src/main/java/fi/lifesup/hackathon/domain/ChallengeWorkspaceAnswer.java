@@ -35,7 +35,7 @@ public class ChallengeWorkspaceAnswer implements Serializable {
     private ZonedDateTime createdDate;
 
     @Column(name = "created_by")
-    private ZonedDateTime createdBy;
+    private String createdBy;
 
     @ManyToOne
     private ChallengeWorkspaceQuestion question;
@@ -87,16 +87,16 @@ public class ChallengeWorkspaceAnswer implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public ZonedDateTime getCreatedBy() {
+    public String getCreatedBy() {
         return createdBy;
     }
 
-    public ChallengeWorkspaceAnswer createdBy(ZonedDateTime createdBy) {
+    public ChallengeWorkspaceAnswer createdBy(String createdBy) {
         this.createdBy = createdBy;
         return this;
     }
 
-    public void setCreatedBy(ZonedDateTime createdBy) {
+    public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
 

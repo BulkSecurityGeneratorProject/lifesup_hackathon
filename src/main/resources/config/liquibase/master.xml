@@ -37,5 +37,5 @@
     <include file="classpath:config/liquibase/changelog/20171030094104_modify_column_table_UserExperience.xml" relativeToChangelogFile="false"/>
     
     <include file="classpath:config/liquibase/changelog/20171115211045_stage2_changelog.xml" relativeToChangelogFile="false"/>
-    
+    <include file="classpath:config/liquibase/changelog/20171116112622_modify_column_table_ChallengeWorkspaceAnswer.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

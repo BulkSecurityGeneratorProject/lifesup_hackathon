@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -44,6 +45,12 @@ public class ChallengeWorkspaceResource {
         if (challengeWorkspace.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeWorkspace", "idexists", "A new challengeWorkspace cannot already have an ID")).body(null);
         }
+        ChallengeWorkspace workspace = challengeWorkspaceRepository.findByChallengeId(challengeWorkspace.getChallenge().getId());
+        if(workspace != null){
+        	System.err.println("md");
+        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeWorkspace", "idexists", "A challengeWorkspace is already exist.")).body(null);
+        }
+        challengeWorkspace.setCreatedDate(ZonedDateTime.now());
         ChallengeWorkspace result = challengeWorkspaceRepository.save(challengeWorkspace);
         return ResponseEntity.created(new URI("/api/challenge-workspaces/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("challengeWorkspace", result.getId().toString()))
@@ -115,6 +122,18 @@ public class ChallengeWorkspaceResource {
         log.debug("REST request to delete ChallengeWorkspace : {}", id);
         challengeWorkspaceRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("challengeWorkspace", id.toString())).build();
+    }
+    
+    @GetMapping("/challenge-workspaces/challenge/{idChallenge}")
+    @Timed
+    public ResponseEntity<ChallengeWorkspace> getChallengeWorkspaceByChallenge(@PathVariable Long idChallenge) {
+        log.debug("REST request to get ChallengeWorkspace by challenge id : {}", idChallenge);
+        ChallengeWorkspace challengeWorkspace = challengeWorkspaceRepository.findByChallengeId(idChallenge);
+        return Optional.ofNullable(challengeWorkspace)
+            .map(result -> new ResponseEntity<>(
+                result,
+                HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
 }

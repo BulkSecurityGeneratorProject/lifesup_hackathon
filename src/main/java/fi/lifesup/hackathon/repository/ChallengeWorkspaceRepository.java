@@ -12,4 +12,5 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface ChallengeWorkspaceRepository extends JpaRepository<ChallengeWorkspace,Long> {
 
+	ChallengeWorkspace findByChallengeId(Long challengeId);
 }

@@ -1,23 +1,40 @@
 package fi.lifesup.hackathon.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import fi.lifesup.hackathon.domain.ChallengeWorkspaceAnswer;
-
-import fi.lifesup.hackathon.repository.ChallengeWorkspaceAnswerRepository;
-import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.time.ZonedDateTime;
+import java.util.List;
+import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.codahale.metrics.annotation.Timed;
+
+import fi.lifesup.hackathon.domain.ChallengeWorkspaceAnswer;
+import fi.lifesup.hackathon.domain.ChallengeWorkspaceQuestion;
+import fi.lifesup.hackathon.domain.User;
+import fi.lifesup.hackathon.domain.enumeration.WorkspaceAnswerType;
+import fi.lifesup.hackathon.repository.ChallengeWorkspaceAnswerRepository;
+import fi.lifesup.hackathon.repository.ChallengeWorkspaceQuestionRepository;
+import fi.lifesup.hackathon.repository.UserRepository;
+import fi.lifesup.hackathon.security.SecurityUtils;
+import fi.lifesup.hackathon.service.UserService;
+import fi.lifesup.hackathon.service.dto.ChallengeWorkspaceAnswerDTO;
+import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 
 /**
  * REST controller for managing ChallengeWorkspaceAnswer.
@@ -31,6 +48,14 @@ public class ChallengeWorkspaceAnswerResource {
     @Inject
     private ChallengeWorkspaceAnswerRepository challengeWorkspaceAnswerRepository;
 
+    @Inject
+    private UserRepository userReponsitory;
+    
+    @Inject 
+    private UserService userService;
+    
+    @Inject 
+    private ChallengeWorkspaceQuestionRepository challengeWorkspaceQuestionReponsitory;
     /**
      * POST  /challenge-workspace-answers : Create a new challengeWorkspaceAnswer.
      *
@@ -40,12 +65,27 @@ public class ChallengeWorkspaceAnswerResource {
      */
     @PostMapping("/challenge-workspace-answers")
     @Timed
-    public ResponseEntity<ChallengeWorkspaceAnswer> createChallengeWorkspaceAnswer(@Valid @RequestBody ChallengeWorkspaceAnswer challengeWorkspaceAnswer) throws URISyntaxException {
+    public ResponseEntity<ChallengeWorkspaceAnswer> createChallengeWorkspaceAnswer(@Valid @RequestBody ChallengeWorkspaceAnswerDTO challengeWorkspaceAnswer) throws URISyntaxException {
         log.debug("REST request to save ChallengeWorkspaceAnswer : {}", challengeWorkspaceAnswer);
         if (challengeWorkspaceAnswer.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeWorkspaceAnswer", "idexists", "A new challengeWorkspaceAnswer cannot already have an ID")).body(null);
+        }  
+        ChallengeWorkspaceAnswer answer = new ChallengeWorkspaceAnswer();
+        User user = userReponsitory.getUserByAuthority(SecurityUtils.getCurrentUserLogin(), "ROLE_USER");
+        if(user != null){
+        	answer.setAnswerByType(WorkspaceAnswerType.BY_USER);
         }
-        ChallengeWorkspaceAnswer result = challengeWorkspaceAnswerRepository.save(challengeWorkspaceAnswer);
+        else{
+        	user = userService.getUserWithAuthorities();
+        	answer.setAnswerByType(WorkspaceAnswerType.BY_HOST);
+        }
+        
+        answer.setCreatedBy(SecurityUtils.getCurrentUserLogin());
+        answer.setCreatedDate(ZonedDateTime.now());
+        answer.setContent(challengeWorkspaceAnswer.getContent());
+        answer.setQuestion(challengeWorkspaceQuestionReponsitory.findOne(challengeWorkspaceAnswer.getQuestionId()));
+        
+        ChallengeWorkspaceAnswer result = challengeWorkspaceAnswerRepository.save(answer);
         return ResponseEntity.created(new URI("/api/challenge-workspace-answers/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("challengeWorkspaceAnswer", result.getId().toString()))
             .body(result);
@@ -64,9 +104,10 @@ public class ChallengeWorkspaceAnswerResource {
     @Timed
     public ResponseEntity<ChallengeWorkspaceAnswer> updateChallengeWorkspaceAnswer(@Valid @RequestBody ChallengeWorkspaceAnswer challengeWorkspaceAnswer) throws URISyntaxException {
         log.debug("REST request to update ChallengeWorkspaceAnswer : {}", challengeWorkspaceAnswer);
-        if (challengeWorkspaceAnswer.getId() == null) {
-            return createChallengeWorkspaceAnswer(challengeWorkspaceAnswer);
-        }
+//        if (challengeWorkspaceAnswer.getId() == null) {
+//            return createChallengeWorkspaceAnswer(challengeWorkspaceAnswer);
+//        }
+        
         ChallengeWorkspaceAnswer result = challengeWorkspaceAnswerRepository.save(challengeWorkspaceAnswer);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("challengeWorkspaceAnswer", challengeWorkspaceAnswer.getId().toString()))

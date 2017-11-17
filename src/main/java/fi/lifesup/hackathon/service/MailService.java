@@ -44,6 +44,7 @@ public class MailService {
 	private static final String CHALLENGE = "challenge";
 	private static final String COMPANY = "company";
 	private static final String PASSWORD = "password";
+	private static final String APPLICATION = "application";
 
 	@Inject
 	private JHipsterProperties jHipsterProperties;
@@ -140,6 +141,18 @@ public class MailService {
 		String content = templateEngine.process("companyMail", context);
 		String subject = messageSource.getMessage("email.company.title", null, locate);
 		sendEmail(adminMail, subject, content, false, true);
+	}
+	
+	@Async
+	public void sendQuestionMail(Application application, String baseUrl, String language, String email){
+		log.debug("Sending  e-mail to admin '{}'", adminMail);
+		Locale locate = Locale.forLanguageTag(language);
+		Context context = new Context(locate);
+		context.setVariable(APPLICATION, application);
+		context.setVariable(BASE_URL, baseUrl);
+		String content = templateEngine.process("questionEmail", context);
+		String subject = messageSource.getMessage("email.question.title", null, locate);
+		sendEmail(email, subject, content, false, true);
 	}
 	
 }
