@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import fi.lifesup.hackathon.domain.ChallengeWorkspaceNews;
 
 import fi.lifesup.hackathon.repository.ChallengeWorkspaceNewsRepository;
+import fi.lifesup.hackathon.service.dto.ChallengeWorkspaceNewsDTO;
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,7 +12,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import fi.lifesup.hackathon.service.*;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import java.net.URI;
@@ -30,6 +31,8 @@ public class ChallengeWorkspaceNewsResource {
         
     @Inject
     private ChallengeWorkspaceNewsRepository challengeWorkspaceNewsRepository;
+    @Inject
+    private ChallengeWorkspaceNewsService challengeWorkspaceNewsService;
 
     /**
      * POST  /challenge-workspace-news : Create a new challengeWorkspaceNews.
@@ -50,7 +53,27 @@ public class ChallengeWorkspaceNewsResource {
             .headers(HeaderUtil.createEntityCreationAlert("challengeWorkspaceNews", result.getId().toString()))
             .body(result);
     }
-
+    @PostMapping("/challenge-workspace-news-created")
+    @Timed
+    public ResponseEntity<ChallengeWorkspaceNews> createWorkspaceNews(@Valid @RequestBody ChallengeWorkspaceNewsDTO challengeWorkspaceNewsDTO) throws URISyntaxException {
+        log.debug("REST request to save ChallengeWorkspaceNews : {}", challengeWorkspaceNewsDTO);
+        ChallengeWorkspaceNews challengeWorkspaceNews=challengeWorkspaceNewsService.createChallengeWorkspaceNews(challengeWorkspaceNewsDTO);
+        if(challengeWorkspaceNews !=null)
+        {
+        	 if (challengeWorkspaceNews.getId() != null) {
+                 return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeWorkspaceNews", "idexists", "A new challengeWorkspaceNews cannot already have an ID")).body(null);
+             }
+             ChallengeWorkspaceNews result = challengeWorkspaceNewsRepository.save(challengeWorkspaceNews);
+             return ResponseEntity.created(new URI("/api/challenge-workspace-news/" + result.getId()))
+                 .headers(HeaderUtil.createEntityCreationAlert("challengeWorkspaceNews", result.getId().toString()))
+                 .body(result);
+        }
+        else
+        {
+        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeWorkspaceNews", "idexists", "cannot challenge workspace")).body(null);
+        }
+       
+    }
     /**
      * PUT  /challenge-workspace-news : Updates an existing challengeWorkspaceNews.
      *

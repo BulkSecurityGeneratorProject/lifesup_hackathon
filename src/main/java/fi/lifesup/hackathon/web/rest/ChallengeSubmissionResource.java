@@ -4,6 +4,8 @@ import com.codahale.metrics.annotation.Timed;
 import fi.lifesup.hackathon.domain.ChallengeSubmission;
 
 import fi.lifesup.hackathon.repository.ChallengeSubmissionRepository;
+import fi.lifesup.hackathon.service.ChallengeSubmissionService;
+import fi.lifesup.hackathon.service.dto.ChallengeSubmissionDTO;
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +32,8 @@ public class ChallengeSubmissionResource {
         
     @Inject
     private ChallengeSubmissionRepository challengeSubmissionRepository;
+    @Inject
+    private ChallengeSubmissionService challengeSubmissionService;
 
     /**
      * POST  /challenge-submissions : Create a new challengeSubmission.
@@ -50,7 +54,25 @@ public class ChallengeSubmissionResource {
             .headers(HeaderUtil.createEntityCreationAlert("challengeSubmission", result.getId().toString()))
             .body(result);
     }
-
+    @PostMapping("/challenge-submissions-created")
+    @Timed
+    public ResponseEntity<ChallengeSubmission> createdChallengeSubmission(@Valid @RequestBody ChallengeSubmissionDTO challengeSubmissionDTO) throws URISyntaxException {
+        log.debug("REST request to save ChallengeSubmission : {}", challengeSubmissionDTO);
+        ChallengeSubmission challengeSubmission=challengeSubmissionService.createChallengeSubmission(challengeSubmissionDTO);
+        if(challengeSubmission!=null)
+        {
+        	 if (challengeSubmission.getId() != null) {
+                 return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeSubmission", "idexists", "A new challengeSubmission cannot already have an ID")).body(null);
+             }
+             ChallengeSubmission result = challengeSubmissionRepository.save(challengeSubmission);
+             return ResponseEntity.created(new URI("/api/challenge-submissions/" + result.getId()))
+                 .headers(HeaderUtil.createEntityCreationAlert("challengeSubmission", result.getId().toString()))
+                 .body(result);
+        }
+        else
+        	 return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeSubmission", "idexists", "cannot application or worksapce")).body(null);
+        	
+    }
     /**
      * PUT  /challenge-submissions : Updates an existing challengeSubmission.
      *
