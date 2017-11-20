@@ -22,14 +22,21 @@ public class ChallengeWorkspaceNewsService {
 	private ChallengeWorkspaceNewsRepository challengeWorkspaceNewsRepository;
 	@Inject
 	private UserService userService;
-
+public ChallengeWorkspaceNews convertDTOToentity(ChallengeWorkspaceNewsDTO challengeWorkspaceNewsDTO)
+{
+	ChallengeWorkspaceNews challengeWorkspaceNews=new ChallengeWorkspaceNews();
+	ChallengeWorkspace challengeWorkspace = challengeWorkspaceRepository
+			.findOne(challengeWorkspaceNewsDTO.getWorkspace());
+	challengeWorkspaceNews.setWorkspace(challengeWorkspace);
+	return challengeWorkspaceNews;
+}
 	public ChallengeWorkspaceNews createChallengeWorkspaceNews(ChallengeWorkspaceNewsDTO challengeWorkspaceNewsDTO) {
 		ChallengeWorkspaceNews challengeWorkspaceNews = new ChallengeWorkspaceNews();
 		if (SecurityUtils.isCurrentUserInRole("ROLE_HOST")) {
 			ChallengeWorkspace challengeWorkspace = challengeWorkspaceRepository
-					.findOne(challengeWorkspaceNewsDTO.getWorkspace().getId());
-			if (challengeWorkspace.getId() != null) {
-				challengeWorkspaceNews.setWorkspace(challengeWorkspaceNewsDTO.getWorkspace());
+					.findOne(challengeWorkspaceNewsDTO.getWorkspace());
+			if (challengeWorkspace != null) {
+				challengeWorkspaceNews.setWorkspace(convertDTOToentity(challengeWorkspaceNewsDTO).getWorkspace());
 				challengeWorkspaceNews.setContent(challengeWorkspaceNewsDTO.getContent());
 				challengeWorkspaceNews.setCreatedBy(userService.getCurrentUser().getLastName());
 				challengeWorkspaceNews.setCreatedDate(challengeWorkspaceNewsDTO.getCreatedDate());

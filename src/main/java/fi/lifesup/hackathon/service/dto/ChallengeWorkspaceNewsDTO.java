@@ -10,7 +10,7 @@ public class ChallengeWorkspaceNewsDTO {
 	 private String content;
 	 private ZonedDateTime createdDate;
 	 private String createdBy;
-	 private ChallengeWorkspace workspace;
+	 private Long workspace;
 	public Long getId() {
 		return id;
 	}
@@ -41,17 +41,18 @@ public class ChallengeWorkspaceNewsDTO {
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
-	public ChallengeWorkspace getWorkspace() {
+	public Long getWorkspace() {
 		return workspace;
 	}
-	public void setWorkspace(ChallengeWorkspace workspace) {
+	public void setWorkspace(Long workspace) {
 		this.workspace = workspace;
 	}
+	
 	public ChallengeWorkspaceNewsDTO() {
 		super();
 	}
 	public ChallengeWorkspaceNewsDTO(Long id, String title, String content, ZonedDateTime createdDate, String createdBy,
-			ChallengeWorkspace workspace) {
+			Long workspace) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -60,5 +61,7 @@ public class ChallengeWorkspaceNewsDTO {
 		this.createdBy = createdBy;
 		this.workspace = workspace;
 	}
+
+
 	 
 }
