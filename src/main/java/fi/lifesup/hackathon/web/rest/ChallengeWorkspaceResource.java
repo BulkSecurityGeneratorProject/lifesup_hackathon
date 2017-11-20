@@ -61,10 +61,10 @@ public class ChallengeWorkspaceResource {
         if(workspace != null){
         	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeWorkspace", "idexists", "A challengeWorkspace is already exist.")).body(null);
         }
-        workspace = challengeWorkspaceService.saveChallengeWorksapce(challengeWorkspace);
-        return ResponseEntity.created(new URI("/api/challenge-workspaces/" + workspace.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("challengeWorkspace", workspace.getId().toString()))
-            .body(workspace);
+        ChallengeWorkspace result = challengeWorkspaceService.saveChallengeWorksapce(challengeWorkspace);
+        return ResponseEntity.created(new URI("/api/challenge-workspaces/" + result.getId()))
+            .headers(HeaderUtil.createEntityCreationAlert("challengeWorkspace", result.getId().toString()))
+            .body(result);
     }
 
     /**
@@ -135,16 +135,24 @@ public class ChallengeWorkspaceResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("challengeWorkspace", id.toString())).build();
     }
     
-    @GetMapping("/challenge-workspaces/challenge/{idChallenge}")
+    @GetMapping("/challenge-workspaces/challenge/{challengeId}")
     @Timed
-    public ResponseEntity<ChallengeWorkspace> getChallengeWorkspaceByChallenge(@PathVariable Long idChallenge) {
-        log.debug("REST request to get ChallengeWorkspace by challenge id : {}", idChallenge);
-        ChallengeWorkspace challengeWorkspace = challengeWorkspaceRepository.findByChallengeId(idChallenge);
+    public ResponseEntity<ChallengeWorkspace> getChallengeWorkspaceByChallenge(@PathVariable Long challengeId) {
+        log.debug("REST request to get ChallengeWorkspace by challenge id : {}", challengeId);
+        ChallengeWorkspace challengeWorkspace = challengeWorkspaceRepository.findByChallengeId(challengeId);
         return Optional.ofNullable(challengeWorkspace)
             .map(result -> new ResponseEntity<>(
                 result,
                 HttpStatus.OK))
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+    
+    @GetMapping("/challenge-workspaces/details/{login}/{challengeId}")
+    @Timed
+    public ChallengeWorkspaceDTO getChallengeWorkspaceDetail(@PathVariable Long challengeId) {
+        log.debug("REST request to get ChallengeWorkspace by challenge id : {}", challengeId);
+        ChallengeWorkspaceDTO challengeWorkspace = challengeWorkspaceService.getChallengeWorkspaceDetail(challengeId);
+        return challengeWorkspace;
     }
 
 }

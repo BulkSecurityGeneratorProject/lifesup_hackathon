@@ -25,6 +25,10 @@ public interface ChallengeUserApplicationRepository extends JpaRepository<Challe
 			+ " where u.id = cua.userId and cua.applicationId = ?1 and u.email = ?2")
 	ChallengeUserApplication getMember(Long id, String email);
 
+	@Query("select cua from User u, ChallengeUserApplication cua"
+			+ " where u.id = cua.userId and cua.challengeId = ?1 and u.login = ?2")
+	ChallengeUserApplication getMemberByLogin(Long challengeId, String login);
+	
 	List<ChallengeUserApplication> findByApplicationId(Long applicationId);
 
 	@Query("select cua from ChallengeUserApplication cua where cua.challengeId = :#{[0]} and cua.userId = :#{[1]}")

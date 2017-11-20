@@ -7,6 +7,21 @@ public class ChallengeWorkspaceAnswerDTO {
 	private Long questionId;
 	private String content;
 	private WorkspaceAnswerType answerByType;
+	
+	public ChallengeWorkspaceAnswerDTO() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public ChallengeWorkspaceAnswerDTO(Long id, Long questionId, String content, WorkspaceAnswerType answerByType) {
+		super();
+		this.id = id;
+		this.questionId = questionId;
+		this.content = content;
+		this.answerByType = answerByType;
+	}
+
+
+
 	public Long getId() {
 		return id;
 	}

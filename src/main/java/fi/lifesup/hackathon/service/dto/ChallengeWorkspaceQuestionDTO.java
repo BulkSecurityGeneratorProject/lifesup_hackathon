@@ -5,7 +5,7 @@ import java.util.List;
 public class ChallengeWorkspaceQuestionDTO {
 	private Long id;
 	private Long applicationId;
-	private Long workSpaceId;
+	private Long workspaceId;
 	private String subject;
 	private String content;
 	private List<ChallengeWorkspaceAnswerDTO> answers;	
@@ -14,13 +14,11 @@ public class ChallengeWorkspaceQuestionDTO {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
-	
-	public ChallengeWorkspaceQuestionDTO(Long id, Long applicationId, Long workSpaceId, String subject, String content) {
+	public ChallengeWorkspaceQuestionDTO(Long id, Long applicationId, Long workspaceId, String subject, String content) {
 		super();
 		this.id = id;
 		this.applicationId = applicationId;
-		this.workSpaceId = workSpaceId;
+		this.workspaceId = workspaceId;
 		this.subject = subject;
 		this.content = content;
 		this.answers = answers;
@@ -46,11 +44,11 @@ public class ChallengeWorkspaceQuestionDTO {
 	public void setApplicationId(Long applicationId) {
 		this.applicationId = applicationId;
 	}
-	public Long getWorkSpaceId() {
-		return workSpaceId;
+	public Long getWorkspaceId() {
+		return workspaceId;
 	}
-	public void setWorkSpaceId(Long workSpaceId) {
-		this.workSpaceId = workSpaceId;
+	public void setWorkspaceId(Long workSpaceId) {
+		this.workspaceId = workSpaceId;
 	}
 	public String getSubject() {
 		return subject;

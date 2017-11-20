@@ -59,9 +59,6 @@ public class ChallengeWorkspaceQuestionResource {
     
     @Inject
     private ApplicationRepository applicationResponsitory;
-    
-    @Inject
-    private ChallengeWorkspaceRepository challengeWorkspaceRepository;
 
     @Inject 
     private ChallengeWorkspaceQuestionService challengeWorkspaceQuestionService;
@@ -80,8 +77,8 @@ public class ChallengeWorkspaceQuestionResource {
         if (challengeWorkspaceQuestion.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeWorkspaceQuestion", "idexists", "A new challengeWorkspaceQuestion cannot already have an ID")).body(null);
         }
-        User user = userReponsitory.getUserByAuthority(SecurityUtils.getCurrentUserLogin(), "ROLE_USER");
-        if(user == null){
+        
+        if(SecurityUtils.isCurrentUserInRole("ROLE_USER") && !SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")){
         	 return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeWorkspaceQuestion", "idexists", "A new challengeWorkspaceQuestion can only create  by user")).body(null);
         }       
         ChallengeWorkspaceQuestion result = challengeWorkspaceQuestionService.saveChallengeWorkspaceQuestion(challengeWorkspaceQuestion);
@@ -95,7 +92,7 @@ public class ChallengeWorkspaceQuestionResource {
                 request.getServerPort() +              // "80"
                 request.getContextPath();
         Application application = applicationResponsitory.findOne(challengeWorkspaceQuestion.getApplicationId());
-        mailService.sendQuestionMail(application, baseUrl, user.getLangKey(), userCompany.getEmail());
+        mailService.sendQuestionMail(application, baseUrl, userCompany.getLangKey(), userCompany.getEmail());
         
         return ResponseEntity.created(new URI("/api/challenge-workspace-questions/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("challengeWorkspaceQuestion", result.getId().toString()))
@@ -119,10 +116,9 @@ public class ChallengeWorkspaceQuestionResource {
         	createChallengeWorkspaceQuestion(challengeWorkspaceQuestion, request);
         }
         
-        User user = userReponsitory.getUserByAuthority(SecurityUtils.getCurrentUserLogin(), "ROLE_USER");
-        if(user == null){
-        	 return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeWorkspaceQuestion", "idexists", "A new challengeWorkspaceQuestion can only create  by user")).body(null);
-        } 
+        if(SecurityUtils.isCurrentUserInRole("ROLE_USER") && !SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")){
+       	 return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeWorkspaceQuestion", "idexists", "A new challengeWorkspaceQuestion can only create  by user")).body(null);
+       }  
         ChallengeWorkspaceQuestion result = challengeWorkspaceQuestionService.saveChallengeWorkspaceQuestion(challengeWorkspaceQuestion);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("challengeWorkspaceQuestion", challengeWorkspaceQuestion.getId().toString()))
@@ -181,5 +177,13 @@ public class ChallengeWorkspaceQuestionResource {
         List<ChallengeWorkspaceQuestionDTO> challengeWorkspaceQuestions = challengeWorkspaceQuestionService.getQuestionNotAnswer(workspaceId);
         return challengeWorkspaceQuestions;
     }
+    
+//    @GetMapping("/challenge-workspace-questions/details/{id}")
+//    @Timed
+//    public ChallengeWorkspaceQuestionDTO getQuestonDetail(@PathVariable Long id) {
+//        log.debug("REST request to get all ChallengeWorkspaceQuestions",id);
+//        	ChallengeWorkspaceQuestionDTO questionDTO = challengeWorkspaceQuestionService.getQuestionDTO(id);
+//            return questionDTO;       
+//    }
 
 }
