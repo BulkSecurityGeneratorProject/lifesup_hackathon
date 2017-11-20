@@ -4,6 +4,7 @@ import fi.lifesup.hackathon.config.Constants;
 import com.codahale.metrics.annotation.Timed;
 
 import fi.lifesup.hackathon.domain.Application;
+import fi.lifesup.hackathon.domain.Authority;
 import fi.lifesup.hackathon.domain.Challenge;
 import fi.lifesup.hackathon.domain.User;
 import fi.lifesup.hackathon.domain.UserInfo;
@@ -233,7 +234,7 @@ public class UserResource {
 	@Timed
 	public void deleteAccount(@PathVariable Long id) {
 		User user = userService.getUserWithAuthorities(id);
-		user.setStatus(UserStatus.REMOVED);
+		user.setStatus(UserStatus.REMOVED);		
 		userRepository.save(user);
 
 	}
@@ -251,4 +252,6 @@ public class UserResource {
 		log.debug("REST request to get all Applications by user");
 		return userRepository.getApplicationByUser(id);
 	}
+	
+
 }

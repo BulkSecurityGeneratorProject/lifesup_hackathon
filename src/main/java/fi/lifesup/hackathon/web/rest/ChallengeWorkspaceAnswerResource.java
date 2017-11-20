@@ -32,6 +32,7 @@ import fi.lifesup.hackathon.repository.ChallengeWorkspaceAnswerRepository;
 import fi.lifesup.hackathon.repository.ChallengeWorkspaceQuestionRepository;
 import fi.lifesup.hackathon.repository.UserRepository;
 import fi.lifesup.hackathon.security.SecurityUtils;
+import fi.lifesup.hackathon.service.ChallengeWorkspaceAnswerService;
 import fi.lifesup.hackathon.service.UserService;
 import fi.lifesup.hackathon.service.dto.ChallengeWorkspaceAnswerDTO;
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
@@ -48,14 +49,10 @@ public class ChallengeWorkspaceAnswerResource {
     @Inject
     private ChallengeWorkspaceAnswerRepository challengeWorkspaceAnswerRepository;
 
-    @Inject
-    private UserRepository userReponsitory;
-    
     @Inject 
-    private UserService userService;
+    private ChallengeWorkspaceAnswerService challengeWorkspaceAnswerService;
     
-    @Inject 
-    private ChallengeWorkspaceQuestionRepository challengeWorkspaceQuestionReponsitory;
+    
     /**
      * POST  /challenge-workspace-answers : Create a new challengeWorkspaceAnswer.
      *
@@ -70,22 +67,8 @@ public class ChallengeWorkspaceAnswerResource {
         if (challengeWorkspaceAnswer.getId() != null) {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeWorkspaceAnswer", "idexists", "A new challengeWorkspaceAnswer cannot already have an ID")).body(null);
         }  
-        ChallengeWorkspaceAnswer answer = new ChallengeWorkspaceAnswer();
-        User user = userReponsitory.getUserByAuthority(SecurityUtils.getCurrentUserLogin(), "ROLE_USER");
-        if(user != null){
-        	answer.setAnswerByType(WorkspaceAnswerType.BY_USER);
-        }
-        else{
-        	user = userService.getUserWithAuthorities();
-        	answer.setAnswerByType(WorkspaceAnswerType.BY_HOST);
-        }
-        
-        answer.setCreatedBy(SecurityUtils.getCurrentUserLogin());
-        answer.setCreatedDate(ZonedDateTime.now());
-        answer.setContent(challengeWorkspaceAnswer.getContent());
-        answer.setQuestion(challengeWorkspaceQuestionReponsitory.findOne(challengeWorkspaceAnswer.getQuestionId()));
-        
-        ChallengeWorkspaceAnswer result = challengeWorkspaceAnswerRepository.save(answer);
+          
+        ChallengeWorkspaceAnswer result = challengeWorkspaceAnswerService.saveChallengeWorkspaceAnswer(challengeWorkspaceAnswer);
         return ResponseEntity.created(new URI("/api/challenge-workspace-answers/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("challengeWorkspaceAnswer", result.getId().toString()))
             .body(result);
@@ -102,13 +85,13 @@ public class ChallengeWorkspaceAnswerResource {
      */
     @PutMapping("/challenge-workspace-answers")
     @Timed
-    public ResponseEntity<ChallengeWorkspaceAnswer> updateChallengeWorkspaceAnswer(@Valid @RequestBody ChallengeWorkspaceAnswer challengeWorkspaceAnswer) throws URISyntaxException {
+    public ResponseEntity<ChallengeWorkspaceAnswer> updateChallengeWorkspaceAnswer(@Valid @RequestBody ChallengeWorkspaceAnswerDTO challengeWorkspaceAnswer) throws URISyntaxException {
         log.debug("REST request to update ChallengeWorkspaceAnswer : {}", challengeWorkspaceAnswer);
-//        if (challengeWorkspaceAnswer.getId() == null) {
-//            return createChallengeWorkspaceAnswer(challengeWorkspaceAnswer);
-//        }
+        if (challengeWorkspaceAnswer.getId() == null) {
+            return createChallengeWorkspaceAnswer(challengeWorkspaceAnswer);
+        }
         
-        ChallengeWorkspaceAnswer result = challengeWorkspaceAnswerRepository.save(challengeWorkspaceAnswer);
+        ChallengeWorkspaceAnswer result = challengeWorkspaceAnswerService.saveChallengeWorkspaceAnswer(challengeWorkspaceAnswer);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert("challengeWorkspaceAnswer", challengeWorkspaceAnswer.getId().toString()))
             .body(result);
