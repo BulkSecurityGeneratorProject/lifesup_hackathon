@@ -35,6 +35,9 @@ public class ChallengeWorkspaceQuestionService {
 	
 	@Inject
     private ChallengeWorkspaceQuestionRepository challengeWorkspaceQuestionRepository;
+	
+	@Inject
+	private ChallengeWorkspaceService challengeWorkspaceService;
 
 	public List<ChallengeWorkspaceQuestionDTO> getQuestionNotAnswer(Long workspaceId) {
 		String sbQuery = "select new fi.lifesup.hackathon.service.dto.ChallengeWorkspaceQuestionDTO(q.id, q.applicationId, q.workspace.id, q.content, q.subject) "
@@ -86,17 +89,9 @@ public class ChallengeWorkspaceQuestionService {
 	public ChallengeWorkspaceQuestionDTO getQuestionDTO(ChallengeWorkspaceQuestion question){		
 		ChallengeWorkspaceQuestionDTO questionDTO = new ChallengeWorkspaceQuestionDTO();
 		
-		if(question.getAnswers().isEmpty()){
-			List<ChallengeWorkspaceAnswerDTO> answerDTOs = question.getAnswers().stream().map(answer -> {				
-				ChallengeWorkspaceAnswerDTO answerDTO = new ChallengeWorkspaceAnswerDTO();
-				answerDTO.setId(answer.getId());
-				answerDTO.setQuestionId(answer.getQuestion().getId());
-				answerDTO.setContent(answer.getContent());
-				answerDTO.setAnswerByType(answer.getAnswerByType());
-	            return answerDTO;
-	        }).collect(Collectors.toList());
-		questionDTO.setAnswers(answerDTOs);
-		}
+		
+		questionDTO.setAnswers(challengeWorkspaceService.getListAnswer(question.getAnswers()));
+		
 		
 		questionDTO.setId(question.getId());
 		questionDTO.setApplicationId(question.getApplicationId());
