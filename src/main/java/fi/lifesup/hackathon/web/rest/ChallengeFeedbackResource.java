@@ -4,6 +4,8 @@ import com.codahale.metrics.annotation.Timed;
 import fi.lifesup.hackathon.domain.ChallengeFeedback;
 
 import fi.lifesup.hackathon.repository.ChallengeFeedbackRepository;
+import fi.lifesup.hackathon.service.ChallengeFeedbackService;
+import fi.lifesup.hackathon.service.dto.ChallengeFeedbackDTO;
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +32,8 @@ public class ChallengeFeedbackResource {
         
     @Inject
     private ChallengeFeedbackRepository challengeFeedbackRepository;
+    @Inject
+    private ChallengeFeedbackService challengeFeedbackService;
 
     /**
      * POST  /challenge-feedbacks : Create a new challengeFeedback.
@@ -116,6 +120,26 @@ public class ChallengeFeedbackResource {
         log.debug("REST request to delete ChallengeFeedback : {}", id);
         challengeFeedbackRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("challengeFeedback", id.toString())).build();
+    }
+    @PostMapping("/challenge-feedbacks-created")
+    @Timed
+    public ResponseEntity<ChallengeFeedback> createdChallengeFeedback(@Valid @RequestBody ChallengeFeedbackDTO challengeFeedbackDTO) throws URISyntaxException {
+        log.debug("REST request to save ChallengeFeedback : {}", challengeFeedbackDTO);
+        ChallengeFeedback challengeFeedback=challengeFeedbackService.createdChallengeFeedback(challengeFeedbackDTO);
+        if(challengeFeedback!=null)
+        {
+        	 if (challengeFeedback.getId() != null) {
+                 return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeFeedback", "idexists", "A new challengeFeedback cannot already have an ID")).body(null);
+             }
+             ChallengeFeedback result = challengeFeedbackRepository.save( challengeFeedback);
+             return ResponseEntity.created(new URI("/api/challenge-feedbacks/" + result.getId()))
+                 .headers(HeaderUtil.createEntityCreationAlert("challengeFeedback", result.getId().toString()))
+                 .body(result);
+        }
+        else
+        {
+        	 return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeFeedback", "idexists", "cannot application or challenge")).body(null);
+        }
     }
 
 }
