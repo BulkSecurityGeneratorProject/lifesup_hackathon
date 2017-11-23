@@ -78,7 +78,7 @@ public class ChallengeWorkspaceQuestionResource {
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeWorkspaceQuestion", "idexists", "A new challengeWorkspaceQuestion cannot already have an ID")).body(null);
         }
         
-        if(SecurityUtils.isCurrentUserInRole("ROLE_USER") && !SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")){
+        if(!SecurityUtils.isCurrentUserInRole("ROLE_USER") && !SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")){
         	 return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeWorkspaceQuestion", "idexists", "A new challengeWorkspaceQuestion can only create  by user")).body(null);
         }       
         ChallengeWorkspaceQuestion result = challengeWorkspaceQuestionService.saveChallengeWorkspaceQuestion(challengeWorkspaceQuestion);

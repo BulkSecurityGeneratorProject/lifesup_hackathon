@@ -38,12 +38,12 @@
         <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     <div ui-view="navbar" ng-cloak></div>
-    <div class="container" flex layout="column">
-        <div class="main-content" ui-view="content" flex layout='column'>
+    <div class="container">
+        <div class="main-content" ui-view="content" >
             <!-- Angular views -->
         </div>
     </div>
-    <div ng-cloak id="mainFooter"></div>
+    <div ng-cloak id="mainFooter" ui-view="footer"></div>
     <!-- Google Analytics: uncomment and change UA-XXXXX-X to be your site's ID.
     <script>
         (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
@@ -117,7 +117,6 @@
     <script src="app/home/home.controller.js"></script>
     <script src="app/entities/workspace/workspace-question.controller.js"></script>
     <script src="app/entities/workspace/workspace.state.js"></script>
-    <script src="app/entities/workspace/workspace.service.js"></script>
     <script src="app/entities/workspace/workspace.controller.js"></script>
     <script src="app/entities/host-application/host-application.state.js"></script>
     <script src="app/entities/host-application/host-application.service.js"></script>

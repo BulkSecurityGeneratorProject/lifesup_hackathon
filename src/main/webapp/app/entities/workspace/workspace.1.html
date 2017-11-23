@@ -1,42 +1,13 @@
 <div ng-cloak>
     <md-content>
         <md-tabs md-dynamic-height md-border-bottom>
-
             <md-tab label="Home">
                 <md-content class="md-padding">
                     <h1 class="md-display-2">Welcome to challenge workspace</h1>
                     <p>{{vm.workspace.termsAndConditions}}</p>
-                    <md-list>
-                        <md-list-item class="md-3-line" ng-repeat="q in vm.allQuestions">
-                            <div class="md-list-item-text">
-                                <h3>{{q.subject}}</h3>
-                                <p>{{q.content}}</p>
-                            </div>
-                            <md-button class="md-secondary">Respond</md-button>
-                            <md-divider ng-if="!$last"></md-divider>
-                        </md-list-item>
-                    </md-list>
-                    <md-button class="md-primary md-raised" ng-click="vm.ask()">Ask a question</md-button>
+                    <md-button class="md-primary md-raised">Ask a question</md-button>
                 </md-content>
-                <form ng-show="vm.askClicked" class="md-padding" flex="50">
-                    <div layout-gt-sm="row">
-                        <md-input-container class="md-block" flex-gt-sm>
-                            <label>Subject</label>
-                            <input ng-model="vm.question.subject" required/>
-                        </md-input-container>
-                    </div>
-                    <div layout-gt-sm="row">
-                        <md-input-container class="md-block" flex-gt-sm>
-                            <label>Content</label>
-                            <textarea ng-model="vm.question.content" md-maxlength="1000" rows="5" md-select-on-focus required></textarea>
-                        </md-input-container>
-                    </div>
-                    <md-button class="md-primary md-raised" ng-click="vm.submitQuestion()">Submit</md-button>
-                </form>
             </md-tab>
-
-
-
             <md-tab label="My Team">
                 <md-content class="md-padding">
                     <h1 class="md-display-2">My Team</h1>
@@ -68,15 +39,16 @@
                     </div>
                     <div layout-gt-sm="row">
                         <span flex="20">Not likely at all</span>
-                        <md-radio-group layout="row" flex="60" ng-model="vm.feedback.rating">
-                            <md-radio-button ng-repeat="rate in vm.rating" ng-value="rate" aria-label="rating">{{rate}}
+                        <md-radio-group layout="row" flex="80" ng-model="vm.feedback.rating">
+                            <md-radio-button ng-repeat="rate in vm.rating" ng-value="rate" aria-label="rating" flex="8">{{rate}}
+                                <span style="margin-right:20px"></span>
                             </md-radio-button>
                         </md-radio-group>
                         <span flex="20">Very likely</span>
                     </div>
                 </md-content>
                 <div>
-                    <md-button class="md-primary md-raised" ng-click="vm.submitFeedback()">Submit</md-button>
+                    <md-button class="md-primary md-raised" ng-click="vm.submit()">Submit</md-button>
                 </div>
             </md-tab>
             <md-tab label="Terms">
