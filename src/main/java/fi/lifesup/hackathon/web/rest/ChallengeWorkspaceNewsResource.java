@@ -140,5 +140,26 @@ public class ChallengeWorkspaceNewsResource {
         challengeWorkspaceNewsRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("challengeWorkspaceNews", id.toString())).build();
     }
+    @PutMapping("/challenge-workspace-news-update")
+    @Timed
+    public ResponseEntity<ChallengeWorkspaceNews> updateWorkspaceNews(@Valid @RequestBody ChallengeWorkspaceNewsDTO challengeWorkspaceNewsDTO) throws URISyntaxException {
+        log.debug("REST request to save ChallengeWorkspaceNews : {}", challengeWorkspaceNewsDTO);
+        ChallengeWorkspaceNews challengeWorkspaceNews=challengeWorkspaceNewsService.createChallengeWorkspaceNews(challengeWorkspaceNewsDTO);
+        if(challengeWorkspaceNews !=null)
+        {
+        	 if (challengeWorkspaceNews.getId() != null) {
+                 return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeWorkspaceNews", "idexists", "A new challengeWorkspaceNews cannot already have an ID")).body(null);
+             }
+             ChallengeWorkspaceNews result = challengeWorkspaceNewsRepository.save(challengeWorkspaceNews);
+             return ResponseEntity.created(new URI("/api/challenge-workspace-news/" + result.getId()))
+                 .headers(HeaderUtil.createEntityCreationAlert("challengeWorkspaceNews", result.getId().toString()))
+                 .body(result);
+        }
+        else
+        {
+        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeWorkspaceNews", "idexists", "cannot challenge workspace")).body(null);
+        }
+       
+    }
 
 }

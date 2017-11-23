@@ -61,6 +61,15 @@ public class ChallengeSubmissionService {
 			return null;
 		}
 	}
+	public ChallengeSubmission convertDTOToEntity(ChallengeSubmissionDTO challengeSubmissionDTO )
+	{
+		ChallengeSubmission challengeSubmission=new ChallengeSubmission();
+		Application application=applicationRepository.findOne(challengeSubmissionDTO.getApplicationId());
+		ChallengeWorkspace challengeWorkspace=challengeWorkspaceRepository.findOne(challengeSubmissionDTO.getWorkspace());
+		challengeSubmission.setApplicationId(application.getId());
+		challengeSubmission.setWorkspace(challengeWorkspace);
+		return challengeSubmission;
+	}
 
 public ChallengeSubmission createChallengeSubmission(ChallengeSubmissionDTO challengeSubmissionDTO) throws URISyntaxException
 {
@@ -68,19 +77,19 @@ public ChallengeSubmission createChallengeSubmission(ChallengeSubmissionDTO chal
 	Application application=applicationRepository.findOne(challengeSubmissionDTO.getApplicationId());
 	Challenge challenge=challengeRepository.findOne(application.getChallenge().getId());
 	ChallengeInfo challengeInfo=challengeInfoRepository.findOne(challenge.getInfo().getId());
-	String filePath=testUpload(challengeSubmissionDTO.getMultipartFile());
+	//String filePath=testUpload(challengeSubmissionDTO.getMultipartFile());
 	
-	if(challengeSubmissionDTO.getModifiedDate().isAfter(challengeInfo.getEventEndTime()))
+	if(challengeSubmissionDTO.getModifiedDate().isBefore(challengeInfo.getEventEndTime()))
 	{
-		ChallengeWorkspace challengeWorkspace=challengeWorkspaceRepository.findOne(challengeSubmissionDTO.getWorkspace().getId());
-		if(challengeWorkspace.getId()!=null)
+		ChallengeWorkspace challengeWorkspace=challengeWorkspaceRepository.findOne(challengeSubmissionDTO.getWorkspace());
+		if(challengeWorkspace!=null)
 		{
 			challengeSubmission.setAdditionalNote(challengeSubmission.getAdditionalNote());
 			challengeSubmission.setApplicationId(challengeSubmissionDTO.getApplicationId());
 			challengeSubmission.setModifiedBy(userService.getCurrentUser().getLastName());
 			challengeSubmission.setModifiedDate(challengeSubmissionDTO.getModifiedDate());
-			challengeSubmission.setWorkspace(challengeSubmissionDTO.getWorkspace());
-			challengeSubmission.setFilePath(filePath);
+			challengeSubmission.setWorkspace(convertDTOToEntity(challengeSubmissionDTO).getWorkspace());
+			//challengeSubmission.setFilePath(filePath);
 			return challengeSubmissionRepository.save(challengeSubmission);
 		}
 		return null;

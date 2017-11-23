@@ -1,9 +1,16 @@
 package fi.lifesup.hackathon.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+
+import fi.lifesup.hackathon.domain.ChallengeSubmission;
 import fi.lifesup.hackathon.domain.ChallengeSubmissionFeedback;
 
 import fi.lifesup.hackathon.repository.ChallengeSubmissionFeedbackRepository;
+import fi.lifesup.hackathon.repository.ChallengeSubmissionRepository;
+import fi.lifesup.hackathon.security.SecurityUtils;
+import fi.lifesup.hackathon.service.ChallengeSubmissionFeedbackService;
+import fi.lifesup.hackathon.service.UserService;
+import fi.lifesup.hackathon.service.dto.ChallengeSubmissionFeedbackDTO;
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +36,10 @@ public class ChallengeSubmissionFeedbackResource {
         
     @Inject
     private ChallengeSubmissionFeedbackRepository challengeSubmissionFeedbackRepository;
+    @Inject
+	private ChallengeSubmissionFeedbackService challengeSubmissionFeedbackService;
+	@Inject
+	private UserService userService;
 
     /**
      * POST  /challenge-submission-feedbacks : Create a new challengeSubmissionFeedback.
@@ -41,13 +52,22 @@ public class ChallengeSubmissionFeedbackResource {
     @Timed
     public ResponseEntity<ChallengeSubmissionFeedback> createChallengeSubmissionFeedback(@RequestBody ChallengeSubmissionFeedback challengeSubmissionFeedback) throws URISyntaxException {
         log.debug("REST request to save ChallengeSubmissionFeedback : {}", challengeSubmissionFeedback);
-        if (challengeSubmissionFeedback.getId() != null) {
-            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeSubmissionFeedback", "idexists", "A new challengeSubmissionFeedback cannot already have an ID")).body(null);
+        if(SecurityUtils.isCurrentUserInRole("ROLE_HOST"))
+        {
+        	 if (challengeSubmissionFeedback.getId() != null) {
+                 return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeSubmissionFeedback", "idexists", "A new challengeSubmissionFeedback cannot already have an ID")).body(null);
+             }
+        	 
+             ChallengeSubmissionFeedback result = challengeSubmissionFeedbackRepository.save(challengeSubmissionFeedback);
+             return ResponseEntity.created(new URI("/api/challenge-submission-feedbacks/" + result.getId()))
+                 .headers(HeaderUtil.createEntityCreationAlert("challengeSubmissionFeedback", result.getId().toString()))
+                 .body(result);
         }
-        ChallengeSubmissionFeedback result = challengeSubmissionFeedbackRepository.save(challengeSubmissionFeedback);
-        return ResponseEntity.created(new URI("/api/challenge-submission-feedbacks/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert("challengeSubmissionFeedback", result.getId().toString()))
-            .body(result);
+        else
+        {
+        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeSubmissionFeedback", "error", "cannot role")).body(null);
+        }
+       
     }
 
     /**
@@ -116,5 +136,6 @@ public class ChallengeSubmissionFeedbackResource {
         challengeSubmissionFeedbackRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("challengeSubmissionFeedback", id.toString())).build();
     }
+    
 
 }

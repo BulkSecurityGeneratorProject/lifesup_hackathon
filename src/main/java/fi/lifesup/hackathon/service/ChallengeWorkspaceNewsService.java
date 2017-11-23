@@ -38,7 +38,7 @@ public ChallengeWorkspaceNews convertDTOToentity(ChallengeWorkspaceNewsDTO chall
 			if (challengeWorkspace != null) {
 				challengeWorkspaceNews.setWorkspace(convertDTOToentity(challengeWorkspaceNewsDTO).getWorkspace());
 				challengeWorkspaceNews.setContent(challengeWorkspaceNewsDTO.getContent());
-				challengeWorkspaceNews.setCreatedBy(userService.getCurrentUser().getLastName());
+				challengeWorkspaceNews.setCreatedBy(userService.getCurrentUser().getLogin());
 				challengeWorkspaceNews.setCreatedDate(challengeWorkspaceNewsDTO.getCreatedDate());
 				challengeWorkspaceNews.setTitle(challengeWorkspaceNewsDTO.getTitle());
 				return challengeWorkspaceNewsRepository.save(challengeWorkspaceNews);
