@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import fi.lifesup.hackathon.domain.Challenge;
 import fi.lifesup.hackathon.domain.ChallengeUserApplication;
 import fi.lifesup.hackathon.domain.ChallengeWorkspace;
+import fi.lifesup.hackathon.domain.ChallengeWorkspaceAnswer;
 import fi.lifesup.hackathon.domain.ChallengeWorkspaceQuestion;
 import fi.lifesup.hackathon.repository.ChallengeRepository;
 import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
@@ -56,10 +57,23 @@ public class ChallengeWorkspaceService {
 		return result;
 	}
 
+	public List<ChallengeWorkspaceAnswerDTO> getListAnswer(Set<ChallengeWorkspaceAnswer> set) {
+		List<ChallengeWorkspaceAnswerDTO> answerDTOs = set.stream().map(answer -> {
+			ChallengeWorkspaceAnswerDTO answerDTO = new ChallengeWorkspaceAnswerDTO();
+			answerDTO.setId(answer.getId());
+			answerDTO.setQuestionId(answer.getQuestion().getId());
+			answerDTO.setContent(answer.getContent());
+			answerDTO.setAnswerByType(answer.getAnswerByType());
+			return answerDTO;
+		}).collect(Collectors.toList());
+
+		return answerDTOs;
+	}
+
 	public List<ChallengeWorkspaceQuestionDTO> getListQuestion(Set<ChallengeWorkspaceQuestion> set, Long challengeId) {
 
 		List<ChallengeWorkspaceQuestionDTO> list = null;
-		if (SecurityUtils.isCurrentUserInRole("ROLE_HOST")) {
+		if (SecurityUtils.isCurrentUserInRole("ROLE_HOST") || SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) {
 			list = set.stream().map(question -> {
 				ChallengeWorkspaceQuestionDTO questionDTO = new ChallengeWorkspaceQuestionDTO();
 				questionDTO.setId(question.getId());
@@ -67,45 +81,34 @@ public class ChallengeWorkspaceService {
 				questionDTO.setWorkspaceId(question.getWorkspace().getId());
 				questionDTO.setSubject(question.getSubject());
 				questionDTO.setContent(question.getContent());
-				List<ChallengeWorkspaceAnswerDTO> answerDTOs = question.getAnswers().stream().map(answer -> {				
-					ChallengeWorkspaceAnswerDTO answerDTO = new ChallengeWorkspaceAnswerDTO();
-					answerDTO.setId(answer.getId());
-					answerDTO.setQuestionId(answer.getQuestion().getId());
-					answerDTO.setContent(answer.getContent());
-					answerDTO.setAnswerByType(answer.getAnswerByType());
-		            return answerDTO;
-		        }).collect(Collectors.toList());
-				questionDTO.setAnswers(answerDTOs);
+				questionDTO.setAnswers(getListAnswer(question.getAnswers()));
 				return questionDTO;
 			}).collect(Collectors.toList());
+			return list;
 		} else {
 			ChallengeUserApplication challengeUserApplication = challengeUserApplicationRepository
-					.getMemberByLogin(challengeId, SecurityUtils.getCurrentUserLogin());
+					.getMemberByLogin(challengeId, SecurityUtils.getCurrentUserLogin());			
 			list = set.stream().map(question -> {
 				if (question.getApplicationId().longValue() == challengeUserApplication.getApplicationId()
 						.longValue()) {
-					ChallengeWorkspaceQuestionDTO questionDTO = new ChallengeWorkspaceQuestionDTO();							
+					ChallengeWorkspaceQuestionDTO questionDTO = new ChallengeWorkspaceQuestionDTO();
+
 					questionDTO.setId(question.getId());
 					questionDTO.setApplicationId(question.getApplicationId());
 					questionDTO.setWorkspaceId(question.getWorkspace().getId());
 					questionDTO.setSubject(question.getSubject());
 					questionDTO.setContent(question.getContent());
-					List<ChallengeWorkspaceAnswerDTO> answerDTOs = question.getAnswers().stream().map(answer -> {				
-						ChallengeWorkspaceAnswerDTO answerDTO = new ChallengeWorkspaceAnswerDTO();
-						answerDTO.setId(answer.getId());
-						answerDTO.setQuestionId(answer.getQuestion().getId());
-						answerDTO.setContent(answer.getContent());
-						answerDTO.setAnswerByType(answer.getAnswerByType());
-			            return answerDTO;
-			        }).collect(Collectors.toList());
-					questionDTO.setAnswers(answerDTOs);
+					questionDTO.setAnswers(getListAnswer(question.getAnswers()));
 					return questionDTO;
-				}
+				}	
+
 				return null;
+
 			}).collect(Collectors.toList());
+			return list;
 		}
 
-		return list;
+		
 	}
 
 	public ChallengeWorkspaceDTO getChallengeWorkspaceDetail(Long challengeId) {

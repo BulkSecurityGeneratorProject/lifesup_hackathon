@@ -178,12 +178,13 @@ public class ChallengeWorkspaceQuestionResource {
         return challengeWorkspaceQuestions;
     }
     
-//    @GetMapping("/challenge-workspace-questions/details/{id}")
-//    @Timed
-//    public ChallengeWorkspaceQuestionDTO getQuestonDetail(@PathVariable Long id) {
-//        log.debug("REST request to get all ChallengeWorkspaceQuestions",id);
-//        	ChallengeWorkspaceQuestionDTO questionDTO = challengeWorkspaceQuestionService.getQuestionDTO(id);
-//            return questionDTO;       
-//    }
+    @GetMapping("/challenge-workspace-questions/details/{id}")
+    @Timed
+    public ChallengeWorkspaceQuestionDTO getQuestonDetail(@PathVariable Long id) {
+        log.debug("REST request to get all ChallengeWorkspaceQuestions",id);
+        
+        	ChallengeWorkspaceQuestionDTO questionDTO = challengeWorkspaceQuestionService.getQuestionDTO(challengeWorkspaceQuestionRepository.findOne(id));
+            return questionDTO;       
+    }
 
 }

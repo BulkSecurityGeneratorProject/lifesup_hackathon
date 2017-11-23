@@ -41,7 +41,7 @@ public class ChallengeWorkspaceQuestion implements Serializable {
     @Column(name = "created_by")
     private String createdBy;
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question", cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<ChallengeWorkspaceAnswer> answers = new HashSet<>();
 

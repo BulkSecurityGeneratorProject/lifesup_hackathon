@@ -147,7 +147,7 @@ public class ChallengeWorkspaceResource {
             .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
     
-    @GetMapping("/challenge-workspaces/details/{login}/{challengeId}")
+    @GetMapping("/challenge-workspaces/details/{challengeId}")
     @Timed
     public ChallengeWorkspaceDTO getChallengeWorkspaceDetail(@PathVariable Long challengeId) {
         log.debug("REST request to get ChallengeWorkspace by challenge id : {}", challengeId);
