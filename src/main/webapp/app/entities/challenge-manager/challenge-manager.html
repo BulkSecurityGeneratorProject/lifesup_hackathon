@@ -63,20 +63,6 @@
     <div class="col-md-4 col-sm-6 col-xs-12 repeated-item" ng-repeat="challenge in vm.challenges" infinite-scroll="vm.loadPage(vm.page + 1)"
         infinite-scroll-disabled="vm.page >= vm.links['last']">
         <md-card class="challenge-card" ng-switch="challenge.info.status">
-            <!-- Display ribbon -->
-            <!-- <div ng-switch-when="ACTIVE" class="ribbon-wrapper">
-                <div class="ribbon-green" data-translate="hackathonApp.card.active"></div>
-            </div>
-            <div ng-switch-when="DRAFT" class="ribbon-wrapper">
-                <div class="ribbon-brown" data-translate="hackathonApp.card.draft"></div>
-            </div>
-            <div ng-switch-when="INACTIVE" class="ribbon-wrapper">
-                <div class="ribbon-grey" data-translate="hackathonApp.card.inactive"></div>
-            </div>
-
-            <div ng-switch-when="CLOSED" class="ribbon-wrapper">
-                <div class="ribbon-grey" data-translate="hackathonApp.card.closed"></div>
-            </div> -->
             <!-- Display cover -->
             <img ng-switch-when="ACTIVE" ui-sref="challenge-manager-detail({id:challenge.id})" ng-src="{{challenge.bannerUrl64 ? challenge.bannerUrl64 : '/content/images/svg/index.square-circle-preloader.svg'}}"
                 class="md-card-image" alt="">
@@ -160,16 +146,24 @@
                         <span data-translate="hackathonApp.card.eventEnded"></span>
                     </md-list-item>
                 </md-list>
+                
             </md-card-content>
+            <md-button class="w3-border" ui-sref="applicationslist({id:challenge.id})">
+                    <b data-translate="hackathonApp.card.seeApp"></b>
+                </md-button>
+
+            <md-button class="w3-border" ng-click="vm.checkExistWorkspace(challenge.id)" ui-sref="workspace-manager.new({challengeId:challenge.id})">
+                    <b data-translate="hackathonApp.card.workspace"></b>
+                </md-button>
+
+            <md-button class="w3-border" ng-click="vm.checkExistWorkspace(challenge.id)" ui-sref="workspace-manager({challengeId:challenge.id})">
+                    <b data-translate="hackathonApp.card.viewWorkspace"></b>
+                </md-button>
             <!-- Border -->
             <div class="w3-border-top w3-border-light-grey"></div>
 
             <!-- Actions -->
             <md-card-actions layout="row" layout-align="end center">
-                <md-button class="w3-border" ui-sref="applicationslist({id:challenge.id})">
-                    <b data-translate="hackathonApp.card.seeApp"></b>
-                </md-button>
-                <span flex></span>
                 <md-button ui-sref="challenge-manager.delete({id:challenge.id})" class="md-fab md-mini md-hue-3" title="Delete" aria-label="Delete">
                     <span class="glyphicon glyphicon-remove"></span>
                 </md-button>

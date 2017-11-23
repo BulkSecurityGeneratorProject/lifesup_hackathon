@@ -1,0 +1,34 @@
+{
+    "hackathonApp": {
+        "workspace" : {
+            "menu":{
+                "workspace": "Workspace",
+                "workspaceNews": "Workspace News",
+                "workspaceQuestion": "Workspace Question",
+                "workspaceAnswer": "Workspace Answer"
+            },
+            "home": {
+                "title": "Welcome to {{param}}",
+                "content": "This is the challenge workspace<br><br>You can find pre-materials and other important info heare after the kickoff-visit on {{param1}}. See you then at {{param2}} at {{param3}}. The session will last until {{param4}}. Please note that this is a mandatory part of the challenge. but it's okay if only a part of your team participates live."
+            },
+            "news": {
+
+            },
+            "question": {
+
+            },
+            "answer": {
+
+            },
+            "button": {
+                "ask": "Ask a question"
+            },
+
+            "dialog": {
+                "createOrEditLabel": "Create or edit Challenge Workspace",
+                "term": "Terms and Conditions"
+            }
+            
+        }
+    }
+}

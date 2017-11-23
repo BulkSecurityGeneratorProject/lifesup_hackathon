@@ -52,8 +52,8 @@ spring:
         cache: false
     http:
         multipart:
-            max-file-size: 100Mb
-            max-request-size: 100Mb
+            max-file-size: -1Mb
+            max-request-size: -1Mb
 
 liquibase:
     contexts: dev

@@ -32,7 +32,8 @@
         vm.toggle = toggle;
         vm.exists = exists;
 
-        vm.applications = [];
+        vm.unapprovedApp = [];
+        vm.approvedApp = [];
 
         load();
         function load() {
@@ -63,8 +64,16 @@
             }
             ApplicationByCurrentUser.query(function (result) {
                 result.forEach(function (element) {
-                    var temp = Application.get({ id: element.applicationId });
-                    vm.applications.push(temp);
+                    var temp = Application.get({ id: element.applicationId }, function(){
+                        console.log(temp);
+                        if (temp.status === 'APPROVED'){
+                            vm.approvedApp.push(temp);
+                        } else{
+                            vm.unapprovedApp.push(temp);
+                        }
+                        
+                    });
+                    
                 }, this);
                 // vm.applications = result;
             });

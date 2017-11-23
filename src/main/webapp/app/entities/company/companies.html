@@ -1,4 +1,17 @@
-<md-content laout="column" style="max-height: 100%;">
+<h4>Upload on file select</h4>
+<button type="file" ngf-select="uploadFiles($file, $invalidFiles)" accept="*" ngf-max-height="1000" ngf-max-size="3000MB">
+    Select File</button>
+<br>
+<br> File:
+<div style="font:smaller">{{f.name}} {{errFile.name}} {{errFile.$error}} {{errFile.$errorParam}}
+        <md-progress-linear  md-mode="determinate" value="{{f.progress}}"></md-progress-linear>
+    <span class="progress" ng-show="f.progress >= 0">
+        <div style="width:{{f.progress}}%" ng-bind="f.progress + '%'"></div>
+    </span>
+    {{errorMsg}}
+</div>
+
+<md-content layout="column" style="max-height: 100%;">
     <md-toolbar class="md-table-toolbar md-default">
         <div class="md-toolbar-tools" layout="row">
             <md-button class="md-fab md-mini" aria-label="t" ng-click="vm.toggleSearchBox()">
@@ -47,7 +60,7 @@
 
         </div>
     </md-toolbar>
-    <md-table-container flex style="max-height:30%;">
+    <md-table-container flex>
         <md-card ng-cloak>
             <table md-table md-row-select="true" multiple="false" ng-model="vm.selected" md-progress="promise" style="background: white;">
                 <thead ng-if="!options.decapitate" md-head md-order="query.order" md-on-reorder="logOrder">

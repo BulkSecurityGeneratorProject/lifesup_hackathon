@@ -5,15 +5,16 @@
         .module('hackathonApp')
         .controller('ChallengeManagerController', ChallengeManagerController);
 
-    ChallengeManagerController.$inject = ['$scope', '$timeout', '$state', 'ChallengeManager', 'ChallengeInfo', 'ChallengeByAuthority', 'Challenge', 'ChallengeByUser', 'ParseLinks', 'AlertService', '$anchorScroll', '$http', 'TimeServer'];
+    ChallengeManagerController.$inject = ['$scope', '$timeout', '$state', 'ChallengeManager', 'ChallengeInfo', 'ChallengeByAuthority', 'Challenge', 'ChallengeByUser', 'ParseLinks', 'AlertService', '$anchorScroll', '$http', 'TimeServer', 'WorkspaceOfChallenge'];
 
-    function ChallengeManagerController($scope, $timeout, $state, ChallengeManager, ChallengeInfo, ChallengeByAuthority, Challenge, ChallengeByUser, ParseLinks, AlertService, $anchorScroll, $http, TimeServer) {
+    function ChallengeManagerController($scope, $timeout, $state, ChallengeManager, ChallengeInfo, ChallengeByAuthority, Challenge, ChallengeByUser, ParseLinks, AlertService, $anchorScroll, $http, TimeServer, WorkspaceOfChallenge) {
         var vm = this;
 
         vm.challenges = [];
         vm.allStatus = ['', 'DRAFT', 'ACTIVE', 'INACTIVE', 'CLOSED'];
         vm.hasNoChallenge = false;
         vm.querySearchName = querySearchName;
+        vm.checkExistWorkspace = checkExistWorkspace;
 
         // Tuanpm : Object Params to Search Challenge
         vm.challengeSearch = {
@@ -245,6 +246,15 @@
             function onError(error) {
                 AlertService.error(error.data.message);
             }
+        }
+
+        function checkExistWorkspace(id){
+            WorkspaceOfChallenge.query({challengeId: id}, function(res){
+                if (res){
+                    console.log("X");
+                    return true;
+                } 
+            })
         }
     }
 })();

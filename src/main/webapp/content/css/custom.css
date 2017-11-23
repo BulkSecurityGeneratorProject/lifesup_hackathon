@@ -1,9 +1,14 @@
 
 /*============ General style ==============*/
-@import url('https://fonts.googleapis.com/css?family=Righteous|Roboto');
+/* @import url('https://fonts.googleapis.com/css?family=Righteous|Roboto'); */
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
 h1,h2,h3,h4,h5,h6 {
-  font-family: 'Righteous', cursive;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 600;
+}
+p {
+
 }
 
 .main-content {

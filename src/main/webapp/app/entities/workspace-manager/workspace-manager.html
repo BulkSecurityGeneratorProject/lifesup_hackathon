@@ -1,0 +1,41 @@
+<div>
+    <div layout="row">
+        <div flex=25>
+            <md-card>
+                <img ng-src="content/images/default/cover.jpg" class="md-card-image" alt="Challenge Image">
+                <md-card-title>
+                    <md-card-title-text>
+                        <span class="md-headline">Action buttons</span>
+                    </md-card-title-text>
+                </md-card-title>
+                <md-card-content>
+                    <md-list flex>
+                        <md-list-item ng-click="null">
+                            <span>Home</span>
+                        </md-list-item>
+                        <md-list-item ng-click="null">
+                            <span>My Team</span>
+                        </md-list-item>
+                        <md-list-item ng-click="null">
+                            <span>Feedback</span>
+                        </md-list-item>
+                        <md-list-item ng-click="null">
+                            <span>Terms</span>
+                        </md-list-item>
+                        <md-list-item ng-click="null">
+                            <md-button ui-sref="workspace-manager.edit">Edit Terms</md-button>
+                        </md-list-item>
+                    </md-list>
+                </md-card-content>
+            </md-card>
+
+        </div>
+        <div flex=75 flex-offset="5" ui-view="workspace">
+            <md-content>
+                <h2 data-translate="hackathonApp.workspace.home.title"></h2>
+                <p data-translate="hackathonApp.workspace.home.content"></p>
+            </md-content>
+        </div>
+
+    </div>
+</div>

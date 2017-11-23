@@ -9,7 +9,7 @@
           <h1 ng-show="vm.failed" data-translate="hackathonApp.host.sorry">Sorry!</h1>
           <div class="alert alert-danger" ng-show="vm.failed" data-translate="hackathonApp.host.messages.failed">
           </div>
-          <md-button class="md-raised md-primary" data-translate="hackathonApp.host.goHome" ui-sref="home"></md-button>
+          <md-button class="md-raised md-primary" aria-label="home" data-translate="hackathonApp.host.goHome" ui-sref="home"></md-button>
       </div>
       <div ng-show="!vm.success && !vm.failed" class="col s12">
         <h1 data-translate="hackathonApp.host.title">Become a Host</h1>

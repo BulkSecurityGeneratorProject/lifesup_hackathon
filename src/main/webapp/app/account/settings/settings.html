@@ -24,13 +24,18 @@
             <div class="white-card">
                 <label data-translate="settings.sidebar.application"></label>
                 <ul class="list-unstyled">
-                    <li ng-repeat="application in vm.applications">
-                        <a ui-sref="applicationslist-detail({id:application.id})">{{application.challenge.name}}</a>
+                    <li ng-repeat="app in vm.unapprovedApp">
+                        <a ui-sref="applicationslist-detail({id:app.id})">{{app.challenge.name}}</a>
                     </li>
                 </ul>
             </div>
             <div class="white-card">
                 <label data-translate="settings.sidebar.challenge"></label>
+                <ul class="list-unstyled">
+                        <li ng-repeat="app in vm.approvedApp">
+                            <a ui-sref="workspace({challengeId:app.challenge.id})">{{app.challenge.name}}</a>
+                        </li>
+                    </ul>
             </div>
             <div class="white-card">
                 <button class="btn btn-warning full-width" ui-sref="password" data-translate="settings.sidebar.changePassword"></button>

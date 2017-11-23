@@ -33,6 +33,7 @@
             }
             else {
                 vm.challengeInfo = vm.challenge.info;
+                console.log(vm.challenge);
                 vm.minDate = new Date(vm.challenge.info.applicationCloseDate);
                 vm.challengeInfo.applicationCloseDate = new Date(vm.challenge.info.applicationCloseDate);
                 vm.challengeInfo.selectionInformDate = new Date(vm.challenge.info.selectionInformDate);

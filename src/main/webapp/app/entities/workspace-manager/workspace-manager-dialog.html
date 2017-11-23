@@ -1,0 +1,34 @@
+<md-dialog aria-label="Create a workspace">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2 data-translate="hackathonApp.workspace.dialog.createOrEditLabel"></h2>
+            <span flex></span>
+            <md-button class="md-icon-button" aria-label="close" ng-click="vm.clear()">
+                <span class="glyphicon glyphicon-remove"></span>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content class="challenge-dialog">
+        <jhi-alert-error></jhi-alert-error>
+        <form name="workspaceForm">
+            <md-input-container class="md-block" flex-gt-sm>
+                <label data-translate="hackathonApp.workspace.dialog.term"></label>
+                <textarea name="term" ng-model="vm.workspace.termsAndConditions" md-maxlength="1000" rows="7" md-select-on-focus required></textarea>
+            </md-input-container>
+        </form>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+        <span flex></span>
+        <md-button type="button" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;
+            <span data-translate="entity.action.cancel"></span>
+        </md-button>
+        <md-button class="md-raised md-primary" ng-click="vm.save()" ng-disabled="workspaceForm.$invalid">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;
+            <span data-translate="entity.action.save"></span>
+        </md-button>
+    </md-dialog-actions>
+
+</md-dialog>
