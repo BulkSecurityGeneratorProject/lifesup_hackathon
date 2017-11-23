@@ -50,10 +50,17 @@ public class ChallengeWorkspaceService {
 			challengeWorkspace.setId(workSpace.getId());
 		}
 		Challenge challenge = challengeRepository.findOne(workSpace.getChallengeId());
+		if(challenge == null){
+			return null;
+		}
 		challengeWorkspace.setChallenge(challenge);
 		challengeWorkspace.setTermsAndConditions(workSpace.getTermsAndConditions());
 		challengeWorkspace.setCreatedDate(ZonedDateTime.now());
 		ChallengeWorkspace result = challengeWorkspaceRepository.save(challengeWorkspace);
+		if (workSpace.getId() != null) {
+			challenge.setWorkspaceId(result.getId());
+			challengeRepository.save(challenge);
+		}
 		return result;
 	}
 

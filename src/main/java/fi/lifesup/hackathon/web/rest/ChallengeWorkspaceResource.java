@@ -62,6 +62,9 @@ public class ChallengeWorkspaceResource {
         	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeWorkspace", "idexists", "A challengeWorkspace is already exist.")).body(null);
         }
         ChallengeWorkspace result = challengeWorkspaceService.saveChallengeWorksapce(challengeWorkspace);
+        if(result == null){
+        	return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeWorkspace", "idexists", "A challengeWorkspace is already exist.")).body(null);
+        }
         return ResponseEntity.created(new URI("/api/challenge-workspaces/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert("challengeWorkspace", result.getId().toString()))
             .body(result);

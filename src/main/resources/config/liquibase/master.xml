@@ -38,4 +38,5 @@
     
     <include file="classpath:config/liquibase/changelog/20171115211045_stage2_changelog.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20171116112622_modify_column_table_ChallengeWorkspaceAnswer.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20171123140303_add_column_table_Challenge.xml" relativeToChangelogFile="false"/>
 </databaseChangeLog>

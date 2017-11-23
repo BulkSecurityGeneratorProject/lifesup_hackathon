@@ -27,14 +27,6 @@ public class Challenge implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    public Long getCreated_by() {
-		return created_by;
-	}
-
-	public void setCreated_by(Long created_by) {
-		this.created_by = created_by;
-	}
-
 	@NotNull
     @Column(name = "introduction", nullable = false)
     private String introduction;
@@ -92,6 +84,10 @@ public class Challenge implements Serializable {
     @OneToMany(mappedBy = "challenge", orphanRemoval = true)
     @JsonIgnore
     private Set<ChallengeFeedback> feedbacks = new HashSet<>();
+    
+    @Column(name = "workspace_id")
+    private Long workspaceId;
+    
 
     public Long getId() {
         return id;
@@ -309,6 +305,25 @@ public class Challenge implements Serializable {
 
 	public void setFeedbacks(Set<ChallengeFeedback> feedbacks) {
 		this.feedbacks = feedbacks;
+	}
+	
+
+    public Long getCreated_by() {
+		return created_by;
+	}
+
+	public void setCreated_by(Long created_by) {
+		this.created_by = created_by;
+	}
+	
+	
+
+	public Long getWorkspaceId() {
+		return workspaceId;
+	}
+
+	public void setWorkspaceId(Long workspaceId) {
+		this.workspaceId = workspaceId;
 	}
 
 	@Override
