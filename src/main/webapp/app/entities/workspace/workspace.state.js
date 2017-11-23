@@ -23,6 +23,9 @@
                     }
                 },
                 resolve:{
+                    entity: ['WorkspaceOfChallenge', '$stateParams', function(WorkspaceOfChallenge, $stateParams){
+                        return WorkspaceOfChallenge.get({challengeId: $stateParams.challengeId});
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader){
                         $translatePartialLoader.addPart('global');
                         $translatePartialLoader.addPart('workspace');

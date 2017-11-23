@@ -57,10 +57,10 @@ public class ChallengeWorkspaceService {
 		challengeWorkspace.setTermsAndConditions(workSpace.getTermsAndConditions());
 		challengeWorkspace.setCreatedDate(ZonedDateTime.now());
 		ChallengeWorkspace result = challengeWorkspaceRepository.save(challengeWorkspace);
-		if (workSpace.getId() != null) {
+		
 			challenge.setWorkspaceId(result.getId());
 			challengeRepository.save(challenge);
-		}
+		
 		return result;
 	}
 

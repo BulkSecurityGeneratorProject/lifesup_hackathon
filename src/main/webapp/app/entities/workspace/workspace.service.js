@@ -6,11 +6,15 @@
         .factory('ChallengeWorkspaceNews', ChallengeWorkspaceNews)
         .factory('ChallengeWorkspaceQuestion', ChallengeWorkspaceQuestion)
         .factory('ChallengeWorkspaceAnswer', ChallengeWorkspaceAnswer)
+        .factory('ChallengeWorkspaceFeedback', ChallengeWorkspaceFeedback)
+
+        
 
     ChallengeWorkspace.$inject = ['$resource'];
     ChallengeWorkspaceNews.$inject = ['$resource'];
     ChallengeWorkspaceQuestion.$inject = ['$resource'];
     ChallengeWorkspaceAnswer.$inject = ['$resource'];
+    ChallengeWorkspaceFeedback.$inject = ['$resource'];
 
     function ChallengeWorkspace ($resource) {
         var resourceUrl =  'api/challenge-workspaces';
@@ -69,6 +73,24 @@
     }
     function ChallengeWorkspaceAnswer ($resource) {
         var resourceUrl =  'api/challenge-workspace-answers';
+
+        return $resource(resourceUrl, {}, {
+            'query': { method: 'GET', isArray: false},
+            'get': {
+                method: 'GET',
+                transformResponse: function (data) {
+                    if (data) {
+                        data = angular.fromJson(data);
+                    }
+                    return data;
+                }
+            },
+            'save': { method:'POST' },
+            'update': { method:'PUT' }
+        });
+    }
+    function ChallengeWorkspaceFeedback ($resource) {
+        var resourceUrl =  '/api/challenge-feedbacks';
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: false},
