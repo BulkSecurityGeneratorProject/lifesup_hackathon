@@ -28,21 +28,19 @@ public class ChallengeWorkspaceNewsService {
 	public ChallengeWorkspaceNews convertDTOToentity(ChallengeWorkspaceNewsDTO challengeWorkspaceNewsDTO) {
 		ChallengeWorkspaceNews challengeWorkspaceNews = new ChallengeWorkspaceNews();
 		ChallengeWorkspace challengeWorkspace = challengeWorkspaceRepository
-				.findOne(challengeWorkspaceNewsDTO.getWorkspace());
+				.findOne(challengeWorkspaceNewsDTO.getWorkspaceId());
 		challengeWorkspaceNews.setWorkspace(challengeWorkspace);
 		return challengeWorkspaceNews;
 	}
 
 	public ChallengeWorkspaceNews createChallengeWorkspaceNews(ChallengeWorkspaceNewsDTO challengeWorkspaceNewsDTO) {
 		ChallengeWorkspaceNews challengeWorkspaceNews = new ChallengeWorkspaceNews();
-
 		ChallengeWorkspace challengeWorkspace = challengeWorkspaceRepository
-				.findOne(challengeWorkspaceNewsDTO.getWorkspace());
-		if(challengeWorkspace == null){
+				.findOne(challengeWorkspaceNewsDTO.getWorkspaceId());
+		if (challengeWorkspace == null) {
 			return null;
-		}
-		else{
-			if(challengeWorkspaceNewsDTO.getId() != null){
+		} else {
+			if (challengeWorkspaceNewsDTO.getId() != null) {
 				challengeWorkspaceNews.setId(challengeWorkspaceNewsDTO.getId());
 			}
 			challengeWorkspaceNews.setWorkspace(convertDTOToentity(challengeWorkspaceNewsDTO).getWorkspace());

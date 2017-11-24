@@ -1,5 +1,8 @@
 package fi.lifesup.hackathon.service.dto;
 
+import java.time.ZonedDateTime;
+
+import fi.lifesup.hackathon.domain.ChallengeWorkspaceAnswer;
 import fi.lifesup.hackathon.domain.enumeration.WorkspaceAnswerType;
 
 public class ChallengeWorkspaceAnswerDTO {
@@ -7,6 +10,9 @@ public class ChallengeWorkspaceAnswerDTO {
 	private Long questionId;
 	private String content;
 	private WorkspaceAnswerType answerByType;
+	private String createdBy;
+	private ZonedDateTime createdDate;
+	
 	
 	public ChallengeWorkspaceAnswerDTO() {
 		// TODO Auto-generated constructor stub
@@ -18,6 +24,16 @@ public class ChallengeWorkspaceAnswerDTO {
 		this.questionId = questionId;
 		this.content = content;
 		this.answerByType = answerByType;
+	}
+	
+		
+	public ChallengeWorkspaceAnswerDTO(ChallengeWorkspaceAnswer answer){
+		this.id = answer.getId();
+		this.questionId = answer.getQuestion().getId();
+		this.content = answer.getContent();
+		this.answerByType = answer.getAnswerByType();
+		this.createdBy = answer.getCreatedBy();
+		this.createdDate = answer.getCreatedDate();
 	}
 
 
@@ -46,6 +62,23 @@ public class ChallengeWorkspaceAnswerDTO {
 	public void setAnswerByType(WorkspaceAnswerType answerByType) {
 		this.answerByType = answerByType;
 	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public ZonedDateTime getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(ZonedDateTime createdDate) {
+		this.createdDate = createdDate;
+	}
+	
 	
 	
 }

@@ -32,15 +32,15 @@ public class ChallengeWorkspaceQuestionService {
 
 	@Inject
 	private ChallengeWorkspaceRepository challengeWorkspaceRepository;
-	
+
 	@Inject
-    private ChallengeWorkspaceQuestionRepository challengeWorkspaceQuestionRepository;
-	
+	private ChallengeWorkspaceQuestionRepository challengeWorkspaceQuestionRepository;
+
 	@Inject
 	private ChallengeWorkspaceService challengeWorkspaceService;
 
 	public List<ChallengeWorkspaceQuestionDTO> getQuestionNotAnswer(Long workspaceId) {
-		String sbQuery = "select new fi.lifesup.hackathon.service.dto.ChallengeWorkspaceQuestionDTO(q.id, q.applicationId, q.workspace.id, q.content, q.subject) "
+		String sbQuery = "select new fi.lifesup.hackathon.service.dto.ChallengeWorkspaceQuestionDTO(q.id, q.applicationId, q.workspace.id, q.content, q.subject, q.createdBy, q.createdDate) "
 				+ " from ChallengeWorkspaceQuestion q where q.id not in"
 				+ " (select q.id from ChallengeWorkspaceQuestion q ,ChallengeWorkspaceAnswer a where q.id = a.question.id group by q.id)"
 				+ " and q.workspace.id = " + workspaceId;
@@ -50,11 +50,12 @@ public class ChallengeWorkspaceQuestionService {
 		return list;
 	}
 
-	public ChallengeWorkspaceQuestion saveChallengeWorkspaceQuestion(ChallengeWorkspaceQuestionDTO challengeWorkspaceQuestion) {
+	public ChallengeWorkspaceQuestion saveChallengeWorkspaceQuestion(
+			ChallengeWorkspaceQuestionDTO challengeWorkspaceQuestion) {
 		ChallengeWorkspace challengeWorkspace = challengeWorkspaceRepository
 				.findOne(challengeWorkspaceQuestion.getWorkspaceId());
 		ChallengeWorkspaceQuestion question = new ChallengeWorkspaceQuestion();
-		if(challengeWorkspaceQuestion.getId() != null){
+		if (challengeWorkspaceQuestion.getId() != null) {
 			question.setId(challengeWorkspaceQuestion.getId());
 		}
 		question.setApplicationId(challengeWorkspaceQuestion.getApplicationId());
@@ -65,39 +66,22 @@ public class ChallengeWorkspaceQuestionService {
 		question.setCreatedDate(ZonedDateTime.now());
 		return challengeWorkspaceQuestionRepository.save(question);
 	}
-	
-	public ChallengeWorkspaceQuestionDTO getQuestionDTO(Long questionId){		
-		ChallengeWorkspaceQuestionDTO questionDTO = new ChallengeWorkspaceQuestionDTO();
-		 ChallengeWorkspaceQuestion question = challengeWorkspaceQuestionRepository.findOne(questionId);	
-			List<ChallengeWorkspaceAnswerDTO> answerDTOs = question.getAnswers().stream().map(answer -> {						
-				ChallengeWorkspaceAnswerDTO answerDTO = new ChallengeWorkspaceAnswerDTO();
-				answerDTO.setId(answer.getId());
-				answerDTO.setQuestionId(answer.getQuestion().getId());
-				answerDTO.setContent(answer.getContent());
-				answerDTO.setAnswerByType(answer.getAnswerByType());
-	            return answerDTO;
-	        }).collect(Collectors.toList());
+
+	public ChallengeWorkspaceQuestionDTO getQuestionDTO(Long questionId) {
+
+		ChallengeWorkspaceQuestion question = challengeWorkspaceQuestionRepository.findOne(questionId);
+		List<ChallengeWorkspaceAnswerDTO> answerDTOs = question.getAnswers().stream().map(answer -> {
+			ChallengeWorkspaceAnswerDTO answerDTO = new ChallengeWorkspaceAnswerDTO(answer);
+			return answerDTO;
+		}).collect(Collectors.toList());
+		ChallengeWorkspaceQuestionDTO questionDTO = new ChallengeWorkspaceQuestionDTO(question);
 		questionDTO.setAnswers(answerDTOs);
-		questionDTO.setId(question.getId());
-		questionDTO.setApplicationId(question.getApplicationId());
-		questionDTO.setWorkspaceId(question.getWorkspace().getId());
-		questionDTO.setSubject(question.getSubject());
-		questionDTO.setContent(question.getContent());
 		return questionDTO;
 	}
-	
-	public ChallengeWorkspaceQuestionDTO getQuestionDTO(ChallengeWorkspaceQuestion question){		
-		ChallengeWorkspaceQuestionDTO questionDTO = new ChallengeWorkspaceQuestionDTO();
-		
-		
+
+	public ChallengeWorkspaceQuestionDTO getQuestionDTO(ChallengeWorkspaceQuestion question) {
+		ChallengeWorkspaceQuestionDTO questionDTO = new ChallengeWorkspaceQuestionDTO(question);
 		questionDTO.setAnswers(challengeWorkspaceService.getListAnswer(question.getAnswers()));
-		
-		
-		questionDTO.setId(question.getId());
-		questionDTO.setApplicationId(question.getApplicationId());
-		questionDTO.setWorkspaceId(question.getWorkspace().getId());
-		questionDTO.setSubject(question.getSubject());
-		questionDTO.setContent(question.getContent());
 		return questionDTO;
 	}
 }
