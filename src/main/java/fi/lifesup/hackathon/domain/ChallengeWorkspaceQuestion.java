@@ -43,6 +43,7 @@ public class ChallengeWorkspaceQuestion implements Serializable {
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JsonIgnore
+    @OrderBy("createdDate ASC")
     private Set<ChallengeWorkspaceAnswer> answers = new HashSet<>();
 
     @ManyToOne

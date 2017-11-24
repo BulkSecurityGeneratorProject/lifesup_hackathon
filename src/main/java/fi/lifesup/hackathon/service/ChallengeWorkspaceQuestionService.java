@@ -52,19 +52,26 @@ public class ChallengeWorkspaceQuestionService {
 
 	public ChallengeWorkspaceQuestion saveChallengeWorkspaceQuestion(
 			ChallengeWorkspaceQuestionDTO challengeWorkspaceQuestion) {
-		ChallengeWorkspace challengeWorkspace = challengeWorkspaceRepository
-				.findOne(challengeWorkspaceQuestion.getWorkspaceId());
-		ChallengeWorkspaceQuestion question = new ChallengeWorkspaceQuestion();
 		if (challengeWorkspaceQuestion.getId() != null) {
-			question.setId(challengeWorkspaceQuestion.getId());
+			ChallengeWorkspace challengeWorkspace = challengeWorkspaceRepository
+					.findOne(challengeWorkspaceQuestion.getWorkspaceId());
+			if (challengeWorkspace == null) {
+				return null;
+			}
+
+			ChallengeWorkspaceQuestion question = new ChallengeWorkspaceQuestion();
+			question.setApplicationId(challengeWorkspaceQuestion.getApplicationId());
+			question.setWorkspace(challengeWorkspace);
+			question.setContent(challengeWorkspaceQuestion.getContent());
+			question.setSubject(challengeWorkspaceQuestion.getSubject());
+			return question;
+		} else {
+			ChallengeWorkspaceQuestion question = challengeWorkspaceQuestionRepository
+					.findOne(challengeWorkspaceQuestion.getId());
+			question.setContent(challengeWorkspaceQuestion.getContent());
+			question.setSubject(challengeWorkspaceQuestion.getSubject());
+			return question;
 		}
-		question.setApplicationId(challengeWorkspaceQuestion.getApplicationId());
-		question.setWorkspace(challengeWorkspace);
-		question.setContent(challengeWorkspaceQuestion.getContent());
-		question.setSubject(challengeWorkspaceQuestion.getSubject());
-		question.setCreatedBy(SecurityUtils.getCurrentUserLogin());
-		question.setCreatedDate(ZonedDateTime.now());
-		return challengeWorkspaceQuestionRepository.save(question);
 	}
 
 	public ChallengeWorkspaceQuestionDTO getQuestionDTO(Long questionId) {
