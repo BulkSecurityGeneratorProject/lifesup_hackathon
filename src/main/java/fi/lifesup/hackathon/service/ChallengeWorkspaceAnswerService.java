@@ -44,12 +44,12 @@ public class ChallengeWorkspaceAnswerService {
         	answer.setId(challengeWorkspaceAnswer.getId());
         }
         
-        User user = userReponsitory.getUserByAuthority(SecurityUtils.getCurrentUserLogin(), "ROLE_USER");
-        if(user != null){
-        	answer.setAnswerByType(WorkspaceAnswerType.BY_USER);
+        
+        if(SecurityUtils.isCurrentUserInRole("ROLE_HOST") || SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")){
+        	answer.setAnswerByType(WorkspaceAnswerType.BY_HOST);
         }
         else{
-        	answer.setAnswerByType(WorkspaceAnswerType.BY_HOST);
+        	answer.setAnswerByType(WorkspaceAnswerType.BY_USER);
         }
         
         answer.setCreatedBy(SecurityUtils.getCurrentUserLogin());

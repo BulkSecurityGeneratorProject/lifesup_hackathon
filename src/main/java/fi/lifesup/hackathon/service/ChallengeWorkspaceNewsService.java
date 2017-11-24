@@ -1,5 +1,7 @@
 package fi.lifesup.hackathon.service;
 
+import java.time.ZonedDateTime;
+
 import javax.inject.Inject;
 
 import org.slf4j.Logger;
@@ -22,29 +24,33 @@ public class ChallengeWorkspaceNewsService {
 	private ChallengeWorkspaceNewsRepository challengeWorkspaceNewsRepository;
 	@Inject
 	private UserService userService;
-public ChallengeWorkspaceNews convertDTOToentity(ChallengeWorkspaceNewsDTO challengeWorkspaceNewsDTO)
-{
-	ChallengeWorkspaceNews challengeWorkspaceNews=new ChallengeWorkspaceNews();
-	ChallengeWorkspace challengeWorkspace = challengeWorkspaceRepository
-			.findOne(challengeWorkspaceNewsDTO.getWorkspace());
-	challengeWorkspaceNews.setWorkspace(challengeWorkspace);
-	return challengeWorkspaceNews;
-}
+
+	public ChallengeWorkspaceNews convertDTOToentity(ChallengeWorkspaceNewsDTO challengeWorkspaceNewsDTO) {
+		ChallengeWorkspaceNews challengeWorkspaceNews = new ChallengeWorkspaceNews();
+		ChallengeWorkspace challengeWorkspace = challengeWorkspaceRepository
+				.findOne(challengeWorkspaceNewsDTO.getWorkspace());
+		challengeWorkspaceNews.setWorkspace(challengeWorkspace);
+		return challengeWorkspaceNews;
+	}
+
 	public ChallengeWorkspaceNews createChallengeWorkspaceNews(ChallengeWorkspaceNewsDTO challengeWorkspaceNewsDTO) {
 		ChallengeWorkspaceNews challengeWorkspaceNews = new ChallengeWorkspaceNews();
-		if (SecurityUtils.isCurrentUserInRole("ROLE_HOST")) {
-			ChallengeWorkspace challengeWorkspace = challengeWorkspaceRepository
-					.findOne(challengeWorkspaceNewsDTO.getWorkspace());
-			if (challengeWorkspace != null) {
-				challengeWorkspaceNews.setWorkspace(convertDTOToentity(challengeWorkspaceNewsDTO).getWorkspace());
-				challengeWorkspaceNews.setContent(challengeWorkspaceNewsDTO.getContent());
-				challengeWorkspaceNews.setCreatedBy(userService.getCurrentUser().getLogin());
-				challengeWorkspaceNews.setCreatedDate(challengeWorkspaceNewsDTO.getCreatedDate());
-				challengeWorkspaceNews.setTitle(challengeWorkspaceNewsDTO.getTitle());
-				return challengeWorkspaceNewsRepository.save(challengeWorkspaceNews);
-			}
+
+		ChallengeWorkspace challengeWorkspace = challengeWorkspaceRepository
+				.findOne(challengeWorkspaceNewsDTO.getWorkspace());
+		if(challengeWorkspace == null){
 			return null;
 		}
-		return null;
+		else{
+			if(challengeWorkspaceNewsDTO.getId() != null){
+				challengeWorkspaceNews.setId(challengeWorkspaceNewsDTO.getId());
+			}
+			challengeWorkspaceNews.setWorkspace(convertDTOToentity(challengeWorkspaceNewsDTO).getWorkspace());
+			challengeWorkspaceNews.setContent(challengeWorkspaceNewsDTO.getContent());
+			challengeWorkspaceNews.setCreatedBy(SecurityUtils.getCurrentUserLogin());
+			challengeWorkspaceNews.setCreatedDate(ZonedDateTime.now());
+			challengeWorkspaceNews.setTitle(challengeWorkspaceNewsDTO.getTitle());
+			return challengeWorkspaceNews;
+		}
 	}
 }

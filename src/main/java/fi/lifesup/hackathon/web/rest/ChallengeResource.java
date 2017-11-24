@@ -208,26 +208,26 @@ public class ChallengeResource {
 		return base;
 	}
 
-//	@Scheduled(fixedRate = 60000)
-//	@GetMapping("/challenges/check")
-//	@Timed
-//	public void checkChallenge() {
-//		List<Challenge> challenges = challengeRepository.listChallenges();
-//		ZonedDateTime time = ZonedDateTime.now();
-//		for (Challenge challenge : challenges) {
-//
-//			if (challenge.getInfo().getStatus() == ChallengeStatus.ACTIVE
-//					&& !challenge.getInfo().getApplicationCloseDate().isAfter(time)) {
-//				challenge.getInfo().setStatus(ChallengeStatus.INACTIVE);
-//				challengeInfoRepository.save(challenge.getInfo());
-//			}
-//			if (challenge.getInfo().getStatus() == ChallengeStatus.INACTIVE
-//					&& !challenge.getInfo().getEventEndTime().isAfter(time)) {
-//				challenge.getInfo().setStatus(ChallengeStatus.CLOSED);
-//				challengeInfoRepository.save(challenge.getInfo());
-//			}
-//		}
-//	}
+	@Scheduled(fixedRate = 60000)
+	@GetMapping("/challenges/check")
+	@Timed
+	public void checkChallenge() {
+		List<Challenge> challenges = challengeRepository.listChallenges();
+		ZonedDateTime time = ZonedDateTime.now();
+		for (Challenge challenge : challenges) {
+
+			if (challenge.getInfo().getStatus() == ChallengeStatus.ACTIVE
+					&& !challenge.getInfo().getApplicationCloseDate().isAfter(time)) {
+				challenge.getInfo().setStatus(ChallengeStatus.INACTIVE);
+				challengeInfoRepository.save(challenge.getInfo());
+			}
+			if (challenge.getInfo().getStatus() == ChallengeStatus.INACTIVE
+					&& !challenge.getInfo().getEventEndTime().isAfter(time)) {
+				challenge.getInfo().setStatus(ChallengeStatus.CLOSED);
+				challengeInfoRepository.save(challenge.getInfo());
+			}
+		}
+	}
 
 	@GetMapping("/challenges/get-time")
 	@Timed
