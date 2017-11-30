@@ -53,13 +53,7 @@
                 vm.workspaceDetail = res;
                 vm.questions = res.workspaceQuestions;
                 vm.questions.forEach(element => {
-                    element.isAnswered = false;
-                    if (element.answers.length > 0) {
-                        element.answers.forEach(function (ans) {
-                            if (ans.answerByType == 'BY_HOST')
-                                element.isAnswered = true;
-                        })
-                    }
+                    element.totalcmt = element.answers.length;
                 });
                 vm.newsEntity.workspaceId = res.id;
                 vm.news = res.workspaceNews;
