@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('CompanyController', CompanyController);
 
-    CompanyController.$inject = ['$scope', '$state', 'Company'];
+    CompanyController.$inject = ['$scope', '$state', 'Company', 'Upload'];
 
-    function CompanyController ($scope, $state, Company) {
+    function CompanyController ($scope, $state, Company, Upload) {
         var vm = this;
         
         vm.companies = [];

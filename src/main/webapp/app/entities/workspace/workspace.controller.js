@@ -5,11 +5,13 @@
         .module('hackathonApp')
         .controller('WorkspaceController', WorkspaceController);
 
-    WorkspaceController.$inject = ['$scope', 'GetQuestionAnswers', 'entity', '$state', '$stateParams', 'ChallengeWorkspaceFeedback', 'ApplicationByChallengeId', '$mdDialog', 'ChallengeWorkspaceQuestion', 'GetWorkspaceQuestion', 'WorkspaceDetail', 'ChallengeWorkspaceAnswer'];
+    WorkspaceController.$inject = ['$scope', 'GetQuestionAnswers', 'entity', '$state', '$stateParams', 'ChallengeWorkspaceFeedback', 'ApplicationByChallengeId', '$mdDialog', 'ChallengeWorkspaceQuestion', 'GetWorkspaceQuestion', 'WorkspaceDetail', 'ChallengeWorkspaceAnswer', 'Upload', '$timeout'];
 
-    function WorkspaceController($scope, GetQuestionAnswers, entity, $state, $stateParams, ChallengeWorkspaceFeedback, ApplicationByChallengeId, $mdDialog, ChallengeWorkspaceQuestion, GetWorkspaceQuestion, WorkspaceDetail, ChallengeWorkspaceAnswer) {
+    function WorkspaceController($scope, GetQuestionAnswers, entity, $state, $stateParams, ChallengeWorkspaceFeedback, ApplicationByChallengeId, $mdDialog, ChallengeWorkspaceQuestion, GetWorkspaceQuestion, WorkspaceDetail, ChallengeWorkspaceAnswer, Upload, $timeout) {
         var vm = this;
         vm.workspace = entity;
+        console.log(entity.id);
+        vm.applicationId = null;
         // Home
         vm.showAskForm = showAskForm;
         vm.askFormTrigged = false;
@@ -93,6 +95,7 @@
             console.log(res);
             vm.feedback.applicationId = res.applicationId;
             vm.question.applicationId = res.applicationId;
+            vm.applicationId = res.applicationId;
         });
 
         function onSaveError() {
@@ -112,6 +115,36 @@
                 // $state.go("docs");
             });
         };
+
+        $scope.uploadFiles = function (file, errFiles) {
+            $scope.f = file;
+            console.log(file);
+            $scope.errFile = errFiles && errFiles[0];
+            if (file) {
+                file.upload = Upload.upload({
+                    url: '/api/challenge-submissions-created',
+                    data: { 
+                        multipartFile: file,
+                        additionalNote: "test",
+                        applicationId: vm.applicationId,
+                        workspace: entity.id
+                        }
+                });
+
+                file.upload.then(function (response) {
+                    $timeout(function () {
+                        file.result = response.data;
+                    });
+                }, function (response) {
+                    if (response.status > 0)
+                        $scope.errorMsg = response.status + ': ' + response.data;
+                }, function (evt) {
+                    file.progress = Math.min(100, parseInt(100.0 *
+                        evt.loaded / evt.total));
+                });
+
+            }
+        }
 
     }
 })();
