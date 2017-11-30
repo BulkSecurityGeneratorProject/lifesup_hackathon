@@ -9,6 +9,9 @@
         .factory('ChallengeWorkspaceFeedback', ChallengeWorkspaceFeedback)
         .factory('ChallengeWorkspaceQuestion', ChallengeWorkspaceQuestion)
         .factory('GetWorkspaceQuestion', GetWorkspaceQuestion)
+        .factory('CreateWorkspaceNews', CreateWorkspaceNews)
+        .factory('WorkspaceDetail', WorkspaceDetail)
+        .factory('GetQuestionAnswers', GetQuestionAnswers)
 
     ChallengeWorkspace.$inject = ['$resource'];
     ChallengeWorkspaceNews.$inject = ['$resource'];
@@ -17,13 +20,15 @@
     ChallengeWorkspaceFeedback.$inject = ['$resource'];
     ChallengeWorkspaceQuestion.$inject = ['$resource'];
     GetWorkspaceQuestion.$inject = ['$resource'];
-
+    CreateWorkspaceNews.$inject = ['$resource'];
+    WorkspaceDetail.$inject = ['$resource'];
+    GetQuestionAnswers.$inject = ['$resource'];
 
     function ChallengeWorkspace ($resource) {
         var resourceUrl =  'api/challenge-workspaces';
 
         return $resource(resourceUrl, {}, {
-            'query': { method: 'GET', isArray: false},
+            'query': { method: 'GET', isArray: true},
             'get': {
                 method: 'GET',
                 transformResponse: function (data) {
@@ -136,6 +141,52 @@
 
     function GetWorkspaceQuestion ($resource) {
         var resourceUrl =  'api/challenge-workspace-questions/not-answer/:workspaceId';
+
+        return $resource(resourceUrl, {}, {
+            'query': { method: 'GET', isArray: true},
+            'get': {
+                method: 'GET',
+                transformResponse: function (data) {
+                    if (data) {
+                        data = angular.fromJson(data);
+                    }
+                    return data;
+                }
+            },
+            'save': { method:'POST' },
+            'update': { method:'PUT' }
+        });
+    }
+
+    function CreateWorkspaceNews ($resource) {
+        var resourceUrl =  'api/challenge-workspace-news-created';
+
+        return $resource(resourceUrl, {}, {
+            'save': { method:'POST' },
+            'update': { method:'PUT' }
+        });
+    }
+
+    function WorkspaceDetail ($resource) {
+        var resourceUrl =  'api/challenge-workspaces/details/:challengeId';
+
+        return $resource(resourceUrl, {}, {
+            'query': { method: 'GET', isArray: true},
+            'get': {
+                method: 'GET',
+                transformResponse: function (data) {
+                    if (data) {
+                        data = angular.fromJson(data);
+                    }
+                    return data;
+                }
+            },
+            'save': { method:'POST' },
+            'update': { method:'PUT' }
+        });
+    }
+    function GetQuestionAnswers ($resource) {
+        var resourceUrl =  'api/challenge-workspace-questions/details/:id';
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: true},

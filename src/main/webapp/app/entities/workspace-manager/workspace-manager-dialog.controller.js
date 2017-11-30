@@ -13,10 +13,13 @@
         vm.save = save;
         vm.clear = clear;
         vm.workspace.challengeId = $stateParams.challengeId;
-        console.log($stateParams.challengeId);
-
         function save(){
-            ChallengeWorkspace.save(vm.workspace, onSaveSuccess, onSaveError);
+            if (vm.workspace.id){
+                ChallengeWorkspace.update(vm.workspace, onSaveSuccess, onSaveError);
+            } else {
+                ChallengeWorkspace.save(vm.workspace, onSaveSuccess, onSaveError);
+            }
+            
         }
 
         function clear() {
@@ -25,7 +28,6 @@
 
         function onSaveSuccess(result){
             $mdDialog.hide();
-            console.log(result);
         }
 
         function onSaveError(){

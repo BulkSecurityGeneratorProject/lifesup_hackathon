@@ -345,3 +345,12 @@ h2{
 .repeated-item.ng-move.ng-move-active {
   opacity: 1;
 }
+
+
+/* Post news form */
+.news-form{
+  border-radius:5px; 
+  border:1px solid; 
+  padding: 5%;
+  border-color:blue
+}
