@@ -80,6 +80,22 @@
                 </md-content>
             </md-tab>
 
+            <md-tab label="Submission">
+                <md-content class="md-padding">
+                    <button class="btn btn-primary" type="file" ngf-select="uploadFiles($file, $invalidFiles)" accept="*" ngf-max-height="1000" ngf-max-size="3000MB">
+                        Select File</button>
+                    <br>
+                    <br> File:
+                    <div style="font:smaller">{{f.name}} {{errFile.name}} {{errFile.$error}} {{errFile.$errorParam}}
+                        <md-progress-linear md-mode="determinate" value="{{f.progress}}"></md-progress-linear>
+                        <span class="progress" ng-show="f.progress >= 0">
+                            <div style="width:{{f.progress}}%" ng-bind="f.progress + '%'"></div>
+                        </span>
+                        {{errorMsg}}
+                    </div>
+                </md-content>
+            </md-tab>
+
 
             <md-tab label="Feedback">
                 <md-content class="md-padding">
