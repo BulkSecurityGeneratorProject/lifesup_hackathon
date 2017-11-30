@@ -46,7 +46,7 @@
                 <md-content class="md-padding">
                     <div class="panel-group" ng-repeat="q in vm.questions">
                         <div class="row panel-heading">
-                            <div class="col-md-10">
+                            <div class="col-md-9">
                                 <h4 ng-if="!q.reply" class="panel-title w3-text-black">
                                     {{q.subject}}
                                 </h4>
@@ -59,12 +59,23 @@
                             <div class="col-md-2">
                                 <md-checkbox ng-model="q.click">Show Answers</md-checkbox>
                             </div>
+                            <div class="col-md-1">
+                                <md-button ng-click="vm.showPrompt($event)" class="md-fab md-mini mobile-hidden" aria-label="t">
+                                <md-tooltip md-direction="bottom">Edit</md-tooltip>
+                                <md-icon class="material-icons white">border_color</md-icon>
+                            </md-button>
+                            </div>
                         </div>
                         <div ng-show="q.click" style="margin-left:10%">
                             <div ng-repeat="ans in q.answers">
                                 <span ng-if="ans.answerByType == 'BY_HOST'" class="label label-primary">Host</span>
                                 <span ng-if="ans.answerByType == 'BY_USER'" class="label w3-grey">User</span>
                                 {{ans.content}}
+                                <span class="btn-group pull-right">
+                                    <button ng-if="vm.account.login === ans.createdBy" class="btn btn-warning btn-xs" ng-click="vm.showPrompt(ans)">Edit</button>
+                                    <button ng-if="vm.account.login === ans.createdBy" class="btn btn-danger btn-xs" ng-click="vm.showConfirm(ans, $index)">Delete</button>
+                                </span>
+                                
                                 <hr>
                             </div>
                             <div>

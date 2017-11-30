@@ -52,7 +52,7 @@
             WorkspaceDetail.get({ challengeId: $stateParams.challengeId }, function (res) {
                 vm.workspaceDetail = res;
                 vm.questions = res.workspaceQuestions;
-                vm.questions.forEach(element => {
+                vm.questions.forEach(function(element) {
                     element.totalcmt = element.answers.length;
                 });
                 vm.newsEntity.workspaceId = res.id;
@@ -67,7 +67,7 @@
         function postAnswer(id) {
             vm.answer.questionId = id;
             ChallengeWorkspaceAnswer.save(vm.answer, function (res) {
-                vm.questions.forEach(element => {
+                vm.questions.forEach(function(element) {
                     if (element.id == id) {
                         element.answers.push(res);
                     }

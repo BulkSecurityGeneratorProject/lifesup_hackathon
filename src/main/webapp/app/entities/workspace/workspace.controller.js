@@ -5,13 +5,16 @@
         .module('hackathonApp')
         .controller('WorkspaceController', WorkspaceController);
 
-    WorkspaceController.$inject = ['$scope', 'GetQuestionAnswers', 'entity', '$state', '$stateParams', 'ChallengeWorkspaceFeedback', 'ApplicationByChallengeId', '$mdDialog', 'ChallengeWorkspaceQuestion', 'GetWorkspaceQuestion', 'WorkspaceDetail', 'ChallengeWorkspaceAnswer', 'Upload', '$timeout'];
+    WorkspaceController.$inject = ['$scope', 'GetQuestionAnswers', 'entity', '$state', '$stateParams', 'ChallengeWorkspaceFeedback', 'ApplicationByChallengeId', '$mdDialog', 'ChallengeWorkspaceQuestion', 'GetWorkspaceQuestion', 'WorkspaceDetail', 'ChallengeWorkspaceAnswer', 'Upload', '$timeout', 'Principal'];
 
-    function WorkspaceController($scope, GetQuestionAnswers, entity, $state, $stateParams, ChallengeWorkspaceFeedback, ApplicationByChallengeId, $mdDialog, ChallengeWorkspaceQuestion, GetWorkspaceQuestion, WorkspaceDetail, ChallengeWorkspaceAnswer, Upload, $timeout) {
+    function WorkspaceController($scope, GetQuestionAnswers, entity, $state, $stateParams, ChallengeWorkspaceFeedback, ApplicationByChallengeId, $mdDialog, ChallengeWorkspaceQuestion, GetWorkspaceQuestion, WorkspaceDetail, ChallengeWorkspaceAnswer, Upload, $timeout, Principal) {
         var vm = this;
         vm.workspace = entity;
-        console.log(entity.id);
         vm.applicationId = null;
+
+        Principal.identity().then(function (account) {
+            vm.account = account;
+        });
         // Home
         vm.showAskForm = showAskForm;
         vm.askFormTrigged = false;
@@ -39,7 +42,7 @@
         vm.questions = [];
         vm.answer = {};
         vm.postAnswer = postAnswer;
-        loadAnswer();
+        load();
 
         function showAnswerForm() {
             vm.answerFormTrigged = !vm.answerFormTrigged;
@@ -48,7 +51,7 @@
         function postAnswer(id) {
             vm.answer.questionId = id;
             ChallengeWorkspaceAnswer.save(vm.answer, function (res) {
-                vm.questions.forEach(element => {
+                vm.questions.forEach(function (element) {
                     if (element.id == id) {
                         element.answers.push(res);
                     }
@@ -59,18 +62,61 @@
             });
         }
 
-        function loadAnswer() {
+        function load() {
             WorkspaceDetail.get({ challengeId: $stateParams.challengeId }, function (res) {
                 vm.workspaceDetail = res;
                 vm.questions = res.workspaceQuestions;
                 vm.news = res.workspaceNews;
-                vm.questions.forEach(element => {
+                vm.questions.forEach(function (element) {
                     element.totalcmt = element.answers.length;
                 });
 
             })
         }
 
+        vm.showPrompt = showPrompt;
+        function showPrompt(value) {
+            console.log(value);
+            var confirm = $mdDialog.prompt()
+                .title('Edit your answer!')
+                .placeholder('Your answer')
+                .ariaLabel('answer')
+                .initialValue(value.content)
+                .required(true)
+                .ok('Save')
+                .cancel('Cancel');
+
+            $mdDialog.show(confirm).then(function (result) {
+                value.content = result;
+                ChallengeWorkspaceAnswer.update(value, function(){
+                    load();
+                });
+                $scope.status = 'You decided to name your dog ' + result + '.';
+            }, function () {
+
+            });
+        };
+
+        vm.showConfirm = showConfirm;
+        function showConfirm(ans, idx) {
+            var confirm = $mdDialog.confirm()
+                .title('Are you sure delete this answer?')
+                .ariaLabel('Delete answer')
+                .ok('Yes')
+                .cancel('No')
+
+            $mdDialog.show(confirm).then(function () {
+                ChallengeWorkspaceAnswer.delete({ id: ans.id }, function () {
+                    vm.questions.forEach(function (element) {
+                        if (element.id == ans.questionId) {
+                            element.answers.splice(idx,1);
+                        }
+                    });
+                })
+            }, function () {
+                // $state.go("docs");
+            });
+        };
         // Feedback
         vm.feedback = {};
         vm.rating = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
@@ -102,11 +148,14 @@
                 .ok('Got it')
 
             $mdDialog.show(confirm).then(function () {
-                $state.go($state.current, { challengeId: $stateParams.challengeId }, { reload: true });
+                // $state.go($state.current, { challengeId: $stateParams.challengeId }, { reload: true });
+                load();
             }, function () {
                 // $state.go("docs");
             });
         };
+
+
 
         $scope.uploadFiles = function (file, errFiles) {
             $scope.f = file;
@@ -115,12 +164,12 @@
             if (file) {
                 file.upload = Upload.upload({
                     url: '/api/challenge-submissions-created',
-                    data: { 
+                    data: {
                         multipartFile: file,
                         additionalNote: "test",
                         applicationId: vm.applicationId,
                         workspace: entity.id
-                        }
+                    }
                 });
 
                 file.upload.then(function (response) {
