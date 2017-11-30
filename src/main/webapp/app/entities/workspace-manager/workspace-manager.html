@@ -11,7 +11,7 @@
                                 <h3>{{news.title}}</h3>
                                 <p>{{news.content}}</p>
                             </div>
-                            <md-button class="md-secondary" ng-click="vm.editNews(news)">Edit</md-button>
+                            <md-button class="md-secondary" ng-click="vm.updateNews(news)">Edit</md-button>
                             <md-divider ng-if="!$last"></md-divider>
                         </md-list-item>
                     </md-list>
@@ -28,7 +28,7 @@
                                 <textarea name="timelineText" ng-model="vm.newsEntity.content" md-maxlength="1000" rows="5" md-select-on-focus></textarea>
                             </md-input-container>
                         </div>
-                        <md-button class="md-primary md-raised" ng-click="vm.save()">Post</md-button>
+                        <md-button class="md-primary md-raised" ng-click="vm.postNews()">Post</md-button>
                     </div>
 
                 </md-content>

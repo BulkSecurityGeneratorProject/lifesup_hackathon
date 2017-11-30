@@ -1,4 +1,4 @@
-(function() {
+(function () {
     'use strict';
 
     angular
@@ -7,31 +7,53 @@
 
     WorkspaceManagerController.$inject = ['$scope', 'Principal', 'LoginService', '$state', '$stateParams', 'CreateWorkspaceNews', 'ChallengeWorkspace', 'WorkspaceDetail', 'GetQuestionAnswers', 'ChallengeWorkspaceAnswer'];
 
-    function WorkspaceManagerController ($scope, Principal, LoginService, $state, $stateParams, CreateWorkspaceNews, ChallengeWorkspace, WorkspaceDetail, GetQuestionAnswers, ChallengeWorkspaceAnswer) {
+    function WorkspaceManagerController($scope, Principal, LoginService, $state, $stateParams, CreateWorkspaceNews, ChallengeWorkspace, WorkspaceDetail, GetQuestionAnswers, ChallengeWorkspaceAnswer) {
         var vm = this;
-        vm.showNewsForm = showNewsForm;
-        vm.newsFormTrigged = false;
+        vm.workspaceDetail = {};
+
+        // Home
+        vm.newsEntity = {};
+        vm.news = {};
+        vm.postNews = postNews;
+        vm.updateNews = updateNews;
+
+        function postNews() {
+            if (vm.newsEntity.id) {
+                CreateWorkspaceNews.update(vm.newsEntity, function (res) {
+                    console.log(res);
+                    $state.reload();
+                }, function (err) {
+                    console.log(err);
+                });
+            } else {
+                CreateWorkspaceNews.save(vm.newsEntity, function (res) {
+                    console.log(res);
+                    $state.reload();
+                }, function (err) {
+                    console.log(err);
+                });
+            }
+
+        }
+
+        function updateNews(news) {
+            console.log(news);
+            vm.newsEntity = news;
+        }
+        // Question
         vm.showAnswerForm = showAnswerForm;
         vm.answerFormTrigged = false;
-
-        vm.workspaceDetail = {};
-        vm.newsEntity = {};
-        
-        vm.news = {};
         vm.questions = [];
         vm.answer = {};
-        
-        vm.save = save;
         vm.postAnswer = postAnswer;
-        
         reloadAnswer();
 
-        function reloadAnswer(){
-            WorkspaceDetail.get({challengeId: $stateParams.challengeId}, function(res){
+        function reloadAnswer() {
+            WorkspaceDetail.get({ challengeId: $stateParams.challengeId }, function (res) {
                 vm.workspaceDetail = res;
                 vm.questions = res.workspaceQuestions;
                 vm.questions.forEach(element => {
-                    GetQuestionAnswers.get({id: element.id}, function(ans){
+                    GetQuestionAnswers.get({ id: element.id }, function (ans) {
                         console.log(ans.answers);
                         element.answers = ans.answers;
                     })
@@ -41,52 +63,45 @@
             })
         }
 
-        function showNewsForm(){
-            vm.newsFormTrigged = !vm.newsFormTrigged;
-        }
 
-        function save(){
-            if (vm.newsEntity.id){
-                CreateWorkspaceNews.update(vm.newsEntity, function(res){
-                    console.log(res);
-                    $state.reload();
-                }, function(err){
-                    console.log(err);
-                });
-            } else {
-                CreateWorkspaceNews.save(vm.newsEntity, function(res){
-                    console.log(res);
-                    $state.reload();
-                }, function(err){
-                    console.log(err);
-                });
-            }
-            
-        }
 
-        function showAnswerForm(){
+        function showAnswerForm() {
             vm.answerFormTrigged = !vm.answerFormTrigged;
         }
 
-        function postAnswer(id){
+        function postAnswer(id) {
             vm.answer.questionId = id;
-            ChallengeWorkspaceAnswer.save(vm.answer, function(res){
+            ChallengeWorkspaceAnswer.save(vm.answer, function (res) {
                 vm.questions.forEach(element => {
-                    if (element.id == id){
+                    if (element.id == id) {
                         element.answers.push(res);
                     }
                 });
                 vm.answer = {};
-            }, function(){
+            }, function () {
                 console.log("Error");
             });
         }
 
-        vm.editNews = editNews;
-        function editNews(news){
-            console.log(news);
-            vm.newsEntity = news;
-        }
+        // Feedback
+        // Terms
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     }

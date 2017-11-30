@@ -168,7 +168,7 @@ public class ChallengeWorkspaceNewsResource {
 				.headers(HeaderUtil.createEntityDeletionAlert("challengeWorkspaceNews", id.toString())).build();
 	}
 
-	@PutMapping("/challenge-workspace-news-update")
+	@PutMapping("/challenge-workspace-news-created")
 	@Timed
 	public ResponseEntity<ChallengeWorkspaceNews> updateWorkspaceNews(
 			@Valid @RequestBody ChallengeWorkspaceNewsDTO challengeWorkspaceNewsDTO) throws URISyntaxException {
