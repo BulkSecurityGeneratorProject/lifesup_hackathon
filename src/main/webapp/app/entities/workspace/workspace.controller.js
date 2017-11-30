@@ -64,6 +64,7 @@
                 vm.news = res.workspaceNews;
                 vm.questions.forEach(element => {
                     element.isAnswered = false;
+                    element.totalcmt = element.answers.length;
                     if (element.answers.length > 0) {
                         element.answers.forEach(function (ans) {
                             if (ans.answerByType == 'BY_HOST')

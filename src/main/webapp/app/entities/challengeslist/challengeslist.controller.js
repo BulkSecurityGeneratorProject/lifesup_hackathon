@@ -85,7 +85,7 @@
         function parseChallengeStatus(challenges) {
 
             challenges.map(function (challenge) {
-
+                console.log(challenge);
                 TimeServer.get(function (result) {
                     var today = new Date(result.timeServer).getTime();
                     var appClose = new Date(challenge.info.applicationCloseDate);

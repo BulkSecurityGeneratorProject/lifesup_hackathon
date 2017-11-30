@@ -14,7 +14,6 @@
         vm.allStatus = ['', 'DRAFT', 'ACTIVE', 'INACTIVE', 'CLOSED'];
         vm.hasNoChallenge = false;
         vm.querySearchName = querySearchName;
-        vm.checkExistWorkspace = checkExistWorkspace;
 
         // Tuanpm : Object Params to Search Challenge
         vm.challengeSearch = {
@@ -47,6 +46,7 @@
         }
         function parseChallengeStatus(challenges) {
             challenges.map(function (challenge) {
+                console.log(challenge);
                 if (challenge.info.status !== 'REMOVED') {
 
                     TimeServer.get(function(result){
@@ -83,7 +83,6 @@
             }, onSuccess, onError);
             function onSuccess(data, headers) {
                 var endTime = new Date().getTime();
-                console.log(endTime - startTime);
                 if (!data.length) {
                     vm.hasNoChallenge = true;
                     return;
@@ -248,13 +247,5 @@
             }
         }
 
-        function checkExistWorkspace(id){
-            WorkspaceOfChallenge.query({challengeId: id}, function(res){
-                if (res){
-                    console.log("X");
-                    return true;
-                } 
-            })
-        }
     }
 })();

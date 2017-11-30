@@ -47,13 +47,14 @@
                     <div class="panel-group" ng-repeat="q in vm.questions">
                         <div class="row panel-heading">
                             <div class="col-md-10">
-                                <h4 ng-if="q.isAnswered" class="panel-title w3-text-red">
-                                    {{q.subject}}
-                                </h4>
                                 <h4 ng-if="!q.isAnswered" class="panel-title w3-text-black">
                                     {{q.subject}}
                                 </h4>
+                                <h4 ng-if="q.isAnswered" class="panel-title w3-text-grey">
+                                    {{q.subject}}
+                                </h4>
                                 <p>{{q.content}}</p>
+                                <p class="label label-primary">{{q.totalcmt}} reply</p>
                             </div>
                             <div class="col-md-2">
                                 <md-checkbox ng-model="q.click">Show Answers</md-checkbox>

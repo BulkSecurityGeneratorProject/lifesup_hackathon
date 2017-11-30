@@ -49,6 +49,7 @@
         "applicationStatus": {
             "close": "Applications have closed",
             "applied": "View your application",
+            "gotoworkspace": "Go to workspace",
             "apply": "Apply now!"
         },
         "subscribe": {

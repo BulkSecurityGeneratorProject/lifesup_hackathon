@@ -90,9 +90,14 @@
             <a href="#" ui-sref="team({id: challenge.id})" ng-if="vm.userInfo.status=='PROFILE_COMPLETE'" ng-switch-when="true" data-translate="hackathonApp.applicationStatus.apply"></a>
           </button>
 
-          <button class="btn btn-block challenge-cta btn-applied" ng-click="vm.getApplicationId(challenge.id)" ui-sref="workspace({challengeId: challenge.id})"
+          <button ng-if="!challenge.workspaceId" class="btn btn-block challenge-cta btn-applied" ng-click="vm.getApplicationId(challenge.id)" ui-sref="applicationslist-detail({id:vm.applicationId})"
             ng-switch-when="APPLIED">
             <a href="#" data-translate="hackathonApp.applicationStatus.applied"></a>
+          </button>
+
+          <button ng-if="challenge.workspaceId" class="btn btn-block challenge-cta btn-applied" ng-click="vm.getApplicationId(challenge.id)" ui-sref="workspace({challengeId: challenge.id})"
+            ng-switch-when="APPLIED">
+            <a href="#" data-translate="hackathonApp.applicationStatus.gotoworkspace"></a>
           </button>
 
           <button class="btn btn-block challenge-cta btn-inactive" ng-switch-when="INACTIVE" disabled>

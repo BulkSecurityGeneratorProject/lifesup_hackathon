@@ -151,11 +151,11 @@
                     <b data-translate="hackathonApp.card.seeApp"></b>
                 </md-button>
 
-            <md-button class="w3-border" ui-sref="workspace-manager.new({challengeId:challenge.id})">
+            <md-button ng-if="!challenge.workspaceId" class="w3-border" ui-sref="workspace-manager.new({challengeId:challenge.id})">
                     <b data-translate="hackathonApp.card.workspace"></b>
                 </md-button>
 
-            <md-button class="w3-border" ui-sref="workspace-manager({challengeId:challenge.id})">
+            <md-button ng-if="challenge.workspaceId" class="w3-border" ui-sref="workspace-manager({challengeId:challenge.id})">
                     <b data-translate="hackathonApp.card.viewWorkspace"></b>
                 </md-button>
             <!-- Border -->
