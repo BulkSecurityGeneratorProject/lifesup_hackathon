@@ -13,6 +13,7 @@ public class ChallengeWorkspaceQuestionDTO {
 	private String content;
 	private String createdBy;
 	private ZonedDateTime createdDate;
+	private Boolean reply;
 	private List<ChallengeWorkspaceAnswerDTO> answers;	
 	
 	public ChallengeWorkspaceQuestionDTO() {
@@ -98,7 +99,13 @@ public class ChallengeWorkspaceQuestionDTO {
 	public void setCreatedDate(ZonedDateTime createdDate) {
 		this.createdDate = createdDate;
 	}
-	
-	
-	
+
+	public Boolean getReply() {
+		return reply;
+	}
+
+	public void setReply(Boolean reply) {
+		this.reply = reply;
+	}
+		
 }

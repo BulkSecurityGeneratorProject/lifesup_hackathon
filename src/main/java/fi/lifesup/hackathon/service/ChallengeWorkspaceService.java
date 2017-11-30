@@ -17,6 +17,7 @@ import fi.lifesup.hackathon.domain.ChallengeUserApplication;
 import fi.lifesup.hackathon.domain.ChallengeWorkspace;
 import fi.lifesup.hackathon.domain.ChallengeWorkspaceAnswer;
 import fi.lifesup.hackathon.domain.ChallengeWorkspaceQuestion;
+import fi.lifesup.hackathon.domain.enumeration.WorkspaceAnswerType;
 import fi.lifesup.hackathon.repository.ChallengeRepository;
 import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
 import fi.lifesup.hackathon.repository.ChallengeWorkspaceRepository;
@@ -59,15 +60,23 @@ public class ChallengeWorkspaceService {
 		ChallengeWorkspace result = challengeWorkspaceRepository.save(challengeWorkspace);
 		challenge.setWorkspaceId(result.getId());
 		challengeRepository.save(challenge);
-
 		return result;
 	}
 
-	public List<ChallengeWorkspaceAnswerDTO> getListAnswer(Set<ChallengeWorkspaceAnswer> set) {
+	public ChallengeWorkspaceQuestionDTO getListAnswer(Set<ChallengeWorkspaceAnswer> set) {
+		ChallengeWorkspaceQuestionDTO questionDTO = new ChallengeWorkspaceQuestionDTO();
+		questionDTO.setReply(false);
+		if (set.isEmpty()) {
+			questionDTO.setReply(false);
+		}
 		List<ChallengeWorkspaceAnswerDTO> answerDTOs = set.stream().map(answer -> {
+			if(answer.getAnswerByType() == WorkspaceAnswerType.BY_HOST){
+				questionDTO.setReply(true);
+			}
 			return new ChallengeWorkspaceAnswerDTO(answer);
 		}).collect(Collectors.toList());
-		return answerDTOs;
+		questionDTO.setAnswers(answerDTOs);
+		return questionDTO;
 	}
 
 	public List<ChallengeWorkspaceQuestionDTO> getListQuestion(Set<ChallengeWorkspaceQuestion> set, Long challengeId) {
@@ -76,7 +85,9 @@ public class ChallengeWorkspaceService {
 		if (SecurityUtils.isCurrentUserInRole("ROLE_HOST") || SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) {
 			list = set.stream().map(question -> {
 				ChallengeWorkspaceQuestionDTO questionDTO = new ChallengeWorkspaceQuestionDTO(question);
-				questionDTO.setAnswers(getListAnswer(question.getAnswers()));
+				ChallengeWorkspaceQuestionDTO temp = new ChallengeWorkspaceQuestionDTO();
+				questionDTO.setAnswers(temp.getAnswers());
+				questionDTO.setReply(temp.getReply());
 				return questionDTO;
 			}).collect(Collectors.toList());
 			return list;
@@ -86,8 +97,10 @@ public class ChallengeWorkspaceService {
 			list = set.stream().map(question -> {
 				if (question.getApplicationId().longValue() == challengeUserApplication.getApplicationId()
 						.longValue()) {
-					ChallengeWorkspaceQuestionDTO questionDTO = new ChallengeWorkspaceQuestionDTO(question);
-					questionDTO.setAnswers(getListAnswer(question.getAnswers()));
+					ChallengeWorkspaceQuestionDTO questionDTO = new ChallengeWorkspaceQuestionDTO(question);					
+					ChallengeWorkspaceQuestionDTO temp = new ChallengeWorkspaceQuestionDTO();
+					questionDTO.setAnswers(temp.getAnswers());
+					questionDTO.setReply(temp.getReply());
 					return questionDTO;
 				}
 				return null;
