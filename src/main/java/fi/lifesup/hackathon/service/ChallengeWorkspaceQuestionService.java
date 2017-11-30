@@ -52,7 +52,7 @@ public class ChallengeWorkspaceQuestionService {
 
 	public ChallengeWorkspaceQuestion saveChallengeWorkspaceQuestion(
 			ChallengeWorkspaceQuestionDTO challengeWorkspaceQuestion) {
-		if (challengeWorkspaceQuestion.getId() != null) {
+		if (challengeWorkspaceQuestion.getId() == null) {
 			ChallengeWorkspace challengeWorkspace = challengeWorkspaceRepository
 					.findOne(challengeWorkspaceQuestion.getWorkspaceId());
 			if (challengeWorkspace == null) {

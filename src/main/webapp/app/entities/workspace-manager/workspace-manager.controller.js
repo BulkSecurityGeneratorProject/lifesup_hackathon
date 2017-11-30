@@ -20,8 +20,7 @@
         function postNews() {
             if (vm.newsEntity.id) {
                 CreateWorkspaceNews.update(vm.newsEntity, function (res) {
-                    console.log(res);
-                    $state.reload();
+                    $state.go($state.current, {challengeId: $stateParams.challengeId}, {reload: true});
                 }, function (err) {
                     console.log(err);
                 });
@@ -40,6 +39,7 @@
             console.log(news);
             vm.newsEntity = news;
         }
+        
         // Question
         vm.showAnswerForm = showAnswerForm;
         vm.answerFormTrigged = false;
@@ -53,17 +53,18 @@
                 vm.workspaceDetail = res;
                 vm.questions = res.workspaceQuestions;
                 vm.questions.forEach(element => {
-                    GetQuestionAnswers.get({ id: element.id }, function (ans) {
-                        console.log(ans.answers);
-                        element.answers = ans.answers;
-                    })
+                    element.isAnswered = false;
+                    if (element.answers.length > 0) {
+                        element.answers.forEach(function (ans) {
+                            if (ans.answerByType == 'BY_HOST')
+                                element.isAnswered = true;
+                        })
+                    }
                 });
                 vm.newsEntity.workspaceId = res.id;
                 vm.news = res.workspaceNews;
             })
         }
-
-
 
         function showAnswerForm() {
             vm.answerFormTrigged = !vm.answerFormTrigged;
