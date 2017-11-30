@@ -209,16 +209,7 @@ public class ChallengeWorkspaceQuestionResource {
 		challengeWorkspaceQuestionRepository.delete(id);
 		return ResponseEntity.ok()
 				.headers(HeaderUtil.createEntityDeletionAlert("challengeWorkspaceQuestion", id.toString())).build();
-	}
-
-	@GetMapping("/challenge-workspace-questions/not-answer/{workspaceId}")
-	@Timed
-	public List<ChallengeWorkspaceQuestionDTO> getAllQuestionUser(@PathVariable Long workspaceId) {
-		log.debug("REST request to get all ChallengeWorkspaceQuestions");
-		List<ChallengeWorkspaceQuestionDTO> challengeWorkspaceQuestions = challengeWorkspaceQuestionService
-				.getQuestionNotAnswer(workspaceId);
-		return challengeWorkspaceQuestions;
-	}
+	}	
 
 	@GetMapping("/challenge-workspace-questions/details/{id}")
 	@Timed
@@ -226,7 +217,7 @@ public class ChallengeWorkspaceQuestionResource {
 		log.debug("REST request to get all ChallengeWorkspaceQuestions", id);
 
 		ChallengeWorkspaceQuestionDTO questionDTO = challengeWorkspaceQuestionService
-				.getQuestionDTO(challengeWorkspaceQuestionRepository.findOne(id));
+				.getQuestionDTO(id);
 		return questionDTO;
 	}
 
