@@ -1,5 +1,7 @@
 <h4>Upload on file select</h4>
-<button type="file" ngf-select="uploadFiles($file, $invalidFiles)" accept="*" ngf-max-height="1000" ngf-max-size="3000MB">
+<div class="button" ngf-select="uploadFiles(vm.file)" ng-model="vm.file" name="file"
+    ngf-accept="'*'" ngf-max-size="20MB" >Select</div>
+<button type="file" ngf-select="uploadFiles($file)" accept="*" ngf-max-height="1000" ngf-max-size="3000MB">
     Select File</button>
 <br>
 <br> File:
@@ -26,9 +28,9 @@
                 Advance
             </md-button>
             <div layout="row" class="md-toolbar-tools" flex ng-show="!vm.showSearchBox">
-                <span data-translate="hackathonApp.company.listCompany" translate-values="{param: '{{vm.companies.length}}'}">Danh sách Company({{vm.companies.length}})</span>
+                <span data-translate="hackathonApp.company.listCompany" translate-values="{param: '{{vm.companies.length}}'}">Danh sÃ¡ch Company({{vm.companies.length}})</span>
                 <span flex="5"></span>
-                <span ng-show="options.rowSelection && vm.selected.length" data-translate="hackathonApp.company.selectedCompany" translate-values="{param: '{{vm.selected.length}}'}">{{vm.selected.length}} công ty được chọn</span>
+                <span ng-show="options.rowSelection && vm.selected.length" data-translate="hackathonApp.company.selectedCompany" translate-values="{param: '{{vm.selected.length}}'}">{{vm.selected.length}} cÃ´ng ty Ä‘Æ°á»£c chá»�n</span>
                 <div flex></div>
                 <md-button class="md-fab md-mini mobile-hidden" aria-label="t" md-colors="{background: 'green-500'}" ui-sref="company.new">
                     <md-tooltip md-direction="bottom">Add new Company</md-tooltip>

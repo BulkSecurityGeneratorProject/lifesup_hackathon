@@ -1,6 +1,7 @@
 package fi.lifesup.hackathon.service;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
 
 import javax.inject.Inject;
@@ -18,6 +19,7 @@ import fi.lifesup.hackathon.domain.*;
 import fi.lifesup.hackathon.repository.*;
 import fi.lifesup.hackathon.service.dto.*;
 import fi.lifesup.hackathon.web.rest.ChallengeInfoResource;
+import io.undertow.util.FileUtils;
 
 @Service
 @Transactional
@@ -25,7 +27,7 @@ public class ChallengeSubmissionService {
 	private final Logger log = LoggerFactory.getLogger(ChallengeService.class);
 
 	@Value("${attach.path}")
-	private String filePath;
+	private String attachPath;
 	@Inject
 	private ChallengeWorkspaceRepository challengeWorkspaceRepository;
 	@Inject
@@ -39,60 +41,89 @@ public class ChallengeSubmissionService {
 	@Inject
 	private UserService userService;
 
-	public String testUpload(MultipartFile file) throws URISyntaxException {
-		if (!file.isEmpty()) {
+	@Transactional
+	public ChallengeSubmission testUpload(ChallengeSubmissionFileDTO dto) throws URISyntaxException {
+		ChallengeSubmission challengeSubmission = challengeSubmissionRepository.findOne(dto.getChallengeSubmissionId());
+		String filePath = null;
+
+		if (!dto.getFile().isEmpty()) {
 			try {
-				String realPathtoUploads = "D://";
+				/// String realPathtoUploads = attachPath +
+				/// "challengeSubmission/";
+				String realPathtoUploads = "D://HackathonFiles/" + dto.getChallengeSubmissionId();
 				if (!new File(realPathtoUploads).exists()) {
 					new File(realPathtoUploads).mkdir();
 				}
 
 				log.info("realPathtoUploads = {}", realPathtoUploads);
+				String orgName = dto.getFile().getOriginalFilename();
+				filePath = realPathtoUploads + "/" + orgName;
+				try {
+					ChallengeSubmissionService.createFile(filePath, dto.getFile().getBytes());
+					challengeSubmission.setFilePath(filePath);
+					return challengeSubmissionRepository.save(challengeSubmission);
 
-				String orgName = file.getOriginalFilename();
-				String filePath = realPathtoUploads + orgName;
-				File dest = new File(filePath);
-				file.transferTo(dest);
-				return filePath;
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				;
+
 			} catch (Exception e) {
-				return null;
+				e.printStackTrace();
+
 			}
 		} else {
 			return null;
 		}
+		return null;
 	}
-	public ChallengeSubmission convertDTOToEntity(ChallengeSubmissionDTO challengeSubmissionDTO )
-	{
-		ChallengeSubmission challengeSubmission=new ChallengeSubmission();
-		Application application=applicationRepository.findOne(challengeSubmissionDTO.getApplicationId());
-		ChallengeWorkspace challengeWorkspace=challengeWorkspaceRepository.findOne(challengeSubmissionDTO.getWorkspace());
+
+	public static boolean createFile(String path, byte[] data) {
+		try {
+			File file = new File(path);
+			org.apache.commons.io.FileUtils.writeByteArrayToFile(file, data);
+		} catch (IOException e) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public ChallengeSubmission convertDTOToEntity(ChallengeSubmissionDTO challengeSubmissionDTO) {
+		ChallengeSubmission challengeSubmission = new ChallengeSubmission();
+		Application application = applicationRepository.findOne(challengeSubmissionDTO.getApplicationId());
+		ChallengeWorkspace challengeWorkspace = challengeWorkspaceRepository
+				.findOne(challengeSubmissionDTO.getWorkspace());
 		challengeSubmission.setApplicationId(application.getId());
 		challengeSubmission.setWorkspace(challengeWorkspace);
 		return challengeSubmission;
 	}
 
-public ChallengeSubmission createChallengeSubmission(ChallengeSubmissionDTO challengeSubmissionDTO) throws URISyntaxException
-{
-	ChallengeSubmission challengeSubmission=new ChallengeSubmission();
-	Application application=applicationRepository.findOne(challengeSubmissionDTO.getApplicationId());
-	Challenge challenge=challengeRepository.findOne(application.getChallenge().getId());
-	ChallengeInfo challengeInfo=challengeInfoRepository.findOne(challenge.getInfo().getId());
-	//String filePath=testUpload(challengeSubmissionDTO.getMultipartFile());
-	
-	if(challengeSubmissionDTO.getModifiedDate().isBefore(challengeInfo.getEventEndTime()))
-	{
-		ChallengeWorkspace challengeWorkspace=challengeWorkspaceRepository.findOne(challengeSubmissionDTO.getWorkspace());
-		if(challengeWorkspace!=null)
-		{
-			challengeSubmission.setAdditionalNote(challengeSubmission.getAdditionalNote());
-			challengeSubmission.setApplicationId(challengeSubmissionDTO.getApplicationId());
-			challengeSubmission.setModifiedBy(userService.getCurrentUser().getLastName());
-			challengeSubmission.setModifiedDate(challengeSubmissionDTO.getModifiedDate());
-			challengeSubmission.setWorkspace(convertDTOToEntity(challengeSubmissionDTO).getWorkspace());
-			//challengeSubmission.setFilePath(filePath);
-			return challengeSubmissionRepository.save(challengeSubmission);
+	public ChallengeSubmission createChallengeSubmission(ChallengeSubmissionDTO challengeSubmissionDTO)
+			throws URISyntaxException {
+		ChallengeSubmission challengeSubmission = new ChallengeSubmission();
+		Application application = applicationRepository.findOne(challengeSubmissionDTO.getApplicationId());
+		Challenge challenge = challengeRepository.findOne(application.getChallenge().getId());
+		ChallengeInfo challengeInfo = challengeInfoRepository.findOne(challenge.getInfo().getId());
+		// String
+		// filePath=testUpload(challengeSubmissionDTO.getMultipartFile());
+
+		if (challengeSubmissionDTO.getModifiedDate().isBefore(challengeInfo.getEventEndTime())) {
+			ChallengeWorkspace challengeWorkspace = challengeWorkspaceRepository
+					.findOne(challengeSubmissionDTO.getWorkspace());
+			if (challengeWorkspace != null) {
+				challengeSubmission.setAdditionalNote(challengeSubmission.getAdditionalNote());
+				challengeSubmission.setApplicationId(challengeSubmissionDTO.getApplicationId());
+				challengeSubmission.setModifiedBy(userService.getCurrentUser().getLastName());
+				challengeSubmission.setModifiedDate(challengeSubmissionDTO.getModifiedDate());
+				challengeSubmission.setWorkspace(convertDTOToEntity(challengeSubmissionDTO).getWorkspace());
+				// challengeSubmission.setFilePath(filePath);
+				return challengeSubmissionRepository.save(challengeSubmission);
+			}
+			return null;
 		}
 		return null;
 	}
-	return null;
-}}
+}

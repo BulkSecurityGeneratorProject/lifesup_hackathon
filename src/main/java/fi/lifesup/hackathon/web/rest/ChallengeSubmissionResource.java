@@ -2,10 +2,11 @@ package fi.lifesup.hackathon.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import fi.lifesup.hackathon.domain.ChallengeSubmission;
-
+import fi.lifesup.hackathon.domain.UserInfo;
 import fi.lifesup.hackathon.repository.ChallengeSubmissionRepository;
 import fi.lifesup.hackathon.service.ChallengeSubmissionService;
 import fi.lifesup.hackathon.service.dto.ChallengeSubmissionDTO;
+import fi.lifesup.hackathon.service.dto.*;
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -160,30 +161,16 @@ public class ChallengeSubmissionResource {
 				.build();
 	}
 
-	@PostMapping("/upload-test")
-	@Timed
-	public ResponseEntity<Void> testUpload(@RequestBody MultipartFile file) throws URISyntaxException {
-		if (!file.isEmpty()) {
-			try {
-				System.out.println(file.toString());
-				String realPathtoUploads = "D://";
-				if (!new File(realPathtoUploads).exists()) {
-					new File(realPathtoUploads).mkdir();
-				}
-
-				log.info("realPathtoUploads = {}", realPathtoUploads);
-
-				String orgName = file.getOriginalFilename();
-				String filePath = realPathtoUploads + orgName;
-				File dest = new File(filePath);
-				file.transferTo(dest);
-			} catch (Exception e) {
-				return ResponseEntity.badRequest().build();
-			}
-		} else {
-			return ResponseEntity.badRequest().build();
-		}
-		return null;
+	
+	@PostMapping(value="/upload-test", consumes="multipart/form-data")
+	 @Timed
+	public ResponseEntity<ChallengeSubmission> updateSubmissionFile( ChallengeSubmissionFileDTO fileDTO)
+			throws URISyntaxException {
+		log.debug("REST request to update UserInfo banner : {}", fileDTO);
+		
+		ChallengeSubmission result =challengeSubmissionService.testUpload(fileDTO);
+		return ResponseEntity.ok()
+				.headers(HeaderUtil.createEntityUpdateAlert("challengesubmission", result.getId().toString())).body(result);
 	}
 
 }

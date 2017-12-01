@@ -49,19 +49,15 @@
             });
         }
 
-        $scope.uploadFiles = function (file, errFiles) {
+        $scope.uploadFiles = function (file) {
             $scope.f = file;
-            $scope.errFile = errFiles && errFiles[0];
+           
             if (file) {
-                file.upload = Upload.upload({
+              Upload.upload({
                     url: 'api/upload-test',
-                    data: { file: file }
-                });
-
-                file.upload.then(function (response) {
-                    $timeout(function () {
-                        file.result = response.data;
-                    });
+                    data: { file: file,challengeSubmissionId:1016 }
+                }).then(function (response) {
+                    console.log('OK!');
                 }, function (response) {
                     if (response.status > 0)
                         $scope.errorMsg = response.status + ': ' + response.data;
