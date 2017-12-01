@@ -48,9 +48,8 @@ public class ChallengeSubmissionService {
 
 		if (!dto.getFile().isEmpty()) {
 			try {
-				/// String realPathtoUploads = attachPath +
-				/// "challengeSubmission/";
-				String realPathtoUploads = "D://HackathonFiles/" + dto.getChallengeSubmissionId();
+				String realPathtoUploads = attachPath + "challengeSubmission/" + dto.getChallengeSubmissionId();
+				//String realPathtoUploads = "D://HackathonFiles/" + dto.getChallengeSubmissionId();
 				if (!new File(realPathtoUploads).exists()) {
 					new File(realPathtoUploads).mkdir();
 				}
