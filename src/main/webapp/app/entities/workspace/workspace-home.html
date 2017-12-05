@@ -1,0 +1,28 @@
+    <md-content class="md-padding">
+        <h1 class="md-display-2">Welcome to challenge workspace</h1>
+        <md-list>
+            <md-list-item class="md-3-line" ng-repeat="q in vm.news">
+                <div class="md-list-item-text">
+                    <h3>{{q.title}}</h3>
+                    <p>{{q.content}}</p>
+                </div>
+                <md-divider ng-if="!$last"></md-divider>
+            </md-list-item>
+        </md-list>
+        <md-button class="md-primary md-raised" ng-click="vm.showAskForm()">Ask a question</md-button>
+    </md-content>
+    <form ng-show="vm.askFormTrigged" class="md-padding" flex="50">
+        <div layout-gt-sm="row">
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Subject</label>
+                <input ng-model="vm.question.subject" required/>
+            </md-input-container>
+        </div>
+        <div layout-gt-sm="row">
+            <md-input-container class="md-block" flex-gt-sm>
+                <label>Content</label>
+                <textarea ng-model="vm.question.content" md-maxlength="1000" rows="5" md-select-on-focus required></textarea>
+            </md-input-container>
+        </div>
+        <md-button class="md-primary md-raised" ng-click="vm.submitQuestion()">Submit</md-button>
+    </form>

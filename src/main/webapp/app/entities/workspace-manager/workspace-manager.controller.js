@@ -17,6 +17,9 @@
         vm.postNews = postNews;
         vm.updateNews = updateNews;
 
+        console.log($stateParams.challengeId);
+        
+
         function postNews() {
             if (vm.newsEntity.id) {
                 CreateWorkspaceNews.update(vm.newsEntity, function (res) {

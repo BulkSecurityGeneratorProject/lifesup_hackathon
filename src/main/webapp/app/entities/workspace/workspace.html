@@ -1,155 +1,16 @@
-<div ng-cloak>
-    <md-content>
-        <md-tabs md-dynamic-height md-border-bottom>
+<div layout="row">
+    <div flex="25">
+        <md-card>
+            <img ng-src="content/images/default/cover.jpg" class="md-card-image" alt="cover">
+            <md-card-actions layout="column" layout-align="start">
+                <md-button ui-sref-active="w3-red" ui-sref="workspace-home" style="text-align:left">Home</md-button>
+                <md-button ui-sref-active="w3-red" ui-sref="workspace-team" style="text-align:left">My Team</md-button>
+                <md-button ui-sref-active="w3-red" ui-sref="workspace-feedback" style="text-align:left">Feedback</md-button>
+                <md-button ui-sref-active="w3-red" ui-sref="workspace-terms" style="text-align:left">Terms</md-button>
+            </md-card-actions>
+        </md-card>
+    </div>
+    <div flex="75" ui-view="subcontent">
 
-            <md-tab label="Home">
-                <md-content class="md-padding">
-                    <h1 class="md-display-2">Welcome to challenge workspace</h1>
-                    <md-list>
-                        <md-list-item class="md-3-line" ng-repeat="q in vm.news">
-                            <div class="md-list-item-text">
-                                <h3>{{q.title}}</h3>
-                                <p>{{q.content}}</p>
-                            </div>
-                            <md-divider ng-if="!$last"></md-divider>
-                        </md-list-item>
-                    </md-list>
-                    <md-button class="md-primary md-raised" ng-click="vm.showAskForm()">Ask a question</md-button>
-                </md-content>
-                <form ng-show="vm.askFormTrigged" class="md-padding" flex="50">
-                    <div layout-gt-sm="row">
-                        <md-input-container class="md-block" flex-gt-sm>
-                            <label>Subject</label>
-                            <input ng-model="vm.question.subject" required/>
-                        </md-input-container>
-                    </div>
-                    <div layout-gt-sm="row">
-                        <md-input-container class="md-block" flex-gt-sm>
-                            <label>Content</label>
-                            <textarea ng-model="vm.question.content" md-maxlength="1000" rows="5" md-select-on-focus required></textarea>
-                        </md-input-container>
-                    </div>
-                    <md-button class="md-primary md-raised" ng-click="vm.submitQuestion()">Submit</md-button>
-                </form>
-            </md-tab>
-
-
-
-            <!-- <md-tab label="My Team">
-                <md-content class="md-padding">
-                    <h1 class="md-display-2">My Team</h1>
-                    <p>{{vm.workspace.termsAndConditions}}</p>
-                </md-content>
-            </md-tab> -->
-
-            <md-tab label="My Question">
-                <md-content class="md-padding">
-                    <div class="panel-group" ng-repeat="q in vm.questions">
-                        <div class="row panel-heading">
-                            <div class="col-md-9">
-                                <h4 ng-if="!q.reply" class="panel-title w3-text-black">
-                                    {{q.subject}}
-                                </h4>
-                                <h4 ng-if="q.reply" class="panel-title w3-text-grey">
-                                    {{q.subject}}
-                                </h4>
-                                <p>{{q.content}}</p>
-                                <p class="label label-primary">{{q.totalcmt}} reply</p>
-                            </div>
-                            <div class="col-md-2">
-                                <md-checkbox ng-model="q.click">Show Answers</md-checkbox>
-                            </div>
-                            <div class="col-md-1">
-                                <md-button ng-click="vm.showPrompt($event)" class="md-fab md-mini mobile-hidden" aria-label="t">
-                                <md-tooltip md-direction="bottom">Edit</md-tooltip>
-                                <md-icon class="material-icons white">border_color</md-icon>
-                            </md-button>
-                            </div>
-                        </div>
-                        <div ng-show="q.click" style="margin-left:10%">
-                            <div ng-repeat="ans in q.answers">
-                                <span ng-if="ans.answerByType == 'BY_HOST'" class="label label-primary">Host</span>
-                                <span ng-if="ans.answerByType == 'BY_USER'" class="label w3-grey">User</span>
-                                {{ans.content}}
-                                <span class="btn-group pull-right">
-                                    <button ng-if="vm.account.login === ans.createdBy" class="btn btn-warning btn-xs" ng-click="vm.showPrompt(ans)">Edit</button>
-                                    <button ng-if="vm.account.login === ans.createdBy" class="btn btn-danger btn-xs" ng-click="vm.showConfirm(ans, $index)">Delete</button>
-                                </span>
-                                
-                                <hr>
-                            </div>
-                            <div>
-                                <md-input-container class="md-block" flex-gt-sm>
-                                    <label>Type answer here</label>
-                                    <textarea name="answer" ng-model="vm.answer.content" md-maxlength="1000" rows="3" md-select-on-focus></textarea>
-                                </md-input-container>
-                                <md-button class="md-primary md-raised" ng-click="vm.postAnswer(q.id)">Reply</md-button>
-                            </div>
-                        </div>
-                        <md-divider ng-if="!$last"></md-divider>
-                    </div>
-                </md-content>
-            </md-tab>
-
-            <md-tab label="Submission">
-                <md-content class="md-padding">
-                    <button class="btn btn-primary" type="file" ngf-select="uploadFiles($file, $invalidFiles)" accept="*" ngf-max-height="1000" ngf-max-size="3000MB">
-                        Select File</button>
-                    <br>
-                    <br> File:
-                    <div style="font:smaller">{{f.name}} {{errFile.name}} {{errFile.$error}} {{errFile.$errorParam}}
-                        <md-progress-linear md-mode="determinate" value="{{f.progress}}"></md-progress-linear>
-                        <span class="progress" ng-show="f.progress >= 0">
-                            <div style="width:{{f.progress}}%" ng-bind="f.progress + '%'"></div>
-                        </span>
-                        {{errorMsg}}
-                    </div>
-                </md-content>
-            </md-tab>
-
-
-            <md-tab label="Feedback">
-                <md-content class="md-padding">
-                    <h1 class="md-display-2">Feedback</h1>
-                    <div layout-gt-sm="row">
-                        <md-input-container class="md-block" flex-gt-sm>
-                            <label>Feedback for Hackathon</label>
-                            <textarea name="introduction" ng-model="vm.feedback.feedbackForUs" md-maxlength="1000" rows="5" md-select-on-focus required></textarea>
-                        </md-input-container>
-                    </div>
-                    <div layout-gt-sm="row">
-                        <md-input-container class="md-block" flex-gt-sm>
-                            <label>Feedback for challenge host</label>
-                            <textarea name="introduction" ng-model="vm.feedback.feedbackForChallenge" md-maxlength="1000" rows="5" md-select-on-focus
-                                required></textarea>
-                        </md-input-container>
-                    </div>
-                    <div layout-gt-sm="row">
-                        <md-input-container class="md-block" flex-gt-sm>
-                            <label>Public feedback</label>
-                            <textarea name="introduction" ng-model="vm.feedback.publicFeedback" md-maxlength="1000" rows="5" md-select-on-focus required></textarea>
-                        </md-input-container>
-                    </div>
-                    <div layout-gt-sm="row">
-                        <span flex="20">Not likely at all</span>
-                        <md-radio-group layout="row" flex="60" ng-model="vm.feedback.rating">
-                            <md-radio-button ng-repeat="rate in vm.rating" ng-value="rate" aria-label="rating">{{rate}}
-                            </md-radio-button>
-                        </md-radio-group>
-                        <span flex="20">Very likely</span>
-                    </div>
-                </md-content>
-                <div>
-                    <md-button class="md-primary md-raised" ng-click="vm.submitFeedback()">Submit</md-button>
-                </div>
-            </md-tab>
-
-            <md-tab label="Terms">
-                <md-content class="md-padding">
-                    <h1 class="md-display-2">Terms</h1>
-                    <p>{{vm.workspace.termsAndConditions}}</p>
-                </md-content>
-            </md-tab>
-        </md-tabs>
-    </md-content>
+    </div>
 </div>

@@ -33,17 +33,18 @@
                     }]
                 }
             })
-            .state('workspace-news', {
-                parent: 'app',
-                url: '/workspace-news',
+
+            .state('workspace-home', {
+                parent: 'workspace',
+                url: '/home',
                 data: {
                     authorities: [],
                     pageTitle: "Workspace"
                 },
                 views:{
-                    'content@':{
-                        templateUrl: 'app/entities/workspace/workspace-news.html',
-                        controller: 'WorkspaceNewsController',
+                    'subcontent':{
+                        templateUrl: 'app/entities/workspace/workspace-home.html',
+                        controller: 'WorkspaceHomeController',
                         controllerAs: 'vm',
                     }
                 },
@@ -55,49 +56,76 @@
                     }]
                 }
             })
-            .state('workspace-question', {
-                parent: 'entity',
-                url: '/workspace-question',
+            
+            .state('workspace-team', {
+                parent: 'workspace',
+                url: '/team',
                 data: {
                     authorities: [],
                     pageTitle: "Workspace"
                 },
                 views:{
-                    'content@':{
-                        templateUrl: 'app/entities/workspace/workspace-question.html',
-                        controller: 'WorkspaceQuestionController',
+                    'subcontent':{
+                        templateUrl: 'app/entities/workspace/workspace-team.html',
+                        controller: 'WorkspaceTeamController',
                         controllerAs: 'vm',
                     }
                 },
                 resolve:{
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader){
                         $translatePartialLoader.addPart('global');
-                        $translatePartialLoader.addPart('workspace');
+                        // $translatePartialLoader.addPart('workspace');
                         return $translate.refresh();
                     }]
                 }
             })
-            .state('workspace-answer', {
-                parent: 'entity',
-                url: '/workspace-answer',
+
+            .state('workspace-feedback', {
+                parent: 'workspace',
+                url: '/feedback',
                 data: {
                     authorities: [],
                     pageTitle: "Workspace"
                 },
                 views:{
-                    'content@':{
-                        templateUrl: 'app/entities/workspace/workspace-answer.html',
-                        controller: 'WorkspaceAnswerController',
+                    'subcontent':{
+                        templateUrl: 'app/entities/workspace/workspace-feedback.html',
+                        controller: 'WorkspaceFeedbackController',
                         controllerAs: 'vm',
                     }
                 },
                 resolve:{
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader){
                         $translatePartialLoader.addPart('global');
-                        $translatePartialLoader.addPart('workspace');
+                        // $translatePartialLoader.addPart('workspace');
                         return $translate.refresh();
                     }]
                 }
             })
+
+            .state('workspace-terms', {
+                parent: 'workspace',
+                url: '/terms',
+                data: {
+                    authorities: [],
+                    pageTitle: "Workspace"
+                },
+                views:{
+                    'subcontent':{
+                        templateUrl: 'app/entities/workspace/workspace-terms.html',
+                        controller: 'WorkspaceTermsController',
+                        controllerAs: 'vm',
+                    }
+                },
+                resolve:{
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader){
+                        $translatePartialLoader.addPart('global');
+                        // $translatePartialLoader.addPart('workspace');
+                        return $translate.refresh();
+                    }]
+                }
+            })
+            
+            
         }
 })();
