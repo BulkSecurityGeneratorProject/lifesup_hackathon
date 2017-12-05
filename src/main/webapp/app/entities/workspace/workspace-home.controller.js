@@ -14,6 +14,10 @@
         vm.applicationId = application.applicationId;
         vm.questions = [];
 
+        ApplicationByChallengeId.get({challengeId: $stateParams.challengeId}, function(res){
+            vm.applicationId = res.applicationId;
+        });
+
         Principal.identity().then(function (account) {
             vm.account = account;
         });
