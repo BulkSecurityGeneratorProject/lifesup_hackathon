@@ -1,28 +1,71 @@
-    <md-content class="md-padding">
-        <h1 class="md-display-2">Welcome to challenge workspace</h1>
-        <md-list>
-            <md-list-item class="md-3-line" ng-repeat="q in vm.news">
-                <div class="md-list-item-text">
-                    <h3>{{q.title}}</h3>
-                    <p>{{q.content}}</p>
+<div>
+    <div class="application-heading jumbotron-fluid">
+        <h1>{{vm.application.teamName}}</h1>
+        <h3>{{vm.application.companyName}}</h3>
+    </div>
+
+    <div class="row content-wrapper">
+        <div class="team-info col-md-12 col-xs-12">
+            <div class="card-wrapper">
+                <br>
+                <!--======== member card ============-->
+                <div class="member-wrapper horizontal-card row" ng-repeat="member in vm.members">
+                    <div ng-if="member.id">
+                        <div class="member-avatar col-md-2 col-xs-12">
+                            <img ng-if="member.logoUrl" ng-src="{{member.logoUrl64}}" width="100" height="100">
+                            <img ng-if="!member.logoUrl" ng-src="content/images/default/no_avatar.png" width="100" height="100">
+                        </div>
+                        <div class="member-info col-md-3 col-xs-12">
+                            <p>
+                                <a ui-sref="user-management-detail({login:member.invitedMail})">
+                                    <strong>{{member.firstName}} {{member.lastName}}</strong>
+                                </a>
+                            </p>
+                            <p>{{member.jobTitle}}</p>
+                            <p>{{member.companyName}}</p>
+                        </div>
+                        <div class="member-detail col-md-7 col-xs-12">
+                            <button ng-if="!member.introduction && member.invitedMail == vm.account.email" class="btn custom-btn challenge-link w3-red"
+                                ui-sref="settings" data-translate="hackathonApp.applicationslist.detail.completeProfile"></button>
+                            <div class="member-description">{{member.introduction}}</div>
+                            <div class="member-skill" ng-repeat="skill in member.skills track by $index">
+                                <span class="skill-badge">{{skill}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="!member.id">
+                        <div class="member-avatar col-md-2 col-xs-12">
+                            <img ng-src="content/images/default/no_avatar.png" width="100" height="100">
+                        </div>
+                        <div class="member-info col-md-10 col-xs-12">
+                            <!-- <p> -->
+                            <strong data-translate="hackathonApp.applicationslist.detail.pending"></strong>
+                            <!-- </p> -->
+                            <p>{{member.jobTitle}}</p>
+                            <p>{{member.invitedMail}}</p>
+                        </div>
+
+                    </div>
                 </div>
-                <md-divider ng-if="!$last"></md-divider>
-            </md-list-item>
-        </md-list>
-        <md-button class="md-primary md-raised" ng-click="vm.showAskForm()">Ask a question</md-button>
-    </md-content>
-    <form ng-show="vm.askFormTrigged" class="md-padding" flex="50">
-        <div layout-gt-sm="row">
-            <md-input-container class="md-block" flex-gt-sm>
-                <label>Subject</label>
-                <input ng-model="vm.question.subject" required/>
-            </md-input-container>
+
+                <!--======== other info ============-->
+                <div class="horizontal-card">
+                    <div class="team-description">
+                        <h3 data-translate="hackathonApp.applicationslist.detail.description"></h3>
+                        <p>{{vm.application.description}}</p>
+                    </div>
+                    <div class="team-motivation">
+                        <h3 data-translate="hackathonApp.applicationslist.detail.motivation"></h3>
+                        <p>{{vm.application.motivation}}</p>
+                    </div>
+                    <div class="team-conclusion">
+                        <h3 data-translate="hackathonApp.applicationslist.detail.ideasDescription"></h3>
+                        <p>{{vm.application.ideasDescription}}</p>
+                    </div>
+                    <button has-authority-except="ROLE_HOST" ng-if="vm.application.status !== 'APPROVED' && vm.application.status !== 'REJECTED'"
+                        class="btn custom-btn w3-blue" ui-sref="team({id:vm.application.challengeId})" data-translate="hackathonApp.applicationslist.detail.editApplication"></button>
+                </div>
+            </div>
         </div>
-        <div layout-gt-sm="row">
-            <md-input-container class="md-block" flex-gt-sm>
-                <label>Content</label>
-                <textarea ng-model="vm.question.content" md-maxlength="1000" rows="5" md-select-on-focus required></textarea>
-            </md-input-container>
-        </div>
-        <md-button class="md-primary md-raised" ng-click="vm.submitQuestion()">Submit</md-button>
-    </form>
+    </div>
+</div>

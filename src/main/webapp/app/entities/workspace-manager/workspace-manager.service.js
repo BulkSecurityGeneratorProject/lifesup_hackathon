@@ -121,7 +121,7 @@
     }
 
     function ChallengeWorkspaceQuestion ($resource) {
-        var resourceUrl =  'api/challenge-workspace-questions';
+        var resourceUrl =  'api/challenge-workspace-questions/:id';
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: false},
