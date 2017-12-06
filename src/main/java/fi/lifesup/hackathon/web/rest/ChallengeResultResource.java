@@ -117,5 +117,13 @@ public class ChallengeResultResource {
         challengeResultRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("challengeResult", id.toString())).build();
     }
+    
+    @GetMapping("/challenge-results/challenge/{challengeId}")
+    @Timed
+    public ChallengeResult getChallengeResultByChallenge(@PathVariable Long challengeId) {
+        log.debug("REST request to get ChallengeResult : {}", challengeId);
+        ChallengeResult challengeResult = challengeResultRepository.getByChallenge(challengeId);
+        return challengeResult;
+    }
 
 }

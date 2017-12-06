@@ -29,6 +29,8 @@ public interface ApplicationRepository extends JpaRepository<Application, Long> 
 	@Query("select aie.application from ApplicationInviteEmail aie"
 			+ " where aie.acceptKey = :#{[0]}")
 	Application getapplication(String acceptKey);
-
+	
+	@Query("select a from Application a where a.status = 'APPROVED' and a.challenge.id = :#{[0]}")
+	List<Application> getApplicationByApproved(Long challengeId);
 	
 }

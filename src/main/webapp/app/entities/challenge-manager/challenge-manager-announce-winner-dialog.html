@@ -1,0 +1,52 @@
+<md-dialog aria-label="Create a Challenge">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Announce Winner</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" aria-label="close" ng-click="vm.clear()">
+                <span class="glyphicon glyphicon-remove"></span>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <md-dialog-content class="challenge-dialog">
+        <jhi-alert-error></jhi-alert-error>
+        <md-content class="md-padding md-inline-form">
+            <form name="challengeResultForm">
+                <div layout="column">
+                    <md-select placeholder="Select winner" ng-model="vm.challengeResult.firstTeam" md-on-open="vm.loadTeams()" style="min-width: 200px;"
+                        required>
+                        <md-option ng-value="team.id" ng-repeat="team in vm.teams">{{team.teamName}}</md-option>
+                    </md-select>
+                </div>
+                <div layout="column">
+                    <md-select placeholder="Select runner up" ng-model="vm.challengeResult.secondTeam" md-on-open="vm.loadTeams()" style="min-width: 200px;">
+                        <md-option ng-value="team.id" ng-repeat="team in vm.teams">{{team.teamName}}</md-option>
+                    </md-select>
+                </div>
+                <div layout="column">
+                    <md-select placeholder="Select third place" ng-model="vm.challengeResult.thirdTeam" md-on-open="vm.loadTeams()" style="min-width: 200px;">
+                        <md-option ng-value="team.id" ng-repeat="team in vm.teams">{{team.teamName}}</md-option>
+                    </md-select>
+                </div>
+                <div layout="column">
+                    <md-input-container class="md-block" flex-gt-sm>
+                        <label>Note</label>
+                        <textarea name="introduction" ng-model="vm.challengeResult.additionalNote" md-maxlength="250" rows="5" md-select-on-focus></textarea>
+                    </md-input-container>
+                </div>
+            </form>
+        </md-content>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+        <span flex></span>
+        <md-button type="button" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;
+            <span data-translate="entity.action.cancel"></span>
+        </md-button>
+        <md-button class="md-raised md-primary" ng-click="vm.save()" ng-disabled="challengeResultForm.$invalid || !vm.isFormValid()">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;
+            <span data-translate="entity.action.save"></span>
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

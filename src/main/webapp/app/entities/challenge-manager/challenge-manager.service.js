@@ -6,7 +6,10 @@
         .factory('ChallengeByAuthority', ChallengeByAuthority)
         .factory('ChallengeInfo', ChallengeInfo)
         .factory('ChallengeBanner', ChallengeBanner)
-        .factory('TimeServer', TimeServer);
+        .factory('TimeServer', TimeServer)
+        .factory('ApprovedApplication', ApprovedApplication)
+        .factory('ChallengeResult', ChallengeResult)
+        .factory('ChallengeResultById', ChallengeResultById)
 
 
     ChallengeManager.$inject = ['$resource'];
@@ -14,8 +17,10 @@
     ChallengeInfo.$inject = ['$resource', 'DateUtils'];
     ChallengeBanner.$inject = ['$resource'];
     TimeServer.$inject = ['$resource', 'DateUtils'];
-
-
+    ApprovedApplication.$inject = ['$resource', 'DateUtils'];
+    ChallengeResult.$inject = ['$resource'];
+    ChallengeResultById.$inject = ['$resource'];
+    
 
 
 
@@ -73,10 +78,10 @@
             'update': { method: 'PUT' },
         });
     }
-
+    
     function ChallengeInfo($resource, DateUtils) {
         var resourceUrl = 'api/challenge-infos/:id';
-
+        
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: true },
             'get': {
@@ -97,7 +102,7 @@
             'save': { method: 'POST' }
         });
     }
-
+    
     function TimeServer($resource, DateUtils) {
         var resourceUrl = 'api/challenges/get-time';
         return $resource(resourceUrl, {}, {
@@ -115,5 +120,55 @@
         });
     }
     
+    function ApprovedApplication($resource, DateUtils) {
+        var resourceUrl = '/api/applications/approved/:challengeId';
+        return $resource(resourceUrl, {}, {
+            'query': { method: 'GET', isArray: true },
+            'get': {
+                method: 'GET',
+                transformResponse: function (data) {
+                    if (data) {
+                        data = angular.fromJson(data);
+                    }
+                    return data;
+                }
+            }
+        });
+    }
+    
+    function ChallengeResult($resource) {
+        var resourceUrl = '/api/challenge-results/:id';
 
+        return $resource(resourceUrl, {}, {
+            'query': { method: 'GET', isArray: true },
+            'get': {
+                method: 'GET',
+                transformResponse: function (data) {
+                    if (data) {
+                        data = angular.fromJson(data);
+                    }
+                    return data;
+                }
+            },
+            'update': { method: 'PUT' },
+        });
+    }
+
+    function ChallengeResultById($resource) {
+        var resourceUrl = '/api/challenge-results/challenge/:challengeId';
+        return $resource(resourceUrl, {}, {
+            'query': { method: 'GET', isArray: true },
+            'get': {
+                method: 'GET',
+                transformResponse: function (data) {
+                    if (data) {
+                        data = angular.fromJson(data);
+                    }
+                    return data;
+                }
+            },
+            'update': { method: 'PUT' },
+        });
+    }
+    
 })();

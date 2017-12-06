@@ -158,6 +158,9 @@
             <md-button ng-if="challenge.workspaceId" class="w3-border" ui-sref="workspace-manager({challengeId:challenge.id})">
                     <b data-translate="hackathonApp.card.viewWorkspace"></b>
                 </md-button>
+            <md-button ng-if="challenge.workspaceId" class="w3-border" ui-sref="challenge-manager.announce-winner({challengeId:challenge.id})">
+                    <b>Announce the winner</b>
+                </md-button>
             <!-- Border -->
             <div class="w3-border-top w3-border-light-grey"></div>
 

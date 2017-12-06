@@ -176,6 +176,7 @@
                     });
                 }]
             })
+
             .state('challenge-manager.delete', {
                 parent: 'challenge-manager',
                 url: '/{id}/delete',
@@ -192,6 +193,32 @@
                         resolve: {
                             entity: ['ChallengeManager', function (ChallengeManager) {
                                 return ChallengeManager.get({ id: $stateParams.id }).$promise;
+                            }]
+                        }
+                    }).then(function () {
+                        $state.go('challenge-manager', null, { reload: 'challenge-manager' });
+                    }, function () {
+                        $state.go('^');
+                    });
+                }]
+            })
+
+            .state('challenge-manager.announce-winner', {
+                parent: 'challenge-manager',
+                url: '/{challengeId}/announce-winner',
+                data: {
+                    authorities: ['ROLE_ADMIN', 'ROLE_HOST']
+                },
+                onEnter: ['$stateParams', '$state', '$uibModal', '$mdDialog', function ($stateParams, $state, $uibModal, $mdDialog, ev) {
+                    $mdDialog.show({
+                        templateUrl: 'app/entities/challenge-manager/challenge-manager-announce-winner-dialog.html',
+                        controller: 'ChallengeManagerAnnounceWinnerController',
+                        controllerAs: 'vm',
+                        clickOutsideToClose: true,
+                        targetEvent: ev,
+                        resolve: {
+                            entity: ['ChallengeResultById', function (ChallengeResultById) {
+                                return ChallengeResultById.get({ challengeId: $stateParams.challengeId }).$promise;
                             }]
                         }
                     }).then(function () {

@@ -220,5 +220,11 @@ public class ApplicationResource {
 		return ResponseEntity.ok()
 				.headers(HeaderUtil.createEntityDeletionAlert("Application Member", applicationId.toString())).build();
 	}
+	
+	@GetMapping("/applications/approved/{challengeId}")
+	@Timed
+	public List<Application> getApplicationByApproved(@PathVariable Long challengeId) {
+		return applicationRepository.getApplicationByApproved(challengeId);
+	}
 
 }

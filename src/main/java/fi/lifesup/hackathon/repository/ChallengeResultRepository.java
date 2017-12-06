@@ -11,5 +11,6 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 public interface ChallengeResultRepository extends JpaRepository<ChallengeResult,Long> {
-
+	@Query("select r from ChallengeResult r, Application a where r.firstTeam = a.id and a.challenge.id = ?1")
+	 ChallengeResult getByChallenge(Long challengeId);
 }

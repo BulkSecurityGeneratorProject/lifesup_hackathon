@@ -46,7 +46,6 @@
         }
         function parseChallengeStatus(challenges) {
             challenges.map(function (challenge) {
-                console.log(challenge);
                 if (challenge.info.status !== 'REMOVED') {
 
                     TimeServer.get(function(result){
