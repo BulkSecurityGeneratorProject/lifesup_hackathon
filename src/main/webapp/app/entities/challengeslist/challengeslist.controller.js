@@ -85,7 +85,6 @@
         function parseChallengeStatus(challenges) {
 
             challenges.map(function (challenge) {
-                console.log(challenge);
                 TimeServer.get(function (result) {
                     var today = new Date(result.timeServer).getTime();
                     var appClose = new Date(challenge.info.applicationCloseDate);
@@ -147,7 +146,6 @@
                     })
                         .then(function (response) {
                             // success
-                            console.log(response);
                             if (response.data.length > 1) {
                                 challenge.bannerUrl64 = "data:image/jpeg;base64," + response.data;
 
@@ -248,7 +246,6 @@
                     vm.challenges.push(data[i]);
                 }
                 angular.forEach(data, function (challenge) {
-                    console.log('querybase64: ' + challenge.id);
                     //Convert Base64 img 
                     $http({
                         url: '/api/challenges/get-banner-base64',
@@ -302,7 +299,6 @@
                     vm.challenges.push(data[i]);
                 }
                 angular.forEach(data, function (challenge) {
-                    console.log('querybase64: ' + challenge.id);
                     //Convert Base64 img 
                     $http({
                         url: '/api/challenges/get-banner-base64',

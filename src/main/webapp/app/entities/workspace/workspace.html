@@ -1,16 +1,18 @@
 <div layout="row">
     <div flex="25">
-        <md-card>
-            <img ng-src="content/images/default/cover.jpg" class="md-card-image" alt="cover">
+        <md-card style="margin:0">
+            <!-- <img ng-src="content/images/default/cover.jpg" class="md-card-image" alt="cover"> -->
+            <img ng-src="{{vm.challenge.bannerUrl64 ? vm.challenge.bannerUrl64 : '/content/images/svg/index.square-circle-preloader.svg'}}" class="img img-responsive banner-img">
             <md-card-actions layout="column" layout-align="start">
                 <md-button ui-sref-active="w3-red" ui-sref="workspace-home" style="text-align:left">Home</md-button>
-                <md-button ui-sref-active="w3-red" ui-sref="workspace-team" style="text-align:left">My Team</md-button>
+                <md-button ui-sref-active="w3-red" ui-sref="workspace-team({id: vm.applicationId})" style="text-align:left">My Team</md-button>
                 <md-button ui-sref-active="w3-red" ui-sref="workspace-feedback" style="text-align:left">Feedback</md-button>
                 <md-button ui-sref-active="w3-red" ui-sref="workspace-terms" style="text-align:left">Terms</md-button>
             </md-card-actions>
         </md-card>
     </div>
-    <div flex="75" ui-view="subcontent">
+    <div flex></div>
+    <div flex="70" ui-view="subcontent">
 
     </div>
 </div>

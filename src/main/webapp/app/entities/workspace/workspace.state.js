@@ -10,7 +10,7 @@
             $stateProvider
             .state('workspace', {
                 parent: 'entity',
-                url: '/workspace/{challengeId}',
+                url: '/workspace/cid={challengeId}',
                 data: {
                     authorities: [],
                     pageTitle: "Workspace"
@@ -25,6 +25,9 @@
                 resolve:{
                     entity: ['WorkspaceOfChallenge', '$stateParams', function(WorkspaceOfChallenge, $stateParams){
                         return WorkspaceOfChallenge.get({challengeId: $stateParams.challengeId});
+                    }],
+                    application: ['ApplicationByChallengeId', '$stateParams', function(ApplicationByChallengeId, $stateParams){
+                        return ApplicationByChallengeId.get({challengeId: $stateParams.challengeId});
                     }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader){
                         $translatePartialLoader.addPart('global');
@@ -59,7 +62,7 @@
             
             .state('workspace-team', {
                 parent: 'workspace',
-                url: '/team',
+                url: '/team/{id}',
                 data: {
                     authorities: [],
                     pageTitle: "Workspace"
@@ -72,8 +75,12 @@
                     }
                 },
                 resolve:{
+                    entity: ['$stateParams', 'ApplicationsListDetails', function ($stateParams, ApplicationsListDetails) {
+                        return ApplicationsListDetails.query({id: $stateParams.id}).$promise;
+                    }],
                     translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader){
                         $translatePartialLoader.addPart('global');
+                        $translatePartialLoader.addPart('applicationslist');
                         // $translatePartialLoader.addPart('workspace');
                         return $translate.refresh();
                     }]

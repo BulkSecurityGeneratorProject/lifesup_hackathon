@@ -5,58 +5,87 @@
         .module('hackathonApp')
         .controller('WorkspaceHomeController', WorkspaceHomeController);
 
-    WorkspaceHomeController.$inject = ['$scope', 'GetQuestionAnswers', 'entity', '$state', '$stateParams', 'ChallengeWorkspaceFeedback', 'ApplicationByChallengeId', '$mdDialog', 'ChallengeWorkspaceQuestion', 'GetWorkspaceQuestion', 'WorkspaceDetail', 'ChallengeWorkspaceAnswer', 'Upload', '$timeout', 'Principal'];
+    WorkspaceHomeController.$inject = ['$scope', 'entity', '$state', '$stateParams', 'ChallengeWorkspaceFeedback', 'ApplicationByChallengeId', '$mdDialog', 'ChallengeWorkspaceQuestion', 'GetWorkspaceQuestion', 'WorkspaceDetail', 'ChallengeWorkspaceAnswer', 'Upload', '$timeout', 'Principal' , 'application'];
 
-    function WorkspaceHomeController($scope, GetQuestionAnswers, entity, $state, $stateParams, ChallengeWorkspaceFeedback, ApplicationByChallengeId, $mdDialog, ChallengeWorkspaceQuestion, GetWorkspaceQuestion, WorkspaceDetail, ChallengeWorkspaceAnswer, Upload, $timeout, Principal) {
+    function WorkspaceHomeController($scope, entity, $state, $stateParams, ChallengeWorkspaceFeedback, ApplicationByChallengeId, $mdDialog, ChallengeWorkspaceQuestion, GetWorkspaceQuestion, WorkspaceDetail, ChallengeWorkspaceAnswer, Upload, $timeout, Principal, application) {
         var vm = this;
         vm.workspace = entity;
-        vm.applicationId = null;
         vm.challengeId = $stateParams.challengeId;
-        vm.$state = $state;
-        console.log(vm.challengeId);
+        vm.applicationId = application.applicationId;
+        vm.questions = [];
+
+        ApplicationByChallengeId.get({challengeId: $stateParams.challengeId}, function(res){
+            vm.applicationId = res.applicationId;
+        });
 
         Principal.identity().then(function (account) {
             vm.account = account;
         });
+
+        load();
+        function loadCount(){
+            vm.questions.forEach(function (element) {
+                element.totalcmt = element.answers.length;
+            });
+        }
+        function load() {
+            WorkspaceDetail.get({ challengeId: $stateParams.challengeId }, function (res) {
+                vm.workspaceDetail = res;
+                vm.questions = res.workspaceQuestions;
+                vm.news = res.workspaceNews;
+                loadCount();
+            })
+        }
         
-        // Home
+        
+        // Post Question
         vm.showAskForm = showAskForm;
-        vm.askFormTrigged = false;
+        vm.askFormTriggered = false;
         vm.submitQuestion = submitQuestion;
         vm.question = {};
 
         function showAskForm() {
-            vm.askFormTrigged = !vm.askFormTrigged;
+            reset();
+            vm.askFormTriggered = true;
         }
 
         function submitQuestion() {
+            vm.question.applicationId = application.applicationId;
             vm.question.workspaceId = entity.challenge.workspaceId;
-            ChallengeWorkspaceQuestion.save(vm.question, questionSuccess, onSaveError);
+            if (vm.question.id){
+                ChallengeWorkspaceQuestion.update(vm.question, questionUpdated, onSaveError);
+            } else {
+                ChallengeWorkspaceQuestion.save(vm.question, questionSuccess, onSaveError);
+            }
+            
+        }
+
+        function questionUpdated() {
+            reset();
+            showMessage('Your question have been updated!');
         }
 
         function questionSuccess() {
-            vm.question = {};
-            vm.answerFormTrigged = false;
-            showMessage('Your question have been sent.');
+            reset();
+            showMessage('Your question have been sent!');
         }
 
-        // My Team
         // My Question
         vm.showAnswerForm = showAnswerForm;
-        vm.answerFormTrigged = false;
-        vm.questions = [];
-        vm.answer = {};
+        vm.answerFormTriggered = false;
         vm.postAnswer = postAnswer;
-        load();
+        vm.answer = {};
 
         function showAnswerForm() {
-            vm.answerFormTrigged = !vm.answerFormTrigged;
+            reset();
+            vm.answerFormTriggered = true;
         }
 
         function postAnswer(id) {
             vm.answer.questionId = id;
             ChallengeWorkspaceAnswer.save(vm.answer, function (res) {
                 vm.questions.forEach(function (element) {
+                    element.totalcmt = element.answers.length;
                     if (element.id == id) {
                         element.answers.push(res);
                     }
@@ -67,43 +96,35 @@
             });
         }
 
-        function load() {
-            WorkspaceDetail.get({ challengeId: $stateParams.challengeId }, function (res) {
-                vm.workspaceDetail = res;
-                vm.questions = res.workspaceQuestions;
-                vm.news = res.workspaceNews;
-                vm.questions.forEach(function (element) {
-                    element.totalcmt = element.answers.length;
-                });
-            })
-            
-        }
-
-        vm.showPrompt = showPrompt;
-        function showPrompt(value) {
-            console.log(value);
+        vm.editComment = editComment;
+        function editComment(ans, idx) {
             var confirm = $mdDialog.prompt()
                 .title('Edit your answer!')
                 .placeholder('Your answer')
                 .ariaLabel('answer')
-                .initialValue(value.content)
+                .initialValue(ans.content)
                 .required(true)
                 .ok('Save')
                 .cancel('Cancel');
 
             $mdDialog.show(confirm).then(function (result) {
-                value.content = result;
-                ChallengeWorkspaceAnswer.update(value, function(){
-                    load();
+                ans.content = result;
+                ChallengeWorkspaceAnswer.update(ans, function(){
+                    vm.questions.forEach(function (element) {
+                        if (element.id == ans.questionId) {
+                            element.answers[idx].content = ans.content;
+                        }
+                    });
                 });
-                $scope.status = 'You decided to name your dog ' + result + '.';
             }, function () {
 
             });
         };
 
-        vm.showConfirm = showConfirm;
-        function showConfirm(ans, idx) {
+        vm.deleteComment = deleteComment;
+        function deleteComment(ans, idx) {
+            console.log(ans);
+            console.log(idx);
             var confirm = $mdDialog.confirm()
                 .title('Are you sure delete this answer?')
                 .ariaLabel('Delete answer')
@@ -113,7 +134,10 @@
             $mdDialog.show(confirm).then(function () {
                 ChallengeWorkspaceAnswer.delete({ id: ans.id }, function () {
                     vm.questions.forEach(function (element) {
+                        element.totalcmt = element.answers.length;
+                        console.log(element.answers);
                         if (element.id == ans.questionId) {
+                            
                             element.answers.splice(idx,1);
                         }
                     });
@@ -122,24 +146,41 @@
                 // $state.go("docs");
             });
         };
-        // Feedback
-        vm.feedback = {};
-        vm.rating = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'];
-        vm.submitFeedback = submitFeedback;
-        function submitFeedback() {
-            ChallengeWorkspaceFeedback.save(vm.feedback, feedbackSuccess, onSaveError);
+
+        vm.deleteQuestion = deleteQuestion;
+        function deleteQuestion(ans) {
+            var confirm = $mdDialog.confirm()
+                .title('Are you sure delete this question?')
+                .ariaLabel('Delete question')
+                .ok('Yes')
+                .cancel('No')
+
+            $mdDialog.show(confirm).then(function () {
+                ChallengeWorkspaceQuestion.delete({ id: ans.id }, function () {
+                    load();
+                })
+            }, function () {
+                // $state.go("docs");
+            });
+        };
+
+        vm.editQuestion = editQuestion;
+        function editQuestion(ans){
+            console.log(ans);
+            showAskForm();
+            vm.question.id = ans.id;
+            vm.question.subject = ans.subject;
+            vm.question.content = ans.content;
         }
 
-        function feedbackSuccess() {
-            showMessage('Your feedbacks have been sent.')
+
+        function reset(){
+            vm.question = {};
+            vm.answer = {};
+            vm.answerFormTriggered = false;
+            vm.askFormTriggered = false;
         }
-        // Common
-        ApplicationByChallengeId.get({ challengeId: $stateParams.challengeId }, function (res) {
-            console.log(res);
-            vm.feedback.applicationId = res.applicationId;
-            vm.question.applicationId = res.applicationId;
-            vm.applicationId = res.applicationId;
-        });
+       
 
         function onSaveError() {
             console.log("Error");
@@ -153,44 +194,12 @@
                 .ok('Got it')
 
             $mdDialog.show(confirm).then(function () {
-                // $state.go($state.current, { challengeId: $stateParams.challengeId }, { reload: true });
-                load();
+                $state.reload($state.current);
             }, function () {
-                // $state.go("docs");
             });
         };
 
-
-
-        $scope.uploadFiles = function (file, errFiles) {
-            $scope.f = file;
-            console.log(file);
-            $scope.errFile = errFiles && errFiles[0];
-            if (file) {
-                file.upload = Upload.upload({
-                    url: '/api/challenge-submissions-created',
-                    data: {
-                        multipartFile: file,
-                        additionalNote: "test",
-                        applicationId: vm.applicationId,
-                        workspace: entity.id
-                    }
-                });
-
-                file.upload.then(function (response) {
-                    $timeout(function () {
-                        file.result = response.data;
-                    });
-                }, function (response) {
-                    if (response.status > 0)
-                        $scope.errorMsg = response.status + ': ' + response.data;
-                }, function (evt) {
-                    file.progress = Math.min(100, parseInt(100.0 *
-                        evt.loaded / evt.total));
-                });
-
-            }
-        }
+       
 
     }
 })();
