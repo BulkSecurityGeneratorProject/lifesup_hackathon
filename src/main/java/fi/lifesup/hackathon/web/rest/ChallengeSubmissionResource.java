@@ -70,21 +70,20 @@ public class ChallengeSubmissionResource {
 	public ResponseEntity<ChallengeSubmission> createdChallengeSubmission(
 			@Valid @RequestBody ChallengeSubmissionDTO challengeSubmissionDTO) throws URISyntaxException {
 		log.debug("REST request to save ChallengeSubmission : {}", challengeSubmissionDTO);
+		if (challengeSubmissionDTO.getId() != null) {
+			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeSubmission", "idexists",
+					"A new challengeSubmission cannot already have an ID")).body(null);
+		}
 		ChallengeSubmission challengeSubmission = challengeSubmissionService
 				.createChallengeSubmission(challengeSubmissionDTO);
-		if (challengeSubmission != null) {
-			if (challengeSubmission.getId() != null) {
-				return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeSubmission",
-						"idexists", "A new challengeSubmission cannot already have an ID")).body(null);
-			}
-			ChallengeSubmission result = challengeSubmissionRepository.save(challengeSubmission);
-			return ResponseEntity.created(new URI("/api/challenge-submissions/" + result.getId()))
-					.headers(HeaderUtil.createEntityCreationAlert("challengeSubmission", result.getId().toString()))
-					.body(result);
-		} else
-			return ResponseEntity.badRequest().headers(
-					HeaderUtil.createFailureAlert("challengeSubmission", "idexists", "cannot application or worksapce"))
-					.body(null);
+		if (challengeSubmission == null) {
+			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeSubmission", "idexists",
+					"A new challengeSubmission cannot already have an ID")).body(null);
+		}
+		ChallengeSubmission result = challengeSubmissionRepository.save(challengeSubmission);
+		return ResponseEntity.created(new URI("/api/challenge-submissions-created/" + result.getId()))
+				.headers(HeaderUtil.createEntityCreationAlert("challengeSubmission", result.getId().toString()))
+				.body(result);
 
 	}
 
@@ -161,16 +160,14 @@ public class ChallengeSubmissionResource {
 				.build();
 	}
 
-	
-	@PostMapping(value="/upload-test", consumes="multipart/form-data")
-	 @Timed
-	public ResponseEntity<ChallengeSubmission> updateSubmissionFile( ChallengeSubmissionFileDTO fileDTO)
+	@PostMapping(value = "/upload-test", consumes = "multipart/form-data")
+	@Timed
+	public ResponseEntity<ChallengeSubmission> updateSubmissionFile(ChallengeSubmissionFileDTO fileDTO)
 			throws URISyntaxException {
-		log.debug("REST request to update UserInfo banner : {}", fileDTO);
-		
-		ChallengeSubmission result =challengeSubmissionService.testUpload(fileDTO);
+		ChallengeSubmission result = challengeSubmissionService.testUpload(fileDTO);
 		return ResponseEntity.ok()
-				.headers(HeaderUtil.createEntityUpdateAlert("challengesubmission", result.getId().toString())).body(result);
+				.headers(HeaderUtil.createEntityUpdateAlert("challengesubmission", result.getId().toString()))
+				.body(result);
 	}
 
 }

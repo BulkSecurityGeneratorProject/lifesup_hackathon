@@ -4,9 +4,6 @@ import java.time.ZonedDateTime;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import fi.lifesup.hackathon.domain.ChallengeSubmissionFeedback;
-import fi.lifesup.hackathon.domain.ChallengeWorkspace;
-
 public class ChallengeSubmissionDTO {
 	private Long id; 
 	private Long applicationId;
@@ -14,8 +11,8 @@ public class ChallengeSubmissionDTO {
 	private String additionalNote;
 	private ZonedDateTime modifiedDate;
 	private String modifiedBy;
-	private Long feedback;
-	private Long workspace;
+	private Long feedbackId;
+	private Long workspaceId;
 	private MultipartFile multipartFile;
 	public Long getId() {
 		return id;
@@ -53,18 +50,7 @@ public class ChallengeSubmissionDTO {
 	public void setModifiedBy(String modifiedBy) {
 		this.modifiedBy = modifiedBy;
 	}
-	public Long getFeedback() {
-		return feedback;
-	}
-	public void setFeedback(Long feedback) {
-		this.feedback = feedback;
-	}
-	public Long getWorkspace() {
-		return workspace;
-	}
-	public void setWorkspace(Long workspace) {
-		this.workspace = workspace;
-	}
+	
 	public MultipartFile getMultipartFile() {
 		return multipartFile;
 	}
@@ -72,6 +58,19 @@ public class ChallengeSubmissionDTO {
 		this.multipartFile = multipartFile;
 	}
 	
+	
+	public Long getFeedbackId() {
+		return feedbackId;
+	}
+	public void setFeedbackId(Long feedbackId) {
+		this.feedbackId = feedbackId;
+	}
+	public Long getWorkspaceId() {
+		return workspaceId;
+	}
+	public void setWorkspaceId(Long workspaceId) {
+		this.workspaceId = workspaceId;
+	}
 	public ChallengeSubmissionDTO() {
 		super();
 	}
@@ -84,17 +83,11 @@ public class ChallengeSubmissionDTO {
 		this.additionalNote = additionalNote;
 		this.modifiedDate = modifiedDate;
 		this.modifiedBy = modifiedBy;
-		this.feedback = feedback;
-		this.workspace = workspace;
+		this.feedbackId = feedback;
+		this.workspaceId = workspace;
 		this.multipartFile = multipartFile;
 	}
-	@Override
-	public String toString() {
-		return "ChallengeSubmissionDTO [id=" + id + ", applicationId=" + applicationId + ", filePath=" + filePath
-				+ ", additionalNote=" + additionalNote + ", modifiedDate=" + modifiedDate + ", modifiedBy=" + modifiedBy
-				+ ", feedback=" + feedback + ", workspace=" + workspace + "]";
-	}
-
+	
 	
 
 }
