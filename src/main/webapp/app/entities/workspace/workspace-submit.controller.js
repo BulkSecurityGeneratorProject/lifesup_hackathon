@@ -5,18 +5,23 @@
         .module('hackathonApp')
         .controller('WorkspaceSubmitController', WorkspaceSubmitController);
 
-    WorkspaceSubmitController.$inject = ['$scope', 'entity', '$state', '$stateParams', 'ApplicationByChallengeId', 'WorkspaceOfChallenge', 'Upload'];
+    WorkspaceSubmitController.$inject = ['$scope', 'entity', '$state', '$stateParams', 'ApplicationByChallengeId', 'WorkspaceOfChallenge', 'Upload', 'TimeServer'];
 
-    function WorkspaceSubmitController($scope, entity, $state, $stateParams, ApplicationByChallengeId, WorkspaceOfChallenge, Upload) {
+    function WorkspaceSubmitController($scope, entity, $state, $stateParams, ApplicationByChallengeId, WorkspaceOfChallenge, Upload, TimeServer) {
         var vm = this;
         vm.file = null;
         vm.note = null;
         vm.applicationId = null;
         vm.workspaceId = null;
+        vm.isEventEnded = false;
 
-        WorkspaceOfChallenge.get({challengeId: $stateParams.challengeId}, function(res){
-            console.log(res);
-            vm.workspaceId = res.id;
+        WorkspaceOfChallenge.get({challengeId: $stateParams.challengeId}, function(result){
+            vm.workspaceId = result.id;
+            TimeServer.get({}, function(res){
+                var t1 = new Date(result.challenge.info.eventEndTime).getTime();
+                var t2 = new Date(res.timeServer).getTime();
+                if (t1-t2 < 0) vm.isEventEnded = true;
+            })
         });
 
         ApplicationByChallengeId.get({challengeId: $stateParams.challengeId}, function(res){
@@ -44,7 +49,6 @@
                     file.progress = Math.min(100, parseInt(100.0 *
                         evt.loaded / evt.total));
                 });
-
             }
         }
     }

@@ -5,14 +5,25 @@
         .module('hackathonApp')
         .controller('WorkspaceHomeController', WorkspaceHomeController);
 
-    WorkspaceHomeController.$inject = ['$scope', 'entity', '$state', '$stateParams', 'ChallengeWorkspaceFeedback', 'ApplicationByChallengeId', '$mdDialog', 'ChallengeWorkspaceQuestion', 'GetWorkspaceQuestion', 'WorkspaceDetail', 'ChallengeWorkspaceAnswer', 'Upload', '$timeout', 'Principal' , 'application'];
+    WorkspaceHomeController.$inject = ['$scope', 'WorkspaceOfChallenge', '$state', '$stateParams', 'ChallengeWorkspaceFeedback', 'ApplicationByChallengeId', '$mdDialog', 'ChallengeWorkspaceQuestion', 'GetWorkspaceQuestion', 'WorkspaceDetail', 'ChallengeWorkspaceAnswer', 'Upload', '$timeout', 'Principal' , 'TimeServer'];
 
-    function WorkspaceHomeController($scope, entity, $state, $stateParams, ChallengeWorkspaceFeedback, ApplicationByChallengeId, $mdDialog, ChallengeWorkspaceQuestion, GetWorkspaceQuestion, WorkspaceDetail, ChallengeWorkspaceAnswer, Upload, $timeout, Principal, application) {
+    function WorkspaceHomeController($scope, WorkspaceOfChallenge, $state, $stateParams, ChallengeWorkspaceFeedback, ApplicationByChallengeId, $mdDialog, ChallengeWorkspaceQuestion, GetWorkspaceQuestion, WorkspaceDetail, ChallengeWorkspaceAnswer, Upload, $timeout, Principal, TimeServer) {
         var vm = this;
-        vm.workspace = entity;
+        
         vm.challengeId = $stateParams.challengeId;
-        vm.applicationId = application.applicationId;
+        vm.applicationId = null;
         vm.questions = [];
+        vm.workspace = null;
+        vm.isEventEnded = false;
+
+        WorkspaceOfChallenge.get({challengeId: $stateParams.challengeId}, function(result){
+            vm.workspace = result;
+            TimeServer.get({}, function(res){
+                var t1 = new Date(result.challenge.info.eventEndTime).getTime();
+                var t2 = new Date(res.timeServer).getTime();
+                if (t1-t2 < 0) vm.isEventEnded = true;
+            })
+        });
 
         ApplicationByChallengeId.get({challengeId: $stateParams.challengeId}, function(res){
             vm.applicationId = res.applicationId;
@@ -50,8 +61,8 @@
         }
 
         function submitQuestion() {
-            vm.question.applicationId = application.applicationId;
-            vm.question.workspaceId = entity.challenge.workspaceId;
+            vm.question.applicationId = vm.applicationId;
+            vm.question.workspaceId = vm.workspace.challenge.workspaceId;
             if (vm.question.id){
                 ChallengeWorkspaceQuestion.update(vm.question, questionUpdated, onSaveError);
             } else {
