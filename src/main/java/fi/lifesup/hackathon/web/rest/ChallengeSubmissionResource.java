@@ -65,7 +65,7 @@ public class ChallengeSubmissionResource {
 				.body(result);
 	}
 
-	@PostMapping("/challenge-submissions-created")
+	@PostMapping(value="/challenge-submissions-created", consumes = "multipart/form-data")
 	@Timed
 	public ResponseEntity<ChallengeSubmission> createdChallengeSubmission(
 			ChallengeSubmissionDTO challengeSubmissionDTO) throws URISyntaxException {

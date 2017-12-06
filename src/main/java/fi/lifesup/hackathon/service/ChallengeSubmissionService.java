@@ -47,7 +47,7 @@ public class ChallengeSubmissionService {
 	public ChallengeSubmission testUpload(ChallengeSubmissionFileDTO dto) throws URISyntaxException {
 		ChallengeSubmission challengeSubmission = challengeSubmissionRepository.findOne(dto.getChallengeSubmissionId());
 		String filePath = null;
-		System.err.println(dto.getChallengeSubmissionId());
+		System.err.println(dto.getFile());
 		if (!dto.getFile().isEmpty()) {
 			try {
 				String realPathtoUploads = attachPath + "challengeSubmission/" + dto.getChallengeSubmissionId();

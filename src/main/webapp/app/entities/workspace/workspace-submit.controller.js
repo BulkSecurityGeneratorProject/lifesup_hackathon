@@ -35,7 +35,7 @@
               Upload.upload({
                     url: '/api/challenge-submissions-created',
                     data: { 
-                        file: file,
+                        multipartFile: file,
                         additionalNote: vm.note,
                         workspaceId: vm.workspaceId,
                         applicationId: vm.applicationId
