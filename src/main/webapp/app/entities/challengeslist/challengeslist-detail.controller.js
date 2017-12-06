@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('ChallengesListDetailController', ChallengesListDetailController);
 
-    ChallengesListDetailController.$inject = ['$stateParams', 'Challenge', 'ChallengeInfo', 'entity', 'Principal', 'ApplicationsByUser', '$http', 'TimeServer'];
+    ChallengesListDetailController.$inject = ['$stateParams', 'Challenge', 'ChallengeInfo', 'entity', 'Principal', 'ApplicationsByUser', '$http', 'TimeServer', 'ChallengeResultById'];
 
-    function ChallengesListDetailController($stateParams, Challenge, ChallengeInfo, entity, Principal, ApplicationsByUser, $http, TimeServer) {
+    function ChallengesListDetailController($stateParams, Challenge, ChallengeInfo, entity, Principal, ApplicationsByUser, $http, TimeServer, ChallengeResultById) {
         var vm = this;
         vm.isAuthenticated = Principal.isAuthenticated;
         vm.challenge = entity;
@@ -18,6 +18,12 @@
         vm.challengeId = [];
         vm.applicationId = '';
         vm.timeLeft = null;
+        vm.hasResult = false;
+
+        ChallengeResultById.get({ challengeId: $stateParams.id }, function(res){
+            if (res.firstTeam) vm.hasResult = true;
+            vm.challengeResult = res;
+        })
 
 
         getApplicationByUser();

@@ -68,7 +68,7 @@ public class ChallengeSubmissionResource {
 	@PostMapping("/challenge-submissions-created")
 	@Timed
 	public ResponseEntity<ChallengeSubmission> createdChallengeSubmission(
-			@Valid @RequestBody ChallengeSubmissionDTO challengeSubmissionDTO) throws URISyntaxException {
+			ChallengeSubmissionDTO challengeSubmissionDTO) throws URISyntaxException {
 		log.debug("REST request to save ChallengeSubmission : {}", challengeSubmissionDTO);
 		if (challengeSubmissionDTO.getId() != null) {
 			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeSubmission", "idexists",
@@ -81,6 +81,10 @@ public class ChallengeSubmissionResource {
 					"A new challengeSubmission cannot already have an ID")).body(null);
 		}
 		ChallengeSubmission result = challengeSubmissionRepository.save(challengeSubmission);
+		ChallengeSubmissionFileDTO fileDTO = new ChallengeSubmissionFileDTO();
+		fileDTO.setChallengeSubmissionId(result.getId());
+		fileDTO.setFile(challengeSubmissionDTO.getMultipartFile());
+		challengeSubmissionService.testUpload(fileDTO);
 		return ResponseEntity.created(new URI("/api/challenge-submissions-created/" + result.getId()))
 				.headers(HeaderUtil.createEntityCreationAlert("challengeSubmission", result.getId().toString()))
 				.body(result);

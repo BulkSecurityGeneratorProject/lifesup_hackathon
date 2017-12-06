@@ -57,6 +57,38 @@
                     }]
                 }
             })
+
+            .state('challengeslist-team', {
+                parent: 'challengeslist-detail',
+                url: '/team/{applicationId}',
+                data: {
+                    authorities: []
+                },
+                onEnter: ['$stateParams', '$state', '$uibModal', '$mdDialog', function ($stateParams, $state, $uibModal, $mdDialog, ev) {
+                    $mdDialog.show({
+                        templateUrl: 'app/entities/workspace/workspace-team.html',
+                        controller: 'WorkspaceTeamController',
+                        controllerAs: 'vm',
+                        clickOutsideToClose: true,
+                        targetEvent: ev,
+                        resolve: {
+                            entity: ['$stateParams', 'ApplicationsListDetails', function ($stateParams, ApplicationsListDetails) {
+                                return ApplicationsListDetails.query({id: $stateParams.applicationId}).$promise;
+                            }],
+                            translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader){
+                                $translatePartialLoader.addPart('global');
+                                $translatePartialLoader.addPart('applicationslist');
+                                // $translatePartialLoader.addPart('workspace');
+                                return $translate.refresh();
+                            }]
+                        }
+                    }).then(function () {
+                        $state.go($state.current.parent);
+                    }, function () {
+                        $state.go('^');
+                    });
+                }]
+            });
     }
 
 })();

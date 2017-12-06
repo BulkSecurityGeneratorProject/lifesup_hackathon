@@ -132,6 +132,29 @@
                     }]
                 }
             })
+
+            .state('workspace-submit', {
+                parent: 'workspace',
+                url: '/submit',
+                data: {
+                    authorities: [],
+                    pageTitle: "Workspace"
+                },
+                views:{
+                    'subcontent':{
+                        templateUrl: 'app/entities/workspace/workspace-submit.html',
+                        controller: 'WorkspaceSubmitController',
+                        controllerAs: 'vm',
+                    }
+                },
+                resolve:{
+                    translatePartialLoader: ['$translate', '$translatePartialLoader', function($translate, $translatePartialLoader){
+                        $translatePartialLoader.addPart('global');
+                        // $translatePartialLoader.addPart('workspace');
+                        return $translate.refresh();
+                    }]
+                }
+            })
             
             
         }

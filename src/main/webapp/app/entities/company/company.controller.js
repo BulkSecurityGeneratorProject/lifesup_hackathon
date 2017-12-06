@@ -49,24 +49,5 @@
             });
         }
 
-        $scope.uploadFiles = function (file) {
-            $scope.f = file;
-           
-            if (file) {
-              Upload.upload({
-                    url: 'api/upload-test',
-                    data: { file: file,challengeSubmissionId:1016 }
-                }).then(function (response) {
-                    console.log('OK!');
-                }, function (response) {
-                    if (response.status > 0)
-                        $scope.errorMsg = response.status + ': ' + response.data;
-                }, function (evt) {
-                    file.progress = Math.min(100, parseInt(100.0 *
-                        evt.loaded / evt.total));
-                });
-
-            }
-        }
     }
 })();

@@ -1,5 +1,6 @@
 <div class="banner">
-    <img ng-src="{{vm.challenge.bannerUrl64 ? vm.challenge.bannerUrl64 : '/content/images/svg/index.square-circle-preloader.svg'}}" class="img img-responsive banner-img">
+    <img ng-src="{{vm.challenge.bannerUrl64 ? vm.challenge.bannerUrl64 : '/content/images/svg/index.square-circle-preloader.svg'}}"
+        class="img img-responsive banner-img">
 </div>
 <!-- challenge details -->
 <div class="row challenge-detail-wrapper">
@@ -8,28 +9,45 @@
             <h3 data-translate="hackathonApp.challengesDetails.subtitle"></h3>
             <div class="line"></div>
             <div class="info-wrapper">
-                <p><i class="material-icons side-icons">date_range</i>{{vm.challenge.info.eventStartTime | date}} - {{vm.challenge.info.eventEndTime | date}}</p><hr>
-                <p><i class="material-icons side-icons">place</i>{{vm.challenge.info.location}}</p><hr>
-                <p><i class="material-icons side-icons">star_border</i>{{vm.challenge.info.prize}}</p><hr>
-                
-                <p ng-if="vm.timeLeft > 0 && vm.challenge.info.status !== 'INACTIVE'"><i class="material-icons side-icons">alarm</i><span><timer end-time="vm.challenge.timeLeft"><span data-translate="hackathonApp.card.appTime" translate-values="{days: '{{days}}', hours: '{{hours}}',  minutes: '{{minutes}}', seconds: '{{seconds}}'}"></span></timer></span></p>
-                
-                <p ng-if="vm.timeLeft < 0 || vm.challenge.info.status === 'INACTIVE'"><i class="material-icons side-icons">alarm_off</i><span data-translate="hackathonApp.applicationStatus.close"></span></p>
-                
+                <p>
+                    <i class="material-icons side-icons">date_range</i>{{vm.challenge.info.eventStartTime | date}} - {{vm.challenge.info.eventEndTime | date}}</p>
+                <hr>
+                <p>
+                    <i class="material-icons side-icons">place</i>{{vm.challenge.info.location}}</p>
+                <hr>
+                <p>
+                    <i class="material-icons side-icons">star_border</i>{{vm.challenge.info.prize}}</p>
+                <hr>
+
+                <p ng-if="vm.timeLeft > 0 && vm.challenge.info.status !== 'INACTIVE'">
+                    <i class="material-icons side-icons">alarm</i>
+                    <span>
+                        <timer end-time="vm.challenge.timeLeft">
+                            <span data-translate="hackathonApp.card.appTime" translate-values="{days: '{{days}}', hours: '{{hours}}',  minutes: '{{minutes}}', seconds: '{{seconds}}'}"></span>
+                        </timer>
+                    </span>
+                </p>
+
+                <p ng-if="vm.timeLeft < 0 || vm.challenge.info.status === 'INACTIVE'">
+                    <i class="material-icons side-icons">alarm_off</i>
+                    <span data-translate="hackathonApp.applicationStatus.close"></span>
+                </p>
+
             </div>
-           <!--  <button class="cta-btn"><a href="#">APPLY NOW</a></button> -->
-           <div ng-switch="vm.getApplicationStatus()" has-authority-except="ROLE_HOST">
-             <button class="cta-btn" ng-switch-when="ACTIVE" ng-switch="vm.isAuthenticated()">
-               <a href="#" ui-sref="login-signup" ng-switch-when="false" data-translate="hackathonApp.applicationStatus.apply"></a>
-               <a href="#" ui-sref="complete-profile({id: vm.challenge.id})" ng-switch-when="true" data-translate="hackathonApp.applicationStatus.apply"></a>
-             </button>
-             <button class="cta-btn" ng-click="vm.getApplicationId(vm.challenge.id)" ui-sref="applicationslist-detail({id:vm.applicationId})" ng-switch-when="APPLIED">
-               <a href="#" data-translate="hackathonApp.applicationStatus.applied"></a>
-             </button>
-             <button class="cta-btn" ng-switch-when="INACTIVE">
-               <a href="#" data-translate="hackathonApp.applicationStatus.close"></a>
-             </button>
-           </div>
+            <!--  <button class="cta-btn"><a href="#">APPLY NOW</a></button> -->
+            <div ng-switch="vm.getApplicationStatus()" has-authority-except="ROLE_HOST">
+                <button class="cta-btn" ng-switch-when="ACTIVE" ng-switch="vm.isAuthenticated()">
+                    <a href="#" ui-sref="login-signup" ng-switch-when="false" data-translate="hackathonApp.applicationStatus.apply"></a>
+                    <a href="#" ui-sref="complete-profile({id: vm.challenge.id})" ng-switch-when="true" data-translate="hackathonApp.applicationStatus.apply"></a>
+                </button>
+                <button class="cta-btn" ng-click="vm.getApplicationId(vm.challenge.id)" ui-sref="applicationslist-detail({id:vm.applicationId})"
+                    ng-switch-when="APPLIED">
+                    <a href="#" data-translate="hackathonApp.applicationStatus.applied"></a>
+                </button>
+                <button class="cta-btn" ng-switch-when="INACTIVE">
+                    <a href="#" data-translate="hackathonApp.applicationStatus.close"></a>
+                </button>
+            </div>
         </div>
 
         <div class="side-subscribe">
@@ -37,7 +55,7 @@
             <div class="line"></div>
             <p data-translate="hackathonApp.subscribe.infoText"></p>
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="yourEmail@example.com"  aria-describedby="btnGroupAddon">
+                <input type="text" class="form-control" placeholder="yourEmail@example.com" aria-describedby="btnGroupAddon">
                 <span class="input-group-addon subscribe-btn" id="btnGroupAddon" ui-sref="login-signup" data-translate="hackathonApp.subscribe.signup"></span>
             </div>
         </div>
@@ -49,6 +67,14 @@
             <h5>with {{vm.challenge.company.name}}</h5>
         </div>
         <div class="main-info">
+            <div ng-if="vm.hasResult" class="content-wrapper">
+                <h3 class="sub-heading">Challenge Result</h3>
+                <md-button class="md-primary md-raised w3-red" ui-sref="challengeslist-team({applicationId: vm.challengeResult.firstTeam})">1st Team</md-button>
+                <md-button class="md-primary md-raised w3-orange" ng-class="{'w3-grey': !vm.challengeResult.secondTeam}" ng-disabled="!vm.challengeResult.secondTeam" ui-sref="challengeslist-team({applicationId: vm.challengeResult.secondTeam})">2nd Team</md-button>
+                <md-button class="md-primary md-raised w3-khaki" ng-class="{'w3-grey': !vm.challengeResult.thirdTeam}" ng-disabled="!vm.challengeResult.thirdTeam" ui-sref="challengeslist-team({applicationId: vm.challengeResult.thirdTeam})">3rd Team</md-button>
+                <md-divider ng-if="!$last"></md-divider>
+                <br>
+            </div>
             <div class="content-wrapper">
                 <p>{{vm.challenge.introduction}}</p>
             </div>
@@ -75,22 +101,34 @@
             <div class="content-wrapper">
                 <h3 class="sub-heading" data-translate="hackathonApp.challengesDetails.timelineText"></h3>
                 <div>
-                    <p><strong data-translate="hackathonApp.challengesDetails.eventStartTime"></strong>&nbsp;{{vm.challenge.info.eventStartTime | date: 'longDate'}}</p>
-                    <p><strong data-translate="hackathonApp.challengesDetails.eventEndTime"></strong>&nbsp;{{vm.challenge.info.eventEndTime | date: 'longDate'}}</p>
-                    <p><strong data-translate="hackathonApp.challengesDetails.kickoffWebinarDate"></strong>&nbsp;{{vm.challenge.info.kickoffWebinarDate | date: 'longDate'}}</p>
-                    <p><strong data-translate="hackathonApp.challengesDetails.applicationCloseDate"></strong>&nbsp;{{vm.challenge.info.applicationCloseDate | date: 'longDate'}}</p>
-                    <p><strong data-translate="hackathonApp.challengesDetails.selectionInformDate"></strong>&nbsp;{{vm.challenge.info.selectionInformDate | date: 'longDate'}}</p>
-                    <p><strong data-translate="hackathonApp.challengesDetails.pilotSubmissionCloseDate"></strong>&nbsp;{{vm.challenge.info.pilotSubmissionCloseDate | date: 'longDate'}}</p>
-                    <p><strong data-translate="hackathonApp.challengesDetails.pilotPhaseStartDate"></strong>&nbsp;{{vm.challenge.info.pilotPhaseStartDate | date: 'longDate'}}</p>
-                    <p><strong data-translate="hackathonApp.challengesDetails.pilotPhaseEndDate"></strong>&nbsp;{{vm.challenge.info.pilotPhaseEndDate | date: 'longDate'}}</p>
+                    <p>
+                        <strong data-translate="hackathonApp.challengesDetails.eventStartTime"></strong>&nbsp;{{vm.challenge.info.eventStartTime | date: 'longDate'}}</p>
+                    <p>
+                        <strong data-translate="hackathonApp.challengesDetails.eventEndTime"></strong>&nbsp;{{vm.challenge.info.eventEndTime | date: 'longDate'}}</p>
+                    <p>
+                        <strong data-translate="hackathonApp.challengesDetails.kickoffWebinarDate"></strong>&nbsp;{{vm.challenge.info.kickoffWebinarDate | date: 'longDate'}}</p>
+                    <p>
+                        <strong data-translate="hackathonApp.challengesDetails.applicationCloseDate"></strong>&nbsp;{{vm.challenge.info.applicationCloseDate | date: 'longDate'}}</p>
+                    <p>
+                        <strong data-translate="hackathonApp.challengesDetails.selectionInformDate"></strong>&nbsp;{{vm.challenge.info.selectionInformDate | date: 'longDate'}}</p>
+                    <p>
+                        <strong data-translate="hackathonApp.challengesDetails.pilotSubmissionCloseDate"></strong>&nbsp;{{vm.challenge.info.pilotSubmissionCloseDate | date: 'longDate'}}</p>
+                    <p>
+                        <strong data-translate="hackathonApp.challengesDetails.pilotPhaseStartDate"></strong>&nbsp;{{vm.challenge.info.pilotPhaseStartDate | date: 'longDate'}}</p>
+                    <p>
+                        <strong data-translate="hackathonApp.challengesDetails.pilotPhaseEndDate"></strong>&nbsp;{{vm.challenge.info.pilotPhaseEndDate | date: 'longDate'}}</p>
                 </div>
             </div>
             <div class="content-wrapper">
                 <h3 class="sub-heading" data-translate="hackathonApp.challengesDetails.additionalText"> </h3>
                 <p>{{vm.challenge.additionalText}}</p>
-                <span data-translate="hackathonApp.challengesDetails.maxTeamMember"></span><span>: {{vm.challenge.maxTeamNumber}}</span><br>
-                <span data-translate="hackathonApp.challengesDetails.minTeamMember"></span><span>: {{vm.challenge.minTeamNumber}}</span>
+                <span data-translate="hackathonApp.challengesDetails.maxTeamMember"></span>
+                <span>: {{vm.challenge.maxTeamNumber}}</span>
+                <br>
+                <span data-translate="hackathonApp.challengesDetails.minTeamMember"></span>
+                <span>: {{vm.challenge.minTeamNumber}}</span>
             </div>
-        </div><!-- end of main info -->
+        </div>
+        <!-- end of main info -->
     </div>
 </div>
