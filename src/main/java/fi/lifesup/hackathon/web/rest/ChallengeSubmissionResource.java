@@ -78,10 +78,10 @@ public class ChallengeSubmissionResource {
 	public ResponseEntity<ChallengeSubmission> createdChallengeSubmission(
 			ChallengeSubmissionDTO challengeSubmissionDTO) throws URISyntaxException {
 		log.debug("REST request to save ChallengeSubmission : {}", challengeSubmissionDTO);
-		if (challengeSubmissionDTO.getId() != null) {
-			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeSubmission", "idexists",
-					"A new challengeSubmission cannot already have an ID")).body(null);
-		}
+//		if (challengeSubmissionDTO.getId() != null) {
+//			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeSubmission", "idexists",
+//					"A new challengeSubmission cannot already have an ID")).body(null);
+//		}
 		ChallengeSubmission challengeSubmission = challengeSubmissionService
 				.createChallengeSubmission(challengeSubmissionDTO);
 		if (challengeSubmission == null) {
@@ -211,9 +211,9 @@ public class ChallengeSubmissionResource {
 	
 	@GetMapping("/challenge-submissions/application/{applicationId}")
 	@Timed
-	public List<ChallengeSubmission> getChallengeSubmissionApplication(@PathVariable Long applicationId) {
+	public ChallengeSubmission getChallengeSubmissionApplication(@PathVariable Long applicationId) {
 		log.debug("REST request to get ChallengeSubmission : {}", applicationId);
-		List<ChallengeSubmission> challengeSubmissions = challengeSubmissionRepository.findByApplicationId(applicationId);
+		ChallengeSubmission challengeSubmissions = challengeSubmissionRepository.findByApplicationId(applicationId);
 		return challengeSubmissions;
 	}
 	

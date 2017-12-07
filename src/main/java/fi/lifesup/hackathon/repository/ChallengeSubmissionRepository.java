@@ -17,5 +17,5 @@ public interface ChallengeSubmissionRepository extends JpaRepository<ChallengeSu
 	
 	List<ChallengeSubmission> findByWorkspaceId(Long workscapeId);
 
-	List<ChallengeSubmission> findByApplicationId(Long applicationId);
+	ChallengeSubmission findByApplicationId(Long applicationId);
 }
