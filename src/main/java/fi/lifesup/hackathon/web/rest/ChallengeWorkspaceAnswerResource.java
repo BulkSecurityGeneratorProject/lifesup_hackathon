@@ -25,15 +25,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 
 import fi.lifesup.hackathon.domain.ChallengeWorkspaceAnswer;
-import fi.lifesup.hackathon.domain.ChallengeWorkspaceQuestion;
-import fi.lifesup.hackathon.domain.User;
-import fi.lifesup.hackathon.domain.enumeration.WorkspaceAnswerType;
 import fi.lifesup.hackathon.repository.ChallengeWorkspaceAnswerRepository;
-import fi.lifesup.hackathon.repository.ChallengeWorkspaceQuestionRepository;
-import fi.lifesup.hackathon.repository.UserRepository;
 import fi.lifesup.hackathon.security.SecurityUtils;
 import fi.lifesup.hackathon.service.ChallengeWorkspaceAnswerService;
-import fi.lifesup.hackathon.service.UserService;
 import fi.lifesup.hackathon.service.dto.ChallengeWorkspaceAnswerDTO;
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 

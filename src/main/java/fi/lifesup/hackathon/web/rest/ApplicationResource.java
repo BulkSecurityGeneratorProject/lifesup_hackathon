@@ -28,7 +28,6 @@ import com.codahale.metrics.annotation.Timed;
 import fi.lifesup.hackathon.domain.Application;
 import fi.lifesup.hackathon.domain.enumeration.ApplicationStatus;
 import fi.lifesup.hackathon.repository.ApplicationRepository;
-import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
 import fi.lifesup.hackathon.security.AuthoritiesConstants;
 import fi.lifesup.hackathon.service.ApplicationService;
 import fi.lifesup.hackathon.service.dto.ApplicationBasicDTO;

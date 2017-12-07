@@ -1,29 +1,37 @@
 package fi.lifesup.hackathon.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-import fi.lifesup.hackathon.domain.ChallengeSubmission;
-import fi.lifesup.hackathon.domain.UserInfo;
-import fi.lifesup.hackathon.repository.ChallengeSubmissionRepository;
-import fi.lifesup.hackathon.service.ChallengeSubmissionService;
-import fi.lifesup.hackathon.service.dto.ChallengeSubmissionDTO;
-import fi.lifesup.hackathon.service.dto.*;
-import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.inject.Inject;
-import javax.validation.Valid;
-
 import java.io.File;
+import java.io.FileInputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+
+import javax.inject.Inject;
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.codec.Base64;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.codahale.metrics.annotation.Timed;
+
+import fi.lifesup.hackathon.domain.ChallengeSubmission;
+import fi.lifesup.hackathon.repository.ChallengeSubmissionRepository;
+import fi.lifesup.hackathon.service.ChallengeSubmissionService;
+import fi.lifesup.hackathon.service.dto.ChallengeSubmissionDTO;
+import fi.lifesup.hackathon.service.dto.ChallengeSubmissionFileDTO;
+import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 
 /**
  * REST controller for managing ChallengeSubmission.
@@ -172,6 +180,25 @@ public class ChallengeSubmissionResource {
 		return ResponseEntity.ok()
 				.headers(HeaderUtil.createEntityUpdateAlert("challengesubmission", result.getId().toString()))
 				.body(result);
+	}
+	
+	@PostMapping("/challenge-submissions/download")
+	@Timed
+	public ChallengeSubmissionFileDTO downloadSubmissionFile(@RequestBody String filePath)
+			throws URISyntaxException {
+		ChallengeSubmissionFileDTO outPut = null;
+    	FileInputStream stream = null;
+    	try{
+    	File file = new File(filePath);	
+    	stream = new FileInputStream(file);
+    	byte[] bytes = new byte[(int)file.length()];
+    	stream.read(bytes);
+    	String base64Content = new String(Base64.encode(bytes));   	
+    	outPut.setBase64(base64Content);
+    	outPut.setFileName(file.getName());
+    	}catch(Exception e){
+    	}
+    	return outPut;
 	}
 
 }

@@ -1,29 +1,35 @@
 package fi.lifesup.hackathon.web.rest;
 
-import com.codahale.metrics.annotation.Timed;
-
-import fi.lifesup.hackathon.domain.ChallengeSubmission;
-import fi.lifesup.hackathon.domain.ChallengeSubmissionFeedback;
-
-import fi.lifesup.hackathon.repository.ChallengeSubmissionFeedbackRepository;
-import fi.lifesup.hackathon.repository.ChallengeSubmissionRepository;
-import fi.lifesup.hackathon.security.SecurityUtils;
-import fi.lifesup.hackathon.service.ChallengeSubmissionFeedbackService;
-import fi.lifesup.hackathon.service.UserService;
-import fi.lifesup.hackathon.service.dto.ChallengeSubmissionFeedbackDTO;
-import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+
+import javax.inject.Inject;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.codahale.metrics.annotation.Timed;
+
+import fi.lifesup.hackathon.domain.ChallengeSubmission;
+import fi.lifesup.hackathon.domain.ChallengeSubmissionFeedback;
+import fi.lifesup.hackathon.repository.ChallengeSubmissionFeedbackRepository;
+import fi.lifesup.hackathon.repository.ChallengeSubmissionRepository;
+import fi.lifesup.hackathon.security.SecurityUtils;
+import fi.lifesup.hackathon.service.ChallengeSubmissionFeedbackService;
+import fi.lifesup.hackathon.service.dto.ChallengeSubmissionFeedbackDTO;
+import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
 
 /**
  * REST controller for managing ChallengeSubmissionFeedback.
@@ -38,6 +44,8 @@ public class ChallengeSubmissionFeedbackResource {
 	private ChallengeSubmissionFeedbackRepository challengeSubmissionFeedbackRepository;
 	@Inject
 	private ChallengeSubmissionFeedbackService challengeSubmissionFeedbackService;
+	@Inject
+	private ChallengeSubmissionRepository challengeSubmissionRepository;
 
 	/**
 	 * POST /challenge-submission-feedbacks : Create a new
@@ -154,6 +162,9 @@ public class ChallengeSubmissionFeedbackResource {
 	@Timed
 	public ResponseEntity<Void> deleteChallengeSubmissionFeedback(@PathVariable Long id) {
 		log.debug("REST request to delete ChallengeSubmissionFeedback : {}", id);
+		ChallengeSubmission challengeSubmission = challengeSubmissionRepository.findByFeeabackId(id);
+		challengeSubmission.setFeedback(null);
+		challengeSubmissionRepository.save(challengeSubmission);
 		challengeSubmissionFeedbackRepository.delete(id);
 		return ResponseEntity.ok()
 				.headers(HeaderUtil.createEntityDeletionAlert("challengeSubmissionFeedback", id.toString())).build();

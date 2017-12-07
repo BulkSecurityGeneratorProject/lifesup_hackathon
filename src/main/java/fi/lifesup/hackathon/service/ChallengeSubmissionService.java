@@ -11,17 +11,19 @@ import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.multipart.MultipartFile;
 
-import fi.lifesup.hackathon.domain.*;
-import fi.lifesup.hackathon.repository.*;
+import fi.lifesup.hackathon.domain.Application;
+import fi.lifesup.hackathon.domain.ChallengeSubmission;
+import fi.lifesup.hackathon.domain.ChallengeWorkspace;
+import fi.lifesup.hackathon.repository.ApplicationRepository;
+import fi.lifesup.hackathon.repository.ChallengeInfoRepository;
+import fi.lifesup.hackathon.repository.ChallengeRepository;
+import fi.lifesup.hackathon.repository.ChallengeSubmissionRepository;
+import fi.lifesup.hackathon.repository.ChallengeWorkspaceRepository;
 import fi.lifesup.hackathon.security.SecurityUtils;
-import fi.lifesup.hackathon.service.dto.*;
-import fi.lifesup.hackathon.web.rest.ChallengeInfoResource;
-import io.undertow.util.FileUtils;
+import fi.lifesup.hackathon.service.dto.ChallengeSubmissionDTO;
+import fi.lifesup.hackathon.service.dto.ChallengeSubmissionFileDTO;
 
 @Service
 @Transactional

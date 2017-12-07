@@ -15,7 +15,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import fi.lifesup.hackathon.domain.ApplicationInviteEmail;
 import fi.lifesup.hackathon.domain.Authority;
 import fi.lifesup.hackathon.domain.Company;
 import fi.lifesup.hackathon.domain.User;

@@ -37,6 +37,7 @@ public class ChallengeSubmissionFeedbackService {
 			ChallengeSubmissionFeedback result = challengeSubmissionFeedbackRepository
 					.save(challengeSubmissionFeedback);
 			challengeSubmission.setFeedback(result);
+			challengeSubmissionRepository.save(challengeSubmission);
 			return result;
 		} else {
 			challengeSubmissionFeedback.setId(challengeSubmissionFeedbackDTO.getId());

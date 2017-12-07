@@ -8,10 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import fi.lifesup.hackathon.domain.*;
-import fi.lifesup.hackathon.repository.*;
+
+import fi.lifesup.hackathon.domain.ChallengeWorkspace;
+import fi.lifesup.hackathon.domain.ChallengeWorkspaceNews;
+import fi.lifesup.hackathon.repository.ChallengeWorkspaceNewsRepository;
+import fi.lifesup.hackathon.repository.ChallengeWorkspaceRepository;
 import fi.lifesup.hackathon.security.SecurityUtils;
-import fi.lifesup.hackathon.service.dto.*;
+import fi.lifesup.hackathon.service.dto.ChallengeWorkspaceNewsDTO;
 
 @Service
 @Transactional

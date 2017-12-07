@@ -10,11 +10,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import fi.lifesup.hackathon.domain.Challenge;
+import fi.lifesup.hackathon.domain.ChallengeFeedback;
+import fi.lifesup.hackathon.repository.ApplicationRepository;
+import fi.lifesup.hackathon.repository.ChallengeFeedbackRepository;
 import fi.lifesup.hackathon.repository.ChallengeRepository;
-import fi.lifesup.hackathon.domain.*;
-import fi.lifesup.hackathon.repository.*;
-import fi.lifesup.hackathon.service.*;
-import fi.lifesup.hackathon.service.dto.*;
+import fi.lifesup.hackathon.service.dto.ChallengeFeedbackDTO;
 
 @Service
 @Transactional

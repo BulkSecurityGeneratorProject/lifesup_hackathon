@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fi.lifesup.hackathon.domain.Application;
 import fi.lifesup.hackathon.domain.ApplicationInviteEmail;
-import fi.lifesup.hackathon.domain.Challenge;
 import fi.lifesup.hackathon.domain.ChallengeUserApplication;
 import fi.lifesup.hackathon.domain.User;
 import fi.lifesup.hackathon.domain.enumeration.ApplicationStatus;
@@ -27,9 +26,7 @@ import fi.lifesup.hackathon.repository.UserRepository;
 import fi.lifesup.hackathon.service.dto.ApplicationBasicDTO;
 import fi.lifesup.hackathon.service.dto.ApplicationDTO;
 import fi.lifesup.hackathon.service.dto.ApplicationMemberDTO;
-import fi.lifesup.hackathon.service.dto.MemberDTO;
 import fi.lifesup.hackathon.service.util.RandomUtil;
-import liquibase.sqlgenerator.core.AddDefaultValueGeneratorPostgres;
 
 @Service
 @Transactional

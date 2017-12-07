@@ -1,35 +1,37 @@
 package fi.lifesup.hackathon.web.rest;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Optional;
+
+import javax.inject.Inject;
+import javax.validation.Valid;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.codahale.metrics.annotation.Timed;
 
-import fi.lifesup.hackathon.domain.Challenge;
 import fi.lifesup.hackathon.domain.User;
 import fi.lifesup.hackathon.domain.UserInfo;
 import fi.lifesup.hackathon.domain.enumeration.UserStatus;
 import fi.lifesup.hackathon.repository.UserInfoRepository;
 import fi.lifesup.hackathon.repository.UserRepository;
-import fi.lifesup.hackathon.security.SecurityUtils;
 import fi.lifesup.hackathon.service.UserInfoService;
 import fi.lifesup.hackathon.service.UserService;
-import fi.lifesup.hackathon.service.dto.ChallengeImageDTO;
-import fi.lifesup.hackathon.service.dto.UserDTO;
-import fi.lifesup.hackathon.service.dto.UserInfoDTO;
 import fi.lifesup.hackathon.service.dto.UserInfoImageDTO;
 import fi.lifesup.hackathon.web.rest.util.HeaderUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.thymeleaf.util.SetUtils;
-
-import javax.inject.Inject;
-import javax.validation.Valid;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
 
 /**
  * REST controller for managing UserInfo.

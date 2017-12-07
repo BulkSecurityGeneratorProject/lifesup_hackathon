@@ -13,7 +13,6 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface ChallengeSubmissionRepository extends JpaRepository<ChallengeSubmission,Long> {
 
-	@Query("select c from ChallengeSubmission c where c.feedback.id = ?1 ")
-	List<ChallengeSubmission> findByFeeabackId(Long id);
+	ChallengeSubmission findByFeeabackId(Long feedbackId);
 
 }

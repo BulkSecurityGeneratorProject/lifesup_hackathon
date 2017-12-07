@@ -21,8 +21,6 @@ import fi.lifesup.hackathon.config.JHipsterProperties;
 import fi.lifesup.hackathon.domain.Application;
 import fi.lifesup.hackathon.domain.ApplicationInviteEmail;
 import fi.lifesup.hackathon.domain.User;
-import fi.lifesup.hackathon.security.SecurityUtils;
-import fi.lifesup.hackathon.service.dto.ApplicationMemberDTO;
 import fi.lifesup.hackathon.service.dto.CompanyDTO;
 
 /**

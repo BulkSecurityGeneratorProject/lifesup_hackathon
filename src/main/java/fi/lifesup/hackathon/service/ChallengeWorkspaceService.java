@@ -2,7 +2,6 @@ package fi.lifesup.hackathon.service;
 
 import java.time.ZonedDateTime;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
@@ -13,16 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import fi.lifesup.hackathon.domain.Challenge;
-import fi.lifesup.hackathon.domain.ChallengeUserApplication;
 import fi.lifesup.hackathon.domain.ChallengeWorkspace;
-import fi.lifesup.hackathon.domain.ChallengeWorkspaceAnswer;
-import fi.lifesup.hackathon.domain.ChallengeWorkspaceQuestion;
-import fi.lifesup.hackathon.domain.enumeration.WorkspaceAnswerType;
 import fi.lifesup.hackathon.repository.ChallengeRepository;
 import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
 import fi.lifesup.hackathon.repository.ChallengeWorkspaceRepository;
-import fi.lifesup.hackathon.security.SecurityUtils;
-import fi.lifesup.hackathon.service.dto.ChallengeWorkspaceAnswerDTO;
 import fi.lifesup.hackathon.service.dto.ChallengeWorkspaceDTO;
 import fi.lifesup.hackathon.service.dto.ChallengeWorkspaceNewsDTO;
 import fi.lifesup.hackathon.service.dto.ChallengeWorkspaceQuestionDTO;
