@@ -8,6 +8,7 @@
         .factory('WorkspaceOfChallenge', WorkspaceOfChallenge)
         .factory('ChallengeWorkspaceFeedback', ChallengeWorkspaceFeedback)
         .factory('ChallengeFeedbackCreate', ChallengeFeedbackCreate)
+        .factory('FeedbackByChallenge', FeedbackByChallenge)
         .factory('ChallengeWorkspaceQuestion', ChallengeWorkspaceQuestion)
         .factory('GetWorkspaceQuestion', GetWorkspaceQuestion)
         .factory('CreateWorkspaceNews', CreateWorkspaceNews)
@@ -21,6 +22,7 @@
     WorkspaceOfChallenge.$inject = ['$resource'];
     ChallengeWorkspaceFeedback.$inject = ['$resource'];
     ChallengeFeedbackCreate.$inject = ['$resource'];
+    FeedbackByChallenge.$inject = ['$resource'];
     ChallengeWorkspaceQuestion.$inject = ['$resource'];
     GetWorkspaceQuestion.$inject = ['$resource'];
     CreateWorkspaceNews.$inject = ['$resource'];
@@ -129,6 +131,24 @@
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: false},
+            'get': {
+                method: 'GET',
+                transformResponse: function (data) {
+                    if (data) {
+                        data = angular.fromJson(data);
+                    }
+                    return data;
+                }
+            },
+            'save': { method:'POST' },
+            'update': { method:'PUT' }
+        });
+    }
+
+    function FeedbackByChallenge ($resource) {
+        var resourceUrl =  '/api/challenge-feedbacks/challenge/:challengeId';
+        return $resource(resourceUrl, {}, {
+            'query': { method: 'GET', isArray: true},
             'get': {
                 method: 'GET',
                 transformResponse: function (data) {
