@@ -16,6 +16,7 @@
         vm.isEventEnded = false;
         vm.fileId = null;
         vm.isUploading = false;
+        vm.hasFileUploaded = false;
 
         WorkspaceOfChallenge.get({ challengeId: $stateParams.challengeId }, function (result) {
             vm.workspaceId = result.id;
@@ -30,6 +31,7 @@
             vm.applicationId = res.applicationId;
             GetSubmissionByApplicationId.get({ applicationId: vm.applicationId }, function (result) {
                 if (result.id){
+                    vm.hasFileUploaded = true;;
                     vm.fileId = result.id;
                 }
             })
@@ -75,28 +77,56 @@
             })
         }
 
+        function upload(id){
+            
+        }
+
         $scope.uploadFiles = function (file) {
             $scope.f = file;
             vm.isUploading = true;
             if (file) {
-                Upload.upload({
-                    url: '/api/challenge-submissions-created',
-                    data: {
-                        id: vm.fileId,
-                        multipartFile: file,
-                        additionalNote: vm.note,
-                        workspaceId: vm.workspaceId,
-                        applicationId: vm.applicationId
-                    }
-                }).then(function (response) {
-                    console.log('OK!');
-                }, function (response) {
-                    if (response.status > 0)
-                        $scope.errorMsg = response.status + ': ' + response.data;
-                }, function (evt) {
-                    file.progress = Math.min(100, parseInt(100.0 *
-                        evt.loaded / evt.total));
-                });
+                if (vm.fileId){
+                    console.log(vm.fileId);
+                    Upload.upload({
+                        url: '/api/challenge-submissions-updated',
+                        data: {
+                            id: vm.fileId,
+                            multipartFile: file,
+                            additionalNote: vm.note,
+                            workspaceId: vm.workspaceId,
+                            applicationId: vm.applicationId
+                        }
+                    }).then(function (response) {
+                        console.log('OK!');
+                    }, function (response) {
+                        if (response.status > 0)
+                            $scope.errorMsg = response.status + ': ' + response.data;
+                    }, function (evt) {
+                        file.progress = Math.min(100, parseInt(100.0 *
+                            evt.loaded / evt.total));
+                    });
+                }
+                else {
+                    console.log("No id");
+                    Upload.upload({
+                        url: '/api/challenge-submissions-created',
+                        data: {
+                            multipartFile: file,
+                            additionalNote: vm.note,
+                            workspaceId: vm.workspaceId,
+                            applicationId: vm.applicationId
+                        }
+                    }).then(function (response) {
+                        console.log('OK!');
+                    }, function (response) {
+                        if (response.status > 0)
+                            $scope.errorMsg = response.status + ': ' + response.data;
+                    }, function (evt) {
+                        file.progress = Math.min(100, parseInt(100.0 *
+                            evt.loaded / evt.total));
+                    });
+                }
+                
             }
         }
     }

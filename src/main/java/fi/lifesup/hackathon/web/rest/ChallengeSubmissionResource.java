@@ -73,7 +73,7 @@ public class ChallengeSubmissionResource {
 				.body(result);
 	}
 
-	@PostMapping(value="/challenge-submissions-created", consumes = "multipart/form-data")
+	@PostMapping(value="/challenge-submissions-updated", consumes = "multipart/form-data")
 	@Timed
 	public ResponseEntity<ChallengeSubmission> createdChallengeSubmission(
 			ChallengeSubmissionDTO challengeSubmissionDTO) throws URISyntaxException {
@@ -100,26 +100,15 @@ public class ChallengeSubmissionResource {
 				.body(result);
 
 	}
-
-	/**
-	 * PUT /challenge-submissions : Updates an existing challengeSubmission.
-	 *
-	 * @param challengeSubmission
-	 *            the challengeSubmission to update
-	 * @return the ResponseEntity with status 200 (OK) and with body the updated
-	 *         challengeSubmission, or with status 400 (Bad Request) if the
-	 *         challengeSubmission is not valid, or with status 500 (Internal
-	 *         Server Error) if the challengeSubmission couldnt be updated
-	 * @throws URISyntaxException
-	 *             if the Location URI syntax is incorrect
-	 */
-	@PutMapping("/challenge-submissions-created")
+	
+	@PostMapping(value="/challenge-submissions-created", consumes = "multipart/form-data")
 	@Timed
 	public ResponseEntity<ChallengeSubmission> updateChallengeSubmission(
-			@Valid @RequestBody ChallengeSubmissionDTO challengeSubmissionDTO) throws URISyntaxException {
-		log.debug("REST request to update ChallengeSubmission : {}", challengeSubmissionDTO);
-		if (challengeSubmissionDTO.getId() == null) {
-			return createdChallengeSubmission(challengeSubmissionDTO);
+			ChallengeSubmissionDTO challengeSubmissionDTO) throws URISyntaxException {
+		log.debug("REST request to save ChallengeSubmission : {}", challengeSubmissionDTO);
+		if (challengeSubmissionDTO.getId() != null) {
+			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeSubmission", "idexists",
+					"A new challengeSubmission cannot already have an ID")).body(null);
 		}
 		ChallengeSubmission challengeSubmission = challengeSubmissionService
 				.createChallengeSubmission(challengeSubmissionDTO);
@@ -133,11 +122,26 @@ public class ChallengeSubmissionResource {
 			fileDTO.setChallengeSubmissionId(result.getId());
 			fileDTO.setFile(challengeSubmissionDTO.getMultipartFile());
 			challengeSubmissionService.testUpload(fileDTO);
-		}
-		return ResponseEntity.ok().headers(
-				HeaderUtil.createEntityUpdateAlert("challengeSubmission", challengeSubmission.getId().toString()))
+		}		
+		return ResponseEntity.created(new URI("/api/challenge-submissions-update/" + result.getId()))
+				.headers(HeaderUtil.createEntityCreationAlert("challengeSubmission", result.getId().toString()))
 				.body(result);
+
 	}
+
+	/**
+	 * PUT /challenge-submissions : Updates an existing challengeSubmission.
+	 *
+	 * @param challengeSubmission
+	 *            the challengeSubmission to update
+	 * @return the ResponseEntity with status 200 (OK) and with body the updated
+	 *         challengeSubmission, or with status 400 (Bad Request) if the
+	 *         challengeSubmission is not valid, or with status 500 (Internal
+	 *         Server Error) if the challengeSubmission couldnt be updated
+	 * @throws URISyntaxException
+	 *             if the Location URI syntax is incorrect
+	 */
+	
 
 	@PutMapping("/challenge-submissions")
 	@Timed
