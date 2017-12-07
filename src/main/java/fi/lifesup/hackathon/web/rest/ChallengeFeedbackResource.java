@@ -146,16 +146,35 @@ public class ChallengeFeedbackResource {
 		}
 		ChallengeFeedback challengeFeedback = challengeFeedbackService.createdChallengeFeedback(challengeFeedbackDTO);
 
-		if (challengeFeedback != null) {
+		if (challengeFeedback == null) {
 			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeFeedback", "idexists",
 					"A new challengeFeedback cannot already have an ID")).body(null);
-
 		}
-		
-		return ResponseEntity.created(new URI("/api/challenge-feedbacks-created/" + challengeFeedback.getId()))
-				.headers(HeaderUtil.createEntityCreationAlert("challengeFeedback", challengeFeedback.getId().toString()))
-				.body(challengeFeedback);
+		ChallengeFeedback result = challengeFeedbackRepository.save(challengeFeedback);
+		return ResponseEntity.created(new URI("/api/challenge-feedbacks-created/" + result.getId()))
+				.headers(HeaderUtil.createEntityCreationAlert("challengeFeedback", result.getId().toString()))
+				.body(result);
+	}
+	
+	@PutMapping("/challenge-feedbacks-created")
+	@Timed
+	public ResponseEntity<ChallengeFeedback> updateChallengeFeedback(
+			@Valid @RequestBody ChallengeFeedbackDTO challengeFeedbackDTO) throws URISyntaxException {
+		log.debug("REST request to save ChallengeFeedback : {}", challengeFeedbackDTO);
 
+		if (challengeFeedbackDTO.getId() != null) {
+			createdChallengeFeedback(challengeFeedbackDTO);
+		}
+		ChallengeFeedback challengeFeedback = challengeFeedbackService.createdChallengeFeedback(challengeFeedbackDTO);
+
+		if (challengeFeedback == null) {
+			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeFeedback", "idexists",
+					"A new challengeFeedback cannot already have an ID")).body(null);
+		}
+		ChallengeFeedback result = challengeFeedbackRepository.save(challengeFeedback);
+		return ResponseEntity.created(new URI("/api/challenge-feedbacks-created/" + result.getId()))
+				.headers(HeaderUtil.createEntityCreationAlert("challengeFeedback", result.getId().toString()))
+				.body(result);
 	}
 
 	@GetMapping("/challenge-feedbacks/challenge/{challengeId}")
