@@ -211,13 +211,13 @@ public class ChallengeWorkspaceQuestionResource {
 				.headers(HeaderUtil.createEntityDeletionAlert("challengeWorkspaceQuestion", id.toString())).build();
 	}	
 
-	@GetMapping("/challenge-workspace-questions/details/{id}")
+	@GetMapping("/challenge-workspace-questions/details/{questionId}")
 	@Timed
-	public ChallengeWorkspaceQuestionDTO getQuestonDetail(@PathVariable Long id) {
-		log.debug("REST request to get all ChallengeWorkspaceQuestions", id);
+	public ChallengeWorkspaceQuestionDTO getQuestonDetail(@PathVariable Long questionId) {
+		log.debug("REST request to get all ChallengeWorkspaceQuestions", questionId);
 
 		ChallengeWorkspaceQuestionDTO questionDTO = challengeWorkspaceQuestionService
-				.getQuestionDTO(id);
+				.getQuestionDTO(questionId);
 		return questionDTO;
 	}
 

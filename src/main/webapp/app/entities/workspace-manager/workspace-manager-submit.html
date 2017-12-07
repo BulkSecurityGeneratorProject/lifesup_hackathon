@@ -1,0 +1,28 @@
+<form  class="md-padding">
+    <div layout-gt-sm="column">
+            <h4>Upload on file select</h4>
+
+            <input type="file" ngf-select ng-model="file" name="file"    
+            accept="image/*" ngf-max-size="2MB" required
+            ngf-model-invalid="errorFile">
+
+            <br>
+            <br> File:
+            <div style="font:smaller">{{f.name}} {{errFile.name}} {{errFile.$error}} {{errFile.$errorParam}}
+                    <md-progress-linear  md-mode="determinate" value="{{f.progress}}"></md-progress-linear>
+                <span class="progress" ng-show="f.progress >= 0">
+                    <div style="width:{{f.progress}}%" ng-bind="f.progress + '%'"></div>
+                </span>
+                {{errorMsg}}
+            </div>
+    </div>
+
+
+    <div layout-gt-sm="row">
+        <md-input-container class="md-block" flex-gt-sm>
+            <label>Note</label>
+            <textarea ng-model="vm.note" md-maxlength="250" rows="5" md-select-on-focus></textarea>
+        </md-input-container>
+    </div>
+    <md-button ng-show="!vm.isEventEnded" class="md-primary md-raised" ng-click="uploadFiles(file)">Submit</md-button>
+</form>

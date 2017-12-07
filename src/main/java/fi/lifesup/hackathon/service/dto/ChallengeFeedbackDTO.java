@@ -1,6 +1,7 @@
 package fi.lifesup.hackathon.service.dto;
 
 import fi.lifesup.hackathon.domain.Challenge;
+import fi.lifesup.hackathon.domain.ChallengeFeedback;
 
 public class ChallengeFeedbackDTO {
 	private Long id;
@@ -10,6 +11,8 @@ public class ChallengeFeedbackDTO {
 	private String publicFeedback;
 	private Integer rating;
 	private Long challengeId;
+	
+
 
 	public Long getId() {
 		return id;
@@ -81,6 +84,17 @@ public class ChallengeFeedbackDTO {
 		this.publicFeedback = publicFeedback;
 		this.rating = rating;
 		this.challengeId = challengeId;
+	}
+	
+	public ChallengeFeedbackDTO(ChallengeFeedback challengeFeedback ) {
+		super();
+		this.id = challengeFeedback.getId();
+		this.applicationId = challengeFeedback.getApplicationId();
+		this.feedbackForUs = challengeFeedback.getFeedbackForUs();
+		this.feedbackForChallenge = challengeFeedback.getFeedbackForChallenge();
+		this.publicFeedback = challengeFeedback.getPublicFeedback();
+		this.rating = challengeFeedback.getRating();
+		this.challengeId = challengeFeedback.getChallenge().getId();
 	}
 
 }

@@ -5,102 +5,48 @@
         .module('hackathonApp')
         .controller('WorkspaceManagerController', WorkspaceManagerController);
 
-    WorkspaceManagerController.$inject = ['$scope', 'Principal', 'LoginService', '$state', '$stateParams', 'CreateWorkspaceNews', 'ChallengeWorkspace', 'WorkspaceDetail', 'GetQuestionAnswers', 'ChallengeWorkspaceAnswer'];
+    WorkspaceManagerController.$inject = ['$scope', '$state', '$http', '$stateParams', 'entity', 'application', 'WorkspaceOfChallenge', 'ApplicationByChallengeId'];
 
-    function WorkspaceManagerController($scope, Principal, LoginService, $state, $stateParams, CreateWorkspaceNews, ChallengeWorkspace, WorkspaceDetail, GetQuestionAnswers, ChallengeWorkspaceAnswer) {
+    function WorkspaceManagerController($scope, $state, $http, $stateParams, entity, application, WorkspaceOfChallenge, ApplicationByChallengeId) {
         var vm = this;
-        vm.workspaceDetail = {};
-
-        // Home
-        vm.newsEntity = {};
-        vm.news = {};
-        vm.postNews = postNews;
-        vm.updateNews = updateNews;
-
-        console.log($stateParams.challengeId);
         
-
-        function postNews() {
-            if (vm.newsEntity.id) {
-                CreateWorkspaceNews.update(vm.newsEntity, function (res) {
-                    $state.go($state.current, {challengeId: $stateParams.challengeId}, {reload: true});
-                }, function (err) {
-                    console.log(err);
-                });
-            } else {
-                CreateWorkspaceNews.save(vm.newsEntity, function (res) {
-                    console.log(res);
-                    $state.reload();
-                }, function (err) {
-                    console.log(err);
-                });
-            }
-
-        }
-
-        function updateNews(news) {
-            console.log(news);
-            vm.newsEntity = news;
-        }
+        vm.applicationId = application.applicationId;
         
-        // Question
-        vm.showAnswerForm = showAnswerForm;
-        vm.answerFormTrigged = false;
-        vm.questions = [];
-        vm.answer = {};
-        vm.postAnswer = postAnswer;
-        reloadAnswer();
+        ApplicationByChallengeId.get({challengeId: $stateParams.challengeId}, function(res){
+            vm.applicationId = res.applicationId;
+        });
 
-        function reloadAnswer() {
-            WorkspaceDetail.get({ challengeId: $stateParams.challengeId }, function (res) {
-                vm.workspaceDetail = res;
-                vm.questions = res.workspaceQuestions;
-                vm.questions.forEach(function(element) {
-                    element.totalcmt = element.answers.length;
+        vm.challenge = entity.challenge;
+        WorkspaceOfChallenge.get({challengeId: $stateParams.challengeId}, function(res){
+            vm.challenge = res.challenge;
+
+            $http({
+                url: '/api/challenges/get-banner-base64',
+                method: "POST",
+                headers: {
+                    'Content-Type': 'text/plain'
+                },
+                data: vm.challenge.bannerUrl,
+                transformResponse: [function (data) {
+                    return data;
+                }]
+            }).then(function (response) {
+                // success
+                if (response.data.length > 1) {
+                    vm.challenge.bannerUrl64 = "data:image/jpeg;base64," + response.data;
+    
+                } else {
+                    vm.challenge.bannerUrl64 = null;
+                }
+                if ($state.current.parent != "workspace-manager"){
+                    $state.go("workspace-manager-home", {reload: true});
+                }
+            },
+                function (response) { // optional
+                    // failed
                 });
-                vm.newsEntity.workspaceId = res.id;
-                vm.news = res.workspaceNews;
-            })
-        }
+        });
 
-        function showAnswerForm() {
-            vm.answerFormTrigged = !vm.answerFormTrigged;
-        }
-
-        function postAnswer(id) {
-            vm.answer.questionId = id;
-            ChallengeWorkspaceAnswer.save(vm.answer, function (res) {
-                vm.questions.forEach(function(element) {
-                    if (element.id == id) {
-                        element.answers.push(res);
-                    }
-                });
-                vm.answer = {};
-            }, function () {
-                console.log("Error");
-            });
-        }
-
-        // Feedback
-        // Terms
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
     }
 })();

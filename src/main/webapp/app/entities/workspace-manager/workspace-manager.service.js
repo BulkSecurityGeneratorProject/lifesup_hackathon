@@ -7,9 +7,11 @@
         .factory('ChallengeWorkspaceAnswer', ChallengeWorkspaceAnswer)
         .factory('WorkspaceOfChallenge', WorkspaceOfChallenge)
         .factory('ChallengeWorkspaceFeedback', ChallengeWorkspaceFeedback)
+        .factory('ChallengeFeedbackCreate', ChallengeFeedbackCreate)
         .factory('ChallengeWorkspaceQuestion', ChallengeWorkspaceQuestion)
         .factory('GetWorkspaceQuestion', GetWorkspaceQuestion)
         .factory('CreateWorkspaceNews', CreateWorkspaceNews)
+        .factory('DeleteWorkspaceNews', DeleteWorkspaceNews)
         .factory('WorkspaceDetail', WorkspaceDetail)
         .factory('GetQuestionAnswers', GetQuestionAnswers)
 
@@ -18,9 +20,11 @@
     ChallengeWorkspaceAnswer.$inject = ['$resource'];
     WorkspaceOfChallenge.$inject = ['$resource'];
     ChallengeWorkspaceFeedback.$inject = ['$resource'];
+    ChallengeFeedbackCreate.$inject = ['$resource'];
     ChallengeWorkspaceQuestion.$inject = ['$resource'];
     GetWorkspaceQuestion.$inject = ['$resource'];
     CreateWorkspaceNews.$inject = ['$resource'];
+    DeleteWorkspaceNews.$inject = ['$resource'];
     WorkspaceDetail.$inject = ['$resource'];
     GetQuestionAnswers.$inject = ['$resource'];
 
@@ -120,6 +124,25 @@
         });
     }
 
+    function ChallengeFeedbackCreate ($resource) {
+        var resourceUrl =  '/api/challenge-feedbacks-created';
+
+        return $resource(resourceUrl, {}, {
+            'query': { method: 'GET', isArray: false},
+            'get': {
+                method: 'GET',
+                transformResponse: function (data) {
+                    if (data) {
+                        data = angular.fromJson(data);
+                    }
+                    return data;
+                }
+            },
+            'save': { method:'POST' },
+            'update': { method:'PUT' }
+        });
+    }
+
     function ChallengeWorkspaceQuestion ($resource) {
         var resourceUrl =  'api/challenge-workspace-questions/:id';
 
@@ -161,6 +184,14 @@
     function CreateWorkspaceNews ($resource) {
         var resourceUrl =  'api/challenge-workspace-news-created';
 
+        return $resource(resourceUrl, {}, {
+            'save': { method:'POST' },
+            'update': { method:'PUT' }
+        });
+    }
+
+    function DeleteWorkspaceNews ($resource) {
+        var resourceUrl =  '/api/challenge-workspace-news/:id';
         return $resource(resourceUrl, {}, {
             'save': { method:'POST' },
             'update': { method:'PUT' }

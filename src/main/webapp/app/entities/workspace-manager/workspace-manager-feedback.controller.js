@@ -3,11 +3,11 @@
 
     angular
         .module('hackathonApp')
-        .controller('WorkspaceFeedbackController', WorkspaceFeedbackController);
+        .controller('WorkspaceManagerFeedbackController', WorkspaceManagerFeedbackController);
 
-    WorkspaceFeedbackController.$inject = ['$scope', 'application', 'entity', '$state', '$stateParams', 'ChallengeFeedbackCreate', '$mdDialog'];
+    WorkspaceManagerFeedbackController.$inject = ['$scope', 'application', 'entity', '$state', '$stateParams', 'ChallengeWorkspaceFeedback', '$mdDialog'];
 
-    function WorkspaceFeedbackController($scope, application, entity, $state, $stateParams, ChallengeFeedbackCreate, $mdDialog) {
+    function WorkspaceManagerFeedbackController($scope, application, entity, $state, $stateParams, ChallengeWorkspaceFeedback, $mdDialog) {
         var vm = this;
        
         // Feedback
@@ -17,9 +17,7 @@
         
         function submitFeedback() {
             vm.feedback.applicationId = application.applicationId;
-            vm.feedback.challengeId = $stateParams.challengeId;
-            console.log(vm.feedback);
-            ChallengeFeedbackCreate.save(vm.feedback, feedbackSuccess, onSaveError);
+            ChallengeWorkspaceFeedback.save(vm.feedback, feedbackSuccess, onSaveError);
         }
 
         function feedbackSuccess() {
