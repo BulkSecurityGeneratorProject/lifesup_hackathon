@@ -36,7 +36,7 @@ public class ChallengeSubmission implements Serializable {
     @Column(name = "modified_by")
     private String modifiedBy;
 
-    @OneToOne
+    @OneToOne(orphanRemoval = true)
     @JoinColumn(unique = true)
     private ChallengeSubmissionFeedback feedback;
 

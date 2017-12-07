@@ -47,19 +47,18 @@ public class ChallengeSubmissionService {
 	public ChallengeSubmission testUpload(ChallengeSubmissionFileDTO dto) throws URISyntaxException {
 		ChallengeSubmission challengeSubmission = challengeSubmissionRepository.findOne(dto.getChallengeSubmissionId());
 		String filePath = null;
-		System.err.println(dto.getFile());
 		if (!dto.getFile().isEmpty()) {
 			try {
-				
-				String realPathtoUploads = attachPath + "/challenge/" + "challenge_" + challengeSubmission.getWorkspace().getChallenge().getId() 
-						+ "/ChallengeSubmission/";
+
+				String realPathtoUploads = attachPath + "/challenge/" + "challenge_"
+						+ challengeSubmission.getWorkspace().getChallenge().getId() + "/ChallengeSubmission/";
 				if (!new File(realPathtoUploads).exists()) {
 					new File(realPathtoUploads).mkdir();
 				}
 
 				log.info("realPathtoUploads = {}", realPathtoUploads);
 				String orgName = dto.getFile().getOriginalFilename();
-				
+
 				filePath = realPathtoUploads + orgName;
 				try {
 					File file = new File(filePath);
@@ -71,8 +70,6 @@ public class ChallengeSubmissionService {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-
-				
 
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -105,37 +102,6 @@ public class ChallengeSubmissionService {
 		return challengeSubmission;
 	}
 
-	// public ChallengeSubmission
-	// createChallengeSubmission(ChallengeSubmissionDTO challengeSubmissionDTO)
-	// throws URISyntaxException {
-	// ChallengeSubmission challengeSubmission = new ChallengeSubmission();
-	// Application application =
-	// applicationRepository.findOne(challengeSubmissionDTO.getApplicationId());
-	// Challenge challenge =
-	// challengeRepository.findOne(application.getChallenge().getId());
-	// ChallengeInfo challengeInfo =
-	// challengeInfoRepository.findOne(challenge.getInfo().getId());
-	// // String
-	// // filePath=testUpload(challengeSubmissionDTO.getMultipartFile());
-	//
-	// if
-	// (challengeSubmissionDTO.getModifiedDate().isBefore(challengeInfo.getEventEndTime()))
-	// {
-	// ChallengeWorkspace challengeWorkspace = challengeWorkspaceRepository
-	// .findOne(challengeSubmissionDTO.getWorkspace());
-	// if (challengeWorkspace != null) {
-	// challengeSubmission.setAdditionalNote(challengeSubmission.getAdditionalNote());
-	// challengeSubmission.setApplicationId(challengeSubmissionDTO.getApplicationId());
-	// challengeSubmission.setModifiedBy(userService.getCurrentUser().getLastName());
-	// challengeSubmission.setModifiedDate(challengeSubmissionDTO.getModifiedDate());
-	// challengeSubmission.setWorkspace(convertDTOToEntity(challengeSubmissionDTO).getWorkspace());
-	// // challengeSubmission.setFilePath(filePath);
-	// return challengeSubmissionRepository.save(challengeSubmission);
-	// }
-	// return null;
-	// }
-	// return null;
-	// }
 
 	public ChallengeSubmission createChallengeSubmission(ChallengeSubmissionDTO challengeSubmissionDTO)
 			throws URISyntaxException {
@@ -151,7 +117,6 @@ public class ChallengeSubmissionService {
 			challengeSubmission.setModifiedBy(SecurityUtils.getCurrentUserLogin());
 			challengeSubmission.setModifiedDate(ZonedDateTime.now());
 			challengeSubmission.setWorkspace(challengeWorkspace);
-			// challengeSubmission.setFilePath(filePath);
 			return challengeSubmission;
 		}
 		return null;

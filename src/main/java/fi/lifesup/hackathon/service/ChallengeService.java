@@ -105,7 +105,7 @@ public class ChallengeService {
 		String filePath = null;
 		try {
 			// tao thu muc
-			String dirPath = attachPath + "challenge_" + challenge.getId() + "/challenge/";
+			String dirPath = attachPath + "/challenge/" + "challenge_" + challenge.getId() + "/banner/";
 			File dir = new File(dirPath);
 			if (!dir.exists()) {
 				if (dir.mkdirs()) {

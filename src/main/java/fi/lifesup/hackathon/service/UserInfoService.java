@@ -37,7 +37,7 @@ public class UserInfoService {
 		String filePath = null;
 		try {
 			// tao thu muc
-			String dirPath = attachPath + "userInfo_" + userInfo.getId() + "/";
+			String dirPath = attachPath + "userInfo/";
 			File dir = new File(dirPath);
 			if (!dir.exists()) {
 				if (dir.mkdirs()) {

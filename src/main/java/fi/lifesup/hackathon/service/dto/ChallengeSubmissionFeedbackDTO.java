@@ -4,6 +4,7 @@ import java.time.ZonedDateTime;
 
 public class ChallengeSubmissionFeedbackDTO {
 	private Long id;
+	private Long challengeSubmissionId;
 	private String feedbackText;
 	private ZonedDateTime createdDate;
 	private String createdBy;
@@ -38,6 +39,16 @@ public class ChallengeSubmissionFeedbackDTO {
 
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
+	}
+	
+	
+
+	public Long getChallengeSubmissionId() {
+		return challengeSubmissionId;
+	}
+
+	public void setChallengeSubmissionId(Long challengeSubmissionId) {
+		this.challengeSubmissionId = challengeSubmissionId;
 	}
 
 	public ChallengeSubmissionFeedbackDTO() {
