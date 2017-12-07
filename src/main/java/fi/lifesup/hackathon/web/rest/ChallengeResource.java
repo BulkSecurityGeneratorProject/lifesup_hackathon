@@ -16,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.codahale.metrics.annotation.Timed;
 
 import fi.lifesup.hackathon.domain.Challenge;
+import fi.lifesup.hackathon.domain.enumeration.ChallengeStatus;
 import fi.lifesup.hackathon.repository.ChallengeInfoRepository;
 import fi.lifesup.hackathon.repository.ChallengeRepository;
 import fi.lifesup.hackathon.searchCriteria.ChallengeSearch;
@@ -206,26 +208,26 @@ public class ChallengeResource {
 		return base;
 	}
 
-//	@Scheduled(fixedRate = 60000)
-//	@GetMapping("/challenges/check")
-//	@Timed
-//	public void checkChallenge() {
-//		List<Challenge> challenges = challengeRepository.listChallenges();
-//		ZonedDateTime time = ZonedDateTime.now();
-//		for (Challenge challenge : challenges) {
-//
-//			if (challenge.getInfo().getStatus() == ChallengeStatus.ACTIVE
-//					&& !challenge.getInfo().getApplicationCloseDate().isAfter(time)) {
-//				challenge.getInfo().setStatus(ChallengeStatus.INACTIVE);
-//				challengeInfoRepository.save(challenge.getInfo());
-//			}
-//			if (challenge.getInfo().getStatus() == ChallengeStatus.INACTIVE
-//					&& !challenge.getInfo().getEventEndTime().isAfter(time)) {
-//				challenge.getInfo().setStatus(ChallengeStatus.CLOSED);
-//				challengeInfoRepository.save(challenge.getInfo());
-//			}
-//		}
-//	}
+	@Scheduled(fixedRate = 60000)
+	@GetMapping("/challenges/check")
+	@Timed
+	public void checkChallenge() {
+		List<Challenge> challenges = challengeRepository.listChallenges();
+		ZonedDateTime time = ZonedDateTime.now();
+		for (Challenge challenge : challenges) {
+
+			if (challenge.getInfo().getStatus() == ChallengeStatus.ACTIVE
+					&& !challenge.getInfo().getApplicationCloseDate().isAfter(time)) {
+				challenge.getInfo().setStatus(ChallengeStatus.INACTIVE);
+				challengeInfoRepository.save(challenge.getInfo());
+			}
+			if (challenge.getInfo().getStatus() == ChallengeStatus.INACTIVE
+					&& !challenge.getInfo().getEventEndTime().isAfter(time)) {
+				challenge.getInfo().setStatus(ChallengeStatus.CLOSED);
+				challengeInfoRepository.save(challenge.getInfo());
+			}
+		}
+	}
 
 	@GetMapping("/challenges/get-time")
 	@Timed
