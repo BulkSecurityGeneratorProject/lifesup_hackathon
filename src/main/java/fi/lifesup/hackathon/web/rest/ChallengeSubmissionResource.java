@@ -194,7 +194,7 @@ public class ChallengeSubmissionResource {
 	@Timed
 	public ChallengeSubmissionFileDTO downloadSubmissionFile(@RequestBody String filePath)
 			throws URISyntaxException {
-		ChallengeSubmissionFileDTO outPut = null;
+		ChallengeSubmissionFileDTO outPut = new ChallengeSubmissionFileDTO();
     	FileInputStream stream = null;
     	System.err.println(filePath);
     	try{

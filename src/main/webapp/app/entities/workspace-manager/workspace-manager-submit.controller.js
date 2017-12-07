@@ -29,7 +29,6 @@
 
         ApplicationByChallengeId.get({challengeId: $stateParams.challengeId}, function(res){
             vm.applicationId = res.applicationId;
-            
         });
 
         $scope.uploadFiles = function (file) {

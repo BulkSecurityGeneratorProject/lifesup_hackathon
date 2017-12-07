@@ -31,6 +31,41 @@
             })
         });
 
+        vm.downloadSubmission = downloadSubmission;
+        function downloadSubmission(attachId) {
+            AttachDownload.get({ id: attachId }, function (result) {
+                var base64Content = result.base64;
+                var byteCharacters = atob(base64Content);
+                var byteNumbers = new Array(byteCharacters.length);
+                for (var i = 0; i < byteCharacters.length; i++) {
+                    byteNumbers[i] = byteCharacters.charCodeAt(i);
+                }
+                var byteArray = new Uint8Array(byteNumbers);
+                var file = new Blob([byteArray], { type: result.filetype });
+                if (window.navigator.msSaveOrOpenBlob) // IE10+
+                    window.navigator.msSaveOrOpenBlob(file, result.filename);
+                else { // Others
+                    // tao the link a tu blob vua tao
+                    var a = document.createElement("a"),
+                        url = URL.createObjectURL(file);
+                    // set href = url tao duoc tu blob
+                    a.href = url;
+                    a.download = result.filename;
+                    // append the a vao body
+                    document.body.appendChild(a);
+                    // click the a ==> click href url download
+                    a.click();
+                    setTimeout(function () {
+                        // xoa the a khi dowload xong
+                        document.body.removeChild(a);
+
+                        // goi lai trang
+                        window.URL.revokeObjectURL(url);
+                    }, 0);
+                }
+            })
+        }
+
         $scope.uploadFiles = function (file) {
             $scope.f = file;
             console.log(file);
