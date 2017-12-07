@@ -50,9 +50,9 @@ public class ChallengeSubmissionService {
 		System.err.println(dto.getFile());
 		if (!dto.getFile().isEmpty()) {
 			try {
-				String realPathtoUploads = attachPath + "challengeSubmission/" + dto.getChallengeSubmissionId();
-				// String realPathtoUploads = "D://HackathonFiles/" +
-				// dto.getChallengeSubmissionId();
+				
+				String realPathtoUploads = attachPath + "/challenge/" + "challenge_" + challengeSubmission.getWorkspace().getChallenge().getId() 
+						+ "/ChallengeSubmission/";
 				if (!new File(realPathtoUploads).exists()) {
 					new File(realPathtoUploads).mkdir();
 				}
@@ -60,8 +60,7 @@ public class ChallengeSubmissionService {
 				log.info("realPathtoUploads = {}", realPathtoUploads);
 				String orgName = dto.getFile().getOriginalFilename();
 				
-				filePath = realPathtoUploads + "/" + orgName;
-				System.err.println(filePath);
+				filePath = realPathtoUploads + orgName;
 				try {
 					File file = new File(filePath);
 					org.apache.commons.io.FileUtils.writeByteArrayToFile(file, dto.getFile().getBytes());

@@ -62,7 +62,7 @@ server:
     port: 1234
     
 attach:
-    path: C:/suffer/project/hackathon/image/ 
+    path: C:/suffer/project/hackathon/
 
 # ===================================================================
 # JHipster specific properties
