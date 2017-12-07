@@ -37,12 +37,78 @@
                     </a>
                 </li>
 
+                <!-- <li ui-sref-active="active" ng-switch-when="true" has-authority="ROLE_HOST" class="nav-item" uib-dropdown class="dropdown pointer nav-item">
+                        <a class="dropdown-toggle" uib-dropdown-toggle href="" id="entity-menu">
+                            <span>
+                                <span class="glyphicon glyphicon-th-list"></span>
+                                <span class="hidden-sm">
+                                    Manage
+                                </span>
+                                <b class="caret"></b>
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu" uib-dropdown-menu>
+                            <li ui-sref-active="active">
+                                <a ui-sref="user-list" ng-click="vm.collapseNavbar()">
+                                    <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                    <span>Challenges</span>
+                                </a>
+                            </li>
+                            <li ui-sref-active="active">
+                                <a ui-sref="user-info" ng-click="vm.collapseNavbar()">
+                                    <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                    <span>Questions</span>
+                                </a>
+                            </li>
+                            <li ui-sref-active="active">
+                                <a ui-sref="company" ng-click="vm.collapseNavbar()">
+                                    <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                    <span>Feedback</span>
+                                </a>
+                            </li>
+                           
+                        </ul>
+                    </li> -->
+
+                <!-- Manage -->
+                <li ui-sref-active="active" ng-switch-when="true" has-authority="ROLE_HOST" uib-dropdown class="dropdown pointer nav-item"
+                    class="nav-item">
+                    <a class="dropdown-toggle" uib-dropdown-toggle href="">
+                        <span class="glyphicon glyphicon-cog"></span>
+                        <span class="hidden-sm">Manage</span>
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu" uib-dropdown-menu>
+                        <li ui-sref-active="active">
+                            <a ui-sref="challenge-manager" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span>Challenges</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="challenge-question" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span>Questions</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="challenge-feedback" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-asterisk"></span>&nbsp;
+                                <span>Feedback</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </li>
+
                 <li ui-sref-active="active" ng-switch-when="true" has-authority="ROLE_ADMIN" class="nav-item">
                     <a ui-sref="company" ng-click="vm.collapseNavbar()" id="admin-menu" class="align-center">
                         <span class="glyphicon glyphicon-cog"></span>
                         <span class="hidden-sm" data-translate="global.menu.company">Company</span>
                     </a>
                 </li>
+
                 <!-- Languages -->
                 <li ui-sref-active="active" uib-dropdown class="dropdown pointer nav-item" ng-controller="JhiLanguageController as languageVm">
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" ng-if="languageVm.languages.length > 0">
@@ -79,22 +145,20 @@
                     <div class="dropdown-menu dropdown-menu-right" uib-dropdown-menu role="menu" aria-labelledby="ls">
                         <a>
                             <span ui-sref-active="active">
-                                <a ui-sref="settings" ui-sref-opts="{reload: true}" class="dropdown-item" data-translate="global.menu.accountSetting"
-                                    has-authority-except="ROLE_HOST">Account Setting</a>
+                                <a ui-sref="settings" ui-sref-opts="{reload: true}" class="dropdown-item" data-translate="global.menu.accountSetting" has-authority-except="ROLE_HOST">Account Setting</a>
                             </span>
                         </a>
 
                         <a>
                             <span ui-sref-active="active">
-                                <a ui-sref="user-management-detail({login: vm.account.login})" ui-sref-opts="{reload: true}"
-                                    class="dropdown-item" data-translate="global.menu.accountDetail" has-authority-except="ROLE_HOST">Account Detail</a>
+                                <a ui-sref="user-management-detail({login: vm.account.login})" ui-sref-opts="{reload: true}" class="dropdown-item" data-translate="global.menu.accountDetail"
+                                    has-authority-except="ROLE_HOST">Account Detail</a>
                             </span>
                         </a>
 
                         <a>
                             <span ui-sref-active="active">
-                                <a has-authority="ROLE_ADMIN" ui-sref="user-management" ui-sref-opts="{reload: true}" class="dropdown-item"
-                                    data-translate="global.menu.manageUser">Manage User</a>
+                                <a has-authority="ROLE_ADMIN" ui-sref="user-management" ui-sref-opts="{reload: true}" class="dropdown-item" data-translate="global.menu.manageUser">Manage User</a>
                             </span>
                         </a>
 
