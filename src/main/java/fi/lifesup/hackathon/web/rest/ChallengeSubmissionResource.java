@@ -89,10 +89,12 @@ public class ChallengeSubmissionResource {
 					"A new challengeSubmission cannot already have an ID")).body(null);
 		}
 		ChallengeSubmission result = challengeSubmissionRepository.save(challengeSubmission);
-		ChallengeSubmissionFileDTO fileDTO = new ChallengeSubmissionFileDTO();
-		fileDTO.setChallengeSubmissionId(result.getId());
-		fileDTO.setFile(challengeSubmissionDTO.getMultipartFile());
-		challengeSubmissionService.testUpload(fileDTO);
+		if(challengeSubmissionDTO.getMultipartFile() != null){
+			ChallengeSubmissionFileDTO fileDTO = new ChallengeSubmissionFileDTO();
+			fileDTO.setChallengeSubmissionId(result.getId());
+			fileDTO.setFile(challengeSubmissionDTO.getMultipartFile());
+			challengeSubmissionService.testUpload(fileDTO);
+		}		
 		return ResponseEntity.created(new URI("/api/challenge-submissions-created/" + result.getId()))
 				.headers(HeaderUtil.createEntityCreationAlert("challengeSubmission", result.getId().toString()))
 				.body(result);
@@ -111,6 +113,32 @@ public class ChallengeSubmissionResource {
 	 * @throws URISyntaxException
 	 *             if the Location URI syntax is incorrect
 	 */
+	@PutMapping("/challenge-submissions-created")
+	@Timed
+	public ResponseEntity<ChallengeSubmission> updateChallengeSubmission(
+			@Valid @RequestBody ChallengeSubmissionDTO challengeSubmissionDTO) throws URISyntaxException {
+		log.debug("REST request to update ChallengeSubmission : {}", challengeSubmissionDTO);
+		if (challengeSubmissionDTO.getId() == null) {
+			return createdChallengeSubmission(challengeSubmissionDTO);
+		}
+		ChallengeSubmission challengeSubmission = challengeSubmissionService
+				.createChallengeSubmission(challengeSubmissionDTO);
+		if (challengeSubmission == null) {
+			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeSubmission", "idexists",
+					"A new challengeSubmission cannot already have an ID")).body(null);
+		}
+		ChallengeSubmission result = challengeSubmissionRepository.save(challengeSubmission);
+		if(challengeSubmissionDTO.getMultipartFile() != null){
+			ChallengeSubmissionFileDTO fileDTO = new ChallengeSubmissionFileDTO();
+			fileDTO.setChallengeSubmissionId(result.getId());
+			fileDTO.setFile(challengeSubmissionDTO.getMultipartFile());
+			challengeSubmissionService.testUpload(fileDTO);
+		}
+		return ResponseEntity.ok().headers(
+				HeaderUtil.createEntityUpdateAlert("challengeSubmission", challengeSubmission.getId().toString()))
+				.body(result);
+	}
+
 	@PutMapping("/challenge-submissions")
 	@Timed
 	public ResponseEntity<ChallengeSubmission> updateChallengeSubmission(
@@ -124,7 +152,6 @@ public class ChallengeSubmissionResource {
 				HeaderUtil.createEntityUpdateAlert("challengeSubmission", challengeSubmission.getId().toString()))
 				.body(result);
 	}
-
 	/**
 	 * GET /challenge-submissions : get all the challengeSubmissions.
 	 *
@@ -196,14 +223,12 @@ public class ChallengeSubmissionResource {
 			throws URISyntaxException {
 		ChallengeSubmissionFileDTO outPut = new ChallengeSubmissionFileDTO();
     	FileInputStream stream = null;
-    	System.err.println(filePath);
     	try{
     	File file = new File(filePath);	
     	stream = new FileInputStream(file);
     	byte[] bytes = new byte[(int)file.length()];
     	stream.read(bytes);
     	String base64Content = new String(Base64.encode(bytes));   
-    	System.err.println(base64Content);
     	outPut.setBase64(base64Content);
     	outPut.setFileName(file.getName());
     	}catch(Exception e){
