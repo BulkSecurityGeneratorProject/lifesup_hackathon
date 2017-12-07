@@ -1,6 +1,7 @@
 package fi.lifesup.hackathon.service;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,10 +13,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import fi.lifesup.hackathon.domain.Challenge;
+import fi.lifesup.hackathon.domain.ChallengeSubmission;
 import fi.lifesup.hackathon.domain.ChallengeWorkspace;
 import fi.lifesup.hackathon.repository.ChallengeRepository;
+import fi.lifesup.hackathon.repository.ChallengeSubmissionRepository;
 import fi.lifesup.hackathon.repository.ChallengeUserApplicationRepository;
 import fi.lifesup.hackathon.repository.ChallengeWorkspaceRepository;
+import fi.lifesup.hackathon.service.dto.ChallengeSubmissionDTO;
 import fi.lifesup.hackathon.service.dto.ChallengeWorkspaceDTO;
 import fi.lifesup.hackathon.service.dto.ChallengeWorkspaceNewsDTO;
 import fi.lifesup.hackathon.service.dto.ChallengeWorkspaceQuestionDTO;
@@ -37,6 +41,9 @@ public class ChallengeWorkspaceService {
 
 	@Inject
 	private ChallengeWorkspaceQuestionService challengeWorkspaceQuestionService;
+	
+	@Inject
+	private ChallengeSubmissionRepository challengeSubmissionRepository;
 
 	public ChallengeWorkspace saveChallengeWorksapce(ChallengeWorkspaceDTO workSpace) {
 		ChallengeWorkspace challengeWorkspace = new ChallengeWorkspace();
@@ -68,7 +75,15 @@ public class ChallengeWorkspaceService {
 				return news;
 			}).collect(Collectors.toList());
 			workspaceDTO.setWorkspaceNews(newsDTOs);
-
+			
+			List<ChallengeSubmissionDTO> challengeSubmissionDTOs = new ArrayList<>();
+			List<ChallengeSubmission> challengeSubmissions = challengeSubmissionRepository.findByWorkspaceId(workspace.getId());
+			for (ChallengeSubmission challengeSubmission : challengeSubmissions) {
+				ChallengeSubmissionDTO dto = new ChallengeSubmissionDTO(challengeSubmission);
+				challengeSubmissionDTOs.add(dto);
+			}
+					
+			workspaceDTO.setChallengeSubmissionDTOs(challengeSubmissionDTOs);
 			List<ChallengeWorkspaceQuestionDTO> questionDTOs = challengeWorkspaceQuestionService
 					.getQuestionByWorkspace(workspace.getId(), challengeId);
 			workspaceDTO.setWorkspaceQuestions(questionDTOs);

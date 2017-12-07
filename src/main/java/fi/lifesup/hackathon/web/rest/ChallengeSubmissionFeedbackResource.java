@@ -162,7 +162,7 @@ public class ChallengeSubmissionFeedbackResource {
 	@Timed
 	public ResponseEntity<Void> deleteChallengeSubmissionFeedback(@PathVariable Long id) {
 		log.debug("REST request to delete ChallengeSubmissionFeedback : {}", id);
-		ChallengeSubmission challengeSubmission = challengeSubmissionRepository.findByFeeabackId(id);
+		ChallengeSubmission challengeSubmission = challengeSubmissionRepository.findByFeedbackId(id);
 		challengeSubmission.setFeedback(null);
 		challengeSubmissionRepository.save(challengeSubmission);
 		challengeSubmissionFeedbackRepository.delete(id);

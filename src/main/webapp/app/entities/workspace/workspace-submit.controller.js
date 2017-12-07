@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('WorkspaceSubmitController', WorkspaceSubmitController);
 
-    WorkspaceSubmitController.$inject = ['$scope', 'entity', '$state', '$stateParams', 'ApplicationByChallengeId', 'WorkspaceOfChallenge', 'Upload', 'TimeServer'];
+    WorkspaceSubmitController.$inject = ['$scope', 'entity', '$state', '$stateParams', 'ApplicationByChallengeId', 'WorkspaceOfChallenge', 'Upload', 'TimeServer', 'GetSubmissionByApplicationId'];
 
-    function WorkspaceSubmitController($scope, entity, $state, $stateParams, ApplicationByChallengeId, WorkspaceOfChallenge, Upload, TimeServer) {
+    function WorkspaceSubmitController($scope, entity, $state, $stateParams, ApplicationByChallengeId, WorkspaceOfChallenge, Upload, TimeServer, GetSubmissionByApplicationId) {
         var vm = this;
         vm.file = null;
         vm.note = null;
@@ -26,6 +26,9 @@
 
         ApplicationByChallengeId.get({challengeId: $stateParams.challengeId}, function(res){
             vm.applicationId = res.applicationId;
+            GetSubmissionByApplicationId.query({applicationId: vm.applicationId}, function(res){
+                console.log(res);
+            })
         });
 
         $scope.uploadFiles = function (file) {

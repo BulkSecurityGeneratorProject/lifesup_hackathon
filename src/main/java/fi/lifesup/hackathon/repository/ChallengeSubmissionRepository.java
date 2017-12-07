@@ -13,6 +13,9 @@ import java.util.List;
 @SuppressWarnings("unused")
 public interface ChallengeSubmissionRepository extends JpaRepository<ChallengeSubmission,Long> {
 
-	ChallengeSubmission findByFeeabackId(Long feedbackId);
+	ChallengeSubmission findByFeedbackId(Long feedbackId);
+	
+	List<ChallengeSubmission> findByWorkspaceId(Long workscapeId);
 
+	List<ChallengeSubmission> findByApplicationId(Long applicationId);
 }

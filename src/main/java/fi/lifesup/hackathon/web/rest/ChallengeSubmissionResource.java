@@ -182,18 +182,28 @@ public class ChallengeSubmissionResource {
 				.body(result);
 	}
 	
+	@GetMapping("/challenge-submissions/application/{applicationId}")
+	@Timed
+	public List<ChallengeSubmission> getChallengeSubmissionApplication(@PathVariable Long applicationId) {
+		log.debug("REST request to get ChallengeSubmission : {}", applicationId);
+		List<ChallengeSubmission> challengeSubmissions = challengeSubmissionRepository.findByApplicationId(applicationId);
+		return challengeSubmissions;
+	}
+	
 	@PostMapping("/challenge-submissions/download")
 	@Timed
 	public ChallengeSubmissionFileDTO downloadSubmissionFile(@RequestBody String filePath)
 			throws URISyntaxException {
 		ChallengeSubmissionFileDTO outPut = null;
     	FileInputStream stream = null;
+    	System.err.println(filePath);
     	try{
     	File file = new File(filePath);	
     	stream = new FileInputStream(file);
     	byte[] bytes = new byte[(int)file.length()];
     	stream.read(bytes);
-    	String base64Content = new String(Base64.encode(bytes));   	
+    	String base64Content = new String(Base64.encode(bytes));   
+    	System.err.println(base64Content);
     	outPut.setBase64(base64Content);
     	outPut.setFileName(file.getName());
     	}catch(Exception e){

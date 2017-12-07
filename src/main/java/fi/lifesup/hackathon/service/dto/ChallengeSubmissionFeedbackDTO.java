@@ -2,9 +2,11 @@ package fi.lifesup.hackathon.service.dto;
 
 import java.time.ZonedDateTime;
 
+import fi.lifesup.hackathon.domain.ChallengeSubmissionFeedback;
+
 public class ChallengeSubmissionFeedbackDTO {
 	private Long id;
-	private Long challengeSubmissionId;
+	
 	private String feedbackText;
 	private ZonedDateTime createdDate;
 	private String createdBy;
@@ -43,14 +45,7 @@ public class ChallengeSubmissionFeedbackDTO {
 	
 	
 
-	public Long getChallengeSubmissionId() {
-		return challengeSubmissionId;
-	}
-
-	public void setChallengeSubmissionId(Long challengeSubmissionId) {
-		this.challengeSubmissionId = challengeSubmissionId;
-	}
-
+	
 	public ChallengeSubmissionFeedbackDTO() {
 		super();
 	}

@@ -10,7 +10,6 @@ public class ChallengeSubmissionFileDTO {
 	private String fileName;
 	private String base64;
 	
-	
 
 	public String getFileName() {
 		return fileName;

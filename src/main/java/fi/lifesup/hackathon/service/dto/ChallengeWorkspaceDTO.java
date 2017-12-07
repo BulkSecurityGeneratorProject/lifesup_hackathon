@@ -12,6 +12,7 @@ public class ChallengeWorkspaceDTO {
 	private ZonedDateTime createdDate;
 	private List<ChallengeWorkspaceNewsDTO> workspaceNews;
 	private List<ChallengeWorkspaceQuestionDTO> workspaceQuestions;
+	private List<ChallengeSubmissionDTO> challengeSubmissionDTOs;
 	
 	public ChallengeWorkspaceDTO() {
 		// TODO Auto-generated constructor stub
@@ -30,6 +31,13 @@ public class ChallengeWorkspaceDTO {
 		this.createdDate = workspace.getCreatedDate(); 
 	}
 	
+	
+	public List<ChallengeSubmissionDTO> getChallengeSubmissionDTOs() {
+		return challengeSubmissionDTOs;
+	}
+	public void setChallengeSubmissionDTOs(List<ChallengeSubmissionDTO> challengeSubmissionDTOs) {
+		this.challengeSubmissionDTOs = challengeSubmissionDTOs;
+	}
 	public List<ChallengeWorkspaceNewsDTO> getWorkspaceNews() {
 		return workspaceNews;
 	}
