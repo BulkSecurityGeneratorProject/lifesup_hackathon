@@ -75,7 +75,7 @@ public class ChallengeSubmissionResource {
 
 	@PostMapping(value="/challenge-submissions-updated", consumes = "multipart/form-data")
 	@Timed
-	public ResponseEntity<ChallengeSubmission> createdChallengeSubmission(
+	public ResponseEntity<ChallengeSubmission> updatedChallengeSubmission(
 			ChallengeSubmissionDTO challengeSubmissionDTO) throws URISyntaxException {
 		log.debug("REST request to save ChallengeSubmission : {}", challengeSubmissionDTO);
 //		if (challengeSubmissionDTO.getId() != null) {
@@ -95,7 +95,7 @@ public class ChallengeSubmissionResource {
 			fileDTO.setFile(challengeSubmissionDTO.getMultipartFile());
 			challengeSubmissionService.testUpload(fileDTO);
 		}		
-		return ResponseEntity.created(new URI("/api/challenge-submissions-created/" + result.getId()))
+		return ResponseEntity.created(new URI("/api/challenge-submissions-updated/" + result.getId()))
 				.headers(HeaderUtil.createEntityCreationAlert("challengeSubmission", result.getId().toString()))
 				.body(result);
 
@@ -103,7 +103,7 @@ public class ChallengeSubmissionResource {
 	
 	@PostMapping(value="/challenge-submissions-created", consumes = "multipart/form-data")
 	@Timed
-	public ResponseEntity<ChallengeSubmission> updateChallengeSubmission(
+	public ResponseEntity<ChallengeSubmission> createdChallengeSubmission(
 			ChallengeSubmissionDTO challengeSubmissionDTO) throws URISyntaxException {
 		log.debug("REST request to save ChallengeSubmission : {}", challengeSubmissionDTO);
 		if (challengeSubmissionDTO.getId() != null) {
@@ -123,7 +123,7 @@ public class ChallengeSubmissionResource {
 			fileDTO.setFile(challengeSubmissionDTO.getMultipartFile());
 			challengeSubmissionService.testUpload(fileDTO);
 		}		
-		return ResponseEntity.created(new URI("/api/challenge-submissions-update/" + result.getId()))
+		return ResponseEntity.created(new URI("/api/challenge-submissions-created/" + result.getId()))
 				.headers(HeaderUtil.createEntityCreationAlert("challengeSubmission", result.getId().toString()))
 				.body(result);
 

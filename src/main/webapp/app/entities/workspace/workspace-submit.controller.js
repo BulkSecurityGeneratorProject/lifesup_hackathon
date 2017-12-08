@@ -77,10 +77,6 @@
             })
         }
 
-        function upload(id){
-            
-        }
-
         $scope.uploadFiles = function (file) {
             $scope.f = file;
             vm.isUploading = true;
