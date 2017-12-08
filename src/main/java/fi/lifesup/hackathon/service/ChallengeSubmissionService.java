@@ -114,7 +114,7 @@ public class ChallengeSubmissionService {
 			if (challengeSubmissionDTO.getId() != null) {
 				challengeSubmission.setId(challengeSubmissionDTO.getId());
 			}
-			challengeSubmission.setAdditionalNote(challengeSubmission.getAdditionalNote());
+			challengeSubmission.setAdditionalNote(challengeSubmissionDTO.getAdditionalNote());
 			challengeSubmission.setApplicationId(challengeSubmissionDTO.getApplicationId());
 			challengeSubmission.setModifiedBy(SecurityUtils.getCurrentUserLogin());
 			challengeSubmission.setModifiedDate(ZonedDateTime.now());

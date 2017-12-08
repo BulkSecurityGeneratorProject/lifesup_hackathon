@@ -1,28 +1,36 @@
-<form  class="md-padding">
-    <div layout-gt-sm="column">
-            <h4>Upload on file select</h4>
-
-            <input type="file" ngf-select ng-model="file" name="file"    
-            accept="image/*" ngf-max-size="2MB" required
-            ngf-model-invalid="errorFile">
-
-            <br>
-            <br> File:
-            <div style="font:smaller">{{f.name}} {{errFile.name}} {{errFile.$error}} {{errFile.$errorParam}}
-                    <md-progress-linear  md-mode="determinate" value="{{f.progress}}"></md-progress-linear>
-                <span class="progress" ng-show="f.progress >= 0">
-                    <div style="width:{{f.progress}}%" ng-bind="f.progress + '%'"></div>
-                </span>
-                {{errorMsg}}
-            </div>
-    </div>
-
-
-    <div layout-gt-sm="row">
-        <md-input-container class="md-block" flex-gt-sm>
-            <label>Note</label>
-            <textarea ng-model="vm.note" md-maxlength="250" rows="5" md-select-on-focus></textarea>
-        </md-input-container>
-    </div>
-    <md-button ng-show="!vm.isEventEnded" class="md-primary md-raised" ng-click="uploadFiles(file)">Submit</md-button>
-</form>
+<md-content layout="column" style="max-height: 100%;">
+    <md-table-container flex>
+        <md-card ng-cloak>
+            <table md-table md-row-select="false" multiple="false" ng-model="vm.selected" md-progress="promise" style="background: white;">
+                <thead ng-if="!options.decapitate" md-head md-order="query.order" md-on-reorder="logOrder">
+                    <tr md-row md-colors="{background: 'indigo-100'}">
+                        <th md-column md-order-by="teamName">
+                            <span>Team</span>
+                        </th>
+                        <th>
+                            <span>Note</span>
+                        </th>
+                        <th>
+                            <span>File</span>
+                        </th>
+                        <th>
+                            <span>Feedback</span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody md-body>
+                    <tr md-row md-select="company" md-on-select="logItem" md-auto-select="options.autoSelect" ng-repeat="submit in vm.allSubmit | filter: vm.queryString | orderBy: query.order | limitTo: query.limit : (query.page -1) * query.limit">
+                        <td md-cell>{{submit.teamName}}</td>
+                        <td md-cell>{{submit.additionalNote}}</td>
+                        <td md-cell><md-button ng-click="vm.downloadSubmission(submit.filePath)" class="md-raised w3-green">Download</md-button></td>
+                        <td md-cell><md-button class="md-raised w3-blue">Add</md-button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-card>
+    </md-table-container>
+    <md-card ng-cloak>
+        <md-table-pagination id="pagi-company" md-limit="query.limit" md-limit-options="limitOptions" md-page="query.page" md-total="{{vm.allSubmit.length}}"
+            md-page-select="options.pageSelect" md-boundary-links="false" md-on-paginate="logPagination"></md-table-pagination>
+    </md-card>
+</md-content>
