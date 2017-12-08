@@ -64,20 +64,22 @@ public class ChallengeSubmissionFeedbackResource {
 	public ResponseEntity<ChallengeSubmissionFeedback> createChallengeSubmissionFeedback(
 			@RequestBody ChallengeSubmissionFeedbackDTO challengeSubmissionFeedback) throws URISyntaxException {
 		log.debug("REST request to save ChallengeSubmissionFeedback : {}", challengeSubmissionFeedback);
-		if (!(SecurityUtils.isCurrentUserInRole("ROLE_HOST") || SecurityUtils.isCurrentUserInRole("ROLE_ADMIN"))) {
-			return ResponseEntity.badRequest()
-					.headers(HeaderUtil.createFailureAlert("challengeSubmissionFeedback", "error", "cannot role"))
-					.body(null);
-		}
 		if (challengeSubmissionFeedback.getId() != null) {
 			return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("challengeSubmissionFeedback",
 					"idexists", "A new challengeSubmissionFeedback cannot already have an ID")).body(null);
 		}
-		ChallengeSubmissionFeedback result = challengeSubmissionFeedbackService
-				.createChallengeSubmission(challengeSubmissionFeedback);
-		return ResponseEntity.created(new URI("/api/challenge-submission-feedbacks/" + result.getId()))
-				.headers(HeaderUtil.createEntityCreationAlert("challengeSubmissionFeedback", result.getId().toString()))
-				.body(result);
+		if (SecurityUtils.isCurrentUserInRole("ROLE_HOST") || SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) {
+			ChallengeSubmissionFeedback result = challengeSubmissionFeedbackService
+					.createChallengeSubmission(challengeSubmissionFeedback);
+			return ResponseEntity.created(new URI("/api/challenge-submission-feedbacks/" + result.getId()))
+					.headers(HeaderUtil.createEntityCreationAlert("challengeSubmissionFeedback", result.getId().toString()))
+					.body(result);
+		}
+		
+		return ResponseEntity.badRequest()
+				.headers(HeaderUtil.createFailureAlert("challengeSubmissionFeedback", "error", "cannot role"))
+				.body(null);
+		
 
 	}
 
@@ -100,19 +102,21 @@ public class ChallengeSubmissionFeedbackResource {
 	public ResponseEntity<ChallengeSubmissionFeedback> updateChallengeSubmissionFeedback(
 			@RequestBody ChallengeSubmissionFeedbackDTO challengeSubmissionFeedback) throws URISyntaxException {
 		log.debug("REST request to update ChallengeSubmissionFeedback : {}", challengeSubmissionFeedback);
-		if (!(SecurityUtils.isCurrentUserInRole("ROLE_HOST") || SecurityUtils.isCurrentUserInRole("ROLE_ADMIN"))) {
-			return ResponseEntity.badRequest()
-					.headers(HeaderUtil.createFailureAlert("challengeSubmissionFeedback", "error", "cannot role"))
-					.body(null);
-		}
 		if (challengeSubmissionFeedback.getId() == null) {
 			return createChallengeSubmissionFeedback(challengeSubmissionFeedback);
 		}
+		
+		if (SecurityUtils.isCurrentUserInRole("ROLE_HOST") || SecurityUtils.isCurrentUserInRole("ROLE_ADMIN")) {
+			ChallengeSubmissionFeedback result = challengeSubmissionFeedbackService
+					.createChallengeSubmission(challengeSubmissionFeedback);
+			return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert("challengeSubmissionFeedback",
+					challengeSubmissionFeedback.getId().toString())).body(result);
+		}
+		return ResponseEntity.badRequest()
+				.headers(HeaderUtil.createFailureAlert("challengeSubmissionFeedback", "error", "cannot role"))
+				.body(null);
 
-		ChallengeSubmissionFeedback result = challengeSubmissionFeedbackService
-				.createChallengeSubmission(challengeSubmissionFeedback);
-		return ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert("challengeSubmissionFeedback",
-				challengeSubmissionFeedback.getId().toString())).body(result);
+		
 	}
 
 	/**

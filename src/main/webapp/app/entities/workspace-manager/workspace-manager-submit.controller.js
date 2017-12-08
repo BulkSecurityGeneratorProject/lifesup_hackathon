@@ -5,9 +5,9 @@
         .module('hackathonApp')
         .controller('WorkspaceManagerSubmitController', WorkspaceManagerSubmitController);
 
-    WorkspaceManagerSubmitController.$inject = ['$scope', 'entity', '$state', '$stateParams', 'ApplicationByChallengeId', 'WorkspaceOfChallenge', 'Upload', 'DownloadSubmission', 'GetSubmissionByApplicationId', 'WorkspaceDetail', 'ApplicationBasicInfo'];
+    WorkspaceManagerSubmitController.$inject = ['$scope', 'entity', '$state', '$stateParams', 'ApplicationByChallengeId', 'WorkspaceOfChallenge', 'Upload', 'DownloadSubmission', 'GetSubmissionByApplicationId', 'WorkspaceDetail', 'ApplicationBasicInfo', 'ChallengeSubmissionFeedback', '$mdDialog'];
 
-    function WorkspaceManagerSubmitController($scope, entity, $state, $stateParams, ApplicationByChallengeId, WorkspaceOfChallenge, Upload, DownloadSubmission, GetSubmissionByApplicationId, WorkspaceDetail, ApplicationBasicInfo) {
+    function WorkspaceManagerSubmitController($scope, entity, $state, $stateParams, ApplicationByChallengeId, WorkspaceOfChallenge, Upload, DownloadSubmission, GetSubmissionByApplicationId, WorkspaceDetail, ApplicationBasicInfo, ChallengeSubmissionFeedback, $mdDialog) {
         var vm = this;
         vm.allSubmit = [];
 
@@ -15,12 +15,17 @@
         WorkspaceDetail.get({ challengeId: $stateParams.challengeId }, function (res) {
             res.challengeSubmissionDTOs.forEach(function (element) {
                 var submit = {};
+                submit.id = element.id;
+                submit.feedback = element.feedback;
                 submit.filePath = element.filePath;
                 submit.additionalNote = element.additionalNote;
                 ApplicationBasicInfo.get({ applicationId: element.applicationId }, function (res) {
                     submit.teamName = res.teamName;
+                    vm.allSubmit.push(submit);
+                }, function(err){
+                    console.log(err);
                 })
-                vm.allSubmit.push(submit);
+                
             });
         })
 
@@ -78,6 +83,47 @@
             boundaryLinks: false,
             limitSelect: true,
             pageSelect: true
+        };
+
+        vm.addFeedback = addFeedback;
+        function addFeedback(data) {
+            console.log(data);
+            var confirm = $mdDialog.prompt()
+                .title('Add feedback for submission!')
+                .placeholder('Your feedback...')
+                .ariaLabel('feedback')
+                .initialValue(data.feedback.feedbackText)
+                .required(true)
+                .ok('Save')
+                .cancel('Cancel');
+
+            $mdDialog.show(confirm).then(function (text) {
+                var temp = {};
+                temp.feedbackText = text;
+                temp.challengeSubmissionId = data.id;
+                
+                if (data.feedback.id){
+                    console.log("update");
+                    temp.id = data.feedback.id;
+                    ChallengeSubmissionFeedback.update(temp, function(res){
+                        console.log(res);
+                        $state.reload($state.current);
+                    }, function(err){
+                        console.log(err);
+                    })
+                } else {
+                    console.log("save");
+                    ChallengeSubmissionFeedback.save(temp, function(res){
+                        console.log(res);
+                        $state.reload($state.current);
+                    }, function(err){
+                        console.log(err);
+                    })
+                }
+                
+            }, function () {
+
+            });
         };
 
     }

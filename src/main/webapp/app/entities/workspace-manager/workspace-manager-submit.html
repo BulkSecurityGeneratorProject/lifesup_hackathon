@@ -23,7 +23,8 @@
                         <td md-cell>{{submit.teamName}}</td>
                         <td md-cell>{{submit.additionalNote}}</td>
                         <td md-cell><md-button ng-click="vm.downloadSubmission(submit.filePath)" class="md-raised w3-green">Download</md-button></td>
-                        <td md-cell><md-button class="md-raised w3-blue">Add</md-button></td>
+                        <td md-cell ng-if="!submit.feedback.id"><md-button class="md-raised w3-blue" ng-click="vm.addFeedback(submit)">Add</md-button></td>
+                        <td md-cell ng-if="submit.feedback.id">{{submit.feedback.feedbackText}} <md-button class="md-raised w3-blue" ng-click="vm.addFeedback(submit)">Edit</md-button></td>
                     </tr>
                 </tbody>
             </table>

@@ -19,7 +19,7 @@
         vm.challenge = entity.challenge;
         WorkspaceOfChallenge.get({challengeId: $stateParams.challengeId}, function(res){
             vm.challenge = res.challenge;
-
+            console.log(res);
             $http({
                 url: '/api/challenges/get-banner-base64',
                 method: "POST",

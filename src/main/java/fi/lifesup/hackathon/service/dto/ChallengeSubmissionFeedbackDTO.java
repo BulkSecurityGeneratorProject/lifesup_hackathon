@@ -6,10 +6,19 @@ import fi.lifesup.hackathon.domain.ChallengeSubmissionFeedback;
 
 public class ChallengeSubmissionFeedbackDTO {
 	private Long id;
-	
+
 	private String feedbackText;
 	private ZonedDateTime createdDate;
 	private String createdBy;
+	private Long ChallengeSubmissionId;
+
+	public Long getChallengeSubmissionId() {
+		return ChallengeSubmissionId;
+	}
+
+	public void setChallengeSubmissionId(Long challengeSubmissionId) {
+		ChallengeSubmissionId = challengeSubmissionId;
+	}
 
 	public Long getId() {
 		return id;
@@ -42,10 +51,7 @@ public class ChallengeSubmissionFeedbackDTO {
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
 	}
-	
-	
 
-	
 	public ChallengeSubmissionFeedbackDTO() {
 		super();
 	}

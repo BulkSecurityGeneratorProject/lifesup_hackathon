@@ -1,9 +1,19 @@
 <form class="md-padding">
     <div layout-gt-sm="column">
-        <p ng-show="vm.hasFileUploaded">
-            Your submitted file:
-            <a ng-click="vm.downloadSubmission()">Download</a>
-        </p>
+        <div ng-show="vm.hasFileUploaded">
+            <p>
+                Your submitted file:
+                <a ng-click="vm.downloadSubmission()">Download</a>
+            </p>
+            <p ng-if="vm.info.additionalNote">
+                Your note: 
+                <span>{{vm.info.additionalNote}}</span>
+            </p>
+            <p ng-if="vm.info.feedback.feedbackText">
+                Host feedback:
+                <span>{{vm.info.feedback.feedbackText}}</span>
+            </p>
+        </div>
         <h4>Upload new file</h4>
         <input type="file" ngf-select ng-model="file" name="file" accept="*" ngf-max-size="100MB" required ngf-model-invalid="errorFile">
         <div ng-show="vm.isUploading">

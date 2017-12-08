@@ -17,6 +17,7 @@
         .factory('GetQuestionAnswers', GetQuestionAnswers)
         .factory('GetSubmissionByApplicationId', GetSubmissionByApplicationId)
         .factory('DownloadSubmission', DownloadSubmission)
+        .factory('ChallengeSubmissionFeedback', ChallengeSubmissionFeedback)
 
     ChallengeWorkspace.$inject = ['$resource'];
     ChallengeWorkspaceNews.$inject = ['$resource'];
@@ -33,6 +34,7 @@
     GetQuestionAnswers.$inject = ['$resource'];
     GetSubmissionByApplicationId.$inject = ['$resource'];
     DownloadSubmission.$inject = ['$resource'];
+    ChallengeSubmissionFeedback.$inject = ['$resource'];
 
     function ChallengeWorkspace ($resource) {
         var resourceUrl =  'api/challenge-workspaces';
@@ -278,6 +280,24 @@
     }
     function DownloadSubmission ($resource) {
         var resourceUrl =  '/api/challenge-submissions/download';
+
+        return $resource(resourceUrl, {}, {
+            'query': { method: 'GET', isArray: true},
+            'get': {
+                method: 'GET',
+                transformResponse: function (data) {
+                    if (data) {
+                        data = angular.fromJson(data);
+                    }
+                    return data;
+                }
+            },
+            'save': { method:'POST' },
+            'update': { method:'PUT' }
+        });
+    }
+    function ChallengeSubmissionFeedback ($resource) {
+        var resourceUrl =  'api/challenge-submission-feedbacks';
 
         return $resource(resourceUrl, {}, {
             'query': { method: 'GET', isArray: true},

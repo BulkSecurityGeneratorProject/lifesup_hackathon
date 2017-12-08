@@ -17,6 +17,7 @@
         vm.fileId = null;
         vm.isUploading = false;
         vm.hasFileUploaded = false;
+        vm.info = null;
 
         WorkspaceOfChallenge.get({ challengeId: $stateParams.challengeId }, function (result) {
             vm.workspaceId = result.id;
@@ -30,6 +31,7 @@
         ApplicationByChallengeId.get({ challengeId: $stateParams.challengeId }, function (res) {
             vm.applicationId = res.applicationId;
             GetSubmissionByApplicationId.get({ applicationId: vm.applicationId }, function (result) {
+                vm.info = result;
                 if (result.id){
                     vm.hasFileUploaded = true;;
                     vm.fileId = result.id;
